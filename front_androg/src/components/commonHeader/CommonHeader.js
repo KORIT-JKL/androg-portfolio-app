@@ -46,6 +46,7 @@ const img = css`
     height: 50px;
 `
 const subHeader =css`
+    background-color: white;
     display: flex;
     width: 100%;
     height: 50px;
@@ -65,9 +66,7 @@ const sublist =css`
         font-weight: 600;
     }
 `
-const test = css`
-    height: 3000px;
-`
+
 const CommonHeader = () => {
     const [sbheader , setsbheader] = useState(true);
     return (
@@ -105,9 +104,6 @@ const CommonHeader = () => {
             }
             </div>
             
-        </div>
-        <div css={test}>
-
         </div>
         </>
     );

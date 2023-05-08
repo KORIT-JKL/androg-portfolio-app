@@ -46,6 +46,7 @@ export const Reset = css`
         border-radius: 10px;
         padding: 10px;
         overflow: hidden; */
+        height: auto;
     }
     ol, ul {
         list-style: none;
