@@ -123,6 +123,7 @@ export const Reset = css`
         border-radius: 10px;
         padding: 10px;
         overflow: hidden; */
+    position: relative;
     height: auto;
   }
   ol,
