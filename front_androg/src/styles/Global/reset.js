@@ -41,10 +41,8 @@ export const Reset = css`
     }
     #root {
         position: relative;
-        margin: 10px auto;
-        border: 3px solid #dbdbdb;
+        margin: 0px auto;
         border-radius: 10px;
-        padding: 10px;
         overflow: hidden;
     }
     ol, ul {
