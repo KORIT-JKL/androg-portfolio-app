@@ -9,6 +9,7 @@ const header = css`
   display: flex;
   width: 100%;
   border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 10px;
 `;
 const mainHeader = css`
   display: flex;
@@ -65,8 +66,20 @@ const sublist = css`
 const CommonHeader = () => {
   const [sbheader, setsbheader] = useState(true);
   const navigate = useNavigate();
-  const ClickTest = () => {
+  const onClickNotice = () => {
     navigate("/page/notice");
+  };
+  const onClickCoustomer = () => {
+    navigate("/page/customer");
+  };
+  const onClickShipping = () => {
+    navigate("/page/shipping");
+  };
+  const onClickSizeGuide = () => {
+    navigate("/page/sizeguide");
+  };
+  const onClickLegal = () => {
+    navigate("/page/legal");
   };
   return (
     <>
@@ -99,13 +112,21 @@ const CommonHeader = () => {
             </ul>
           ) : (
             <ul css={subHeaderList}>
-              <li css={sublist} onClick={ClickTest}>
+              <li css={sublist} onClick={onClickNotice}>
                 NOTICE
               </li>
-              <li css={sublist}>CUSTOMER SUPPORT</li>
-              <li css={sublist}>SHIPPING & RETURNS</li>
-              <li css={sublist}>SIZE GUIDE</li>
-              <li css={sublist}>LEGAL</li>
+              <li css={sublist} onClick={onClickCoustomer}>
+                CUSTOMER SUPPORT
+              </li>
+              <li css={sublist} onClick={onClickShipping}>
+                SHIPPING & RETURNS
+              </li>
+              <li css={sublist} onClick={onClickSizeGuide}>
+                SIZE GUIDE
+              </li>
+              <li css={sublist} onClick={onClickLegal}>
+                LEGAL
+              </li>
             </ul>
           )}
         </div>
