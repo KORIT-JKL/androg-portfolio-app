@@ -40,12 +40,12 @@ export const Reset = css`
         line-height: 1;
     }
     #root {
-        position: relative;
+        /* position: relative;
         margin: 10px auto;
         border: 3px solid #dbdbdb;
         border-radius: 10px;
         padding: 10px;
-        overflow: hidden;
+        overflow: hidden; */
     }
     ol, ul {
         list-style: none;
