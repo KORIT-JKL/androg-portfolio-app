@@ -1,13 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from 'react';
+import React from "react";
 
 const Login = () => {
-    return (
-        <div css={container}>
-            
-        </div>
-    );
+  return;
 };
 
 export default Login;
