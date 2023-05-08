@@ -16,12 +16,6 @@ const footerTop = css`
     height: 40px;
     width: 100%;
 `
-const footerTopLeft = css`
-
-`
-const footerTopRight = css`
-
-`
 const footerBottom =css`
     display: flex;
     text-align: center;

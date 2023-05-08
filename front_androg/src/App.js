@@ -13,6 +13,7 @@ function App() {
       <Global styles={ Reset }></Global>
       <Routes>
         <Route exact path='/' element={<CommonHeader />}></Route>
+        
       </Routes>
     </>
   );

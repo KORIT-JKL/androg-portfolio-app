@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import React, { useState } from 'react';
 import impact from '../../img/tutle.jpg';
 import CommonFooter from './commonFooter';
+import Cart from "../Cart/cart";
+import { useRecoilState } from "recoil";
+import { cartIsOpenState } from "../../atoms/authAtoms";
 const header =css`
     position: fixed;
     flex-direction: column;
@@ -71,8 +74,11 @@ const test = css`
 `
 const CommonHeader = () => {
     const [sbheader , setsbheader] = useState(true);
+    const [ cartIsOpen , setCartIsOpen] = useRecoilState(cartIsOpenState);
     return (
         <>
+        {cartIsOpen ? <Cart /> : ""}
+        
         <div css={header}>
             <div css={mainHeader}>
                     <img src={impact} alt="logo" css={img}/>
@@ -82,7 +88,7 @@ const CommonHeader = () => {
                     </ul>       
                     <ul css={headerList2}>
                         <li css={list}>SEARCH</li>
-                        <li css={list}>BAG</li>
+                        <li css={list} onClick={() => setCartIsOpen(true)}>BAG</li>
                     </ul>
             </div>
             <div css={subHeader}>
