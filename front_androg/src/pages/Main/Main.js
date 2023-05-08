@@ -8,6 +8,7 @@ import  mainPageImg  from '../../img/Black And White Minimalist Aesthetic Modern
 const mainPage = css`
     display: flex;
     justify-content: center;
+    
 `;
 
 const img = css`
@@ -21,7 +22,7 @@ const Main = () => {
         <>
             <CommonHeader />
             <div css={mainPage}>
-                <img src={mainPageImg} alt="" css={img}/>
+                <img src={mainPageImg} css={img}/>
             </div>
             <CommonFooter />
         </>

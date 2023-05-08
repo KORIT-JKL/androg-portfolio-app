@@ -2,17 +2,19 @@
 import { css } from "@emotion/react";
 import React, { useState } from 'react';
 import impact from '../../img/impact (1).png';
+
 const header =css`
     position: fixed;
     flex-direction: column;
     display: flex;
     width: 100%;
     border-bottom: 1px solid #dbdbdb;
-`
+`;
 const mainHeader = css`
     display: flex;
     width: 100%;
     border-bottom: 1px solid #dbdbdb;
+    background-color: white;
 `;
 
 const headerList = css`
@@ -44,7 +46,7 @@ const img = css`
 
     width: 70px;
     height: 50px;
-`
+`;
 const subHeader =css`
     background-color: white;
     display: flex;
@@ -56,7 +58,7 @@ const subHeaderList =css`
     margin-left: 100px;
     align-items: center;
 
-`
+`;
 const sublist =css`
     padding-left: 10px;
     padding-right: 60px;
@@ -65,7 +67,7 @@ const sublist =css`
     &:hover {
         font-weight: 600;
     }
-`
+`;
 
 const CommonHeader = () => {
     const [sbheader , setsbheader] = useState(true);

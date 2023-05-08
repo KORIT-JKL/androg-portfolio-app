@@ -13,6 +13,7 @@ const input = css`
 `;
 
 const Input = ({ type, placeholder, onChange, name}) => {
+
     return (
         <>
            <input css={input}

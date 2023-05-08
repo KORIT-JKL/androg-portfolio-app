@@ -1,4 +1,3 @@
-import './App.css';
 import { Global } from '@emotion/react';
 import { Reset } from './styles/Global/reset';
 import { Route, Routes } from 'react-router-dom';
