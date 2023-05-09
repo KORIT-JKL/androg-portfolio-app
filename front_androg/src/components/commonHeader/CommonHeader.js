@@ -2,6 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useState } from 'react';
 import impact from '../../img/impact (1).png';
+import { useNavigate } from "react-router-dom";
 
 const header =css`
     position: fixed;
@@ -18,28 +19,26 @@ const mainHeader = css`
 `;
 
 const headerList = css`
-    display: flex;
-    align-items: center;
-    width: 1400px;
-    margin-left: 30px;
-
+  display: flex;
+  align-items: center;
+  width: 1400px;
+  margin-left: 30px;
 `;
 
 const headerList2 = css`
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: 50px;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 50px;
 `;
 
 const list = css`
-    padding: 0px 10px;
-    cursor: pointer;
-    &:hover {
-        font-weight: 600;
-        /* text-decoration: underline; */
-
-    }
+  padding: 0px 10px;
+  cursor: pointer;
+  &:hover {
+    font-weight: 600;
+    /* text-decoration: underline; */
+  }
 `;
 
 const img = css`
@@ -70,45 +69,75 @@ const sublist =css`
 `;
 
 const CommonHeader = () => {
-    const [sbheader , setsbheader] = useState(true);
-    return (
-        <>
-        <div css={header}>
-            <div css={mainHeader}>
-                    <img src={impact} alt="logo" css={img}/>
-                    <ul css={headerList}>
-                        <li css={list} onMouseOver={() => setsbheader(true)}>SHOP</li>
-                        <li css={list} onMouseOver={() => setsbheader(false)}>SUPPORT</li>
-                    </ul>       
-                    <ul css={headerList2}>
-                        <li css={list}>SEARCH</li>
-                        <li css={list}>BAG</li>
-                    </ul>
-            </div>
-            <div css={subHeader}>
-                {sbheader ? 
-                <ul css={subHeaderList}>
-                    <li css={sublist}>tees</li>
-                    <li css={sublist}>swaets</li>
-                    <li css={sublist}>outerwear</li>
-                    <li css={sublist}>pants</li>
-                    <li css={sublist}>headwear</li>
-                    <li css={sublist}>shoes</li>
-                    <li css={sublist}>all</li>
-                </ul>    
-                : <ul css={subHeaderList}>
-                    <li css={sublist}>NOTICE</li>
-                    <li css={sublist}>CUSTOMER SUPPORT</li>
-                    <li css={sublist}>SHIPPING & RETURNS</li>
-                    <li css={sublist}>SIZE GUIDE</li>
-                    <li css={sublist}>LEGAL</li>
-                </ul>   
-            }
-            </div>
-            
+  const [sbheader, setsbheader] = useState(true);
+  const navigate = useNavigate();
+  const onClickNotice = () => {
+    navigate("/page/notice");
+  };
+  const onClickCoustomer = () => {
+    navigate("/page/customer");
+  };
+  const onClickShipping = () => {
+    navigate("/page/shipping");
+  };
+  const onClickSizeGuide = () => {
+    navigate("/page/sizeguide");
+  };
+  const onClickLegal = () => {
+    navigate("/page/legal");
+  };
+  return (
+    <>
+      <div css={header}>
+        <div css={mainHeader}>
+          <img src={impact} alt="logo" css={img} />
+          <ul css={headerList}>
+            <li css={list} onMouseOver={() => setsbheader(true)}>
+              SHOP
+            </li>
+            <li css={list} onMouseOver={() => setsbheader(false)}>
+              SUPPORT
+            </li>
+          </ul>
+          <ul css={headerList2}>
+            <li css={list}>SEARCH</li>
+            <li css={list}>BAG</li>
+          </ul>
         </div>
-        </>
-    );
+        <div css={subHeader}>
+          {sbheader ? (
+            <ul css={subHeaderList}>
+              <li css={sublist}>tees</li>
+              <li css={sublist}>swaets</li>
+              <li css={sublist}>outerwear</li>
+              <li css={sublist}>pants</li>
+              <li css={sublist}>headwear</li>
+              <li css={sublist}>shoes</li>
+              <li css={sublist}>all</li>
+            </ul>
+          ) : (
+            <ul css={subHeaderList}>
+              <li css={sublist} onClick={onClickNotice}>
+                NOTICE
+              </li>
+              <li css={sublist} onClick={onClickCoustomer}>
+                CUSTOMER SUPPORT
+              </li>
+              <li css={sublist} onClick={onClickShipping}>
+                SHIPPING & RETURNS
+              </li>
+              <li css={sublist} onClick={onClickSizeGuide}>
+                SIZE GUIDE
+              </li>
+              <li css={sublist} onClick={onClickLegal}>
+                LEGAL
+              </li>
+            </ul>
+          )}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default CommonHeader;
