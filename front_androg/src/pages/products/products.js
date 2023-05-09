@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from 'react';
+import axios from "axios";
+import React, { useState } from 'react';
+import { useQuery } from "react-query";
 const container= css`
     display: flex;
     width: 100%;
@@ -29,6 +31,19 @@ const productImg =css`
     width: 100%;
 `
 const Products = () => {
+    const [products , setProducts] = useState([])
+    
+    const searchProducts = useQuery(
+        ["searchProducts"], async () => {
+            const reponse = await axios.get("http://localhost:8080/books");
+            return reponse
+        },{
+            onSuccess : (response) => {
+                console.log(response);
+                setProducts(response);
+            }
+        }
+    )
     return (
         <div css={container}>
             <ul css={productCardContainer}>

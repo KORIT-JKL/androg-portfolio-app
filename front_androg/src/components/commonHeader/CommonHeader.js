@@ -72,23 +72,28 @@ const sublist =css`
 `;
 
 const CommonHeader = () => {
-  const [sbheader, setsbheader] = useState(true);
+  const [sbheader, setsbheader] = useState();
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
   const navigate = useNavigate();
   const onClickNotice = () => {
     navigate("/page/notice");
+    setsbheader(false);
   };
   const onClickCoustomer = () => {
     navigate("/page/customer");
+    setsbheader(false);
   };
   const onClickShipping = () => {
     navigate("/page/shipping");
+    setsbheader(false);
   };
   const onClickSizeGuide = () => {
     navigate("/page/sizeguide");
+    setsbheader(false);
   };
   const onClickLegal = () => {
     navigate("/page/legal");
+    setsbheader(false);
   };
   return (
     <>
