@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
-import CommonFooter from "../../../components/commonFooter/CommonFooter";
-import CommonHeader from "../../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../../components/CommonHeader/CommonHeader";
 
 const header = css`
   padding-top: 120px;

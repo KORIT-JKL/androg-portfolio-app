@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
-import CommonHeader from "../../../components/commonHeader/CommonHeader";
-import CommonFooter from "../../../components/commonFooter/CommonFooter";
+import CommonHeader from "../../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../../components/CommonFooter/CommonFooter";
 import SupprotInput from "./../../../components/SupportUI/Input/SupprotInput";
 import FAQItem from "../../../components/SupportUI/Button/FAQItem";
 
