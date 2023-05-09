@@ -18,6 +18,7 @@ const mainHeader = css`
     display: flex;
     width: 100%;
     border-bottom: 1px solid #dbdbdb;
+    background-color: white;
 `;
 
 const headerList = css`
@@ -54,6 +55,7 @@ const subHeader =css`
     display: flex;
     width: 100%;
     height: 50px;
+    background-color: white;
 `;
 const subHeaderList =css`
     display: flex;

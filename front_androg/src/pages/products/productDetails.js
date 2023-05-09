@@ -83,10 +83,11 @@ const shippingContainer =css`
 const buttonList = css`
     position: fixed;
     display: flex;
+    z-index: 99;
     height: 50px;
     width: 700px;
-    left: 1100px;
-    top: 930px;
+    left: 59%;
+    top: 85%;
     margin: 10px;
 `
 const addCartText =css`
@@ -187,7 +188,7 @@ const ProductDetails = () => {
                     <div css={delivery}>10만원 이상 결제시 무료배송</div>
                 </div>
                 <div css={shippingContainer}>
-                    <div onClick={shippingClickHandle} css={shippingText}>shipping </div>
+                    <div onClick={shippingClickHandle} css={shippingText}>택배회사 </div>
                     {shippingIsOpen ? 
                     <>
                         <div css={shippingSubText}>&#62;롯데택배 (1588-2121) </div>
