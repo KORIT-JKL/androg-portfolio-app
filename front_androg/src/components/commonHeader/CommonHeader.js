@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import React, { useState } from 'react';
 import impact from '../../img/impact (1).png';
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { cartIsOpenState } from "../../atoms/authAtoms";
+import Cart from "../../pages/Cart/cart";
 
 const header =css`
     position: fixed;
@@ -70,6 +73,7 @@ const sublist =css`
 
 const CommonHeader = () => {
   const [sbheader, setsbheader] = useState(true);
+  const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
   const navigate = useNavigate();
   const onClickNotice = () => {
     navigate("/page/notice");
@@ -88,6 +92,8 @@ const CommonHeader = () => {
   };
   return (
     <>
+        {CartIsOpen ? <Cart /> : ""}
+        
       <div css={header}>
         <div css={mainHeader}>
           <img src={impact} alt="logo" css={img} />
@@ -101,7 +107,7 @@ const CommonHeader = () => {
           </ul>
           <ul css={headerList2}>
             <li css={list}>SEARCH</li>
-            <li css={list}>BAG</li>
+            <li css={list} onClick={() => setCartIsOpen(true)}>BAG</li>
           </ul>
         </div>
         <div css={subHeader}>
