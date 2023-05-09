@@ -7,11 +7,13 @@ import SupprotInput from "./../../../components/SupportUI/Input/SupprotInput";
 import FAQItem from "../../../components/SupportUI/Button/FAQItem";
 
 const mainContainer = css`
+  grid-column-start: 7;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 `;
 const inquiryContainer = css`
+  grid-column-start: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -24,12 +26,9 @@ const headerText = css`
 `;
 
 const main = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 120px 100px 30px;
-  margin-bottom: 10px;
-  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12);
+  padding-top: 120px;
 `;
 
 const textArea = css`

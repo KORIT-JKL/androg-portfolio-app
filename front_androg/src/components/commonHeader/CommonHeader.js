@@ -91,22 +91,6 @@ const CommonHeader = () => {
     navigate("/page/legal");
   };
 
-  const mypageHeader = ({ isOpen }) => {
-    return (
-      <div css={subHeader}>
-        {isOpen ? (
-          <ul css={subHeaderList}>
-            <li css={sublist}>MYPAGE DETAIL</li>
-            <li css={sublist}>ADRESSES</li>
-            <li css={sublist}>SHIPPING & RETURNS</li>
-          </ul>
-        ) : (
-          ""
-        )}
-      </div>
-    );
-  };
-
   return (
     <>
       {CartIsOpen ? <Cart /> : ""}

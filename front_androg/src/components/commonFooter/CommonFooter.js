@@ -35,23 +35,24 @@ const androgText = css`
 `;
 
 const CommonFooter = () => {
-    return (
-      <>
+  return (
+    <>
       <div css={footer}>
-          <div css={footerTop}>
-                  <div css={icons} >
-                      <AiOutlineInstagram/>
-                      <AiOutlineFacebook />
-                  </div>
-                  <div css={androgText}>
-                      © 2023 Androg 
-                  </div>
-                 
+        <div css={footerTop}>
+          <div css={icons}>
+            <AiOutlineInstagram />
+            <AiOutlineFacebook />
           </div>
-          <div css={footerBottom}>Androg 쇼핑물 | 대표 JKL | 사업자등록번호 123-45-6789 | 부산광역시 부산진구 에이원빌딩 | 통신판매신고번호 제 2023 - 부산진구 - 0001 호 [사업자정보확인] | 전화 000-0000-0000 | 이메일 JKL@naver.com | 개인정보관리책임자 JKL | 개인정보취급방침</div>
+          <div css={androgText}>© 2023 Androg</div>
+        </div>
+        <div css={footerBottom}>
+          Androg 쇼핑물 | 대표 JKL | 사업자등록번호 123-45-6789 | 부산광역시 부산진구 에이원빌딩 |
+          통신판매신고번호 제 2023 - 부산진구 - 0001 호 [사업자정보확인] | 전화 000-0000-0000 |
+          이메일 JKL@naver.com | 개인정보관리책임자 JKL | 개인정보취급방침
+        </div>
       </div>
-      <div css={androgText}>© 2023 Androg</div>      
-      </>
+      <div css={androgText}>© 2023 Androg</div>
+    </>
   );
 };
 
