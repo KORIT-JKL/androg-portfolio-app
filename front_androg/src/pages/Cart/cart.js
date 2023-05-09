@@ -204,7 +204,7 @@ const Cart = () => {
                                 BLACK / M
                             </div>
                             <div css={productPrice}>
-                                ${296000*count}
+                                ₩{296000*count}
                             </div>
                             <div css={productCount}>
                                 <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
