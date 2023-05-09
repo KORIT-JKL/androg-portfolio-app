@@ -9,12 +9,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.LoginReqDto;
+import com.korit.androg.androg.dto.SignupReqDto;
 import com.korit.androg.androg.dto.auth.JwtRespDto;
+import com.korit.androg.androg.entity.Authority;
 import com.korit.androg.androg.entity.User;
 import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.exception.ErrorMap;
 import com.korit.androg.androg.repository.UserRepository;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +28,24 @@ public class AuthenticationService implements UserDetailsService {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final UserRepository userRepository;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
+	
+	public void checkDuplicatedEmail(String email) {
+		if(userRepository.findUserByEmail(email) != null) {
+			throw new CustomException("Duplicated Email",
+					ErrorMap.builder()
+					.put("email", "이미 사용중인 email입니다.")
+					.build());
+		};
+	};
+	
+	public void signup(SignupReqDto signupReqDto) {
+		User userEntity = signupReqDto.toEntity();
+		userRepository.saveUser(userEntity);
+		
+		userRepository.saveAuthority(Authority.builder().userId(userEntity.getUserId()).roleId(1).build());
+		
+	};
+	
 	
 	public JwtRespDto signin(LoginReqDto loginReqDto) {
 		System.out.println(loginReqDto);
