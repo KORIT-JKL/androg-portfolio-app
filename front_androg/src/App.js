@@ -12,6 +12,7 @@ import SizeGuide from "./pages/Support/SizeGuide/SizeGuide";
 import Legal from "./pages/Support/Legal/Legal";
 import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
+import Register from "./pages/Register/Register";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route exact path='/' element={<Main />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route exact path="/" element={<CommonHeader />}></Route>
+        <Route path="/register" element={<Register />}></Route>
 
         {/* 문의페이지 Route */}
         <Route exact path="/page/notice" element={<Notice />}></Route>
