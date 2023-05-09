@@ -44,7 +44,17 @@
 			ut.email = #{email}
 </select>
 
+<insert id="saveUser" parameterType="com.korit.androg.androg.entity.User"
+useGeneratedKeys="true"
+keyProperty="userId">
+	insert into user_tb
+	values (0, #{email}, #{password}, #{username})
+</insert>
 
+<insert id="saveAuthority" parameterType="com.korit.androg.androg.entity.Authority">
+	insert into authority_tb
+	values (0, #{userId}, #{roleId})
+</insert>
 
 
 
