@@ -7,6 +7,7 @@ import Cart from "../Cart/cart";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/authAtoms";
 import ProductDetails from "./productDetails";
+import Products from "./products";
 const header =css`
     position: fixed;
     flex-direction: column;
@@ -120,6 +121,7 @@ const CommonHeader = () => {
 
         </div> */}
         <ProductDetails />
+        {/* <Products /> */}
         <CommonFooter />
         </>
     );
