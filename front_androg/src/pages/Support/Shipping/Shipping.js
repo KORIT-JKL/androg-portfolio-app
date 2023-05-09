@@ -25,7 +25,6 @@ const header = css`
 `;
 
 const orderContent = css`
-  border: 1px solid #dbdbdb;
   padding: 10px;
   margin: 5px;
   max-width: 40%;
@@ -33,7 +32,6 @@ const orderContent = css`
 `;
 
 const returnContent = css`
-  border: 1px solid #dbdbdb;
   padding: 10px;
   margin: 5px;
   max-width: 40%;

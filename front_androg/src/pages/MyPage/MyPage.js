@@ -1,7 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import React from "react";
 
 const MyPage = () => {
-  return <div></div>;
+  return <></>;
 };
 
 export default MyPage;

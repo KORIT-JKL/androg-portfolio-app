@@ -1,24 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from 'react';
-import impact from '../../img/impact (1).png';
+import React, { useState } from "react";
+import impact from "../../img/impact (1).png";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/authAtoms";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
 
-const header =css`
-    position: fixed;
-    flex-direction: column;
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid #dbdbdb;
+const header = css`
+  position: fixed;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #dbdbdb;
 `;
 const mainHeader = css`
-    display: flex;
-    width: 100%;
-    border-bottom: 1px solid #dbdbdb;
-    background-color: white;
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: white;
 `;
 
 const headerList = css`
@@ -45,35 +46,34 @@ const list = css`
 `;
 
 const img = css`
-
-    width: 70px;
-    height: 50px;
+  width: 70px;
+  height: 50px;
 `;
-const subHeader =css`
-    background-color: white;
-    display: flex;
-    width: 100%;
-    height: 50px;
+const subHeader = css`
+  background-color: white;
+  display: flex;
+  width: 100%;
+  height: 50px;
 `;
-const subHeaderList =css`
-    display: flex;
-    margin-left: 100px;
-    align-items: center;
-
+const subHeaderList = css`
+  display: flex;
+  margin-left: 100px;
+  align-items: center;
 `;
-const sublist =css`
-    padding-left: 10px;
-    padding-right: 60px;
-    font-size: 15px;
-    cursor: pointer;
-    &:hover {
-        font-weight: 600;
-    }
+const sublist = css`
+  padding-left: 10px;
+  padding-right: 60px;
+  font-size: 15px;
+  cursor: pointer;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const CommonHeader = () => {
   const [sbheader, setsbheader] = useState(true);
-  const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
+  const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
+  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const navigate = useNavigate();
   const onClickNotice = () => {
     navigate("/page/notice");
@@ -90,25 +90,74 @@ const CommonHeader = () => {
   const onClickLegal = () => {
     navigate("/page/legal");
   };
+
+  const mypageHeader = ({ isOpen }) => {
+    return (
+      <div css={subHeader}>
+        {isOpen ? (
+          <ul css={subHeaderList}>
+            <li css={sublist}>MYPAGE DETAIL</li>
+            <li css={sublist}>ADRESSES</li>
+            <li css={sublist}>SHIPPING & RETURNS</li>
+          </ul>
+        ) : (
+          ""
+        )}
+      </div>
+    );
+  };
+
   return (
     <>
-        {CartIsOpen ? <Cart /> : ""}
-        
+      {CartIsOpen ? <Cart /> : ""}
+
       <div css={header}>
         <div css={mainHeader}>
           <img src={impact} alt="logo" css={img} />
-          <ul css={headerList}>
-            <li css={list} onMouseOver={() => setsbheader(true)}>
-              SHOP
-            </li>
-            <li css={list} onMouseOver={() => setsbheader(false)}>
-              SUPPORT
-            </li>
-          </ul>
-          <ul css={headerList2}>
-            <li css={list}>SEARCH</li>
-            <li css={list} onClick={() => setCartIsOpen(true)}>BAG</li>
-          </ul>
+          {loginIsState ? (
+            <>
+              <ul css={headerList}>
+                <li css={list} onMouseOver={() => setsbheader(true)}>
+                  SHOP
+                </li>
+                <li css={list} onMouseOver={() => setsbheader(false)}>
+                  SUPPORT
+                </li>
+              </ul>
+              <ul css={headerList2}>
+                <li css={list}>SEARCH</li>
+                <li css={list} onClick={() => setLoginIsState(false)}>
+                  LOGOUT
+                </li>
+                <li css={list} onClick={() => navigate("/page/mypage")}>
+                  MYPAGE
+                </li>
+                <li css={list} onClick={() => setCartIsOpen(true)}>
+                  BAG
+                </li>
+              </ul>
+            </>
+          ) : (
+            <>
+              <ul css={headerList}>
+                <li css={list} onMouseOver={() => setsbheader(true)}>
+                  SHOP
+                </li>
+                <li css={list} onMouseOver={() => setsbheader(false)}>
+                  SUPPORT
+                </li>
+              </ul>
+              <ul css={headerList2}>
+                <li css={list}>SEARCH</li>
+                <li css={list} onClick={() => setLoginIsState(true)}>
+                  LOGIN
+                </li>
+                <li css={list} onClick={() => setCartIsOpen(true)}>
+                  BAG
+                </li>
+              </ul>
+            </>
+          )}
         </div>
         <div css={subHeader}>
           {sbheader ? (
