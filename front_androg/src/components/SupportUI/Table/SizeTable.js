@@ -25,13 +25,12 @@ const tableStyle = css`
   }
 `;
 
-const SizeTable = () => {
+const SizeTable = ({ alpha, number }) => {
   return (
     <table css={tableStyle}>
       <tbody>
         <tr>
-          <td>Androg 사이즈 (알파)</td>
-          <td>XS</td>
+          <td>{alpha}</td>
           <td>S</td>
           <td>M</td>
           <td>L</td>
@@ -39,8 +38,7 @@ const SizeTable = () => {
           <td>XXL</td>
         </tr>
         <tr>
-          <td>Androg 사이즈 (숫자)</td>
-          <td>28</td>
+          <td>{number}</td>
           <td>29-30</td>
           <td>31-32</td>
           <td>33-34</td>

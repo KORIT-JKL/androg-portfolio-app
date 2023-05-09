@@ -8,16 +8,20 @@ const AccordionItem = css`
   padding: 16px 0;
 `;
 
-const accordionButton = css`
+const accordionContainer = css`
   display: flex;
   border: none;
   padding: 0px;
   padding-bottom: 10px;
-  text-transform: uppercase;
-  width: 100%;
+`;
+
+const accordionButton = css`
+  border: none;
+  padding: 0px;
   font-size: 16px;
   font-weight: 500;
-  background-color: transparent;
+  background-color: white;
+
   cursor: pointer;
 `;
 
@@ -31,20 +35,12 @@ const ChevronIcon = (isOpen) => css`
   }
 `;
 
-const AccordionButton = ({ isOpen, onClick, question }) => {
-  return (
-    <button css={accordionButton} isOpen={isOpen} onClick={onClick}>
-      {question}
-      <VscChevronRight css={ChevronIcon(isOpen)} />
-    </button>
-  );
-};
-
 const AccordionContent = css`
   max-width: 240px;
 `;
 
 const OrderCancellationText = css`
+  font-size: 10px;
   font-weight: bold;
 `;
 
@@ -53,6 +49,17 @@ const FAQItem = ({ question, answer }) => {
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+  };
+
+  const AccordionButton = ({ isOpen, onClick, question }) => {
+    return (
+      <div css={accordionContainer}>
+        {question}
+        <button css={accordionButton} isOpen={isOpen} onClick={onClick}>
+          <VscChevronRight css={ChevronIcon(isOpen)} />
+        </button>
+      </div>
+    );
   };
 
   return (

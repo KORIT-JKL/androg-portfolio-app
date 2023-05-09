@@ -3,26 +3,26 @@ import { css } from "@emotion/react";
 import React from "react";
 
 const containerStyle = css`
-  margin: 20px 0;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding-bottom: 20px;
 `;
 
 const titleStyle = css`
-  font-size: 24px;
+  font-size: 16px;
+  font-weight: 600;
   margin-bottom: 10px;
 `;
 
 const messageStyle = css`
-  font-size: 18px;
+  font-size: 13px;
   margin-bottom: 10px;
 `;
 
 const listItemStyle = css`
   margin-left: 20px;
-  font-size: 16px;
   margin-bottom: 5px;
+  padding-bottom: 5px;
+  font-size: 10px;
+  list-style-type: circle;
 `;
 
 const Information = ({ title, message, listItems }) => {

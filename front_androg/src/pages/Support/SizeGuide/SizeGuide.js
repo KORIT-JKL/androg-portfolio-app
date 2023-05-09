@@ -12,12 +12,12 @@ const container = css`
   align-items: center;
   margin: 10px;
   padding: 120px 0px 0px 50px;
-  width: 1000px;
+  max-width: 100%;
   height: 1000px;
 `;
 
 const header = css`
-  padding-bottom: 40px;
+  padding: 0px 40px 10px 10px;
   width: 320px;
   height: 64px;
   font-size: 20px;
@@ -25,17 +25,33 @@ const header = css`
 `;
 
 const orderContent = css`
-  border: 1px solid #dbdbdb;
   padding: 10px;
   margin: 5px;
-  width: 430px;
+  width: 100%;
   height: 100%;
 `;
 
 const contentText = css`
-  padding: 5px;
+  padding: 10px;
   width: 300px;
   height: 150px;
+  font-style: italic;
+  text-decoration: dashed;
+`;
+
+const tablebox = css`
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 250px;
+`;
+
+const subTitle = css`
+  padding-bottom: 10px;
+  width: 100%;
+  height: 30px;
+  font-size: 13px;
+  font-weight: 600;
 `;
 
 const SizeGuide = () => {
@@ -53,7 +69,14 @@ const SizeGuide = () => {
               상품에 자세한 측정은 아래의 내용을 따릅니다.
             </p>
           </div>
-          <SizeTable />
+          <div css={tablebox}>
+            <h2 css={subTitle}>국제사이즈 변환</h2>
+            <SizeTable alpha="androg사이즈(알파)" number="androg사이즈(숫자)" />
+          </div>
+          <div css={tablebox}>
+            <h2 css={subTitle}>신체측정 사이즈</h2>
+            <SizeTable alpha="androg사이즈(알파)" number="androg사이즈(숫자)" />
+          </div>
         </div>
       </main>
       <CommonFooter />
