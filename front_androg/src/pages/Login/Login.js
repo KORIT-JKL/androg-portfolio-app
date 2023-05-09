@@ -82,6 +82,7 @@ const Login = () => {
         }
         try {
             const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
+            console.log(response)
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
             SetRefresh(false);
