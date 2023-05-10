@@ -83,6 +83,7 @@ const Register = () => {
         }
         try {
             await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
+            
             setErrorMessages({email:"", password:"",name:""});
             navigate("/login")
         } catch(error) {
@@ -98,9 +99,9 @@ const Register = () => {
                 </header>
                 <main css={main}>
                     <p css={mainTxt}>회원으로 가입하시면 Androg 에서 운영하는 온라인 스토어의 서비스를 아이<br/>디로 이용하실 수 있습니다.</p>
-                    <RegisterInput type="username" placeholder="이름" onChange={onChange} name="username" />
                     <RegisterInput type="email" placeholder="이메일" onChange={onChange} name="email" />
                     <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
+                    <RegisterInput type="name" placeholder="이름" onChange={onChange} name="name" />
                     <div css={privacy}>
                         <input type="checkbox" css={privacyBtn}/>
                         <label css={text}><a href="">개인정보 보호정책</a> 및 <a href="">이용약관</a> 동의</label>

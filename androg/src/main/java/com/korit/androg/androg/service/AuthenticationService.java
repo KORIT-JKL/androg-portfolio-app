@@ -53,7 +53,6 @@ public class AuthenticationService implements UserDetailsService {
 				new UsernamePasswordAuthenticationToken(loginReqDto.getEmail(), loginReqDto.getPassword());
 		
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-		System.out.println(authentication);
 		return jwtTokenProvider.generateToken(authentication);
 	}
 	

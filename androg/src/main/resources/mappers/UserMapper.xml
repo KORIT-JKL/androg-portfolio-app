@@ -6,13 +6,13 @@
 	<id property="userId" column="user_id"/>
 	<result property="email" column="email"/>
 	<result property="password" column="password"/>
-	<result property="username" column="usernane"/>
+	<result property="name" column="name"/>
 	<collection property="authorities" javaType="list" resultMap="authorityMap"></collection>
 </resultMap>
 
 <resultMap type="com.korit.androg.androg.entity.Role" id="roleMap">
 	<id property="roleId" column="role_id"/>
-	<result property="roleName" column="roleName"/>
+	<result property="roleName" column="role_name"/>
 </resultMap>
 
 <resultMap type="com.korit.androg.androg.entity.Authority" id="authorityMap">
@@ -28,7 +28,7 @@
 		 ut.user_id,
 		 ut.email,
 		 ut.password,
-		 ut.username,
+		 ut.name,
  
 		 at.authority_id,
 		 at.user_id,
@@ -48,7 +48,7 @@
 useGeneratedKeys="true"
 keyProperty="userId">
 	insert into user_tb
-	values (0, #{email}, #{password}, #{username})
+	values (0, #{email}, #{password}, #{name})
 </insert>
 
 <insert id="saveAuthority" parameterType="com.korit.androg.androg.entity.Authority">

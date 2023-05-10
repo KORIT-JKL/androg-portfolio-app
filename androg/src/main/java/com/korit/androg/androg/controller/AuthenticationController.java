@@ -26,8 +26,6 @@ public class AuthenticationController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto) {
-		System.out.println(loginReqDto);
-		System.out.println(authenticationService.signin(loginReqDto));
 		return ResponseEntity.ok().body(authenticationService.signin(loginReqDto));
 	}
 	
@@ -38,6 +36,6 @@ public class AuthenticationController {
 		authenticationService.checkDuplicatedEmail(signupReqDto.getEmail());
 		authenticationService.signup(signupReqDto);
 		
-		return null;
+		return ResponseEntity.ok().body(true);
 	}
 }

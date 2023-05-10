@@ -21,7 +21,6 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Main />}></Route>
         <Route path='/login' element={<Login />}></Route>
-        <Route exact path="/" element={<CommonHeader />}></Route>
         <Route path="/register" element={<Register />}></Route>
 
         {/* 문의페이지 Route */}
