@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import axios from "axios";
 import React, { useState } from 'react';
 import { useQuery } from "react-query";
+import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import { useParams } from "react-router-dom";
 const container= css`
     display: flex;
     width: 100%;
@@ -31,12 +34,14 @@ const productImg =css`
     width: 100%;
 `
 const Products = () => {
+    const {categoryId} = useParams();
     const [products , setProducts] = useState([])
-    
     const searchProducts = useQuery(
         ["searchProducts"], async () => {
-            const reponse = await axios.get("http://localhost:8080/books");
+            console.log(categoryId);
+            const reponse = await axios.get(`http://localhost:8080/category/${categoryId}`);
             return reponse
+            
         },{
             onSuccess : (response) => {
                 console.log(response);
@@ -45,41 +50,45 @@ const Products = () => {
         }
     )
     return (
-        <div css={container}>
-            <ul css={productCardContainer}>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    {/* <Products /> */}
-                </li>
-                {/* <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li>
-                <li css={productCard}>
-                    <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-
-                </li> */}
-
-            </ul>
+        <div>
+            <CommonHeader />
+            <div css={container}>
+                <ul css={productCardContainer}>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        {/* <Products /> */}
+                    </li>
+                    {/* <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li>
+                    <li css={productCard}>
+                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
+    
+                    </li> */}
+    
+                </ul>
+            </div>
+        <CommonFooter />
         </div>
     );
 };

@@ -12,6 +12,7 @@ import SizeGuide from "./pages/Support/SizeGuide/SizeGuide";
 import Legal from "./pages/Support/Legal/Legal";
 import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
+import Products from "./pages/products/products";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route exact path="/page/shipping" element={<Shipping />}></Route>
         <Route exact path="/page/sizeguide" element={<SizeGuide />}></Route>
         <Route exact path="/page/legal" element={<Legal />}></Route>
+        
+        <Route path ="/category/:categoryId" element ={<Products/>}></Route>
       </Routes>
     </>
   );

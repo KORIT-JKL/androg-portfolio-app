@@ -4,39 +4,40 @@
 	<resultMap type="com.korit.androg.androg.entity.Products" id="productsMap">
 		<id property="productId" column="product_id"/>
 		<result property="productName" column="product_name"/>
-		<result property="productPrice" column="product_name"/>
+		<result property="productPrice" column="product_Price"/>
 		<result property="productImg" column="product_img"/>
 		<result property="sizeS" column="size_s"/>
 		<result property="sizeM" column="size_m"/>
 		<result property="sizeL" column="size_l"/>
 		<result property="sizeXL" column="size_xl"/>
 		<result property="sizeXXL" column="size_xxl"/>
-		<association property="categoryId" resultMap="categoryMap"></association>
-		<association property="colorId" resultMap="colorMap"></association>
+		<association property="category" resultMap="categoryMap"></association>
+		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
 	
 	<resultMap type="com.korit.androg.androg.entity.Category" id="categoryMap">
 		<id property="categoryId" column="category_id"/>
 		<result property="categoryName" column="category_name"/>
 	</resultMap>
+	
 	<resultMap type="com.korit.androg.androg.entity.Color" id="colorMap">
 		<id property="colorId" column="color_id"/>
 		<result property="colorName" column="color_name"/>
 	</resultMap>
 	
-	<select id="getProductsByCategoryId" parameterType="integer" resultMap="productsMap">
+	<select id="getProductsByCategoryId" parameterType="Integer" resultMap="productsMap" >
 		SELECT
 			pt.product_id,
             pt.product_name,
             pt.product_price,
-            ct.category_id,
-            ct.category_name,
             pt.product_img,
             pt.size_s,
             pt.size_m,
             pt.size_l,
             pt.size_xl,
             pt.size_xxl,
+			ct.category_id,
+            ct.category_name,
             clt.color_id,
             clt.color_name
 		FROM
@@ -44,6 +45,6 @@
             left outer join category_tb ct on(ct.category_id = pt.category_id)
             left outer join color_tb clt on(clt.color_id = pt.color_id)
 		where
-			pt.category_id = ${categoryId};
+			pt.category_id = #{categoryId};
 	</select>
 </mapper>

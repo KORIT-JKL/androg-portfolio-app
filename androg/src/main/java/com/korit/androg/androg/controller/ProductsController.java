@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class ProductsController {
-	private ProductsService productsService;
+	private final ProductsService productsService;
 	
-	@GetMapping("/products/{categoryId}")
+	@GetMapping("/category/{categoryId}")
 	public ResponseEntity<?> getProductsByCategoyrId(@PathVariable int categoryId){
 		System.out.println(categoryId);
 		return ResponseEntity.ok().body(productsService.getProductsByCategoryId(categoryId));

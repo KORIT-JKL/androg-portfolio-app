@@ -4,6 +4,7 @@ import React from 'react';
 import CommonHeader from '../../components/CommonHeader/CommonHeader';
 import CommonFooter from '../../components/CommonFooter/CommonFooter';
 import  mainPageImg  from '../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png';
+import Products from "../products/products";
 
 const mainPage = css`
     display: flex;
@@ -21,9 +22,9 @@ const Main = () => {
     return (
         <>
             <CommonHeader />
-            <div css={mainPage}>
-                <img src={mainPageImg} css={img}/>
-            </div>
+                <div css={mainPage}>
+                    <img src={mainPageImg} css={img}/>
+                </div>
             <CommonFooter />
         </>
     );

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
-	private String categoryId;
+	private int categoryId;
 	private String categoryName;
 }

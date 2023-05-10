@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import impact from '../../img/impact (1).png';
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState } from "../../atoms/authAtoms";
+import { cartIsOpenState, setCategoryId } from "../../atoms/authAtoms";
 import Cart from "../../pages/Cart/cart";
 
 const header =css`
@@ -45,7 +45,7 @@ const list = css`
 `;
 
 const img = css`
-
+    cursor: pointer;
     width: 70px;
     height: 50px;
 `;
@@ -74,7 +74,11 @@ const sublist =css`
 const CommonHeader = () => {
   const [sbheader, setsbheader] = useState();
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
+  const [categoryId, thisSetCategoryId] = useRecoilState(setCategoryId);
   const navigate = useNavigate();
+  const onClickLogo = () => {
+    navigate("/");
+  }
   const onClickNotice = () => {
     navigate("/page/notice");
     setsbheader(false);
@@ -95,18 +99,38 @@ const CommonHeader = () => {
     navigate("/page/legal");
     setsbheader(false);
   };
+
+  const onClickTees = (e) => {
+    navigate(`/category/${e}`);
+  }
+  const onClickSwaets = (e) => {
+    navigate(`/category/${e}`);
+  }
+  const onClickOuterwear = (e) => {
+    navigate(`/category/${e}`);
+  }
+  const onClickPants = (e) => {
+    navigate(`/category/${e}`);
+  }
+  const onClickHeadwear = (e) => {
+    navigate(`/category/${e}`);
+  }
+  const onClickShoes = (e) => {
+    navigate(`/category/${e}`);
+  }
+
   return (
     <>
         {CartIsOpen ? <Cart /> : ""}
         
       <div css={header}>
         <div css={mainHeader}>
-          <img src={impact} alt="logo" css={img} />
+          <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
           <ul css={headerList}>
-            <li css={list} onMouseOver={() => setsbheader(true)}>
+            <li css={list} onMouseOver={() => setsbheader(true)} onClick={() => setsbheader(true)}>
               SHOP
             </li>
-            <li css={list} onMouseOver={() => setsbheader(false)}>
+            <li css={list} onMouseOver={() => setsbheader(false)} onClick={() => setsbheader(false)}>
               SUPPORT
             </li>
           </ul>
@@ -118,12 +142,12 @@ const CommonHeader = () => {
         <div css={subHeader}>
           {sbheader ? (
             <ul css={subHeaderList}>
-              <li css={sublist}>tees</li>
-              <li css={sublist}>swaets</li>
-              <li css={sublist}>outerwear</li>
-              <li css={sublist}>pants</li>
-              <li css={sublist}>headwear</li>
-              <li css={sublist}>shoes</li>
+              <li css={sublist}  onClick={() => onClickTees(1)}>tees</li>
+              <li css={sublist}  onClick={() => onClickSwaets(2)}>swaets</li>
+              <li css={sublist}  onClick={() => onClickOuterwear(3)}>outerwear</li>
+              <li css={sublist}  onClick={() => onClickPants(4)}>pants</li>
+              <li css={sublist}  onClick={() => onClickHeadwear(5)}>headwear</li>
+              <li css={sublist}  onClick={() => onClickShoes(6)}>shoes</li>
               <li css={sublist}>all</li>
             </ul>
           ) : (
