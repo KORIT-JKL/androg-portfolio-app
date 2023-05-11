@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import impact from '../../img/impact (1).png';
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setCategoryId } from "../../atoms/authAtoms";
+import { cartIsOpenState, setRefresh } from "../../atoms/authAtoms";
 import Cart from "../../pages/Cart/cart";
+
 
 const header =css`
     position: fixed;
@@ -72,65 +73,54 @@ const sublist =css`
 `;
 
 const CommonHeader = () => {
-  const [sbheader, setsbheader] = useState();
+  const [sbheader, setsbheader] = useState(false);
+  const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
-  const [categoryId, thisSetCategoryId] = useRecoilState(setCategoryId);
+  // const [categoryId, thisSetCategoryId] = useRecoilState(setCategoryId);
   const navigate = useNavigate();
   const onClickLogo = () => {
     navigate("/");
   }
   const onClickNotice = () => {
     navigate("/page/notice");
-    setsbheader(false);
+    setsbheader(true);
+
   };
   const onClickCoustomer = () => {
     navigate("/page/customer");
-    setsbheader(false);
+    setsbheader(true);
   };
   const onClickShipping = () => {
     navigate("/page/shipping");
-    setsbheader(false);
+    setsbheader(true);
   };
   const onClickSizeGuide = () => {
     navigate("/page/sizeguide");
-    setsbheader(false);
+    setsbheader(true);
   };
   const onClickLegal = () => {
     navigate("/page/legal");
-    setsbheader(false);
+    setsbheader(true);
   };
 
-  const onClickTees = (e) => {
+  const onClickCategory = (e) => {
     navigate(`/category/${e}`);
+    setThiRefresh(true);
   }
-  const onClickSwaets = (e) => {
-    navigate(`/category/${e}`);
-  }
-  const onClickOuterwear = (e) => {
-    navigate(`/category/${e}`);
-  }
-  const onClickPants = (e) => {
-    navigate(`/category/${e}`);
-  }
-  const onClickHeadwear = (e) => {
-    navigate(`/category/${e}`);
-  }
-  const onClickShoes = (e) => {
-    navigate(`/category/${e}`);
-  }
-
+  
   return (
-    <>
+    <>  
+    
         {CartIsOpen ? <Cart /> : ""}
         
       <div css={header}>
         <div css={mainHeader}>
           <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
           <ul css={headerList}>
-            <li css={list} onMouseOver={() => setsbheader(true)} onClick={() => setsbheader(true)}>
+            <li css={list} onMouseOver={() => setsbheader(false)} >
               SHOP
             </li>
-            <li css={list} onMouseOver={() => setsbheader(false)} onClick={() => setsbheader(false)}>
+            <li css={list} onMouseOver={() => setsbheader(true)} >
               SUPPORT
             </li>
           </ul>
@@ -140,15 +130,15 @@ const CommonHeader = () => {
           </ul>
         </div>
         <div css={subHeader}>
-          {sbheader ? (
+          {!sbheader ? (
             <ul css={subHeaderList}>
-              <li css={sublist}  onClick={() => onClickTees(1)}>tees</li>
-              <li css={sublist}  onClick={() => onClickSwaets(2)}>swaets</li>
-              <li css={sublist}  onClick={() => onClickOuterwear(3)}>outerwear</li>
-              <li css={sublist}  onClick={() => onClickPants(4)}>pants</li>
-              <li css={sublist}  onClick={() => onClickHeadwear(5)}>headwear</li>
-              <li css={sublist}  onClick={() => onClickShoes(6)}>shoes</li>
-              <li css={sublist}>all</li>
+              <li css={sublist}  onClick={() => onClickCategory(1)}>tees</li>
+              <li css={sublist}  onClick={() => onClickCategory(2)}>swaets</li>
+              <li css={sublist}  onClick={() => onClickCategory(3)}>pants</li>
+              <li css={sublist}  onClick={() => onClickCategory(4)}>outerwear</li>
+              <li css={sublist}  onClick={() => onClickCategory(5)}>headwear</li>
+              <li css={sublist}  onClick={() => onClickCategory(6)}>shoes</li>
+              <li css={sublist}  onClick={() => onClickCategory(7)}>all</li>
             </ul>
           ) : (
             <ul css={subHeaderList}>

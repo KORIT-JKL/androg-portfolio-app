@@ -17,6 +17,9 @@ public class ProductsService {
 	public List<Products> getProductsByCategoryId(int categoryId) {
 		return productsRepository.getProductsByCategoryId(categoryId);
 	}
+	public Products getProductByProductId(int productId) {
+		return productsRepository.getProductByProductId(productId);
+	}
 	
 	
 	

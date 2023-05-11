@@ -13,6 +13,7 @@ import Legal from "./pages/Support/Legal/Legal";
 import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
 import Products from "./pages/products/products";
+import ProductDetails from "./pages/products/productDetails";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/page/legal" element={<Legal />}></Route>
         
         <Route path ="/category/:categoryId" element ={<Products/>}></Route>
+        <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
       </Routes>
     </>
   );

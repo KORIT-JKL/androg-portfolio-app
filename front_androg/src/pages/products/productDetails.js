@@ -1,6 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from 'react';
+import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { setRefresh } from "../../atoms/authAtoms";
+import { useRecoilState } from "recoil";
 const container = css`
     display: flex;
     justify-content: center;
@@ -18,7 +25,7 @@ const imgContainer =css`
 `
 const img = css`
     width: 100%;
-    height: 100%;
+    height: 900px;
 `
 const detailsContainer =css`
     display: flex;
@@ -139,8 +146,10 @@ const shippingSubText =css`
 const ProductDetails = () => {
     
     const categoryId = 1;
-    const [ size , setSize ] =useState();
+    const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
+    const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
+    const { productId } =useParams();
     const shippingClickHandle = () =>{
         if(shippingIsOpen){
             setShippingIsOpen(false)
@@ -148,21 +157,36 @@ const ProductDetails = () => {
             setShippingIsOpen(true)
         }
     }
+    const getProduct = useQuery(["getProduct"], async () => {
+        const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
+        return reponse;
+    },{
+        enabled : refresh,
+        onSuccess : (response) => {
+            console.log(response);
+            setProduct(response.data);
+        }
+    })
+    if (!product) {
+        return setThiRefresh(true); 
+    }
+
     return (
-        
+        <>
+        <CommonHeader  />
         <div css={container}>
             
             <div css={imgContainer}>
-                <img css={img} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt="" />
+                <img css={img} src={product.productImg} alt="" />
             </div>
             <div css={detailsContainer}>
                 <div css={detailTop}>
-                    <h1 css={productName}> PYTHON REVERSIBLE VEST</h1>
-                    <div css={productPrice}>₩296000</div>
+                    <h1 css={productName}>{product.productName}</h1>
+                    <div css={productPrice}>₩{product.productPrice}</div>
                 </div>
                 <div css={sizeContainer}>
                     {/* 카테고리아이디 별로 사이즈 출력 */}
-                    {categoryId <= 4  ? 
+                    {product.category.categoryId <= 4 ? 
                         <>
                             <div css={productSize}>S</div>
                             <div css={productSize}>M</div>
@@ -170,17 +194,18 @@ const ProductDetails = () => {
                             <div css={productSize}>XL</div>
                             <div css={productSize}>XXL</div>
                         </>
-                        : categoryId === 5 ?
+                        : product.category.categoryId === 6 ?
                         <>
-                            <div css={productSize}>oneSize</div>
-                        </>
-                        : 
-                        <>
-                            <div css={productSize}>240</div>
+                             <div css={productSize}>240</div>
                             <div css={productSize}>250</div>
                             <div css={productSize}>260</div>
                             <div css={productSize}>270</div>
                             <div css={productSize}>280</div>
+                        </>
+                        : 
+                        <>  
+                            <div css={productSize}>oneSize</div>
+                           
                         </>
                         }
                 </div>
@@ -191,7 +216,7 @@ const ProductDetails = () => {
                     <div onClick={shippingClickHandle} css={shippingText}>택배회사 </div>
                     {shippingIsOpen ? 
                     <>
-                        <div css={shippingSubText}>&#62;롯데택배 (1588-2121) </div>
+                        <div css={shippingSubText}>&#62;ㅁㅁ택배 (1234-5678) </div>
                     </> 
                     :""
 
@@ -203,6 +228,8 @@ const ProductDetails = () => {
                     <button css={directBuyText}>바로구매</button>
                 </div>
         </div>
+        <CommonFooter />
+        </>
     );
 };
 

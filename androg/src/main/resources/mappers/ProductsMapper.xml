@@ -45,6 +45,31 @@
             left outer join category_tb ct on(ct.category_id = pt.category_id)
             left outer join color_tb clt on(clt.color_id = pt.color_id)
 		where
-			pt.category_id = #{categoryId};
+		1 = 1
+		<if test="categoryId != 7">
+        	AND pt.category_id = #{categoryId}
+    	</if>
+	</select>
+	<select id="getProductByProductId" parameterType="Integer" resultMap = "productsMap">
+		SELECT
+			pt.product_id,
+            pt.product_name,
+            pt.product_price,
+            pt.product_img,
+            pt.size_s,
+            pt.size_m,
+            pt.size_l,
+            pt.size_xl,
+            pt.size_xxl,
+			ct.category_id,
+            ct.category_name,
+            clt.color_id,
+            clt.color_name
+		FROM
+			product_tb pt
+            left outer join category_tb ct on(ct.category_id = pt.category_id)
+            left outer join color_tb clt on(clt.color_id = pt.color_id)
+        where
+        	pt.product_id = #{productId}
 	</select>
 </mapper>

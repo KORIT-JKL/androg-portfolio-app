@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from "react-query";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ProductsCard from './productsCard';
+import { useRecoilState } from "recoil";
+import { setRefresh } from "../../atoms/authAtoms";
 const container= css`
     display: flex;
     width: 100%;
@@ -24,68 +27,65 @@ const productCardContainer = css`
 `
 const productCard = css`
     display: flex;
-    
+    flex-direction: column;
     width: 300px;
     height: 430px;
     padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    &:hover{
+        background-color: #dbdbdb90;
+    }
+    &:active{
+        background-color: #fafafa;
+    }
 `
 const productImg =css`
     height: 80%;
     width: 100%;
 `
 const Products = () => {
+
     const {categoryId} = useParams();
+    const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setProducts] = useState([])
+
+
     const searchProducts = useQuery(
         ["searchProducts"], async () => {
             console.log(categoryId);
             const reponse = await axios.get(`http://localhost:8080/category/${categoryId}`);
             return reponse
             
-        },{
+        },
+        {
+            enabled : refresh,
             onSuccess : (response) => {
                 console.log(response);
-                setProducts(response);
+                setProducts(response.data);
+                setThiRefresh(false);
             }
         }
     )
+    const navigate = useNavigate();
+    const ProductsCardClick = (productId) => {
+        navigate(`/products/${productId}/details`);
+    }
+    
+    // onClick={ProductsCardClick(product.productId)}
     return (
         <div>
-            <CommonHeader />
+            <CommonHeader  />
             <div css={container}>
                 <ul css={productCardContainer}>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        {/* <Products /> */}
-                    </li>
-                    {/* <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li>
-                    <li css={productCard}>
-                        <img css={productImg} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt=""/>
-    
-                    </li> */}
-    
+                    {products.length > 0 ? products.map((product) => 
+                    <>
+                        <li css={productCard} onClick={() => ProductsCardClick(product.productId)} >
+                            <ProductsCard  product ={product} key={product.productId}/>
+                        </li > 
+                    </>)
+                        : ""}
+
                 </ul>
             </div>
         <CommonFooter />

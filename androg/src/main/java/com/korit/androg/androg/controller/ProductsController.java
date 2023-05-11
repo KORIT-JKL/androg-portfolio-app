@@ -15,9 +15,14 @@ public class ProductsController {
 	private final ProductsService productsService;
 	
 	@GetMapping("/category/{categoryId}")
-	public ResponseEntity<?> getProductsByCategoyrId(@PathVariable int categoryId){
-		System.out.println(categoryId);
+	public ResponseEntity<?> getProductsByCategoyrId (@PathVariable int categoryId) {
+//		System.out.println(categoryId);
 		return ResponseEntity.ok().body(productsService.getProductsByCategoryId(categoryId));
+	}
+	@GetMapping("/products/{productId}/details")
+	public ResponseEntity<?> getProductByProductId (@PathVariable int productId) {
+//		System.out.println(productId);
+		return ResponseEntity.ok().body(productsService.getProductByProductId(productId));
 	}
 	
 }
