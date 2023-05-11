@@ -127,10 +127,10 @@ const CommonHeader = () => {
           {loginIsState ? (
             <>
               <ul css={headerList}>
-                <li css={list} onMouseOver={() => setsbheader(true)}>
+                <li css={list} onMouseOver={() => setsbheader(false)}>
                   SHOP
                 </li>
-                <li css={list} onMouseOver={() => setsbheader(false)}>
+                <li css={list} onMouseOver={() => setsbheader(true)}>
                   SUPPORT
                 </li>
               </ul>
@@ -150,10 +150,10 @@ const CommonHeader = () => {
           ) : (
             <>
               <ul css={headerList}>
-                <li css={list} onMouseOver={() => setsbheader(true)}>
+                <li css={list} onMouseOver={() => setsbheader(false)}>
                   SHOP
                 </li>
-                <li css={list} onMouseOver={() => setsbheader(false)}>
+                <li css={list} onMouseOver={() => setsbheader(true)}>
                   SUPPORT
                 </li>
               </ul>
