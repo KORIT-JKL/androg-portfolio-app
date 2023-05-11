@@ -76,7 +76,6 @@ const CommonHeader = () => {
   const [sbheader, setsbheader] = useState(false);
   const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
-  // const [categoryId, thisSetCategoryId] = useRecoilState(setCategoryId);
   const navigate = useNavigate();
   const onClickLogo = () => {
     navigate("/");

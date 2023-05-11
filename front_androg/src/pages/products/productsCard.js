@@ -34,12 +34,7 @@ const productPrice = css`
     top: 5px;
 `
 const ProductsCard = ( {product , key} ) => {
-    // const navigate = useNavigate();
-    // const ProductsCardClick = (e) => {
-    //     navigate(`/products/'${e}/details`);
-    // }
-    
-    // onClick={ProductsCardClick(product.productId)}
+
     return (
         <>
             <div css={productCard}  >

@@ -145,7 +145,6 @@ const shippingSubText =css`
 `
 const ProductDetails = () => {
     
-    const categoryId = 1;
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
@@ -177,7 +176,7 @@ const ProductDetails = () => {
         <div css={container}>
             
             <div css={imgContainer}>
-                <img css={img} src={product.productImg} alt="" />
+                <img css={img} src={product.productImg} alt="productImg" />
             </div>
             <div css={detailsContainer}>
                 <div css={detailTop}>

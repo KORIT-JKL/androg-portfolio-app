@@ -40,10 +40,7 @@ const productCard = css`
         background-color: #fafafa;
     }
 `
-const productImg =css`
-    height: 80%;
-    width: 100%;
-`
+
 const Products = () => {
 
     const {categoryId} = useParams();
@@ -71,8 +68,7 @@ const Products = () => {
     const ProductsCardClick = (productId) => {
         navigate(`/products/${productId}/details`);
     }
-    
-    // onClick={ProductsCardClick(product.productId)}
+
     return (
         <div>
             <CommonHeader  />
