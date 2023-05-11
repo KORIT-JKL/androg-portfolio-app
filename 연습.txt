@@ -1,0 +1,50 @@
+사용자 페이지
+
+장바구니 추가 
+장바구니 들고 결제페이지
+
+로그인
+장바구니 기능
+장바구니 -> 결제페이지
+검색
+
+마이페이지 기능(리뷰,구매한 상품리뷰, 배송지 등록)
+
+옷들 데이터
+
+details에서 같은 옷 컬러 옵션
+insert into cart_tb
+values (0 , 1 , 1);
+
+select 
+	cart_tb.user_id,
+    pdt.size_name,
+    pt.product_price,
+    pt.product_name,
+    pt.product_img,
+    ct.color_name
+from 
+ cart_tb
+left outer join product_dtl_tb pdt on(pdt.product_id = cart_tb.product_dtl_id)
+left outer join product_tb pt on(pt.product_id = pdt.product_id)
+left outer join color_tb ct on(ct.color_id = pdt.color_id)
+where
+	user_id = 1;
+
+insert cart_tb
+values(0, 2, 3 , "M", 1);
+
+select
+	ct.count,
+	pt.product_name,
+    pt.product_price,
+    clt.color_name,
+    pt.product_img,
+    ct.size_name
+from
+	cart_tb ct
+    left outer join product_tb pt on (pt.product_id = ct.product_id)
+    left outer join color_tb clt on(clt.color_id = pt.color_id)
+where
+	ct.user_id = 1
+요런식
