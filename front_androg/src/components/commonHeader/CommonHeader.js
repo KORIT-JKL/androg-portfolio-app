@@ -2,10 +2,10 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import impact from "../../img/impact (1).png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh } from "../../atoms/authAtoms";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { cartIsOpenState, setRefresh } from "../../atoms/Auth/authAtoms";
+import { loginState } from "../../atoms/Auth/authAtoms";
 import Cart from "../../pages/Cart/cart";
 
 const header = css`
@@ -136,7 +136,7 @@ const CommonHeader = () => {
               </ul>
               <ul css={headerList2}>
                 <li css={list}>SEARCH</li>
-                <li css={list} onClick={() => setLoginIsState(false)}>
+                <li css={list}>
                   LOGOUT
                 </li>
                 <li css={list} onClick={() => navigate("/page/mypage")}>
@@ -159,8 +159,8 @@ const CommonHeader = () => {
               </ul>
               <ul css={headerList2}>
                 <li css={list}>SEARCH</li>
-                <li css={list} onClick={() => setLoginIsState(true)}>
-                  LOGIN
+                <li css={list}>
+                 <Link to="/login">LOGIN</Link> 
                 </li>
                 <li css={list} onClick={() => setCartIsOpen(true)}>
                   BAG

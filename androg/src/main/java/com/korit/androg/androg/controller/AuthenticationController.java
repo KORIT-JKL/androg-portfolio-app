@@ -24,8 +24,10 @@ public class AuthenticationController {
 	
 	private final AuthenticationService authenticationService;
 	
+	@ValidAspect
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto) {
+	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto, BindingResult bindingResult) {
+		System.out.println(loginReqDto);
 		return ResponseEntity.ok().body(authenticationService.signin(loginReqDto));
 	}
 	

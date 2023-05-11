@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from "recoil";
-import { cartIsOpenState } from "../../atoms/authAtoms";
+import { cartIsOpenState } from "../../atoms/Auth/authAtoms";
 const cartContainer =css`
     position: fixed;
     z-index: 999;

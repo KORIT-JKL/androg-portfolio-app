@@ -32,6 +32,16 @@ const mainTxt = css`
     margin-bottom: 23px;
 `;
 
+const inputCss = css`
+    position: relative;
+`;
+
+const errorMsg = css`
+    position: absolute;
+    top: 40px;
+    color: red;
+`;
+
 const privacy = css`
     display: flex;
 `;
@@ -99,9 +109,18 @@ const Register = () => {
                 </header>
                 <main css={main}>
                     <p css={mainTxt}>회원으로 가입하시면 Androg 에서 운영하는 온라인 스토어의 서비스를 아이<br/>디로 이용하실 수 있습니다.</p>
-                    <RegisterInput type="email" placeholder="이메일" onChange={onChange} name="email" />
-                    <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
-                    <RegisterInput type="name" placeholder="이름" onChange={onChange} name="name" />
+                    <div css={inputCss}>
+                        <RegisterInput type="email" placeholder="이메일" onChange={onChange} name="email" />
+                        <div css={errorMsg}>{errorMessages.email}</div>
+                    </div>
+                    <div css={inputCss}>
+                        <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
+                        <div css={errorMsg}>{errorMessages.password}</div>
+                    </div>
+                    <div css={inputCss}>
+                        <RegisterInput type="name" placeholder="이름" onChange={onChange} name="name" />
+                        <div css={errorMsg}>{errorMessages.name}</div>
+                    </div>
                     <div css={privacy}>
                         <input type="checkbox" css={privacyBtn}/>
                         <label css={text}><a href="">개인정보 보호정책</a> 및 <a href="">이용약관</a> 동의</label>

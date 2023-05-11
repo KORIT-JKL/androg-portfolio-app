@@ -6,7 +6,7 @@ import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { setRefresh } from "../../atoms/authAtoms";
+import { setRefresh } from "../../atoms/Auth/authAtoms";
 import { useRecoilState } from "recoil";
 const container = css`
     display: flex;
