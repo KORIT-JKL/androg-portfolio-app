@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import impact from "../../img/impact (1).png";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh } from "../../atoms/Auth/authAtoms";
-import { loginState } from "../../atoms/Auth/authAtoms";
+import { cartIsOpenState, setRefresh } from "../../atoms/Auth/AuthAtoms";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const header = css`
   position: fixed;
@@ -84,6 +86,18 @@ const CommonHeader = () => {
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
 
   const navigate = useNavigate();
+
+  const { data, isLoading } = useQuery(["principal"], async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get("http://localhost:8080/auth/principal",
+      {params:{accessToken}},
+      {
+          enabled: accessToken
+      });
+      return response;
+  });
+
+
   const onClickLogo = () => {
     navigate("/");
   }
@@ -109,11 +123,16 @@ const CommonHeader = () => {
     setsbheader(true);
   };
 
- 
-          
   const onClickCategory = (e) => {
     navigate(`/category/${e}`);
     setThiRefresh(true);
+  };
+
+  const logoutClickHandle = () => {
+    if(window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken");
+   }
+   setLoginIsState(false);
   };
   
   return (
@@ -136,7 +155,7 @@ const CommonHeader = () => {
               </ul>
               <ul css={headerList2}>
                 <li css={list}>SEARCH</li>
-                <li css={list}>
+                <li css={list} onClick={logoutClickHandle}>
                   LOGOUT
                 </li>
                 <li css={list} onClick={() => navigate("/page/mypage")}>

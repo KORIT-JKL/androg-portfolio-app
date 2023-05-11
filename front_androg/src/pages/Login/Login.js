@@ -9,7 +9,7 @@ import { RiLockPasswordLine } from 'react-icons/ri';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { refreshState } from "../../atoms/Auth/authAtoms";
+import { loginState, refreshState } from "../../atoms/Auth/AuthAtoms";
 
 const container = css`
     display: flex;
@@ -78,6 +78,7 @@ const Login = () => {
     const [loginUser , setLoginUser] = useState({email:"", password:""});
     const [ errorMessages, setErrorMessages] = useState({email:"", password:""});
     const [ refresh, SetRefresh ] = useRecoilState(refreshState);
+    const [login, setLogin] = useRecoilState(loginState);
 
     const navigate = useNavigate();
 
@@ -95,10 +96,11 @@ const Login = () => {
         try {
             const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
             setErrorMessages({email:"", password:""})
-            console.log(response)
+            
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
             SetRefresh(false);
+            setLogin(true);
             navigate("/");
         } catch (error) {
             setErrorMessages({email:"", password:"", ...error.response.data.errorData});
