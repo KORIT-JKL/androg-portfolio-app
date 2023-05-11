@@ -6,6 +6,8 @@ import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import Information from "../../components/SupportUI/Information/Information";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const mainContainer = css`
   display: grid;
@@ -76,6 +78,24 @@ const orderContent = css`
 
 const MyPage = () => {
   const navgate = useNavigate();
+
+  const principal = useQuery(
+    ["principal"],
+    async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get("http://localhost:8080/user/mypage", {
+        params: { accessToken },
+      });
+      console.log(response);
+      return response;
+    },
+    {
+      enabled: !!localStorage.getItem("accessToken"),
+    }
+  );
+  if (principal.isLoading) {
+    return <></>;
+  }
   return (
     <>
       <CommonHeader />
@@ -84,9 +104,9 @@ const MyPage = () => {
           <div css={myInfoContent}>
             <h2 css={Title}>내 계정</h2>
             <span css={subTitle}>
-              이름 <br />
+              {principal.data.data.name} <br />
             </span>
-            <span css={subTitle}>이메일</span>
+            <span css={subTitle}>{principal.data.data.email}</span>
             <div css={addressContent}>주소록 보기</div>
           </div>
           <div css={supportContent}>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.korit.androg.androg.dto.LoginReqDto;
 import com.korit.androg.androg.dto.SignupReqDto;
 import com.korit.androg.androg.dto.auth.JwtRespDto;
+import com.korit.androg.androg.dto.user.PrincipalRespDto;
 import com.korit.androg.androg.entity.Authority;
 import com.korit.androg.androg.entity.User;
 import com.korit.androg.androg.exception.CustomException;
@@ -18,7 +19,7 @@ import com.korit.androg.androg.exception.ErrorMap;
 import com.korit.androg.androg.repository.UserRepository;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
 
-
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -68,4 +69,15 @@ public class AuthenticationService implements UserDetailsService {
 		return userEntity.toPrincipal();
 	}
 	
+	public PrincipalRespDto getPrincipal(String accessToken) {
+		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken));
+		User userEntity = userRepository.findUserByEmail(claims.getSubject());
+		return PrincipalRespDto.builder()
+								.userId(userEntity.getUserId())
+								.email(userEntity.getEmail())
+								.name(userEntity.getName())
+								.authorities((String)claims.get("auth"))
+								.build();
+	}
+
 }
