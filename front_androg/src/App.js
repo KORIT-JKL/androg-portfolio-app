@@ -13,6 +13,8 @@ import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
 import Register from "./pages/Register/Register";
 import MyPage from './pages/MyPage/MyPage';
+import Products from "./pages/products/products";
+import ProductDetails from "./pages/products/productDetails";
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
         <Route exact path="/page/legal" element={<Legal />}></Route>
 
         <Route exact path="/page/mypage" element={<MyPage />}></Route>
+        
+        <Route path ="/category/:categoryId" element ={<Products/>}></Route>
+        <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
       </Routes>
     </>
   );
