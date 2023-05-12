@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
@@ -8,6 +8,7 @@ import Information from "../../components/SupportUI/Information/Information";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
+import OrderProducts from "../../components/Products/OrderProducts";
 
 const mainContainer = css`
   display: grid;
@@ -77,79 +78,12 @@ const orderContent = css`
   max-height: 100%;
 `;
 
-const orderbox = css`
-  width: 1030px;
-  height: 720px;
-  overflow-y: auto;
-`;
-
-const orderDetailBox = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid black;
-  margin: 10px 0px 10px 2px;
-  padding: 5px;
-  width: 70%;
-  height: 200px;
-`;
-
-const orderImgBox = css`
-  border: 1px solid black;
-  padding: 5px;
-  width: 30%;
-  height: 100%;
-  overflow: hidden;
-`;
-
-const orderImg = css`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const orderInfoBox = css`
-  border: 1px solid black;
-  padding: 5px;
-  width: 35%;
-  height: 100%;
-`;
-
-const productName = css`
-  margin-top: 5px;
-  font-size: 25px;
-  font-weight: 600;
-  padding-bottom: 10px;
-`;
-
-const orderInfoText = css`
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 10px;
-`;
-
-const reviewButtonBox = css`
-  padding: 5px;
-  width: 30%;
-  height: 100%;
-`;
-
-const reviewButton = css`
-  font-weight: 600;
-  font-size: 17px;
-  height: 100%;
-  width: 100%;
-  background-color: black;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: grey;
-    color: white;
-  }
-`;
-
 const MyPage = () => {
   const navgate = useNavigate();
+  const [orderProducts, setOrderProducts] = useState([]);
+  const [infoRefresh, setInfoRefresh] = useState(false);
+  const [productsRefresh, setProductsRefresh] = useState(false);
+  let userId = 0;
 
   const principal = useQuery(
     ["principal"],
@@ -159,16 +93,49 @@ const MyPage = () => {
       const response = await axios.get("http://localhost:8080/user/mypage", {
         params: { accessToken },
       });
-      console.log(response);
       return response;
     },
     {
-      enabled: !!localStorage.getItem("accessToken"),
+      onSuccess: (response) => {
+        userId = response.data.userId;
+        setInfoRefresh(false);
+      },
+      enabled: infoRefresh,
     }
   );
-  if (principal.isLoading) {
+  const products = useQuery(
+    ["orderProducts"],
+    async () => {
+      const option = {
+        params: {
+          userId: principal.data.data.userId,
+        },
+      };
+      //user가 구매한 상품 목록 url ->/user/mypage/purchases
+      const response = await axios.get("http://localhost:8080/user/mypage/purchases", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setOrderProducts([...orderProducts, ...response.data]);
+        setProductsRefresh(false);
+      },
+      enabled: !!principal.data && productsRefresh,
+    }
+  );
+  useEffect(() => {
+    if (!infoRefresh) {
+      // console.log(infoRefresh);
+      setInfoRefresh(true);
+    }
+    if (!productsRefresh) {
+      setProductsRefresh(true);
+    }
+  }, []);
+  if (principal.isLoading && products.isLoading) {
     return <></>;
   }
+
   return (
     <>
       <CommonHeader />
@@ -177,9 +144,9 @@ const MyPage = () => {
           <div css={myInfoContent}>
             <h2 css={Title}>내 계정</h2>
             <span css={subTitle}>
-              {principal.data.data.name} <br />
+              {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>{principal.data.data.email}</span>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
             <div css={addressContent}>주소록 보기</div>
           </div>
           <div css={supportContent}>
@@ -206,30 +173,13 @@ const MyPage = () => {
         </div>
         <div css={orderContent}>
           <h2 css={Title}>주문 기록</h2>
-          <div css={orderbox}>
-            <div css={orderDetailBox}>
-              <div css={orderImgBox}>
-                <img
-                  css={orderImg}
-                  src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/1994916_CORA_1_476ac993-fee8-47a7-b61c-8419f9fcc0e0.jpg?v=1683052708&width=480"
-                  alt=""
-                />
-              </div>
-              <div css={orderInfoBox}>
-                <h2 css={productName}>GOLD LION LS TEE</h2>
-                <p css={orderInfoText}>
-                  옵션 : coral/M <br />
-                </p>
-                <p css={orderInfoText}>
-                  수량 : 1 <br />
-                </p>
-                <p css={orderInfoText}>가격 : ₩82000</p>
-              </div>
-              <div css={reviewButtonBox}>
-                <button css={reviewButton}>리뷰 등록</button>
-              </div>
-            </div>
-          </div>
+          {orderProducts.length > 0 ? (
+            orderProducts.map((orderProduct) => (
+              <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} />
+            ))
+          ) : (
+            <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
+          )}
         </div>
       </main>
       <CommonFooter />

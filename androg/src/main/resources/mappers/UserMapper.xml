@@ -22,6 +22,39 @@
 	<association property="role" resultMap="roleMap"></association>
 </resultMap>
 
+<resultMap type="com.korit.androg.androg.entity.OrderProducts" id="orderProductsMap">
+	<id property="orderId" column="order_id"/>
+	<result property="sizeName" column="size_name"/>
+	<result property="countNumber" column="count_number"/>
+	<association property="user" resultMap="userMap"></association>
+	<association property="products" resultMap="productsMap"></association>
+	<association property="color" resultMap="colorMap"></association>
+</resultMap>
+
+<resultMap type="com.korit.androg.androg.entity.Products" id="productsMap">
+		<id property="productId" column="product_id"/>
+		<result property="productName" column="product_name"/>
+		<result property="productPrice" column="product_Price"/>
+		<result property="productImg" column="product_img"/>
+		<result property="sizeS" column="size_s"/>
+		<result property="sizeM" column="size_m"/>
+		<result property="sizeL" column="size_l"/>
+		<result property="sizeXL" column="size_xl"/>
+		<result property="sizeXXL" column="size_xxl"/>
+		<association property="category" resultMap="categoryMap"></association>
+		<association property="color" resultMap="colorMap"></association>
+	</resultMap>
+
+<resultMap type="com.korit.androg.androg.entity.Category" id="categoryMap">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Color" id="colorMap">
+		<id property="colorId" column="color_id"/>
+		<result property="colorName" column="color_name"/>
+</resultMap>
+
 
 <select id="findUserByEmail" resultMap="userMap">
 	SELECT
@@ -56,7 +89,28 @@ keyProperty="userId">
 	values (0, #{userId}, #{roleId})
 </insert>
 
+<select id="getOrderProducts" parameterType="Integer" resultMap="orderProductsMap">
+	select
+		pt.product_name,
+    	pt.product_price,
+    	pt.product_img,
+    
+   	 	ct.color_name,
+    	ot.size_name,
+    	ot.order_id,
+    	ot.count_number,
+    
+    	ut.name
+	from
+		order_tb ot
+	left outer join product_tb pt on(pt.product_id = ot.product_id)
+	left outer join user_tb ut on(ut.user_id = ot.user_id)
+	left outer join color_tb ct on(ct.color_id = pt.color_id)
 
+	where
+ 		ot.user_id = #{userId}
+		
+</select>
 
 
 </mapper>
