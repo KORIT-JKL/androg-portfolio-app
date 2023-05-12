@@ -50,7 +50,7 @@ const SearchProducts = () => {
         ["searchProducts"], async () => {
             const option = {
                 params:{
-                    searchInput
+                    searchInput : searchInput
                 } 
                 
               };

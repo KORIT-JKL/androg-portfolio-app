@@ -24,6 +24,7 @@ public class Products {
 	
 	private Category category;
 	private Color color;
+	private int totalCount;
 	public SearchProductsRespDto toDto() {
 		return SearchProductsRespDto.builder()
 				.productId(productId)
