@@ -49,9 +49,9 @@ const list = css`
 `;
 
 const img = css`
-    cursor: pointer;
-    width: 70px;
-    height: 50px;
+  cursor: pointer;
+  width: 70px;
+  height: 50px;
 `;
 const subHeader = css`
   background-color: white;
@@ -80,8 +80,8 @@ const CommonHeader = () => {
   const  [searchInput , thisSetSearchInput] = useRecoilState(setSearchInput);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [sbheader, setsbheader] = useState(false);
-  const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
-  const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
+  const [refresh, setThiRefresh] = useRecoilState(setRefresh);
+  const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
 
   const navigate = useNavigate();
 
@@ -90,11 +90,10 @@ const CommonHeader = () => {
 
   const onClickLogo = () => {
     navigate("/");
-  }
+  };
   const onClickNotice = () => {
     navigate("/page/notice");
     setsbheader(true);
-
   };
   const onClickCoustomer = () => {
     navigate("/page/customer");
@@ -140,10 +139,9 @@ const CommonHeader = () => {
   };
   
   return (
-    <>  
-    
-        {CartIsOpen ? <Cart /> : ""}
-        
+    <>
+      {CartIsOpen ? <Cart /> : ""}
+
       <div css={header}>
         <div css={mainHeader}>
           <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
@@ -163,7 +161,7 @@ const CommonHeader = () => {
                 <li css={list} onClick={logoutClickHandle}>
                   LOGOUT
                 </li>
-                <li css={list} onClick={() => navigate("/page/mypage")}>
+                <li css={list} onClick={() => navigate("/mypage")}>
                   MYPAGE
                 </li>
                 <li css={list} onClick={() => setCartIsOpen(true)}>
@@ -197,13 +195,27 @@ const CommonHeader = () => {
         <div css={subHeader}>
           {!sbheader ? (
             <ul css={subHeaderList}>
-              <li css={sublist}  onClick={() => onClickCategory(1)}>tees</li>
-              <li css={sublist}  onClick={() => onClickCategory(2)}>swaets</li>
-              <li css={sublist}  onClick={() => onClickCategory(3)}>pants</li>
-              <li css={sublist}  onClick={() => onClickCategory(4)}>outerwear</li>
-              <li css={sublist}  onClick={() => onClickCategory(5)}>headwear</li>
-              <li css={sublist}  onClick={() => onClickCategory(6)}>shoes</li>
-              <li css={sublist}  onClick={() => onClickCategory(7)}>all</li>
+              <li css={sublist} onClick={() => onClickCategory(1)}>
+                tees
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(2)}>
+                swaets
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(3)}>
+                pants
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(4)}>
+                outerwear
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(5)}>
+                headwear
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(6)}>
+                shoes
+              </li>
+              <li css={sublist} onClick={() => onClickCategory(7)}>
+                all
+              </li>
             </ul>
           ) : (
             <ul css={subHeaderList}>

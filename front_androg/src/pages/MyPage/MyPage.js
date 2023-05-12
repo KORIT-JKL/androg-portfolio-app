@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import Information from "../../components/SupportUI/Information/Information";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import axios from "axios";
+import OrderProducts from "../../components/Products/OrderProducts";
 
 const mainContainer = css`
   display: grid;
@@ -29,6 +32,7 @@ const myInfoContent = css`
   margin-bottom: 100px;
 `;
 const Title = css`
+  margin-top: 5px;
   font-size: 25px;
   font-weight: 600;
   padding-bottom: 20px;
@@ -73,9 +77,65 @@ const orderContent = css`
   margin-bottom: 10px;
   max-height: 100%;
 `;
-
+// react useQuery, rendering, State 이슈
 const MyPage = () => {
   const navgate = useNavigate();
+  const [orderProducts, setOrderProducts] = useState([]);
+  const [infoRefresh, setInfoRefresh] = useState(false);
+  const [productsRefresh, setProductsRefresh] = useState(false);
+  let userId = 0;
+
+  const principal = useQuery(
+    ["principal"],
+    async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
+      const response = await axios.get("http://localhost:8080/user/mypage", {
+        params: { accessToken },
+      });
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        userId = response.data.userId;
+        setInfoRefresh(false);
+      },
+      enabled: infoRefresh,
+    }
+  );
+  const products = useQuery(
+    ["orderProducts"],
+    async () => {
+      const option = {
+        params: {
+          userId: principal.data.data.userId,
+        },
+      };
+      //user가 구매한 상품 목록 url ->/user/mypage/purchases
+      const response = await axios.get("http://localhost:8080/user/mypage/purchases", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setOrderProducts([...orderProducts, ...response.data]);
+        setProductsRefresh(false);
+      },
+      enabled: !!principal.data && productsRefresh,
+    }
+  );
+  useEffect(() => {
+    if (!infoRefresh) {
+      // console.log(infoRefresh);
+      setInfoRefresh(true);
+    }
+    if (!productsRefresh) {
+      setProductsRefresh(true);
+    }
+  }, []);
+  if (principal.isLoading && products.isLoading) {
+    return <></>;
+  }
+
   return (
     <>
       <CommonHeader />
@@ -84,10 +144,12 @@ const MyPage = () => {
           <div css={myInfoContent}>
             <h2 css={Title}>내 계정</h2>
             <span css={subTitle}>
-              이름 <br />
+              {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>이메일</span>
-            <div css={addressContent}>주소록 보기</div>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <div css={addressContent} onClick={() => navgate("/mypage/address")}>
+              주소록 보기
+            </div>
           </div>
           <div css={supportContent}>
             <h2 css={Title}>고객지원</h2>
@@ -113,6 +175,13 @@ const MyPage = () => {
         </div>
         <div css={orderContent}>
           <h2 css={Title}>주문 기록</h2>
+          {orderProducts.length > 0 ? (
+            orderProducts.map((orderProduct) => (
+              <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} />
+            ))
+          ) : (
+            <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
+          )}
         </div>
       </main>
       <CommonFooter />

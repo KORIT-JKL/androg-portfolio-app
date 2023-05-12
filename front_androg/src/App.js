@@ -9,13 +9,14 @@ import CustomerSupport from "./pages/Support/CustomerSupport/CustomerSupport";
 import Shipping from "./pages/Support/Shipping/Shipping";
 import SizeGuide from "./pages/Support/SizeGuide/SizeGuide";
 import Legal from "./pages/Support/Legal/Legal";
-import Login from './pages/Login/Login';
-import Main from './pages/Main/Main';
+import Login from "./pages/Login/Login";
+import Main from "./pages/Main/Main";
 import Register from "./pages/Register/Register";
-import MyPage from './pages/MyPage/MyPage';
+import MyPage from "./pages/MyPage/MyPage";
 import Products from "./pages/products/products";
 import ProductDetails from "./pages/products/productDetails";
 import SearchProducts from "./pages/products/searchProducts";
+import Address from "./pages/Address/Address";
 
 function App() {
   return (
@@ -33,10 +34,12 @@ function App() {
         <Route exact path="/page/sizeguide" element={<SizeGuide />} />
         <Route exact path="/page/legal" element={<Legal />} />
 
-        <Route exact path="/page/mypage" element={<MyPage />} />
-        
+
+        {/* 마이페이지 Route */}
+        <Route path="/mypage" element={<MyPage />}></Route>
+        <Route path="/mypage/address" element={<Address />}></Route>
+
         <Route path ="/category/:categoryId" element ={<Products/>}></Route>
-        
         <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
         <Route path ="/products/search" element = {<SearchProducts />}></Route>
       </Routes>
