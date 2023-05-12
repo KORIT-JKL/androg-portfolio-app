@@ -130,7 +130,7 @@ const CommonHeader = () => {
                 <li css={list} onClick={() => setLoginIsState(false)}>
                   LOGOUT
                 </li>
-                <li css={list} onClick={() => navigate("/page/mypage")}>
+                <li css={list} onClick={() => navigate("/mypage")}>
                   MYPAGE
                 </li>
                 <li css={list} onClick={() => setCartIsOpen(true)}>
