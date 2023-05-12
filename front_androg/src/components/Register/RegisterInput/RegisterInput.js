@@ -4,6 +4,7 @@ import React from 'react';
 import Input from "../../Input/Input";
 
 const registerInput = css`
+    position: relative;
     margin-bottom: 40px;
     
 `;

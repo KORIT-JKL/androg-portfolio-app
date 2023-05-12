@@ -8,7 +8,7 @@ import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductsCard from './productsCard';
 import { useRecoilState } from "recoil";
-import { setRefresh } from "../../atoms/authAtoms";
+import { setRefresh } from "../../atoms/Auth/AuthAtoms";
 const container= css`
     display: flex;
     width: 100%;

@@ -2,11 +2,13 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import impact from "../../img/impact (1).png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAtoms";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const header = css`
   position: fixed;
@@ -15,9 +17,6 @@ const header = css`
   width: 100%;
   border-bottom: 1px solid #dbdbdb;
 `;
-
-
-
 
 const mainHeader = css`
   display: flex;
@@ -85,6 +84,10 @@ const CommonHeader = () => {
   const [CartIsOpen , setCartIsOpen] =useRecoilState(cartIsOpenState);
 
   const navigate = useNavigate();
+
+
+
+
   const onClickLogo = () => {
     navigate("/");
   }
@@ -110,8 +113,6 @@ const CommonHeader = () => {
     setsbheader(true);
   };
 
- 
-          
   const onClickCategory = (e) => {
     navigate(`/category/${e}`);
     setThiRefresh(true);
@@ -130,6 +131,14 @@ const CommonHeader = () => {
   const searchClick = (inputIsOpen)=> {
     setInputIsOpen(!inputIsOpen);
   }
+
+  const logoutClickHandle = () => {
+    if(window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken");
+      setLoginIsState(false);
+   }
+  };
+  
   return (
     <>  
     
@@ -151,7 +160,7 @@ const CommonHeader = () => {
               <ul css={headerList2}>
                 {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
                 <li css={list} onClick={() => searchClick(inputIsOpen)} >SEARCH</li>
-                <li css={list} onClick={() => setLoginIsState(false)}>
+                <li css={list} onClick={logoutClickHandle}>
                   LOGOUT
                 </li>
                 <li css={list} onClick={() => navigate("/page/mypage")}>
@@ -175,8 +184,8 @@ const CommonHeader = () => {
               <ul css={headerList2}>
               {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
                 <li css={list} onClick={() => searchClick(inputIsOpen)}>SEARCH</li>
-                <li css={list} onClick={() => setLoginIsState(true)}>
-                  LOGIN
+                <li css={list}>
+                 <Link to="/login">LOGIN</Link> 
                 </li>
                 <li css={list} onClick={() => setCartIsOpen(true)}>
                   BAG

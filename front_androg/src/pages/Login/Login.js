@@ -7,9 +7,9 @@ import LoginInput from "../../components/Login/LoginInput/LoginInput";
 import { AiOutlineMail } from "react-icons/ai"; 
 import { RiLockPasswordLine } from 'react-icons/ri';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { refreshState } from "../../atoms/Auth/AuthAtoms";
+import { loginState, refreshState } from "../../atoms/Auth/AuthAtoms";
 
 const container = css`
     display: flex;
@@ -37,6 +37,18 @@ const loginButton = css`
     border: 1px solid black;
     cursor: pointer;
 `;
+const inputCss = css`
+    position: relative;
+`;
+
+const errorMsg = css`
+    position: absolute;
+    top: 40px;
+    font-size: 12px;
+    color: red;
+`;
+
+
 
 const passwordFindButton = css`
     width: 400px;
@@ -66,6 +78,7 @@ const Login = () => {
     const [loginUser , setLoginUser] = useState({email:"", password:""});
     const [ errorMessages, setErrorMessages] = useState({email:"", password:""});
     const [ refresh, SetRefresh ] = useRecoilState(refreshState);
+    const [loginIsState, setLoginIsState] = useRecoilState(loginState);
 
     const navigate = useNavigate();
 
@@ -82,15 +95,19 @@ const Login = () => {
         }
         try {
             const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
-            console.log(response)
+            setErrorMessages({email:"", password:""})
+            
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
             SetRefresh(false);
+            setLoginIsState(true);
             navigate("/");
         } catch (error) {
             setErrorMessages({email:"", password:"", ...error.response.data.errorData});
         }
     }
+
+  
 
     return (
         <>
@@ -100,13 +117,19 @@ const Login = () => {
                     <h1>Login</h1>
                 </header>
                 <main css={main}>
-                    <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
-                    <AiOutlineMail />
-                    </LoginInput>
+                    <div css={inputCss}>
+                        <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
+                        <AiOutlineMail />
+                        </LoginInput>
+                        <div css={errorMsg}>{errorMessages.email}</div>
+                    </div>
 
-                    <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
-                    <RiLockPasswordLine />
-                    </LoginInput>
+                    <div css={inputCss}>
+                        <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
+                        <RiLockPasswordLine />
+                        </LoginInput>
+                        <div css={errorMsg}>{errorMessages.password}</div>
+                    </div>
                 </main>
                
               
@@ -114,7 +137,7 @@ const Login = () => {
                 <footer css={footer}>
                     <button css={loginButton} onClick={loginSubmitHandle}>로그인</button>
                     <button css={passwordFindButton}>비밀번호 찾기</button>
-                    <button css={registerButton}>회원가입</button>
+                    <button css={registerButton}><Link to="/register">회원가입</Link></button>
                 </footer>
 
             </div>
