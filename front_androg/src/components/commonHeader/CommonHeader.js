@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import impact from "../../img/impact (1).png";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh } from "../../atoms/authAtoms";
+import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAtoms";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
 
@@ -77,7 +77,8 @@ const sublist = css`
 
 const CommonHeader = () => {
 
-
+  const [inputIsOpen , setInputIsOpen] = useState(false);
+  const  [searchInput , thisSetSearchInput] = useRecoilState(setSearchInput);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [sbheader, setsbheader] = useState(false);
   const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
@@ -115,7 +116,20 @@ const CommonHeader = () => {
     navigate(`/category/${e}`);
     setThiRefresh(true);
   };
-  
+  const EnterKeyDown = (e) =>{
+    if(e.key === "Enter") {
+      thisSetSearchInput("")
+      thisSetSearchInput(document.getElementById("searchInputText").value);
+      navigate("/products/search");
+
+      setThiRefresh(true);
+    }
+    
+    
+  }
+  const searchClick = (inputIsOpen)=> {
+    setInputIsOpen(!inputIsOpen);
+  }
   return (
     <>  
     
@@ -135,7 +149,8 @@ const CommonHeader = () => {
                 </li>
               </ul>
               <ul css={headerList2}>
-                <li css={list}>SEARCH</li>
+                {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
+                <li css={list} onClick={() => searchClick(inputIsOpen)} >SEARCH</li>
                 <li css={list} onClick={() => setLoginIsState(false)}>
                   LOGOUT
                 </li>
@@ -158,7 +173,8 @@ const CommonHeader = () => {
                 </li>
               </ul>
               <ul css={headerList2}>
-                <li css={list}>SEARCH</li>
+              {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
+                <li css={list} onClick={() => searchClick(inputIsOpen)}>SEARCH</li>
                 <li css={list} onClick={() => setLoginIsState(true)}>
                   LOGIN
                 </li>

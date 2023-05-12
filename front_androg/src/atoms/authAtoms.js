@@ -14,3 +14,8 @@ export const setRefresh = atom({
     key: "setRefresh",
     default : true
 })
+
+export const setSearchInput = atom({
+    key: "setSearchInput",
+    default : ""
+})

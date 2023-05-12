@@ -10,4 +10,5 @@ import com.korit.androg.androg.entity.Products;
 public interface ProductsRepository {
 	public List<Products> getProductsByCategoryId(int categoryId);
 	public Products getProductByProductId(int productId);
+	public List<Products> getProductsBySearchInput(String searchInput);
 }
