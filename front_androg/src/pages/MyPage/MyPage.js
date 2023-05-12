@@ -77,7 +77,7 @@ const orderContent = css`
   margin-bottom: 10px;
   max-height: 100%;
 `;
-
+// react useQuery, rendering, State 이슈
 const MyPage = () => {
   const navgate = useNavigate();
   const [orderProducts, setOrderProducts] = useState([]);
@@ -147,7 +147,9 @@ const MyPage = () => {
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
             <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
-            <div css={addressContent}>주소록 보기</div>
+            <div css={addressContent} onClick={() => navgate("/mypage/address")}>
+              주소록 보기
+            </div>
           </div>
           <div css={supportContent}>
             <h2 css={Title}>고객지원</h2>
