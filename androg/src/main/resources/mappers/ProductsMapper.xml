@@ -11,7 +11,6 @@
 		<result property="sizeL" column="size_l"/>
 		<result property="sizeXL" column="size_xl"/>
 		<result property="sizeXXL" column="size_xxl"/>
-		<result property="totalCount" column="total_count"/>
 		<association property="category" resultMap="categoryMap"></association>
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
@@ -87,8 +86,7 @@
 			ct.category_id,
             ct.category_name,
             clt.color_id,
-            clt.color_name,
-            count(*) as total_count
+            clt.color_name
 		FROM
 			product_tb pt
             left outer join category_tb ct on(ct.category_id = pt.category_id)
@@ -96,18 +94,5 @@
         where
         	pt.product_name like concat("%",#{searchInput},"%")
         	or clt.color_name like concat("%",#{seachInput},"%")
-	</select>
-	<select id="getTotalCountByCategoryId">
-		select
-			count(*)
-		from
-			product_tb pt
-            left outer join category_tb ct on(ct.category_id = pt.category_id)
-            left outer join color_tb clt on(clt.color_id = pt.color_id)
-        where
-        	1 = 1
-			<if test="categoryId != 7">
-	        	AND pt.category_id = #{categoryId}
-	    	</if>
 	</select>
 </mapper>
