@@ -18,9 +18,6 @@ const header = css`
   border-bottom: 1px solid #dbdbdb;
 `;
 
-
-
-
 const mainHeader = css`
   display: flex;
   width: 100%;
@@ -87,15 +84,7 @@ const CommonHeader = () => {
 
   const navigate = useNavigate();
 
-  const { data, isLoading } = useQuery(["principal"], async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get("http://localhost:8080/auth/principal",
-      {params:{accessToken}},
-      {
-          enabled: accessToken
-      });
-      return response;
-  });
+
 
 
   const onClickLogo = () => {
@@ -131,8 +120,8 @@ const CommonHeader = () => {
   const logoutClickHandle = () => {
     if(window.confirm("로그아웃 하시겠습니까?")) {
       localStorage.removeItem("accessToken");
+      setLoginIsState(false);
    }
-   setLoginIsState(false);
   };
   
   return (

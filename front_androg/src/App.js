@@ -21,21 +21,21 @@ function App() {
     <>
       <Global styles={Reset}></Global>
       <Routes>
-        <Route exact path='/' element={<Main />}></Route>
-        <Route path='/login' element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+        <Route exact path='/' element={<Main />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* 문의페이지 Route */}
-        <Route exact path="/page/notice" element={<Notice />}></Route>
-        <Route exact path="/page/customer" element={<CustomerSupport />}></Route>
-        <Route exact path="/page/shipping" element={<Shipping />}></Route>
-        <Route exact path="/page/sizeguide" element={<SizeGuide />}></Route>
-        <Route exact path="/page/legal" element={<Legal />}></Route>
+        <Route exact path="/page/notice" element={<Notice />} />
+        <Route exact path="/page/customer" element={<CustomerSupport />} />
+        <Route exact path="/page/shipping" element={<Shipping />} />
+        <Route exact path="/page/sizeguide" element={<SizeGuide />} />
+        <Route exact path="/page/legal" element={<Legal />} />
 
-        <Route exact path="/page/mypage" element={<MyPage />}></Route>
+        <Route exact path="/page/mypage" element={<MyPage />} />
         
-        <Route path ="/category/:categoryId" element ={<Products/>}></Route>
-        <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
+        <Route path ="/category/:categoryId" element ={<Products/>} />
+        <Route path="products/:productId/details" element = {<ProductDetails />}/>
       </Routes>
     </>
   );

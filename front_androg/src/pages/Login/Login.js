@@ -78,7 +78,7 @@ const Login = () => {
     const [loginUser , setLoginUser] = useState({email:"", password:""});
     const [ errorMessages, setErrorMessages] = useState({email:"", password:""});
     const [ refresh, SetRefresh ] = useRecoilState(refreshState);
-    const [login, setLogin] = useRecoilState(loginState);
+    const [loginIsState, setLoginIsState] = useRecoilState(loginState);
 
     const navigate = useNavigate();
 
@@ -100,7 +100,7 @@ const Login = () => {
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
             SetRefresh(false);
-            setLogin(true);
+            setLoginIsState(true);
             navigate("/");
         } catch (error) {
             setErrorMessages({email:"", password:"", ...error.response.data.errorData});
