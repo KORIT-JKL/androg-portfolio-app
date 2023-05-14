@@ -6,6 +6,12 @@ import CommonFooter from "../../../components/CommonFooter/CommonFooter";
 import SupprotInput from "./../../../components/SupportUI/Input/SupprotInput";
 import FAQItem from "../../../components/SupportUI/Button/FAQItem";
 
+const main = css`
+  display: grid;
+  grid-template-columns: repeat(12);
+  padding-top: 120px;
+`;
+
 const mainContainer = css`
   grid-column-start: 7;
   display: flex;
@@ -23,12 +29,6 @@ const headerText = css`
   padding-bottom: 30px;
   font-size: 25px;
   font-weight: 800;
-`;
-
-const main = css`
-  display: grid;
-  grid-template-columns: repeat(12);
-  padding-top: 120px;
 `;
 
 const textArea = css`

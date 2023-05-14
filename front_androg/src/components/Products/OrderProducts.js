@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const orderbox = css`
   width: 1030px;
@@ -74,6 +75,11 @@ const reviewButton = css`
 `;
 
 const OrderProducts = ({ orderProduct }) => {
+  const navigate = useNavigate();
+  const reviewClickHandle = () => {
+    navigate("/");
+  };
+
   return (
     <div css={orderDetailBox}>
       <div css={orderImgBox}>
@@ -90,7 +96,9 @@ const OrderProducts = ({ orderProduct }) => {
         <p css={orderInfoText}>가격 : ₩ {orderProduct.productPrice}</p>
       </div>
       <div css={reviewButtonBox}>
-        <button css={reviewButton}>리뷰 등록</button>
+        <button css={reviewButton} onClick={reviewClickHandle}>
+          리뷰 등록
+        </button>
       </div>
     </div>
   );

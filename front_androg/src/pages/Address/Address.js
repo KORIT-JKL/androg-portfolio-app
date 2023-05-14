@@ -1,20 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
-import Postcode from "@actbase/react-daum-postcode";
+import React, { useState } from "react";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import { useQuery } from "react-query";
+import axios from "axios";
+import AddressInput from "../../components/Input/AddressInput";
+import DaumPostcodeEmbed from "react-daum-postcode";
 
 const mainContainer = css`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 10px;
   padding: 120px 20px;
 `;
 const informationContent = css`
   grid-column-start: 2;
-  grid-column: span 4 / span 4;
+  grid-column-end: span 4;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 10px;
   max-width: 100%;
   max-height: 100%;
@@ -53,6 +57,17 @@ const addressUpdateButton = css`
     font-weight: 600;
   }
 `;
+
+const addressContent = css`
+  grid-column-start: 7;
+  grid-column-end: span 6;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  max-width: 70%;
+  max-height: 100%;
+`;
+
 const addressDetailBox = css`
   display: flex;
   justify-content: space-between;
@@ -69,6 +84,7 @@ const addAddressButton = css`
   font-weight: 600;
   background-color: white;
   cursor: pointer;
+  transition: background, 0.4s;
 
   &:hover {
     background-color: gray;
@@ -76,8 +92,72 @@ const addAddressButton = css`
     color: white;
   }
 `;
+const nameBox = css`
+  max-width: 100%;
+  height: 50px;
+  border-bottom: 1px solid black;
+  padding-top: 10px;
+  margin-bottom: 20px;
+`;
+const postcode = css`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: none;
+
+  background-color: rgba(0, 0, 0, 0.4);
+`;
 
 const Address = () => {
+  const [addressOpen, setAddressOpen] = useState(false);
+  const [principalState, setPrincipalState] = useState(false);
+  const [openPostCode, setOpenPostCode] = useState(false);
+  const [address, setAddress] = useState({
+    address: "",
+    sigungu: "",
+    sido: "",
+    bname: "",
+    zonecode: "",
+  });
+  let userId = 0;
+  const principal = useQuery(
+    ["principal"],
+    async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
+      const response = await axios.get("http://localhost:8080/user/mypage", {
+        params: { accessToken },
+      });
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        userId = response.data.userId;
+        setPrincipalState(false);
+      },
+      enabled: principalState,
+    }
+  );
+  console.log(address);
+  const selectAddress = (data) => {
+    setAddress((prevState) => ({
+      ...prevState,
+      address: data.address,
+      sigungu: data.sigungu,
+      sido: data.sido,
+      bname: data.bname,
+      zonecode: data.zonecode,
+    }));
+  };
+
+  if (principal.isLoading) {
+    return <></>;
+  }
+
   return (
     <>
       <CommonHeader />
@@ -100,9 +180,88 @@ const Address = () => {
               국적 <br />
               <span>기본 배송지</span>
             </p>
-            <button css={addAddressButton}>주소 추가하기</button>
+            <button
+              css={addAddressButton}
+              onClick={() => {
+                if (!addressOpen) {
+                  setAddressOpen(true);
+                } else {
+                  setAddressOpen(false);
+                }
+              }}
+            >
+              주소 추가하기
+            </button>
           </div>
         </div>
+        {addressOpen ? (
+          <div css={addressContent}>
+            <h2 css={Title}>새 주소 추가</h2>
+            <div css={nameBox}>이름</div>
+            <div css={nameBox}>
+              {address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}
+            </div>
+            <button
+              css={addAddressButton}
+              onClick={() => {
+                if (!openPostCode) {
+                  setOpenPostCode(true);
+                } else {
+                  setOpenPostCode(false);
+                }
+              }}
+            >
+              {" "}
+              주소찾기{" "}
+            </button>
+            {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
+            <AddressInput type="text" placeholder="상세주소" name="addressDetail" />
+            <AddressInput
+              type="text"
+              placeholder="구/군/시"
+              name="sigungu"
+              value={address.sigungu}
+              onChange={(e) => setAddress({ ...address, sigungu: e.target.value })}
+            />
+            <AddressInput
+              type="text"
+              placeholder="시/도"
+              name="sido"
+              value={address.sido}
+              onChange={(e) => setAddress({ ...address, sido: e.target.value })}
+            />
+            <AddressInput
+              type="text"
+              placeholder="우편번호"
+              name="zonecode"
+              value={address.zonecode}
+              onChange={(e) => setAddress({ ...address, zonecode: e.target.value })}
+            />
+            <button css={addAddressButton}>저장</button>
+            <button
+              css={addAddressButton}
+              onClick={() => {
+                if (!addressOpen) {
+                  setAddressOpen(true);
+                } else {
+                  setAddressOpen(false);
+                  setAddress((prevState) => ({
+                    ...prevState,
+                    address: "",
+                    sigungu: "",
+                    sido: "",
+                    bname: "",
+                    zonecode: "",
+                  }));
+                }
+              }}
+            >
+              취소
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </main>
       <CommonFooter />
     </>

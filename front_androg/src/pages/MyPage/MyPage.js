@@ -120,7 +120,7 @@ const MyPage = () => {
         setOrderProducts([...orderProducts, ...response.data]);
         setProductsRefresh(false);
       },
-      enabled: !!principal.data && productsRefresh,
+      enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
   useEffect(() => {
@@ -146,7 +146,9 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <span css={subTitle}>
+              {principal.data !== undefined ? principal.data.data.email : <></>}
+            </span>
             <div css={addressContent} onClick={() => navgate("/mypage/address")}>
               주소록 보기
             </div>
