@@ -9,6 +9,7 @@ import CommonHeader from '../../components/CommonHeader/CommonHeader';
 import axios from "axios";
 import ProductsCard from "./productsCard";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import QueryString from "qs";
 const container= css`
     display: flex;
     width: 100%;
@@ -45,16 +46,22 @@ const SearchProducts = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setProducts] = useState([])
     const [ searchInput , setThisserachInput ] = useRecoilState(setSearchInput);
-
+    const [page , setPage ] =useState(1);
+    const [searchParams , setSearchParams] = useState({"searchInput" : searchInput , "page" : page})
     const searchProducts = useQuery(
         ["searchProducts"], async () => {
+
             const option = {
                 params:{
-                    searchInput
-                } 
+                    searchParams : searchParams
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
                 
               };
-            // console.log(option)
+
                 console.log(option)
                 const response = await axios.get("http://localhost:8080/products/search",option);
                 setThiRefresh(false);

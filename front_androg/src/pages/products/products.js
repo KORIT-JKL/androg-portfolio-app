@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from "react-query";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
@@ -46,21 +46,45 @@ const Products = () => {
     const {categoryId} = useParams();
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setProducts] = useState([])
+    const [ page , setPage] = useState(1);
+    const lastProductRef = useRef();
+
+    useEffect(() => {
+        const observerService = (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                setThiRefresh(true);
+            }
+          });
+        };
+        const observer = new IntersectionObserver(observerService, { threshold: 1 });
+        observer.observe(lastProductRef.current);
+      }, []);
 
 
+    const option = {
+        params: {
+            page : page
+        }
+        
+    }
     const searchProducts = useQuery(
         ["searchProducts"], async () => {
             console.log(categoryId);
-            const reponse = await axios.get(`http://localhost:8080/category/${categoryId}`);
-            return reponse
+
+            const response = await axios.get(`http://localhost:8080/category/${categoryId}`,option);
+            console.log(response.data.productList)
+            return response
             
         },
         {
             enabled : refresh,
             onSuccess : (response) => {
-                console.log(response);
-                setProducts(response.data);
+                // 여기 어딘가 아주 문제 product리스트가 초기화도 안되고 추가만 됨
                 setThiRefresh(false);
+                setProducts([...products, ...response.data.productList]);
+                setPage(page +1);
+
             }
         }
     )
@@ -83,6 +107,7 @@ const Products = () => {
                         : ""}
 
                 </ul>
+                <div ref={lastProductRef}></div>
             </div>
         <CommonFooter />
         </div>

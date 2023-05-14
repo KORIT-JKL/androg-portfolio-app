@@ -25,7 +25,7 @@
 		<result property="colorName" column="color_name"/>
 	</resultMap>
 	
-	<select id="getProductsByCategoryId" parameterType="Integer" resultMap="productsMap" >
+	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >
 		SELECT
 			pt.product_id,
             pt.product_name,
@@ -49,6 +49,8 @@
 		<if test="categoryId != 7">
         	AND pt.category_id = #{categoryId}
     	</if>
+    	limit
+    		#{page}, 20
 	</select>
 	<select id="getProductByProductId" parameterType="Integer" resultMap = "productsMap" >
 		SELECT
@@ -94,5 +96,15 @@
         where
         	pt.product_name like concat("%",#{searchInput},"%")
         	or clt.color_name like concat("%",#{seachInput},"%")
+	</select>
+	<select id="getTotalCountByCategoryId" parameterType="Integer"  resultType="Integer">
+		SELECT
+			count(*) as total_count
+		FROM
+			product_tb pt
+            left outer join category_tb ct on(ct.category_id = pt.category_id)
+            left outer join color_tb clt on(clt.color_id = pt.color_id)
+        where
+        	pt.category_id = #{CategoryId}
 	</select>
 </mapper>
