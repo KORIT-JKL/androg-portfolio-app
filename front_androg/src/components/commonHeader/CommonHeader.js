@@ -144,6 +144,12 @@ const CommonHeader = () => {
    }
   };
 
+  useEffect(()=> {
+    if(!!localStorage.getItem("accessToken")){
+      setLoginIsState(true);
+    }
+  })
+
   return (
     <>
       {CartIsOpen ? <Cart /> : ""}
