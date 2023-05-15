@@ -1,8 +1,6 @@
 package com.korit.androg.androg.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -31,7 +29,6 @@ public class ProductsController {
 	}
 	@GetMapping("/products/{productId}/details")
 	public ResponseEntity<?> getProductByProductId (@PathVariable int productId) {
-//		System.out.println(productId);
 		return ResponseEntity.ok().body(productsService.getProductByProductId(productId));
 	}
 	

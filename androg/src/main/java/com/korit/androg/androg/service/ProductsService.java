@@ -22,7 +22,6 @@ public class ProductsService {
 	public Map<String, Object> getProductsByCategoryId(Map<String,Object> reqeustMap) {
 		List<Products> productList = new ArrayList<>();
 		productList = productsRepository.getProductsByCategoryId(reqeustMap);
-		System.out.println(productList);
 		int productTotalCount = productsRepository.getTotalCountByCategoryId((int)reqeustMap.get("categoryId"));
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("productList", productList);
@@ -36,11 +35,6 @@ public class ProductsService {
 	public Map<String, Object> getProductsBySearchInput(Map<String,Object> requestMap) {
 		List<Products> productList = new ArrayList<>();
 		Map<String, Object> mapperRequestMap = new HashMap<>();
-		System.out.println(requestMap.get("searchParams[setSearchPage]"));
-		System.out.println(requestMap.get("searchParams[setSearchPage]").getClass());
-		System.out.println(requestMap);
-//		int startIndex = (((Integer)(requestMap.get("searchParams[setSearchPage]"))-1))*20;
-//		int startIndex = (int) requestMap.get("searchParams[setSearchPage]");
 		mapperRequestMap.put("page", (Integer.parseInt((String)requestMap.get("searchParams[setSearchPage]"))-1)*20 );
 		mapperRequestMap.put("searhInput", requestMap.get("searchParams[setSearchInput]"));
 		productList = productsRepository.getProductsBySearchInput(mapperRequestMap);
@@ -49,7 +43,7 @@ public class ProductsService {
 		responseMap.put("productList", productList);
 		responseMap.put("productTotalCount",productTotalCount);
 		return responseMap;
-//		return null;
+
 	}
 	
 	

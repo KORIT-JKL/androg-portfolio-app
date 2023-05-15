@@ -47,8 +47,6 @@ const productCard = css`
 const SearchProducts = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setThisProducts] = useRecoilState(setProducts)
-    const [ searchInput , setThisserachInput ] = useRecoilState(setSearchInput);
-    // const [page , setThisPage ] = useRecoilState(setPage);
     const [searchParams , setThisSearchParams] = useRecoilState(setSearchParams);
     const [lastPage, setlastPage] = useState(1);
     const lastProductRef = useRef();
@@ -78,7 +76,6 @@ const SearchProducts = () => {
           ["searchProducts"], async () => {
 
                 const response = await axios.get("http://localhost:8080/products/search",option);
-                console.log(response);
                 return response;
 
         },
@@ -87,20 +84,15 @@ const SearchProducts = () => {
                 
                 const totalCount = response.data.productTotalCount;
                 setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
-                // setSearchParams({ "searchInput" : searchInput,"page" : page});
-                setThisSearchParams({"setSearchPage" : searchParams.setSearchPage +1, "setSearchInput" : searchParams.setSearchInput})
                 setThisProducts([...products, ...response.data.productList]);
-                console.log(searchParams.setSearchPage)
+                setThisSearchParams({"setSearchPage" : searchParams.setSearchPage +1, "setSearchInput" : searchParams.setSearchInput})
                 setThiRefresh(false);
             },
             enabled : refresh && (searchParams.setSearchPage < lastPage + 1 || lastPage === 0),  
             
         }
     )
-    // useEffect(() => {
-    //     setThiRefresh(false);
-    //     setSearchParams({ "searchInput" : searchInput,"page" : page});
-    // },[searchInput , page , setThiRefresh])
+
     
     const navigate = useNavigate();
     const ProductsCardClick = (productId) => {

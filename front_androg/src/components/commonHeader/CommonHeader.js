@@ -44,7 +44,6 @@ const list = css`
   cursor: pointer;
   &:hover {
     font-weight: 600;
-    /* text-decoration: underline; */
   }
 `;
 
