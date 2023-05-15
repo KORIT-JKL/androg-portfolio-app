@@ -199,6 +199,14 @@ const Address = () => {
   );
 
   const addressUpdate = useMutation(async (addressId) => {
+    const data = {
+      address: address.address,
+      addressSigungu: address.sigungu,
+      addressSido: address.sido,
+      addressBname: address.bname,
+      addressZonecode: address.zonecode,
+      addressDetail: addressDetailInput.addressDetail,
+    };
     const option = {
       headers: {
         Authorization: localStorage.getItem("accessToken"),
@@ -206,7 +214,8 @@ const Address = () => {
     };
     const response = await axios.put(
       `http://localhost:8080/user/mypage/address/${addressId}`,
-      option
+      option,
+      data
     );
     console.log(response);
     return response;

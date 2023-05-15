@@ -42,8 +42,4 @@
 		ab.user_id = #{userId}
 	</select>
 	
-	<update id="addressUpdate"></update>
-	
-	
-	
 </mapper>

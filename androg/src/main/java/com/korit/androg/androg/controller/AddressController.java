@@ -33,7 +33,9 @@ public class AddressController {
 	}
 	
 	@PutMapping("/user/mypage/address/{addressId}")
-	public ResponseEntity<?> addressUpdate(@PathVariable int addressId){
+	public ResponseEntity<?> addressUpdate(@PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto){
+		System.out.println(addressId);
+		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(null);
 	}
 }
