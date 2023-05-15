@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { setRefresh } from "../../atoms/Auth/AuthAtoms";
 import { useRecoilState } from "recoil";
+import QueryString from "qs";
 const container = css`
     display: flex;
     justify-content: center;
@@ -148,15 +149,30 @@ const ProductDetails = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
+    const [searchParams , setSearchparams] = useState({"userId" : 0, "productId" : 0, "sizeName" : "", "countNumber" : 1})
     const [ size , setSize] = useState(null);
+    const [ userId, setUserId] = useState(0);
     const { productId } = useParams();
-    const shippingClickHandle = () =>{
-        if(shippingIsOpen){
-            setShippingIsOpen(false)
-        }else {
-            setShippingIsOpen(true)
+    
+    const principal = useQuery(
+        ["principal"],
+        async () => {
+          const accessToken = localStorage.getItem("accessToken");
+          const response = await axios.get("http://localhost:8080/user/mypage", {
+            params: { accessToken },
+          });
+          return response;
+        },
+        {
+          onSuccess: (response) => {
+            setUserId(response.data.userId);
+            setSearchparams({...searchParams, "userId" : response.data.userId})
+            setThiRefresh(false);
+          },
+          enabled: refresh,
         }
-    }
+      );
+
     const getProduct = useQuery(["getProduct"], async () => {
         const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
         return reponse;
@@ -165,15 +181,50 @@ const ProductDetails = () => {
         onSuccess : (response) => {
             console.log(response);
             setProduct(response.data);
+            setSearchparams({...searchParams, "productId" : response.data.productId})
         }
     })
+
+    
+    const addCartSubmitHandle = async () => {
+        
+
+        try {
+            console.log(JSON.stringify(searchParams))
+            const response = axios.post("http://localhost:8080/cart/addition",JSON.stringify(searchParams)
+            , {
+                headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
+              )
+            return response;
+                
+        } catch {
+
+        }
+    };
+
+
+
+
     if (!product) {
         return setThiRefresh(true); 
     }
+
     const sizeClick = (e) =>{
-        setSize(e.target.textContent)
-        console.log(size);
+        setSearchparams({...searchParams, "sizeName" : e.target.textContent})
     }
+    const shippingClickHandle = () =>{
+        if(shippingIsOpen){
+            setShippingIsOpen(false)
+        }else {
+            setShippingIsOpen(true)
+        }
+    }
+
+   
+
     return (
         <>
         <CommonHeader  />
@@ -192,22 +243,22 @@ const ProductDetails = () => {
                     {product.category.categoryId <= 4 ? 
                         <>
                             <div css={productSize} onClick={sizeClick}>S</div>
-                            <div css={productSize}>M</div>
-                            <div css={productSize}>L</div>
-                            <div css={productSize}>XL</div>
-                            <div css={productSize}>XXL</div>
+                            <div css={productSize} onClick={sizeClick}>M</div>
+                            <div css={productSize} onClick={sizeClick}>L</div>
+                            <div css={productSize} onClick={sizeClick}>XL</div>
+                            <div css={productSize} onClick={sizeClick}>XXL</div>
                         </>
                         : product.category.categoryId === 6 ?
                         <>
-                             <div css={productSize}>240</div>
-                            <div css={productSize}>250</div>
-                            <div css={productSize}>260</div>
-                            <div css={productSize}>270</div>
-                            <div css={productSize}>280</div>
+                             <div css={productSize} onClick={sizeClick}>240</div>
+                            <div css={productSize} onClick={sizeClick}>250</div>
+                            <div css={productSize} onClick={sizeClick}>260</div>
+                            <div css={productSize} onClick={sizeClick}>270</div>
+                            <div css={productSize} onClick={sizeClick}>280</div>
                         </>
                         : 
                         <>  
-                            <div css={productSize}>oneSize</div>
+                            <div css={productSize} onClick={sizeClick}>oneSize</div>
                            
                         </>
                         }
@@ -226,7 +277,7 @@ const ProductDetails = () => {
                 </div>
             </div>
                 <div css={buttonList}>
-                    <button css={addCartText}>장바구니에 담기</button>
+                    <button css={addCartText} onClick={addCartSubmitHandle}>장바구니에 담기</button>
                     <button css={directBuyText}>바로구매</button>
                 </div>
         </div>

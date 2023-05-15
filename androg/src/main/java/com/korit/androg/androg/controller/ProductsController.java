@@ -6,9 +6,12 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,5 +40,12 @@ public class ProductsController {
 		Map<String, Object> requestMap = new HashMap<>(searchParams);
 		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
+	
+	@PostMapping("/cart/addition")
+	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
+		System.out.println(addCartRequestDto);
+		return null;
+	}
+		
 	
 }

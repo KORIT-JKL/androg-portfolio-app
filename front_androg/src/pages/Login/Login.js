@@ -87,7 +87,7 @@ const Login = () => {
   const loginSubmitHandle = async () => {
     const option = {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
     };
     try {
