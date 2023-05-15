@@ -148,6 +148,7 @@ const ProductDetails = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
+    const [ size , setSize] = useState(null);
     const { productId } = useParams();
     const shippingClickHandle = () =>{
         if(shippingIsOpen){
@@ -169,7 +170,10 @@ const ProductDetails = () => {
     if (!product) {
         return setThiRefresh(true); 
     }
-
+    const sizeClick = (e) =>{
+        setSize(e.target.textContent)
+        console.log(size);
+    }
     return (
         <>
         <CommonHeader  />
@@ -187,7 +191,7 @@ const ProductDetails = () => {
                     {/* 카테고리아이디 별로 사이즈 출력 */}
                     {product.category.categoryId <= 4 ? 
                         <>
-                            <div css={productSize}>S</div>
+                            <div css={productSize} onClick={sizeClick}>S</div>
                             <div css={productSize}>M</div>
                             <div css={productSize}>L</div>
                             <div css={productSize}>XL</div>
