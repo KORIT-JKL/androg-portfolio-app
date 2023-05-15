@@ -31,4 +31,8 @@ public class AddressService {
 		});
 		return addressList;
 	}
+	
+	public int addressUpdate(int addressId) {
+		return 0;
+	}
 }

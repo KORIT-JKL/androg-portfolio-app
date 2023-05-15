@@ -11,4 +11,6 @@ public interface AddressRepository {
 	public int addressRegister(Address address);
 	
 	public List<Address> getAddress(int userId);
+	
+	public int addressUpdate(int addressId);
 }
