@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		HttpServletRequest httpRequest  = (HttpServletRequest) request;
 		String accessToken = httpRequest.getHeader("Authorization");
 		if(accessToken == null) {
-			log.warn("BeforeFilter nullToken");
+			log.warn("토큰 미발행; 미인증");
 		} else {
 			accessToken = jwtTokenProvider.getToken(accessToken);
 			jwtTokenProvider.validateToken(accessToken);

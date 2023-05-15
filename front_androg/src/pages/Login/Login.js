@@ -104,42 +104,51 @@ const Login = () => {
     }
   };
 
-  return (
-    <>
-      <CommonHeader />
-      <div css={container}>
-        <header css={header}>
-          <h1>Login</h1>
-        </header>
-        <main css={main}>
-          <div css={inputCss}>
-            <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
-              <AiOutlineMail />
-            </LoginInput>
-            <div css={errorMsg}>{errorMessages.email}</div>
-          </div>
 
-          <div css={inputCss}>
-            <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
-              <RiLockPasswordLine />
-            </LoginInput>
-            <div css={errorMsg}>{errorMessages.password}</div>
-          </div>
-        </main>
 
-        <footer css={footer}>
-          <button css={loginButton} onClick={loginSubmitHandle}>
-            로그인
-          </button>
-          <button css={passwordFindButton}>비밀번호 찾기</button>
-          <button css={registerButton}>
-            <Link to="/register">회원가입</Link>
-          </button>
-        </footer>
-      </div>
-      <CommonFooter />
-    </>
-  );
+    const onKeyPress = (e) => {
+        if(e.key==='Enter') {
+            loginSubmitHandle();
+        }
+    }
+
+  
+
+    return (
+        <>
+            <CommonHeader />
+            <div css={container}>
+                <header css={header}>
+                    <h1>Login</h1>
+                </header>
+                <main css={main}>
+                    <div css={inputCss}>
+                        <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
+                        <AiOutlineMail />
+                        </LoginInput>
+                        <div css={errorMsg}>{errorMessages.email}</div>
+                    </div>
+
+                    <div css={inputCss}>
+                        <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
+                        <RiLockPasswordLine />
+                        </LoginInput>
+                        <div css={errorMsg}>{errorMessages.password}</div>
+                    </div>
+                </main>
+               
+              
+
+                <footer css={footer}>
+                    <button css={loginButton} onClick={loginSubmitHandle} onKeyUp={onKeyPress}>로그인</button>
+                    <button css={passwordFindButton}>비밀번호 찾기</button>
+                    <button css={registerButton}><Link to="/register">회원가입</Link></button>
+                </footer>
+
+            </div>
+            <CommonFooter />
+        </>
+    );
 };
 
 export default Login;

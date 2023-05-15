@@ -112,5 +112,12 @@ keyProperty="userId">
 		
 </select>
 
+<delete id="deleteUser" parameterType="integer">
+	delete from 
+		user_tb
+	where 
+		user_id = #{userId}
+</delete>
+
 
 </mapper>
