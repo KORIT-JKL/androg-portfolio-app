@@ -10,7 +10,7 @@ import axios from "axios";
 import ProductsCard from "./productsCard";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import QueryString from "qs";
-import { setPage, setProducts } from "../../atoms/Auth/AuthAtoms";
+import { setPage, setProducts, setSearchParams } from "../../atoms/Auth/AuthAtoms";
 const container= css`
     display: flex;
     width: 100%;
@@ -24,7 +24,8 @@ const productCardContainer = css`
     display: flex;
     flex-wrap: wrap;
     height: auto;
-    width: 80%;
+    margin: auto;
+    width: 1500px;
     justify-content: flex-start;
 `
 const productCard = css`
@@ -47,37 +48,37 @@ const SearchProducts = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setThisProducts] = useRecoilState(setProducts)
     const [ searchInput , setThisserachInput ] = useRecoilState(setSearchInput);
-    const [page , setThisPage ] = useRecoilState(setPage);
-    // const [searchParams , setSearchParams] = useState({"searchInput" : searchInput , "page" : page})
+    // const [page , setThisPage ] = useRecoilState(setPage);
+    const [searchParams , setThisSearchParams] = useRecoilState(setSearchParams);
     const [lastPage, setlastPage] = useState(1);
     const lastProductRef = useRef();
-    useEffect(() => {
-        const observerService = (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                setThiRefresh(true);
-            }
-          });
-        };
-        const observer = new IntersectionObserver(observerService, { threshold: 1 });
-        observer.observe(lastProductRef.current);
-      }, []);
+    // useEffect(() => {
+    //     const observerService = (entries, observer) => {
+    //       entries.forEach((entry) => {
+    //         if (entry.isIntersecting) {
+    //             setThiRefresh(true);
+    //         }
+    //       });
+    //     };
+    //     const observer = new IntersectionObserver(observerService, { threshold: 1 });
+    //     observer.observe(lastProductRef.current);
+    //   }, []);
 
     
       const option = {
         params: {
-            page : page,
-            searchInput : searchInput
+            searchParams : searchParams
         }
+        ,paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
       }
       
       const searchProducts = useQuery(
           
           ["searchProducts"], async () => {
-            
+
                 const response = await axios.get("http://localhost:8080/products/search",option);
-                console.log(response)
-                return response
+                console.log(response);
+                return response;
 
         },
         {   
@@ -85,20 +86,27 @@ const SearchProducts = () => {
                 
                 const totalCount = response.data.productTotalCount;
                 setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
-                setThisPage(page + 1);
+                // setSearchParams({ "searchInput" : searchInput,"page" : page});
+                setThisSearchParams({"setSearchPage" : searchParams.page +1, "setSearchInput" : searchParams.setSearchInput})
                 setThisProducts([...products, ...response.data.productList]);
+                console.log(searchParams.page)
                 setThiRefresh(false);
-            }
-            ,enabled : refresh && (option.params.searchParams.page < lastPage + 1 || lastPage === 0),  
+            },
+            enabled : refresh  
+            // && (searchParams.page < lastPage + 1 || lastPage === 0),  
             
         }
     )
-        
+    // useEffect(() => {
+    //     setThiRefresh(false);
+    //     setSearchParams({ "searchInput" : searchInput,"page" : page});
+    // },[searchInput , page , setThiRefresh])
     
     const navigate = useNavigate();
     const ProductsCardClick = (productId) => {
         navigate(`/products/${productId}/details`);
     }
+
     if(searchProducts.isLoading){
         return <></>
     }

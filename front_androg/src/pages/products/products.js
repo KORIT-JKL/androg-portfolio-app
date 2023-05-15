@@ -23,7 +23,8 @@ const productCardContainer = css`
     display: flex;
     flex-wrap: wrap;
     height: auto;
-    width: 80%;
+    margin: auto;
+    width: 1500px;
     justify-content: flex-start;
 `
 const productCard = css`

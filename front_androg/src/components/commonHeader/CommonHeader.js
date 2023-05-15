@@ -5,7 +5,7 @@ import impact from "../../img/impact (1).png";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAtoms";
-import { loginState, setPage, setProducts } from "../../atoms/Auth/AuthAtoms";
+import { loginState, setPage, setProducts, setSearchParams } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -84,7 +84,7 @@ const CommonHeader = () => {
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [products , setThisProducts] = useRecoilState(setProducts);
   const [ page , setThisPage] = useRecoilState(setPage);
-  
+  const [searchParams , setThisSearchParams] = useRecoilState(setSearchParams);
   const navigate = useNavigate();
 
 
@@ -122,14 +122,13 @@ const CommonHeader = () => {
   };
   const EnterKeyDown = (e) =>{
     if(e.key === "Enter") {
-      thisSetSearchInput(document.getElementById("searchInputText").value);
+      // thisSetSearchInput(document.getElementById("searchInputText").value);
+      setThisSearchParams({"setSearchPage" : 1 , "setSearchInput" : document.getElementById("searchInputText").value})
+      console.log(searchParams)
       navigate("/products/search");
-       
       setThisProducts([]);
-      setThisPage(1);
-      // console.log(document.getElementById("searchInputText").value)
       setThiRefresh(true);
-      
+      // setThisPage(1);
     }
     
     

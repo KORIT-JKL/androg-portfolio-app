@@ -36,10 +36,10 @@ public class ProductsService {
 	public Map<String, Object> getProductsBySearchInput(Map<String,Object> requestMap) {
 		List<Products> productList = new ArrayList<>();
 		Map<String, Object> mapperRequestMap = new HashMap<>();
-		mapperRequestMap.put("page", requestMap.get("searchParams[page]"));
-		mapperRequestMap.put("searhInput", requestMap.get("searchParams[searchInput]"));
+		mapperRequestMap.put("page", requestMap.get("searchParams[setSearchPage]"));
+		mapperRequestMap.put("searhInput", requestMap.get("searchParams[setSearchInput]"));
 		productList = productsRepository.getProductsBySearchInput(mapperRequestMap);
-		int productTotalCount = productsRepository.getTotalCountBySearchInput((String)requestMap.get("searchParams[searchInput]"));
+		int productTotalCount = productsRepository.getTotalCountBySearchInput((String)requestMap.get("searchParams[setSearchInput]"));
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("productList", productList);
 		responseMap.put("productTotalCount",productTotalCount);
