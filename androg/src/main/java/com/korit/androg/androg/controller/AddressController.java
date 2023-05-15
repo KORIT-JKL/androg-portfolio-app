@@ -1,6 +1,7 @@
 package com.korit.androg.androg.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +22,11 @@ public class AddressController {
 	public ResponseEntity<?> addressRegister(@RequestBody AddressReigsteReqDto addressReigsteReqDto){
 		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressRegister(addressReigsteReqDto));
+	}
+	
+	@GetMapping("/user/mypage/address")
+	public ResponseEntity<?> getAddress(int userId){
+		
+		return ResponseEntity.ok().body(addressService.getAddress(userId));
 	}
 }

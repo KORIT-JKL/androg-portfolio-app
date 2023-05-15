@@ -38,6 +38,7 @@ const subTitle = css`
 `;
 const submitAddresBox = css`
   padding: 20px 0px;
+  border-bottom: 1px solid black;
 `;
 
 const userUpdateBox = css`
@@ -99,12 +100,15 @@ const nameBox = css`
   padding-top: 10px;
   margin-bottom: 20px;
 `;
-
+//문제 : 해당 유저에 배송지를 저장하고 추가된 주소지가 바로바로 적용이 안됨 새로고침을 해야 적용된다.
+// 또 한 수정과 삭제 버튼의 click이 동작이 안됨 -> map으로 만들어서 그런듯 함
 const Address = () => {
   const [addressOpen, setAddressOpen] = useState(false);
   const [principalState, setPrincipalState] = useState(false);
   const [openPostCode, setOpenPostCode] = useState(false);
+  const [addressListState, setAddressListState] = useState(false);
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
+  const [userAddressList, setUserAddressList] = useState([]);
   const [address, setAddress] = useState({
     address: "",
     sigungu: "",
@@ -164,6 +168,28 @@ const Address = () => {
       },
     }
   );
+
+  const addressList = useQuery(
+    ["addressList"],
+    async () => {
+      const option = {
+        params: {
+          userId: principal.data.data.userId,
+        },
+      };
+      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      console.log(response);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setUserAddressList([...userAddressList, ...response.data]);
+        setAddressListState(false);
+      },
+      enabled: !!principal.data && addressListState,
+    }
+  );
+
   const selectAddress = (data) => {
     setAddress((prevState) => ({
       ...prevState,
@@ -183,12 +209,14 @@ const Address = () => {
     if (!principalState) {
       setPrincipalState(true);
     }
+    if (!addressListState) {
+      setAddressListState(true);
+    }
   }, []);
 
-  if (principal.isLoading && addressRegister.isLoading) {
+  if (principal.isLoading && addressRegister.isLoading && addressList.isLoading) {
     return <></>;
   }
-
   return (
     <>
       <CommonHeader />
@@ -196,34 +224,48 @@ const Address = () => {
         <div css={informationContent}>
           <h1 css={Title}>주소록</h1>
           <h2 css={subTitle}>모든 주소</h2>
-          <div css={submitAddresBox}>
-            <div css={userUpdateBox}>
-              {principal.data !== undefined ? principal.data.data.name : ""}
-              <div css={userUpdateBox}>
-                <button css={addressUpdateButton}>수정</button>
-                <button css={addressUpdateButton}>삭제</button>
-              </div>
-            </div>
-            <p css={addressDetailBox}>
-              도로명 주소 <br />
-              상세 주소 <br />
-              우편번호 <br />
-              국적 <br />
-              <span>기본 배송지</span>
-            </p>
-            <button
-              css={addAddressButton}
-              onClick={() => {
-                if (!addressOpen) {
-                  setAddressOpen(true);
-                } else {
-                  setAddressOpen(false);
-                }
-              }}
-            >
-              주소 추가하기
-            </button>
-          </div>
+          {userAddressList.length > 0
+            ? userAddressList.map((address) => {
+                return (
+                  <div css={submitAddresBox} key={address.addressId}>
+                    <div css={userUpdateBox}>
+                      {principal.data !== undefined ? principal.data.data.name : ""}
+                      <div css={userUpdateBox}>
+                        <button
+                          css={addressUpdateButton}
+                          onClick={() => {
+                            if (!addressOpen) {
+                              setAddressOpen(true);
+                            }
+                          }}
+                        >
+                          수정
+                        </button>
+                        <button css={addressUpdateButton}>삭제</button>
+                      </div>
+                    </div>
+                    <div>{address.address}</div>
+                    <div>{address.addressDetail}</div>
+                    <div>
+                      {address.addressSigungu}
+                      {address.addressZonecode}
+                    </div>
+                  </div>
+                );
+              })
+            : ""}
+          <button
+            css={addAddressButton}
+            onClick={() => {
+              if (!addressOpen) {
+                setAddressOpen(true);
+              } else {
+                setAddressOpen(false);
+              }
+            }}
+          >
+            주소 추가하기
+          </button>
         </div>
         {addressOpen ? (
           <div css={addressContent}>

@@ -1,5 +1,7 @@
 package com.korit.androg.androg.entity;
 
+import com.korit.androg.androg.dto.address.AddressRespDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
-	private int AddressId;
+	private int addressId;
 	private int userId;
 	private String address;
 	private String addressDetail;
@@ -20,4 +22,17 @@ public class Address {
 	private String addressZonecode;
 	
 	private User user;
+	
+	public AddressRespDto toDto() {
+		return AddressRespDto.builder()
+				.addressId(addressId)
+				.userId(userId)
+				.address(address)
+				.addressDetail(addressDetail)
+				.addressSido(addressSido)
+				.addressSigungu(addressSigungu)
+				.addressBname(addressBname)
+				.addressZonecode(addressZonecode)
+				.build();
+	}
 }
