@@ -25,7 +25,7 @@ const productCardContainer = css`
     flex-wrap: wrap;
     height: auto;
     margin: auto;
-    width: 1500px;
+    width: 1200px;
     justify-content: flex-start;
 `
 const productCard = css`
@@ -52,17 +52,18 @@ const SearchProducts = () => {
     const [searchParams , setThisSearchParams] = useRecoilState(setSearchParams);
     const [lastPage, setlastPage] = useState(1);
     const lastProductRef = useRef();
-    // useEffect(() => {
-    //     const observerService = (entries, observer) => {
-    //       entries.forEach((entry) => {
-    //         if (entry.isIntersecting) {
-    //             setThiRefresh(true);
-    //         }
-    //       });
-    //     };
-    //     const observer = new IntersectionObserver(observerService, { threshold: 1 });
-    //     observer.observe(lastProductRef.current);
-    //   }, []);
+
+    useEffect(() => {
+        const observerService = (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                setThiRefresh(true);
+            }
+          });
+        };
+        const observer = new IntersectionObserver(observerService, { threshold: 1 });
+        observer.observe(lastProductRef.current);
+      }, [setThiRefresh]);
 
     
       const option = {
@@ -87,13 +88,12 @@ const SearchProducts = () => {
                 const totalCount = response.data.productTotalCount;
                 setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
                 // setSearchParams({ "searchInput" : searchInput,"page" : page});
-                setThisSearchParams({"setSearchPage" : searchParams.page +1, "setSearchInput" : searchParams.setSearchInput})
+                setThisSearchParams({"setSearchPage" : searchParams.setSearchPage +1, "setSearchInput" : searchParams.setSearchInput})
                 setThisProducts([...products, ...response.data.productList]);
-                console.log(searchParams.page)
+                console.log(searchParams.setSearchPage)
                 setThiRefresh(false);
             },
-            enabled : refresh  
-            // && (searchParams.page < lastPage + 1 || lastPage === 0),  
+            enabled : refresh && (searchParams.setSearchPage < lastPage + 1 || lastPage === 0),  
             
         }
     )

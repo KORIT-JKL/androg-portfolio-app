@@ -38,9 +38,6 @@ public class ProductsController {
 	@GetMapping("/products/search")
 	public ResponseEntity<?> getProductsBySearchInput (@RequestParam Map<String, Object> searchParams) {
 		Map<String, Object> requestMap = new HashMap<>(searchParams);
-		System.out.println(requestMap);
-//		System.out.println(requestMap.get("searchParams[searchInput]"));
-		
 		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
 	

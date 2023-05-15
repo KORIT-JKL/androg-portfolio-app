@@ -122,13 +122,11 @@ const CommonHeader = () => {
   };
   const EnterKeyDown = (e) =>{
     if(e.key === "Enter") {
-      // thisSetSearchInput(document.getElementById("searchInputText").value);
       setThisSearchParams({"setSearchPage" : 1 , "setSearchInput" : document.getElementById("searchInputText").value})
       console.log(searchParams)
       navigate("/products/search");
       setThisProducts([]);
       setThiRefresh(true);
-      // setThisPage(1);
     }
     
     

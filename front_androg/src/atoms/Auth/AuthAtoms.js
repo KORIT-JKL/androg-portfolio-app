@@ -36,10 +36,11 @@ export const setPage = atom({
     default: 1
 })
 
-export const setSearchParams = atom({
-    key: "setSearchPage",
-    default : 1
-},
+export const setSearchParams = atom(
+    {
+        key: "setSearchPage",
+        default : 1
+    },
     {
         key:"setSearchInput",
         default : ""
