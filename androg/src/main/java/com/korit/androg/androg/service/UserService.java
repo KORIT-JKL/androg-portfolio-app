@@ -22,4 +22,8 @@ public class UserService {
 		});
 		return orderProducts; 
 	}
+	
+	public int deletelUser(int userId) {
+		return userRepository.deleteUser(userId);
+	}
 }

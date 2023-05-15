@@ -9,6 +9,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.korit.androg.androg.security.JwtAuthenticationEntryPoint;
 import com.korit.androg.androg.security.JwtAuthenticationFilter;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
 
@@ -18,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
 	private final JwtTokenProvider jwtTokenProvider;
+	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -34,12 +37,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.authorizeRequests()
-			.antMatchers("/**")
+			.antMatchers("/auth/**")
+			.permitAll()
+			.antMatchers("/category/**")
+			.permitAll()
+			.antMatchers("/products/**")
 			.permitAll()
 			.anyRequest()
 			.authenticated()
 			.and()
-			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+			.exceptionHandling()
+			.authenticationEntryPoint(jwtAuthenticationEntryPoint);
 		
 	}
 	

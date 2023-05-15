@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import Information from "../../components/SupportUI/Information/Information";
-import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import OrderProducts from "../../components/Products/OrderProducts";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
 
 const mainContainer = css`
   display: grid;
@@ -83,7 +85,10 @@ const MyPage = () => {
   const [orderProducts, setOrderProducts] = useState([]);
   const [infoRefresh, setInfoRefresh] = useState(false);
   const [productsRefresh, setProductsRefresh] = useState(false);
+  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   let userId = 0;
+
+  const queryClient = useQueryClient();
 
   const principal = useQuery(
     ["principal"],
@@ -123,6 +128,33 @@ const MyPage = () => {
       enabled: !!principal.data && productsRefresh,
     }
   );
+    
+
+      const withdrawal = useMutation(async () => {
+          const option = {
+            params: {
+              userId: principal.data.data.userId,
+            },
+            headers: {
+              Authorization: localStorage.getItem("accessToken")
+            }
+          }
+          console.log(await axios.delete(`http://localhost:8080/user/${userId}`, option));
+          return await axios.delete(`http://localhost:8080/user/${userId}`, option);          
+        });
+
+  const withdrawalSubmit = () => {
+    if(window.confirm("회원탈퇴 하시겠습니까?")) {
+      withdrawal.mutate();
+      localStorage.removeItem("accessToken");
+      setLoginIsState(false);
+      navgate("/")
+    }
+  }
+
+     
+    
+
   useEffect(() => {
     if (!infoRefresh) {
       // console.log(infoRefresh);
@@ -132,6 +164,8 @@ const MyPage = () => {
       setProductsRefresh(true);
     }
   }, []);
+
+
   if (principal.isLoading && products.isLoading) {
     return <></>;
   }
@@ -147,6 +181,8 @@ const MyPage = () => {
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
             <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <div css={addressContent} onClick={withdrawalSubmit}>회원탈퇴</div>
+
             <div css={addressContent} onClick={() => navgate("/mypage/address")}>
               주소록 보기
             </div>

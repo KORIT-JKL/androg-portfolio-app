@@ -148,7 +148,7 @@ const ProductDetails = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
-    const { productId } =useParams();
+    const { productId } = useParams();
     const shippingClickHandle = () =>{
         if(shippingIsOpen){
             setShippingIsOpen(false)
@@ -218,7 +218,6 @@ const ProductDetails = () => {
                         <div css={shippingSubText}>&#62;ㅁㅁ택배 (1234-5678) </div>
                     </> 
                     :""
-
                 }
                 </div>
             </div>

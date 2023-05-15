@@ -15,4 +15,6 @@ public interface UserRepository {
 	public int saveAuthority(Authority authority);
 	
 	public List<OrderProducts>getOrderProducts(int userId);
+	
+	public int deleteUser(int userId);
 }

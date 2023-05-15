@@ -17,6 +17,7 @@ import Products from "./pages/products/products";
 import ProductDetails from "./pages/products/productDetails";
 import SearchProducts from "./pages/products/searchProducts";
 import Address from "./pages/Address/Address";
+import AuthRouteReactQuery from './components/Route/AuthRoute/AuthRouteReactQuery';
 
 function App() {
   return (
@@ -28,18 +29,18 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* 문의페이지 Route */}
-        <Route exact path="/page/notice" element={<Notice />} />
-        <Route exact path="/page/customer" element={<CustomerSupport />} />
-        <Route exact path="/page/shipping" element={<Shipping />} />
-        <Route exact path="/page/sizeguide" element={<SizeGuide />} />
-        <Route exact path="/page/legal" element={<Legal />} />
+        <Route path="/page/notice" element={<Notice />} />
+        <Route path="/page/customer" element={<CustomerSupport />} />
+        <Route path="/page/shipping" element={<Shipping />} />
+        <Route path="/page/sizeguide" element={<SizeGuide />} />
+        <Route path="/page/legal" element={<Legal />} />
 
 
         {/* 마이페이지 Route */}
-        <Route path="/mypage" element={<MyPage />}></Route>
+        <Route path="/mypage" element={<AuthRouteReactQuery path='/mypage' element={<MyPage />} />} />
         <Route path="/mypage/address" element={<Address />}></Route>
 
-        <Route path ="/category/:categoryId" element ={<Products/>}></Route>
+        <Route path ="/category/:categoryId" element={<Products />} />
         <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
         <Route path ="/products/search" element = {<SearchProducts />}></Route>
       </Routes>

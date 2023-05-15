@@ -107,6 +107,12 @@ const Login = () => {
         }
     }
 
+    const onKeyPress = (e) => {
+        if(e.key==='Enter') {
+            loginSubmitHandle();
+        }
+    }
+
   
 
     return (
@@ -135,7 +141,7 @@ const Login = () => {
               
 
                 <footer css={footer}>
-                    <button css={loginButton} onClick={loginSubmitHandle}>로그인</button>
+                    <button css={loginButton} onClick={loginSubmitHandle} onKeyUp={onKeyPress}>로그인</button>
                     <button css={passwordFindButton}>비밀번호 찾기</button>
                     <button css={registerButton}><Link to="/register">회원가입</Link></button>
                 </footer>
