@@ -148,7 +148,7 @@ const Address = () => {
         addressZonecode: address.zonecode,
         addressDetail: addressDetailInput.addressDetail,
       };
-      console.log(data);
+      // console.log(data);
       const option = {
         headres: {
           "Content-Type": "application/json",
@@ -159,12 +159,12 @@ const Address = () => {
         const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
         return response;
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
+        // console.log(response.data);
       },
     }
   );
@@ -178,7 +178,7 @@ const Address = () => {
         },
       };
       const response = await axios.get("http://localhost:8080/user/mypage/address", option);
-      console.log(response);
+      // console.log(response);
       return response;
     },
     {
