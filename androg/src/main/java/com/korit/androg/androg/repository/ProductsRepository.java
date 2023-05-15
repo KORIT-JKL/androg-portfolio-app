@@ -11,6 +11,7 @@ import com.korit.androg.androg.entity.Products;
 public interface ProductsRepository {
 	public List<Products> getProductsByCategoryId(Map<String, Object> reqeustMap);
 	public Products getProductByProductId(int productId);
-	public List<Products> getProductsBySearchInput(String searchInput);
+	public List<Products> getProductsBySearchInput(Map<String, Object> reqeustMap);
 	public int getTotalCountByCategoryId(int categoryId);
+	public int getTotalCountBySearchInput(String searchInput);
 }

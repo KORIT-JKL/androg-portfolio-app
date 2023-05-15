@@ -74,7 +74,7 @@
         where
         	pt.product_id = #{productId}
 	</select>
-	<select id="getProductsBySearchInput" parameterType="String" resultMap = "productsMap">
+	<select id="getProductsBySearchInput" parameterType="hashmap" resultMap = "productsMap">
 		SELECT
 			pt.product_id,
             pt.product_name,
@@ -94,8 +94,10 @@
             left outer join category_tb ct on(ct.category_id = pt.category_id)
             left outer join color_tb clt on(clt.color_id = pt.color_id)
         where
-        	pt.product_name like concat("%",#{searchInput},"%")
-        	or clt.color_name like concat("%",#{seachInput},"%")
+        	pt.product_name like concat("%",#{searhInput},"%")
+        	or clt.color_name like concat("%",#{searhInput},"%")
+       	limit
+       		${page}, 20
 	</select>
 	<select id="getTotalCountByCategoryId" parameterType="Integer"  resultType="Integer">
 		SELECT
@@ -106,5 +108,16 @@
             left outer join color_tb clt on(clt.color_id = pt.color_id)
         where
         	pt.category_id = #{CategoryId}
+	</select>
+	<select id="getTotalCountBySearchInput" parameterType="hashmap"  resultType="Integer">
+		SELECT
+			count(*) as total_count
+		FROM
+			product_tb pt
+            left outer join category_tb ct on(ct.category_id = pt.category_id)
+            left outer join color_tb clt on(clt.color_id = pt.color_id)
+        where
+        	pt.product_name like concat("%",#{searchInput},"%")
+        	or clt.color_name like concat("%",#{searchInput},"%")
 	</select>
 </mapper>

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.dto.Product.SearchProductReqDto;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,8 +37,11 @@ public class ProductsController {
 	
 	@GetMapping("/products/search")
 	public ResponseEntity<?> getProductsBySearchInput (@RequestParam Map<String, Object> searchParams) {
-		System.out.println(searchParams);
-		return ResponseEntity.ok().body(null);
+		Map<String, Object> requestMap = new HashMap<>(searchParams);
+//		System.out.println(requestMap);
+//		System.out.println(requestMap.get("searchParams[searchInput]"));
+		System.out.println(productsService.getProductsBySearchInput(requestMap));
+		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
 	
 }

@@ -25,3 +25,14 @@ export const refreshState = atom({
     key: "loginState",
     default: false,
   });
+
+export const setProducts = atom({
+    key: "setProducts",
+    default: []
+})
+
+export const setPage = atom({
+    key: "setPage",
+    default: 1
+})
+

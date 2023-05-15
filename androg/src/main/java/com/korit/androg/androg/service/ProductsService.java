@@ -33,9 +33,17 @@ public class ProductsService {
 		return productsRepository.getProductByProductId(productId);
 	}
 	
-	public List<Products> getProductsBySearchInput(@RequestParam String searchInput) {
-		System.out.println(productsRepository.getProductsBySearchInput(searchInput));
-		return productsRepository.getProductsBySearchInput(searchInput);
+	public Map<String, Object> getProductsBySearchInput(Map<String,Object> requestMap) {
+		List<Products> productList = new ArrayList<>();
+		Map<String, Object> mapperRequestMap = new HashMap<>();
+		mapperRequestMap.put("page", requestMap.get("searchParams[page]"));
+		mapperRequestMap.put("searhInput", requestMap.get("searchParams[searchInput]"));
+		productList = productsRepository.getProductsBySearchInput(mapperRequestMap);
+		int productTotalCount = productsRepository.getTotalCountBySearchInput((String)requestMap.get("searchParams[searchInput]"));
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("productList", productList);
+		responseMap.put("productTotalCount",productTotalCount);
+		return responseMap;
 	}
 	
 	

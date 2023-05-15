@@ -8,12 +8,13 @@ import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useNavigate, useParams } from "react-router-dom";
 import ProductsCard from './productsCard';
 import { useRecoilState } from "recoil";
-import { setRefresh } from "../../atoms/Auth/AuthAtoms";
+import { setPage, setProducts, setRefresh } from "../../atoms/Auth/AuthAtoms";
+import { setSearchInput } from "../../atoms/authAtoms";
 const container= css`
     display: flex;
     width: 100%;
     height: 100%;
-    
+    flex-direction: column;
     justify-content: center;
     margin: auto;
     padding-top: 100px;
@@ -45,8 +46,9 @@ const Products = () => {
 
     const {categoryId} = useParams();
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
-    const [products , setProducts] = useState([])
-    const [ page , setPage] = useState(1);
+    const [products , setThisProducts] = useRecoilState(setProducts)
+    const [ page , setThisPage] = useRecoilState(setPage);
+    const [lastPage, setlastPage] = useState(1);
     const lastProductRef = useRef();
 
     useEffect(() => {
@@ -70,22 +72,26 @@ const Products = () => {
     }
     const searchProducts = useQuery(
         ["searchProducts"], async () => {
-            console.log(categoryId);
+            // console.log(categoryId);
 
             const response = await axios.get(`http://localhost:8080/category/${categoryId}`,option);
             console.log(response.data.productList)
+
             return response
             
         },
         {
-            enabled : refresh,
+            enabled : refresh && (option.params.page < lastPage + 1 || lastPage === 0),
             onSuccess : (response) => {
                 // 여기 어딘가 아주 문제 product리스트가 초기화도 안되고 추가만 됨
                 setThiRefresh(false);
-                setProducts([...products, ...response.data.productList]);
-                setPage(page +1);
+                const totalCount = response.data.productTotalCount;
+                setThisProducts([...products, ...response.data.productList]);
+                setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
+                setThisPage(page +1);
 
-            }
+            },
+            
         }
     )
     const navigate = useNavigate();

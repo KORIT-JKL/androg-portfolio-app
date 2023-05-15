@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import impact from "../../img/impact (1).png";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAtoms";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { loginState, setPage, setProducts } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
 import { useQuery } from "react-query";
 import axios from "axios";
@@ -82,7 +82,8 @@ const CommonHeader = () => {
   const [sbheader, setsbheader] = useState(false);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
-
+  const [products , setThisProducts] = useRecoilState(setProducts);
+  const [ page , setThisPage] = useRecoilState(setPage);
   const navigate = useNavigate();
 
 
@@ -114,20 +115,25 @@ const CommonHeader = () => {
 
   const onClickCategory = (e) => {
     navigate(`/category/${e}`);
+    setThisProducts([]);
+    setThisPage(1);
     setThiRefresh(true);
   };
   const EnterKeyDown = (e) =>{
     if(e.key === "Enter") {
-      thisSetSearchInput("")
-      thisSetSearchInput(document.getElementById("searchInputText").value);
+      
       navigate("/products/search");
-
+      setThisProducts([]);
+      setThisPage(1);
+      thisSetSearchInput(document.getElementById("searchInputText").value);
+      // console.log(document.getElementById("searchInputText").value)
       setThiRefresh(true);
     }
     
     
   }
   const searchClick = (inputIsOpen)=> {
+    thisSetSearchInput("");
     setInputIsOpen(!inputIsOpen);
   }
 
@@ -137,7 +143,7 @@ const CommonHeader = () => {
       setLoginIsState(false);
    }
   };
-  
+
   return (
     <>
       {CartIsOpen ? <Cart /> : ""}
