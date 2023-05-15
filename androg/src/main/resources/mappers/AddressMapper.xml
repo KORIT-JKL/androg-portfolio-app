@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.AddressRepository">
+	<resultMap type="com.korit.androg.androg.entity.Address" id="AddressMap">
+		<id property="addressId" column="address_id"/>
+		<result property="address" column="address"/>
+		<result property="addressDetail" column="address_detail"/>
+		<result property="addressSido" column="address_sido"/>
+		<result property="addressSigungu" column="address_sigungu"/>
+		<result property="addressBname" column="address_bname"/>
+		<result property="addressZonecode" column="address_zonecode"/>
+		<association property="user" resultMap="UserMap"></association>
+	</resultMap>
+	<resultMap type="com.korit.androg.androg.entity.User" id="UserMap">
+		<id property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<insert id="addressRegister" parameterType="com.korit.androg.androg.entity.Address">
+	insert into address_tb
+		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode})
+	
+	</insert>
+	
+	<select id="getAddress" resultMap="AddressMap">
+	select
+		ab.address,
+    	ab.address_detail,
+   		ab.address_sido,
+    	ab.address_sigungu,
+    	ab.address_bname,
+    	ab.address_zonecode,
+		ab.address_id,
+    	ut.name
+    
+	from
+		address_tb ab
+    	left outer join user_tb ut on(ut.user_id = ab.user_id)
+	where
+		ab.user_id = #{userId}
+	</select>
+
+</mapper>
