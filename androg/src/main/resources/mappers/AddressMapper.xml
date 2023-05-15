@@ -41,5 +41,9 @@
 	where
 		ab.user_id = #{userId}
 	</select>
-
+	
+	<update id="ad">
+		
+	</update>
+	
 </mapper>

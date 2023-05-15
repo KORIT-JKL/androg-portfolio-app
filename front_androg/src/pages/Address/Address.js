@@ -137,6 +137,8 @@ const Address = () => {
       enabled: principalState,
     }
   );
+
+  //해당 user 주소지 추가 요청
   const addressRegister = useMutation(
     async () => {
       const data = {
@@ -156,7 +158,11 @@ const Address = () => {
         },
       };
       try {
-        const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
+        const response = await axios.post(
+          "http://localhost:8080/user/mypage/address",
+          data,
+          option
+        );
         return response;
       } catch (error) {
         // console.log(error);
@@ -169,6 +175,7 @@ const Address = () => {
     }
   );
 
+  // 해당 유저 주소지 리스트 조회 요청
   const addressList = useQuery(
     ["addressList"],
     async () => {
@@ -177,6 +184,7 @@ const Address = () => {
           userId: principal.data.data.userId,
         },
       };
+      //user 주소지 조회 url/user/mypage/address
       const response = await axios.get("http://localhost:8080/user/mypage/address", option);
       // console.log(response);
       return response;
@@ -189,6 +197,20 @@ const Address = () => {
       enabled: !!principal.data && addressListState,
     }
   );
+
+  const addressUpdate = useMutation(async (addressId) => {
+    const option = {
+      headers: {
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    };
+    const response = await axios.put(
+      `http://localhost:8080/user/mypage/address/${addressId}`,
+      option
+    );
+    console.log(response);
+    return response;
+  });
 
   const selectAddress = (data) => {
     setAddress((prevState) => ({
@@ -203,7 +225,6 @@ const Address = () => {
   const inputOnChangeHandle = (e) => {
     const { name, value } = e.target;
     setAddressDetailInput({ ...addressDetailInput, [name]: value });
-    console.log(addressDetailInput.addressDetail);
   };
   useEffect(() => {
     if (!principalState) {
@@ -234,6 +255,7 @@ const Address = () => {
                         <button
                           css={addressUpdateButton}
                           onClick={() => {
+                            console.log(`${address.addressId}`);
                             if (!addressOpen) {
                               setAddressOpen(true);
                             }
@@ -271,7 +293,9 @@ const Address = () => {
           <div css={addressContent}>
             <h2 css={Title}>새 주소 추가</h2>
             <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
-            <div css={nameBox}>{address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}</div>
+            <div css={nameBox}>
+              {address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}
+            </div>
             <button
               css={addAddressButton}
               onClick={() => {
@@ -286,7 +310,12 @@ const Address = () => {
               주소찾기{" "}
             </button>
             {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-            <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+            <AddressInput
+              type="text"
+              placeholder="상세주소"
+              name="addressDetail"
+              onChange={inputOnChangeHandle}
+            />
             <AddressInput
               type="text"
               placeholder="구/군/시"

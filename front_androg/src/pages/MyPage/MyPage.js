@@ -88,8 +88,6 @@ const MyPage = () => {
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   let userId = 0;
 
-  const queryClient = useQueryClient();
-
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -128,32 +126,29 @@ const MyPage = () => {
       enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
-    
 
-      const withdrawal = useMutation(async () => {
-          const option = {
-            params: {
-              userId: principal.data.data.userId,
-            },
-            headers: {
-              Authorization: localStorage.getItem("accessToken")
-            }
-          }
-          console.log(await axios.delete(`http://localhost:8080/user/${userId}`, option));
-          return await axios.delete(`http://localhost:8080/user/${userId}`, option);          
-        });
+  const withdrawal = useMutation(async () => {
+    const option = {
+      params: {
+        userId: principal.data.data.userId,
+      },
+      headers: {
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    };
+    console.log(await axios.delete(`http://localhost:8080/user/${userId}`, option));
+    return await axios.delete(`http://localhost:8080/user/${userId}`, option);
+  });
 
   const withdrawalSubmit = () => {
-    if(window.confirm("회원탈퇴 하시겠습니까?")) {
+    if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();
       localStorage.removeItem("accessToken");
       setLoginIsState(false);
-      navgate("/")
+      navgate("/");
+      console.log("/");
     }
-  }
-
-     
-    
+  };
 
   useEffect(() => {
     if (!infoRefresh) {
@@ -164,7 +159,6 @@ const MyPage = () => {
       setProductsRefresh(true);
     }
   }, []);
-
 
   if (principal.isLoading && products.isLoading) {
     return <></>;
@@ -180,8 +174,12 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
-            <div css={addressContent} onClick={withdrawalSubmit}>회원탈퇴</div>
+            <span css={subTitle}>
+              {principal.data !== undefined ? principal.data.data.email : <></>}
+            </span>
+            <div css={addressContent} onClick={withdrawalSubmit}>
+              회원탈퇴
+            </div>
 
             <div css={addressContent} onClick={() => navgate("/mypage/address")}>
               주소록 보기
