@@ -47,8 +47,8 @@ const SearchProducts = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [products , setThisProducts] = useRecoilState(setProducts)
     const [ searchInput , setThisserachInput ] = useRecoilState(setSearchInput);
-    const [page , setThisPage ] =useRecoilState(setPage);
-    const [searchParams , setSearchParams] = useState({"searchInput" : searchInput , "page" : page})
+    const [page , setThisPage ] = useRecoilState(setPage);
+    // const [searchParams , setSearchParams] = useState({"searchInput" : searchInput , "page" : page})
     const [lastPage, setlastPage] = useState(1);
     const lastProductRef = useRef();
     useEffect(() => {
@@ -62,41 +62,46 @@ const SearchProducts = () => {
         const observer = new IntersectionObserver(observerService, { threshold: 1 });
         observer.observe(lastProductRef.current);
       }, []);
+
+    
       const option = {
         params: {
-          searchParams: searchParams
-        },
-        paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
-      };
-    const searchProducts = useQuery(
-        ["searchProducts"], async () => {
-
+            page : page,
+            searchInput : searchInput
+        }
+      }
+      
+      const searchProducts = useQuery(
+          
+          ["searchProducts"], async () => {
             
                 const response = await axios.get("http://localhost:8080/products/search",option);
                 console.log(response)
-                setThiRefresh(false);
                 return response
 
         },
         {   
-            enabled : refresh && (option.params.searchParams.page < lastPage + 1 || lastPage === 0),
             onSuccess : (response) => {
-
+                
                 const totalCount = response.data.productTotalCount;
-                setThisProducts([...products, ...response.data.productList]);
                 setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
-                setThisPage(option.params.searchParams.page +1);
-                setSearchParams({ ...searchParams, page: page + 1 });
-                console.log(searchParams)
+                setThisPage(page + 1);
+                setThisProducts([...products, ...response.data.productList]);
                 setThiRefresh(false);
             }
+            ,enabled : refresh && (option.params.searchParams.page < lastPage + 1 || lastPage === 0),  
+            
         }
     )
+        
+    
     const navigate = useNavigate();
     const ProductsCardClick = (productId) => {
         navigate(`/products/${productId}/details`);
     }
-
+    if(searchProducts.isLoading){
+        return <></>
+    }
     return (
         <div>
             <CommonHeader  />

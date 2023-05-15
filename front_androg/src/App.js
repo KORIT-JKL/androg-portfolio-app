@@ -42,6 +42,7 @@ function App() {
         <Route path ="/category/:categoryId" element ={<Products/>}></Route>
         <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
         <Route path ="/products/search" element = {<SearchProducts />}></Route>
+        
       </Routes>
     </>
   );

@@ -40,7 +40,7 @@ public class ProductsController {
 		Map<String, Object> requestMap = new HashMap<>(searchParams);
 //		System.out.println(requestMap);
 //		System.out.println(requestMap.get("searchParams[searchInput]"));
-		System.out.println(productsService.getProductsBySearchInput(requestMap));
+		
 		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
 	

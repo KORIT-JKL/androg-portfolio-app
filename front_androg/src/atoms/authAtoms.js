@@ -12,7 +12,7 @@ export const setCategoryId = atom({
 
 export const setRefresh = atom({
     key: "setRefresh",
-    default : true
+    default : false
 })
 
 export const setSearchInput = atom({

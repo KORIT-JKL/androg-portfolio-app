@@ -84,6 +84,7 @@ const CommonHeader = () => {
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [products , setThisProducts] = useRecoilState(setProducts);
   const [ page , setThisPage] = useRecoilState(setPage);
+  
   const navigate = useNavigate();
 
 
@@ -121,13 +122,14 @@ const CommonHeader = () => {
   };
   const EnterKeyDown = (e) =>{
     if(e.key === "Enter") {
-      
+      thisSetSearchInput(document.getElementById("searchInputText").value);
       navigate("/products/search");
+       
       setThisProducts([]);
       setThisPage(1);
-      thisSetSearchInput(document.getElementById("searchInputText").value);
       // console.log(document.getElementById("searchInputText").value)
       setThiRefresh(true);
+      
     }
     
     
