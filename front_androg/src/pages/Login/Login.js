@@ -112,8 +112,6 @@ const Login = () => {
         }
     }
 
-  
-
     return (
         <>
             <CommonHeader />

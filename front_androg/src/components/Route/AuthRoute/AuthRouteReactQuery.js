@@ -13,6 +13,9 @@ const AuthRouteReactQuery = ({path, element}) => {
       const response = await axios.get("http://localhost:8080/auth/authenticated", {params: {accessToken}});
       return response;
   }, {
+    onSuccess: () =>{
+      setRefresh(false);
+    },
       enabled: refresh
   });
 
@@ -29,7 +32,7 @@ const AuthRouteReactQuery = ({path, element}) => {
         if (!refresh) {
           setRefresh(true);
         }
-      }, [refresh]);
+      }, []);
 
       if (isLoading) {
         return <div>로딩중....</div>;
