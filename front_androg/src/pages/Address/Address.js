@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import AddressInput from "../../components/Input/AddressInput";
 import DaumPostcodeEmbed from "react-daum-postcode";
@@ -99,23 +99,12 @@ const nameBox = css`
   padding-top: 10px;
   margin-bottom: 20px;
 `;
-const postcode = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  display: none;
-
-  background-color: rgba(0, 0, 0, 0.4);
-`;
 
 const Address = () => {
   const [addressOpen, setAddressOpen] = useState(false);
   const [principalState, setPrincipalState] = useState(false);
   const [openPostCode, setOpenPostCode] = useState(false);
+  const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
   const [address, setAddress] = useState({
     address: "",
     sigungu: "",
@@ -123,7 +112,9 @@ const Address = () => {
     bname: "",
     zonecode: "",
   });
+
   let userId = 0;
+
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -142,7 +133,37 @@ const Address = () => {
       enabled: principalState,
     }
   );
-  console.log(address);
+  const addressRegister = useMutation(
+    async () => {
+      const data = {
+        userId: principal.data.data.userId,
+        address: address.address,
+        addressSigungu: address.sigungu,
+        addressSido: address.sido,
+        addressBname: address.bname,
+        addressZonecode: address.zonecode,
+        addressDetail: addressDetailInput.addressDetail,
+      };
+      console.log(data);
+      const option = {
+        headres: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      try {
+        const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    {
+      onSuccess: (response) => {
+        console.log(response.data);
+      },
+    }
+  );
   const selectAddress = (data) => {
     setAddress((prevState) => ({
       ...prevState,
@@ -153,8 +174,18 @@ const Address = () => {
       zonecode: data.zonecode,
     }));
   };
+  const inputOnChangeHandle = (e) => {
+    const { name, value } = e.target;
+    setAddressDetailInput({ ...addressDetailInput, [name]: value });
+    console.log(addressDetailInput.addressDetail);
+  };
+  useEffect(() => {
+    if (!principalState) {
+      setPrincipalState(true);
+    }
+  }, []);
 
-  if (principal.isLoading) {
+  if (principal.isLoading && addressRegister.isLoading) {
     return <></>;
   }
 
@@ -167,7 +198,7 @@ const Address = () => {
           <h2 css={subTitle}>모든 주소</h2>
           <div css={submitAddresBox}>
             <div css={userUpdateBox}>
-              유저이름
+              {principal.data !== undefined ? principal.data.data.name : ""}
               <div css={userUpdateBox}>
                 <button css={addressUpdateButton}>수정</button>
                 <button css={addressUpdateButton}>삭제</button>
@@ -197,10 +228,8 @@ const Address = () => {
         {addressOpen ? (
           <div css={addressContent}>
             <h2 css={Title}>새 주소 추가</h2>
-            <div css={nameBox}>이름</div>
-            <div css={nameBox}>
-              {address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}
-            </div>
+            <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
+            <div css={nameBox}>{address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}</div>
             <button
               css={addAddressButton}
               onClick={() => {
@@ -215,7 +244,7 @@ const Address = () => {
               주소찾기{" "}
             </button>
             {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-            <AddressInput type="text" placeholder="상세주소" name="addressDetail" />
+            <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
             <AddressInput
               type="text"
               placeholder="구/군/시"
@@ -237,7 +266,23 @@ const Address = () => {
               value={address.zonecode}
               onChange={(e) => setAddress({ ...address, zonecode: e.target.value })}
             />
-            <button css={addAddressButton}>저장</button>
+            <button
+              css={addAddressButton}
+              onClick={() => {
+                addressRegister.mutate();
+                setAddressOpen(true);
+                // setAddress((prevState) => ({
+                //   ...prevState,
+                //   address: "",
+                //   sigungu: "",
+                //   sido: "",
+                //   bname: "",
+                //   zonecode: "",
+                // }));
+              }}
+            >
+              저장
+            </button>
             <button
               css={addAddressButton}
               onClick={() => {

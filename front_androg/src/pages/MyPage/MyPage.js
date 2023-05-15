@@ -146,9 +146,8 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>
-              {principal.data !== undefined ? principal.data.data.email : <></>}
-            </span>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <div>기본배송지 정보</div>
             <div css={addressContent} onClick={() => navgate("/mypage/address")}>
               주소록 보기
             </div>

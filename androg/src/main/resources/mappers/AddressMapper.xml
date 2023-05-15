@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.AddressRepository">
+	<insert id="addressRegister" parameterType="com.korit.androg.androg.entity.Address">
+	insert into address_tb
+		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode})
+	
+	</insert>
+
+</mapper>
