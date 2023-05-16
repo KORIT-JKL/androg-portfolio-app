@@ -101,9 +101,10 @@ const nameBox = css`
   margin-bottom: 20px;
 `;
 //문제 : 해당 유저에 배송지를 저장하고 추가된 주소지가 바로바로 적용이 안됨 새로고침을 해야 적용된다.
-// 또 한 수정과 삭제 버튼의 click이 동작이 안됨 -> map으로 만들어서 그런듯 함
+
 const Address = () => {
   const [addressOpen, setAddressOpen] = useState(false);
+  const [updateAddressOpen, setUpdateAddressOpen] = useState(false);
   const [principalState, setPrincipalState] = useState(false);
   const [openPostCode, setOpenPostCode] = useState(false);
   const [addressListState, setAddressListState] = useState(false);
@@ -158,11 +159,7 @@ const Address = () => {
         },
       };
       try {
-        const response = await axios.post(
-          "http://localhost:8080/user/mypage/address",
-          data,
-          option
-        );
+        const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
         return response;
       } catch (error) {
         // console.log(error);
@@ -212,11 +209,7 @@ const Address = () => {
         Authorization: localStorage.getItem("accessToken"),
       },
     };
-    const response = await axios.put(
-      `http://localhost:8080/user/mypage/address/${addressId}`,
-      option,
-      data
-    );
+    const response = await axios.put(`http://localhost:8080/user/mypage/address/${addressId}`, option, data);
     console.log(response);
     return response;
   });
@@ -247,6 +240,90 @@ const Address = () => {
   if (principal.isLoading && addressRegister.isLoading && addressList.isLoading) {
     return <></>;
   }
+
+  const updateAddress = ({ address }) => {
+    return (
+      <div css={addressContent}>
+        <h2 css={Title}>주소 수정하기</h2>
+        <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
+        <div css={nameBox}>{address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}</div>
+        <button
+          css={addAddressButton}
+          onClick={() => {
+            if (!openPostCode) {
+              setOpenPostCode(true);
+            } else {
+              setOpenPostCode(false);
+            }
+          }}
+        >
+          {" "}
+          주소찾기{" "}
+        </button>
+        {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
+        <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+        <AddressInput
+          type="text"
+          placeholder="구/군/시"
+          name="sigungu"
+          value={address.sigungu}
+          onChange={(e) => setAddress({ ...address, sigungu: e.target.value })}
+        />
+        <AddressInput
+          type="text"
+          placeholder="시/도"
+          name="sido"
+          value={address.sido}
+          onChange={(e) => setAddress({ ...address, sido: e.target.value })}
+        />
+        <AddressInput
+          type="text"
+          placeholder="우편번호"
+          name="zonecode"
+          value={address.zonecode}
+          onChange={(e) => setAddress({ ...address, zonecode: e.target.value })}
+        />
+        <button
+          css={addAddressButton}
+          onClick={() => {
+            addressUpdate.mutate(address);
+            setAddressOpen(true);
+            // setAddress((prevState) => ({
+            //   ...prevState,
+            //   address: "",
+            //   sigungu: "",
+            //   sido: "",
+            //   bname: "",
+            //   zonecode: "",
+            // }));
+          }}
+        >
+          저장
+        </button>
+        <button
+          css={addAddressButton}
+          onClick={() => {
+            if (!addressOpen) {
+              setAddressOpen(true);
+            } else {
+              setAddressOpen(false);
+              setAddress((prevState) => ({
+                ...prevState,
+                address: "",
+                sigungu: "",
+                sido: "",
+                bname: "",
+                zonecode: "",
+              }));
+            }
+          }}
+        >
+          취소
+        </button>
+      </div>
+    );
+  };
+
   return (
     <>
       <CommonHeader />
@@ -264,10 +341,10 @@ const Address = () => {
                         <button
                           css={addressUpdateButton}
                           onClick={() => {
-                            console.log(`${address.addressId}`);
-                            if (!addressOpen) {
+                            if (!updateAddressOpen) {
                               setAddressOpen(true);
                             }
+                            updateAddress(address);
                           }}
                         >
                           수정
@@ -302,9 +379,7 @@ const Address = () => {
           <div css={addressContent}>
             <h2 css={Title}>새 주소 추가</h2>
             <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
-            <div css={nameBox}>
-              {address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}
-            </div>
+            <div css={nameBox}>{address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}</div>
             <button
               css={addAddressButton}
               onClick={() => {
@@ -319,12 +394,7 @@ const Address = () => {
               주소찾기{" "}
             </button>
             {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-            <AddressInput
-              type="text"
-              placeholder="상세주소"
-              name="addressDetail"
-              onChange={inputOnChangeHandle}
-            />
+            <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
             <AddressInput
               type="text"
               placeholder="구/군/시"
