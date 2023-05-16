@@ -62,6 +62,12 @@ const sizeContainer = css`
     border-top: 1px solid #dbdbdbff;
     border-bottom: 1px solid #dbdbdbff;
 `
+const selectSizeContainer = css`
+    display : flex;
+    padding: 8.3px;
+    width: 100%;
+    
+`
 const productSize = css`
     font-size: 20px;
     padding: 5px;
@@ -278,7 +284,11 @@ const ProductDetails = () => {
                            
                         </>
                         }
+                        <div css={selectSizeContainer}>
+                        선택사이즈  {searchParams.sizeName}
+                    </div>
                 </div>
+                
                 <div css={detailBottom}>
                     <div css={delivery}>10만원 이상 결제시 무료배송</div>
                 </div>
