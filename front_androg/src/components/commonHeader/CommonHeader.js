@@ -148,7 +148,7 @@ const CommonHeader = () => {
     if(!!localStorage.getItem("accessToken")){
       setLoginIsState(true);
     }
-  })
+  },[loginIsState])
 
   return (
     <>

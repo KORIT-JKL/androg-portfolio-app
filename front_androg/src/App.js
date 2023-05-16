@@ -18,6 +18,7 @@ import ProductDetails from "./pages/products/productDetails";
 import SearchProducts from "./pages/products/searchProducts";
 import Address from "./pages/Address/Address";
 import AuthRouteReactQuery from './components/Route/AuthRoute/AuthRouteReactQuery';
+import Payment from "./pages/Payment/Payment";
 
 function App() {
   return (
@@ -43,7 +44,8 @@ function App() {
         <Route path ="/category/:categoryId" element={<Products />} />
         <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
         <Route path ="/products/search" element = {<SearchProducts />}></Route>
-        
+        <Route path = "/products/payment" element = {<Payment />} />
+
       </Routes>
     </>
   );
