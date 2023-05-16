@@ -120,4 +120,8 @@
         	pt.product_name like concat("%",#{searchInput},"%")
         	or clt.color_name like concat("%",#{searchInput},"%")
 	</select>
+	<insert id="addCart">
+		insert into cart_tb
+		values(0, #{userId},#{productId},#{sizeName},#{countNumber})
+	</insert>
 </mapper>

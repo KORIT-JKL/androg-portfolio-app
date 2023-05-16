@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.repository.ProductsRepository;
 
@@ -44,6 +45,15 @@ public class ProductsService {
 		responseMap.put("productTotalCount",productTotalCount);
 		return responseMap;
 
+	}
+	public void addCart(addCartRequestDto addCartRequestDto) {
+		Map<String, Object> requestMap = new HashMap<>();
+		requestMap.put("userId", addCartRequestDto.getUserId());
+		requestMap.put("productId", addCartRequestDto.getProductId());
+		requestMap.put("sizeName", addCartRequestDto.getSizeName());
+		requestMap.put("countNumber", addCartRequestDto.getCountNumber());
+		productsRepository.addCart(requestMap);
+		return;
 	}
 	
 	

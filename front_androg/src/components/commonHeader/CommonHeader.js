@@ -143,7 +143,10 @@ const CommonHeader = () => {
 
    }
   };
-
+  const cartOpen = () => {
+    setCartIsOpen(true);
+    setThiRefresh(true);
+  }
   useEffect(()=> {
     if(!!localStorage.getItem("accessToken")){
       setLoginIsState(true);
@@ -176,7 +179,7 @@ const CommonHeader = () => {
                 <li css={list} onClick={() => navigate("/mypage")}>
                   MYPAGE
                 </li>
-                <li css={list} onClick={() => setCartIsOpen(true)}>
+                <li css={list} onClick={cartOpen}>
                   BAG
                 </li>
               </ul>
@@ -197,7 +200,7 @@ const CommonHeader = () => {
                 <li css={list}>
                  <Link to="/login">LOGIN</Link> 
                 </li>
-                <li css={list} onClick={() => setCartIsOpen(true)}>
+                <li css={list} onClick={cartOpen}>
                   BAG
                 </li>
               </ul>

@@ -45,4 +45,3 @@ export const setSearchParams = atom(
         key:"setSearchInput",
         default : ""
     })
-

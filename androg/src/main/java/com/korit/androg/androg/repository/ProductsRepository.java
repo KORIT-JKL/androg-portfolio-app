@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.entity.Products;
 
 @Mapper
@@ -14,4 +15,6 @@ public interface ProductsRepository {
 	public List<Products> getProductsBySearchInput(Map<String, Object> reqeustMap);
 	public int getTotalCountByCategoryId(int categoryId);
 	public int getTotalCountBySearchInput(String searchInput);
+	public void addCart(Map<String, Object> reqeustMap);
+	public addCartRequestDto getCart(int userId);
 }

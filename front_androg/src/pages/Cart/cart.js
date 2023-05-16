@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/Auth/AuthAtoms";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { setRefresh } from "../../atoms/authAtoms";
 const cartContainer =css`
     position: fixed;
     z-index: 999;
@@ -166,6 +169,8 @@ const payButton =css`
 `
 const Cart = () => {
     const [ count , setCount ] = useState(0);
+    const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
+    const [ userId, setUserId] = useState(0);
     const [ cartIsOpen , setCartIsOpen] = useRecoilState(cartIsOpenState);
     const cartClose = () => {
         setCartIsOpen(false);
@@ -181,8 +186,42 @@ const Cart = () => {
     useEffect(() => {
         document.body.style= `overflow: hidden`;
         return () => document.body.style = `overflow: auto`
-      }, [])
-      
+      }, [userId])
+
+
+      const principal = useQuery(
+        ["principal"],
+        async () => {
+          const accessToken = localStorage.getItem("accessToken");
+          const response = await axios.get("http://localhost:8080/user/mypage", {
+            params: { accessToken },
+          });
+          
+          return response;
+        },
+        {
+          onSuccess: (response) => {
+            setUserId(response.data.userId);
+            console.log(userId);
+            setThiRefresh(false);
+          },
+          enabled: refresh,
+        }
+      );
+    
+    const getCart = useQuery(["getCart"] , async () => {
+        
+        const response = axios.get("http://localhost:8080/cart",{params: {userId : userId}})
+        return response;
+    },{
+        enabled : (userId!==0)
+        ,onSuccess : (response) => {
+            console.log(response)
+            setThiRefresh(false);
+        }
+    })
+
+
     return (
         
         <div css ={cartContainer}>

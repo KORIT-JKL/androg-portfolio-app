@@ -44,6 +44,12 @@ public class ProductsController {
 	@PostMapping("/cart/addition")
 	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
 		System.out.println(addCartRequestDto);
+		productsService.addCart(addCartRequestDto);
+		return null;
+	}
+	@GetMapping("/cart")
+	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
+		System.out.println(searchParams);
 		return null;
 	}
 		
