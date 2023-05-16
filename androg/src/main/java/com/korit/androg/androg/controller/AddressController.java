@@ -36,6 +36,7 @@ public class AddressController {
 	public ResponseEntity<?> addressUpdate(@PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto){
 		System.out.println(addressId);
 		System.out.println(addressReigsteReqDto);
-		return ResponseEntity.ok().body(null);
+		
+		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
 	}
 }

@@ -42,4 +42,16 @@
 		ab.user_id = #{userId}
 	</select>
 	
+	<update id="addressUpdate" parameterType="hashmap">
+		update address_tb
+		set
+			address = #{address},
+			address_detail = #{addressDetail},
+			address_sido = #{addressSido},
+			address_sigungu = #{addressSigungu},
+			address_bname = #{addressBname},
+			address_zonecode = #{addressZonecode}
+		where
+			address_id = #{addressId}
+	</update>
 </mapper>

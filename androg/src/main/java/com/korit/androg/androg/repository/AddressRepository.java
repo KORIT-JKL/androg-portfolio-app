@@ -1,6 +1,7 @@
 package com.korit.androg.androg.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -12,5 +13,5 @@ public interface AddressRepository {
 	
 	public List<Address> getAddress(int userId);
 	
-	public int addressUpdate(int addressId);
+	public int addressUpdate(Map<String, Object> requestMap);
 }

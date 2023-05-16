@@ -1,7 +1,9 @@
 package com.korit.androg.androg.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,15 @@ public class AddressService {
 		return addressList;
 	}
 	
-	public int addressUpdate(int addressId) {
-		return 0;
+	public int addressUpdate(int addressId, AddressReigsteReqDto addressReigsteReqDto) {
+		Map<String, Object> requestMap = new HashMap<>();
+		requestMap.put("addressId", addressId);
+		requestMap.put("address", addressReigsteReqDto.getAddress());
+		requestMap.put("addressSigungu", addressReigsteReqDto.getAddressSigungu());
+		requestMap.put("addressSido", addressReigsteReqDto.getAddressSido());
+		requestMap.put("addressBname", addressReigsteReqDto.getAddressBname());
+		requestMap.put("addressZonecode", addressReigsteReqDto.getAddressZonecode());
+		requestMap.put("addressDetail", addressReigsteReqDto.getAddressDetail());
+		return addressRepository.addressUpdate(requestMap);
 	}
 }
