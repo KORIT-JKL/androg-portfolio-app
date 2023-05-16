@@ -5,6 +5,12 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation } from "react-query";
 import axios from "axios";
+import {
+  AddressInsertStateRecoil,
+  AddressListStateRecoil,
+  getAddressListRecoil,
+} from "../../../atoms/AddressAtoms/AddressAtoms";
+import { useRecoilState } from "recoil";
 
 const Title = css`
   margin-top: 5px;
@@ -49,9 +55,9 @@ const nameBox = css`
 
 const InsertAddress = ({ principal }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
-
+  const [addressOpen, setAddressOpen] = useRecoilState(AddressInsertStateRecoil);
+  const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
-  const [userAddressList, setUserAddressList] = useState([]);
   const [addressInput, setAddressInput] = useState({
     address: "",
     sigungu: "",
@@ -79,6 +85,7 @@ const InsertAddress = ({ principal }) => {
         },
       };
       try {
+        //주소지 추가 url
         const response = await axios.post(
           "http://localhost:8080/user/mypage/address",
           data,
@@ -90,8 +97,8 @@ const InsertAddress = ({ principal }) => {
       }
     },
     {
-      onSuccess: (response) => {
-        // console.log(response.data);
+      onSuccess: () => {
+        setAddressListState(true);
       },
     }
   );
@@ -111,6 +118,10 @@ const InsertAddress = ({ principal }) => {
     const { name, value } = e.target;
     setAddressDetailInput({ ...addressDetailInput, [name]: value });
   };
+
+  if (addressRegister.isLoading) {
+    return <></>;
+  }
 
   return (
     <div css={addressContent}>
@@ -179,7 +190,16 @@ const InsertAddress = ({ principal }) => {
       >
         저장
       </button>
-      <button css={addAddressButton}>취소</button>
+      <button
+        css={addAddressButton}
+        onClick={() => {
+          if (addressOpen) {
+            setAddressOpen(false);
+          }
+        }}
+      >
+        취소
+      </button>
     </div>
   );
 };

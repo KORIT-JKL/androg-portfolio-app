@@ -120,7 +120,8 @@ const MyPage = () => {
     },
     {
       onSuccess: (response) => {
-        setOrderProducts([...orderProducts, ...response.data]);
+        setOrderProducts([...response.data]);
+        console.log(response);
         setProductsRefresh(false);
       },
       enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
@@ -210,9 +211,9 @@ const MyPage = () => {
         <div css={orderContent}>
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
-            orderProducts.map((orderProduct) => (
-              <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} />
-            ))
+            orderProducts.map((orderProduct) => {
+              return <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} />;
+            })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
           )}
