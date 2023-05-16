@@ -125,7 +125,7 @@ const cartText = css`
     width: 30%;
     margin: 5px;
     background-color: white;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 300;
     color: balck;
     transition: 0.75s ;
@@ -305,7 +305,7 @@ const ProductDetails = () => {
                 <div css={buttonList}>
                     {selectSize ? 
                     <button css={addCartText} onClick={addCartSubmitHandle} >장바구니에 담기</button> : 
-                    <button css={cartText} >사이즈를 고르시면 장바구니에 담을 수 있습니다.</button>}
+                    <button css={cartText} >사이즈선택</button>}
                     
                     <button css={directBuyText}>바로구매</button>
                 </div>
