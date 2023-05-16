@@ -130,6 +130,7 @@ const Login = () => {
                     <div css={inputCss}>
                         <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
                         <RiLockPasswordLine />
+
                         </LoginInput>
                         <div css={errorMsg}>{errorMessages.password}</div>
                     </div>
