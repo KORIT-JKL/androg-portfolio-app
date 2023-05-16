@@ -113,6 +113,22 @@ const addCartText =css`
     }
 
 `
+
+const cartText = css`
+    height: 100%;
+    width: 30%;
+    margin: 5px;
+    background-color: white;
+    font-size: 15px;
+    font-weight: 300;
+    color: balck;
+    transition: 0.75s ;
+    &:hover{
+    background-color: white;
+
+}
+
+`
 const directBuyText =css`
     height: 100%;
     width: 30%;
@@ -150,7 +166,7 @@ const ProductDetails = () => {
     const [ product , setProduct ] = useState();
     const [ shippingIsOpen , setShippingIsOpen] = useState(false);
     const [searchParams , setSearchparams] = useState({"userId" : 0, "productId" : 0, "sizeName" : "", "countNumber" : 1})
-    const [ size , setSize] = useState(null);
+    const [ selectSize , setSelectSize] = useState(false);
     const [ userId, setUserId] = useState(0);
     const { productId } = useParams();
     
@@ -213,6 +229,7 @@ const ProductDetails = () => {
 
     const sizeClick = (e) =>{
         setSearchparams({...searchParams, "sizeName" : e.target.textContent})
+        setSelectSize(true);
     }
     const shippingClickHandle = () =>{
         if(shippingIsOpen){
@@ -276,7 +293,10 @@ const ProductDetails = () => {
                 </div>
             </div>
                 <div css={buttonList}>
-                    <button css={addCartText} onClick={addCartSubmitHandle}>장바구니에 담기</button>
+                    {selectSize ? 
+                    <button css={addCartText} onClick={addCartSubmitHandle} >장바구니에 담기</button> : 
+                    <button css={cartText} >사이즈를 고르시면 장바구니에 담을 수 있습니다.</button>}
+                    
                     <button css={directBuyText}>바로구매</button>
                 </div>
         </div>

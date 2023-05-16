@@ -172,6 +172,7 @@ const Cart = () => {
     const [refresh , setThiRefresh ] = useRecoilState(setRefresh);
     const [ userId, setUserId] = useState(0);
     const [ cartIsOpen , setCartIsOpen] = useRecoilState(cartIsOpenState);
+    const [ getproducts , setProducts] = useState([]);
     const cartClose = () => {
         setCartIsOpen(false);
     }
@@ -202,25 +203,28 @@ const Cart = () => {
         {
           onSuccess: (response) => {
             setUserId(response.data.userId);
-            console.log(userId);
+            // console.log(userId);
             setThiRefresh(false);
           },
           enabled: refresh,
         }
       );
     
-    const getCart = useQuery(["getCart"] , async () => {
-        
-        const response = axios.get("http://localhost:8080/cart",{params: {userId : userId}})
+      const getCart = useQuery(["getCart"], async () => {
+        const response = axios.get("http://localhost:8080/cart", { params: { userId: userId } });
         return response;
-    },{
-        enabled : (userId!==0)
-        ,onSuccess : (response) => {
-            console.log(response)
-            setThiRefresh(false);
+      }, {
+        enabled: (userId !== 0),
+        onSuccess: (response) => {
+          if (response == null) {
+            setThiRefresh(true);
+          }
+          setProducts(response.data); // Update the state with response.data
+          console.log(getproducts);
+          setThiRefresh(false);
         }
-    })
-
+      });
+    
 
     return (
         
@@ -231,27 +235,33 @@ const Cart = () => {
                     <button onClick={() => cartClose()} css={closeButton}>X</button>
                 </div>
                 <div css={main}>
-                    <div css={mainProduct}>
-                        <div css={imgContainer}>
-                            <img css={img} src="//cdn.shopify.com/s/files/1/0099/5708/1143/products/115669_BONE_1.jpg?v=1683049243&width=480" alt="" />
-                        </div>
-                        <div css={detailContainer}>
-                            <div css={productName}>
-                                PYTHON REVERSIBLE VEST
+                    {getproducts != null ? getproducts.map((product) => (
+                        <>
+                        <div css={mainProduct}>
+                            <div css={imgContainer}>
+                                <img css={img} src={product.productImg} alt="" />
+                                </div>
+                                <div css={detailContainer}>
+                                <div css={productName}>
+                                    {product.productName}
+                                </div>
+                                <div css={productOption}>
+                                    {product.colorName} / {product.sizeName}
+                                </div>
+                                <div css={productPrice}>
+                                    ₩{product.productPrice*product.countNumber}
+                                </div>
+                                <div css={productCount}>
+                                    <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
+                                    <button css={CountButton}>{count}</button>
+                                    <button css={plusAndMinus} onClick={() => countplus(count)}>+</button>
+                                </div>
                             </div>
-                            <div css={productOption}>
-                                BLACK / M
-                            </div>
-                            <div css={productPrice}>
-                                ₩{296000*count}
-                            </div>
-                            <div css={productCount}>
-                                <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
-                                <button css={CountButton}>{count}</button>
-                                <button css={plusAndMinus} onClick={() => countplus(count)}>+</button>
-                            </div>
-                        </div>
-                    </div>
+                         </div>
+                            </>
+                        )) : null}
+                        
+                        
                     {/* 여기까지가 살 물품들 */}
                     <div css={space}></div>
 

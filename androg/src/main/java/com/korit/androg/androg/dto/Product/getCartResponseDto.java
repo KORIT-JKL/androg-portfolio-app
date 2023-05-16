@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class getCartResponseDto {
-	private int userId;
-	private Products products;
+	private int cartId;
+	private String productName;
+	private int productPrice;
+	private String productImg;
+	private String sizeName;
+	private String colorName;
+	private int countNumber;
 }

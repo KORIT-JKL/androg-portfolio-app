@@ -49,8 +49,9 @@ public class ProductsController {
 	}
 	@GetMapping("/cart")
 	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
-		System.out.println(searchParams);
-		return null;
+		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
+		return 	ResponseEntity.ok(
+				productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
 	}
 		
 	

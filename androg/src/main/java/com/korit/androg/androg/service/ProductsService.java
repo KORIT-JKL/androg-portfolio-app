@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
+import com.korit.androg.androg.dto.Product.getCartResponseDto;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.repository.ProductsRepository;
 
@@ -54,6 +55,10 @@ public class ProductsService {
 		requestMap.put("countNumber", addCartRequestDto.getCountNumber());
 		productsRepository.addCart(requestMap);
 		return;
+	}
+	
+	public List<getCartResponseDto> getCartByUserId(int userId) {
+		return productsRepository.getCartByuserId(userId);
 	}
 	
 	
