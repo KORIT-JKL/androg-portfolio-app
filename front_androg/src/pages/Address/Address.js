@@ -109,43 +109,6 @@ const Address = () => {
     }
   );
 
-  //해당 user 주소지 추가 요청
-  // const addressRegister = useMutation(
-  //   async () => {
-  //     const data = {
-  //       userId: principal.data.data.userId,
-  //       address: addressInput.address,
-  //       addressSigungu: addressInput.sigungu,
-  //       addressSido: addressInput.sido,
-  //       addressBname: addressInput.bname,
-  //       addressZonecode: addressInput.zonecode,
-  //       addressDetail: addressDetailInput.addressDetail,
-  //     };
-  //     // console.log(data);
-  //     const option = {
-  //       headres: {
-  //         "Content-Type": "application/json",
-  //         Authorization: localStorage.getItem("accessToken"),
-  //       },
-  //     };
-  //     try {
-  //       const response = await axios.post(
-  //         "http://localhost:8080/user/mypage/address",
-  //         data,
-  //         option
-  //       );
-  //       return response;
-  //     } catch (error) {
-  //       // console.log(error);
-  //     }
-  //   },
-  //   {
-  //     onSuccess: (response) => {
-  //       // console.log(response.data);
-  //     },
-  //   }
-  // );
-
   // 해당 유저 주소지 리스트 조회 요청
   const addressList = useQuery(
     ["addressList"],
@@ -169,28 +132,19 @@ const Address = () => {
     }
   );
 
-  // const addressUpdate = useMutation(async (address) => {
-  //   const data = {
-  //     address: addressInput.address,
-  //     addressSigungu: addressInput.sigungu,
-  //     addressSido: addressInput.sido,
-  //     addressBname: addressInput.bname,
-  //     addressZonecode: addressInput.zonecode,
-  //     addressDetail: addressDetailInput.addressDetail,
-  //   };
-  //   const option = {
-  //     headers: {
-  //       Authorization: localStorage.getItem("accessToken"),
-  //     },
-  //   };
-  //   const response = await axios.put(
-  //     `http://localhost:8080/user/mypage/address/${address.addressId}`,
-  //     option,
-  //     data
-  //   );
-  //   console.log(response);
-  //   return response;
-  // });
+  const addressDelete = useMutation(async (address) => {
+    const option = {
+      headers: {
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    };
+    const response = await axios.delete(
+      `http://localhost:8080/user/mypage/address/${address.addressId}`,
+      option
+    );
+    console.log(response);
+    return response;
+  });
 
   // const selectAddress = (data) => {
   //   setAddressInput((prevState) => ({
@@ -218,10 +172,6 @@ const Address = () => {
   if (principal.isLoading && addressList.isLoading) {
     return <></>;
   }
-  let getAddrss = {};
-  const getAddressId = (address) => {
-    return address;
-  };
 
   return (
     <>
@@ -248,7 +198,14 @@ const Address = () => {
                         >
                           수정
                         </button>
-                        <button css={addressUpdateButton}>삭제</button>
+                        <button
+                          css={addressUpdateButton}
+                          onClick={() => {
+                            addressDelete.mutate(address);
+                          }}
+                        >
+                          삭제
+                        </button>
                       </div>
                     </div>
                     <div>{address.address}</div>

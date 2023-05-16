@@ -14,4 +14,6 @@ public interface AddressRepository {
 	public List<Address> getAddress(int userId);
 	
 	public int addressUpdate(Map<String, Object> requestMap);
+	
+	public int addressDelete(int addressId);
 }

@@ -54,4 +54,11 @@
 		where
 			address_id = #{addressId}
 	</update>
+	
+	<delete id="addressDelete" parameterType="Integer">
+		delete from address_tb
+		where
+			address_id = #{addressId}
+	</delete>
+	
 </mapper>

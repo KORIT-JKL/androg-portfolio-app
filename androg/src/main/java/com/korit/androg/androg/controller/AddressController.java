@@ -1,6 +1,7 @@
 package com.korit.androg.androg.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,5 +39,10 @@ public class AddressController {
 		System.out.println(addressReigsteReqDto);
 		
 		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
+	}
+	
+	@DeleteMapping("/user/mypage/address/{addressId}")
+	public ResponseEntity<?> addressDelete(@PathVariable int addressId){
+		return ResponseEntity.ok().body(addressService.addressDelete(addressId));
 	}
 }

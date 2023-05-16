@@ -45,4 +45,8 @@ public class AddressService {
 		requestMap.put("addressDetail", addressReigsteReqDto.getAddressDetail());
 		return addressRepository.addressUpdate(requestMap);
 	}
+	
+	public int addressDelete(int addressId) {
+		return addressRepository.addressDelete(addressId);
+	}
 }
