@@ -19,4 +19,5 @@ public interface ProductsRepository {
 	public void addCart(Map<String, Object> reqeustMap);
 	public addCartRequestDto getCart(int userId);
 	public List<getCartResponseDto> getCartByuserId(int userId);
+	public void deleteCartByCartId(int cartId);
 }

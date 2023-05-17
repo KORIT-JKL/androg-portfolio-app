@@ -3,9 +3,10 @@ import { css } from "@emotion/react";
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/Auth/AuthAtoms";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { setRefresh } from "../../atoms/authAtoms";
+import QueryString from "qs";
 const cartContainer =css`
     position: fixed;
     z-index: 999;
@@ -75,10 +76,25 @@ const detailContainer =css`
     padding-left: 40px;
 `
 const productName =css`
+    display: flex;
+    justify-content: space-between;
     height: 10%;
     margin: 10px 5px;
     padding-bottom: 30px;
     border-bottom: 1px solid #dbdbdb;
+`
+const productDelectButton =css`
+    background-color: white;
+    height: 20px;
+    width: 25px;
+    border: none;
+    margin-right: 20px;
+    &:hover{
+        background-color: #dbdbdb;
+    }
+    &:active{
+        background-color: #fafafa;
+    }
 `
 const productOption =css`
     height: 15%;
@@ -173,6 +189,8 @@ const Cart = () => {
     const [ userId, setUserId] = useState(0);
     const [ cartIsOpen , setCartIsOpen] = useRecoilState(cartIsOpenState);
     const [ getproducts , setProducts] = useState([]);
+    const [ totalPrice , setTotalPrice] = useState(0);
+    const [deleteSuccess, setDeleteSuccess] = useState(true);
     const cartClose = () => {
         setCartIsOpen(false);
     }
@@ -184,6 +202,25 @@ const Cart = () => {
         setCount(count-1);
         console.log(count);
     }
+    const deleteProduct = useMutation(
+        async (product) => {
+            const option = {
+                params: {
+                    product : product
+                },paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
+            }
+            const response = axios.delete("http://localhost:8080/cart/delete",option)
+            return response;
+        },{
+            onSuccess : () => {
+               setDeleteSuccess(true)
+            }
+        }
+
+    
+    )
+
+
     useEffect(() => {
         document.body.style= `overflow: hidden`;
         return () => document.body.style = `overflow: auto`
@@ -214,17 +251,24 @@ const Cart = () => {
         const response = axios.get("http://localhost:8080/cart", { params: { userId: userId } });
         return response;
       }, {
-        enabled: (userId !== 0),
+        enabled: (userId !== 0) && deleteSuccess,
         onSuccess: (response) => {
           if (response == null) {
             setThiRefresh(true);
           }
           setProducts(response.data); // Update the state with response.data
-          console.log(getproducts);
+          let totalPrice = 0;
+          response.data.forEach(product => {
+            totalPrice += (product.productPrice*product.countNumber);
+          });
+          setTotalPrice(totalPrice)
           setThiRefresh(false);
+          setDeleteSuccess(false);
         }
       });
     
+     
+      
 
     return (
         
@@ -232,34 +276,40 @@ const Cart = () => {
             <div css={mainCartContainer}>
                 <div css={header}>
                     <div css={cartText}>장바구니</div>
-                    <button onClick={() => cartClose()} css={closeButton}>X</button>
+                    <button  css={closeButton} onClick={() => cartClose()}>X</button>
                 </div>
                 <div css={main}>
-                    {getproducts != null ? getproducts.map((product) => (
-                        <>
-                        <div css={mainProduct}>
-                            <div css={imgContainer}>
-                                <img css={img} src={product.productImg} alt="" />
+                    {getproducts != null ? getproducts.map(
+                        (product) => (
+                            <>
+
+                            <div css={mainProduct}>
+                                <div css={imgContainer}>
+                                    <img  css={img} src={product.productImg} alt="" />
                                 </div>
                                 <div css={detailContainer}>
-                                <div css={productName}>
-                                    {product.productName}
-                                </div>
-                                <div css={productOption}>
-                                    {product.colorName} / {product.sizeName}
-                                </div>
-                                <div css={productPrice}>
-                                    ₩{product.productPrice*product.countNumber}
-                                </div>
-                                <div css={productCount}>
-                                    <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
-                                    <button css={CountButton}>{count}</button>
-                                    <button css={plusAndMinus} onClick={() => countplus(count)}>+</button>
+                                    <div css={productName}>
+                                        {product.productName}
+                                        <button css={productDelectButton} onClick={() => deleteProduct.mutate(product)}>X</button>
+                                    </div>
+                                    <div css={productOption}>
+                                        {product.colorName} / {product.sizeName}
+                                    </div>
+                                    <div css={productPrice}>
+                                        ₩{product.productPrice*product.countNumber}        (Count : {product.countNumber})
+                                    </div>
+                                    <div css={productCount}>
+                                        
+                                        <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
+                                        <button css={CountButton}>{product.countNumber}</button>
+                                        <button css={plusAndMinus} onClick={() => countplus(count)}>+</button>
+                                    </div>
                                 </div>
                             </div>
-                         </div>
-                            </>
-                        )) : null}
+                        </>
+                        )
+                        ) : null}
+
                         
                         
                     {/* 여기까지가 살 물품들 */}
@@ -279,7 +329,7 @@ const Cart = () => {
                     </div>
                     <div css={totalPriceContainer}>
                         <div css={totalPriceText}>총 가격</div>
-                        <div>₩99999999</div>
+                        <div>₩ {totalPrice}</div>
                     </div>
 
                 </div>

@@ -61,5 +61,10 @@ public class ProductsService {
 		return productsRepository.getCartByuserId(userId);
 	}
 	
+	public void deleteCartByCartId(int cartId) {
+		productsRepository.deleteCartByCartId(cartId);
+		return ;
+	}
+	
 	
 }

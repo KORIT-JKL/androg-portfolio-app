@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,10 +50,16 @@ public class ProductsController {
 	}
 	@GetMapping("/cart")
 	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
-		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
+//		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
 		return 	ResponseEntity.ok(
 				productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
 	}
-		
+
+	@DeleteMapping("/cart/delete")
+	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
+//		System.out.println(params.get("product[cartId]"));
+		productsService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
+		return 	null;
+	}
 	
 }

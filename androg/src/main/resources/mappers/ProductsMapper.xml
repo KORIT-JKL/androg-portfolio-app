@@ -147,6 +147,13 @@
 		    left outer join color_tb clt on (clt.color_id = pt.color_id)
 		where
 			ct.user_id = #{userId}
+			and ct.count_number >0
 				
 	</select>
+	<delete id="deleteCartByCartId" parameterType="Integer">
+		delete from cart_tb
+		where 
+			cart_id = #{cartId}
+		
+	</delete>
 </mapper>
