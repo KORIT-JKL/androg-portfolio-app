@@ -39,6 +39,12 @@ const detailsContainer =css`
     padding-left: 30px;
     
 `
+const sameNameProductsContainer = css`
+    display: flex;
+    width: 100%;
+    height: 80px;
+    border: 1px solid black;
+`
 const detailTop =css`
     display: flex;
     width: 100%;
@@ -175,6 +181,7 @@ const ProductDetails = () => {
     const [ selectSize , setSelectSize] = useState(false);
     const [ userId, setUserId] = useState(0);
     const { productId } = useParams();
+    const [ sameNameProducts , setSameNameProducts] = useState([]);
     
     const principal = useQuery(
         ["principal"],
@@ -194,7 +201,7 @@ const ProductDetails = () => {
           enabled: refresh,
         }
       );
-
+    
     const getProduct = useQuery(["getProduct"], async () => {
         const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
         return reponse;
@@ -256,6 +263,9 @@ const ProductDetails = () => {
                 <img css={img} src={product.productImg} alt="productImg" />
             </div>
             <div css={detailsContainer}>
+                <div css={sameNameProductsContainer}>
+
+                </div>
                 <div css={detailTop}>
                     <h1 css={productName}>{product.productName}</h1>
                     <div css={productPrice}>₩{product.productPrice}</div>
