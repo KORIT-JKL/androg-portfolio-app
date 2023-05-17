@@ -5,12 +5,13 @@ import React, { useEffect, useState } from "react";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import Information from "../../components/SupportUI/Information/Information";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
 const mainContainer = css`
   display: grid;
@@ -86,6 +87,8 @@ const MyPage = () => {
   const [infoRefresh, setInfoRefresh] = useState(false);
   const [productsRefresh, setProductsRefresh] = useState(false);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+  const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
+
   let userId = 0;
 
   const principal = useQuery(
@@ -175,9 +178,7 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>
-              {principal.data !== undefined ? principal.data.data.email : <></>}
-            </span>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
             <div css={addressContent} onClick={withdrawalSubmit}>
               회원탈퇴
             </div>
