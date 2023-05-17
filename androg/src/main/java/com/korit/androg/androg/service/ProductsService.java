@@ -77,6 +77,9 @@ public class ProductsService {
 		productsRepository.minusCountByCartId(cartId);
 		return ;
 	}
+	public List<Products> getSameNameProductsByProductId(int productId) {
+		return productsRepository.getSameNameProductsByProductId(productId);
+	}
 	
 	
 	

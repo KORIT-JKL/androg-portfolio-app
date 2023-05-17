@@ -171,4 +171,22 @@
 		where
 			cart_id = #{cartId};
 	</update>
+	
+	<select id="getSameNameProductsByProductId" parameterType="Integer" resultMap="productsMap">
+		SELECT
+			pt.product_id,
+            pt.product_name,
+            pt.product_img
+		FROM
+			product_tb pt 
+		where
+			pt.product_name = (select
+										pt.product_name
+									from
+										product_tb pt
+									where 
+										pt.product_id = #{productId})
+		
+		
+	</select>
 </mapper>

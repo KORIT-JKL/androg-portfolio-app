@@ -19,13 +19,11 @@ public class UserController {
 	
 	@GetMapping("/user/mypage")
 	public ResponseEntity<?> getPrincipal(String accessToken){
-		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}
 	
 	@GetMapping("/user/mypage/purchases")
 	public ResponseEntity<?> getOrderProducts(int userId){
-		System.out.println(userId);
 		return ResponseEntity.ok().body(userService.getOrderProducts(userId));
 	}
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,13 @@ public class ProductsController {
 		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
 	
+	@GetMapping("/products/{productId}/sameName")
+	public ResponseEntity<?> getSameNameProducts (@PathVariable int productId){
+//		System.out.println(productId);
+//		System.out.println(productsService.getProductByProductId(productId));
+		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
+	}
+	
 	@PostMapping("/cart/addition")
 	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
 		System.out.println(addCartRequestDto);
@@ -59,7 +67,7 @@ public class ProductsController {
 
 	@DeleteMapping("/cart/delete")
 	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
-//		System.out.println(params.get("product[cartId]"));
+//		System.out.println(params.get("produ	ct[cartId]"));
 		productsService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
 		return 	null;
 	}

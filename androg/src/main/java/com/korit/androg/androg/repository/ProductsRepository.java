@@ -16,7 +16,7 @@ public interface ProductsRepository {
 	public List<Products> getProductsBySearchInput(Map<String, Object> reqeustMap);
 	public int getTotalCountByCategoryId(int categoryId);
 	public int getTotalCountBySearchInput(String searchInput);
-	
+	public List<Products> getSameNameProductsByProductId(int productId);
 //	카트
 	public void addCart(Map<String, Object> reqeustMap);
 	public addCartRequestDto getCart(int userId);

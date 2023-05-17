@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { setRefresh } from "../../atoms/Auth/AuthAtoms";
@@ -42,8 +42,17 @@ const detailsContainer =css`
 const sameNameProductsContainer = css`
     display: flex;
     width: 100%;
-    height: 80px;
-    border: 1px solid black;
+    height: 100px;
+    margin-bottom: 20px;
+`
+const sameNameProductsImg = css`
+    height: 100%;
+    width: 80px;
+    padding: 5px;
+    top: 5px;
+    &:hover {
+        background-color: #dbdbdb;
+    }
 `
 const detailTop =css`
     display: flex;
@@ -182,7 +191,8 @@ const ProductDetails = () => {
     const [ userId, setUserId] = useState(0);
     const { productId } = useParams();
     const [ sameNameProducts , setSameNameProducts] = useState([]);
-    
+    const [ selectImgSuccess , setSelectImgSuccess] = useState(false);
+    const navigate = useNavigate();
     const principal = useQuery(
         ["principal"],
         async () => {
@@ -206,13 +216,24 @@ const ProductDetails = () => {
         const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
         return reponse;
     },{
-        enabled : refresh,
         onSuccess : (response) => {
             setProduct(response.data);
             setSearchparams({...searchParams, "productId" : response.data.productId})
+            setThiRefresh(true);
+
+        }
+        ,enabled : refresh,
+    })
+    const getSameNameProducts = useQuery(["getSameNameProducts"], async () => {
+        
+        const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`)
+        return response;
+    },{
+        enabled :  !!productId,
+        onSuccess : (response) => {
+            setSameNameProducts(response.data)
         }
     })
-
     
     const addCartSubmitHandle = async () => {
         
@@ -233,9 +254,7 @@ const ProductDetails = () => {
         }
     };
 
-
-
-
+    
     if (!product) {
         return setThiRefresh(true); 
     }
@@ -251,8 +270,12 @@ const ProductDetails = () => {
             setShippingIsOpen(true)
         }
     }
-
-   
+    
+    const selectColor = (product) => {
+        navigate(`/products/${product.productId}/details`);
+        setThiRefresh(true);
+    }
+    
 
     return (
         <>
@@ -264,7 +287,17 @@ const ProductDetails = () => {
             </div>
             <div css={detailsContainer}>
                 <div css={sameNameProductsContainer}>
+                    {
+                        sameNameProducts.map((product) => {
+                            return (
+                                <>
+                                    <img css= {sameNameProductsImg}src={product.productImg} alt="" onClick={() => selectColor(product)}></img>
+                                    
+                                </>
 
+                            )
+                        })
+                    }
                 </div>
                 <div css={detailTop}>
                     <h1 css={productName}>{product.productName}</h1>
