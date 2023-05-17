@@ -74,20 +74,16 @@ const sublist = css`
 `;
 
 const CommonHeader = () => {
-
-  const [inputIsOpen , setInputIsOpen] = useState(false);
-  const  [searchInput , thisSetSearchInput] = useRecoilState(setSearchInput);
+  const [inputIsOpen, setInputIsOpen] = useState(false);
+  const [searchInput, thisSetSearchInput] = useRecoilState(setSearchInput);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [sbheader, setsbheader] = useState(false);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
-  const [products , setThisProducts] = useRecoilState(setProducts);
-  const [ page , setThisPage] = useRecoilState(setPage);
-  const [searchParams , setThisSearchParams] = useRecoilState(setSearchParams);
+  const [products, setThisProducts] = useRecoilState(setProducts);
+  const [page, setThisPage] = useRecoilState(setPage);
+  const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
   const navigate = useNavigate();
-
-
-
 
   const onClickLogo = () => {
     navigate("/");
@@ -119,36 +115,33 @@ const CommonHeader = () => {
     setThisPage(1);
     setThiRefresh(true);
   };
-  const EnterKeyDown = (e) =>{
-    if(e.key === "Enter") {
-      setThisSearchParams({"setSearchPage" : 1 , "setSearchInput" : document.getElementById("searchInputText").value})
-      console.log(searchParams)
+  const EnterKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setThisSearchParams({ setSearchPage: 1, setSearchInput: document.getElementById("searchInputText").value });
+      console.log(searchParams);
       navigate("/products/search");
       setThisProducts([]);
       setThiRefresh(true);
     }
-    
-    
-  }
-  const searchClick = (inputIsOpen)=> {
+  };
+  const searchClick = (inputIsOpen) => {
     thisSetSearchInput("");
     setInputIsOpen(!inputIsOpen);
-  }
-
-  const logoutClickHandle = () => {
-    if(window.confirm("로그아웃 하시겠습니까?")) {
-      localStorage.removeItem("accessToken");
-      setLoginIsState(false);
-      navigate("/")
-
-   }
   };
 
-  useEffect(()=> {
-    if(!!localStorage.getItem("accessToken")){
+  const logoutClickHandle = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken");
+      setLoginIsState(false);
+      navigate("/");
+    }
+  };
+
+  useEffect(() => {
+    if (!!localStorage.getItem("accessToken")) {
       setLoginIsState(true);
     }
-  })
+  });
 
   return (
     <>
@@ -168,8 +161,19 @@ const CommonHeader = () => {
                 </li>
               </ul>
               <ul css={headerList2}>
-                {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
-                <li css={list} onClick={() => searchClick(inputIsOpen)} >SEARCH</li>
+                {inputIsOpen ? (
+                  <input
+                    placeholder="대문자로 입력해주세요"
+                    type="text"
+                    id="searchInputText"
+                    onKeyDown={EnterKeyDown}
+                  />
+                ) : (
+                  ""
+                )}
+                <li css={list} onClick={() => searchClick(inputIsOpen)}>
+                  SEARCH
+                </li>
                 <li css={list} onClick={logoutClickHandle}>
                   LOGOUT
                 </li>
@@ -192,10 +196,21 @@ const CommonHeader = () => {
                 </li>
               </ul>
               <ul css={headerList2}>
-              {inputIsOpen ? <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown}/> :  ""}
-                <li css={list} onClick={() => searchClick(inputIsOpen)}>SEARCH</li>
+                {inputIsOpen ? (
+                  <input
+                    placeholder="대문자로 입력해주세요"
+                    type="text"
+                    id="searchInputText"
+                    onKeyDown={EnterKeyDown}
+                  />
+                ) : (
+                  ""
+                )}
+                <li css={list} onClick={() => searchClick(inputIsOpen)}>
+                  SEARCH
+                </li>
                 <li css={list}>
-                 <Link to="/login">LOGIN</Link> 
+                  <Link to="/login">LOGIN</Link>
                 </li>
                 <li css={list} onClick={() => setCartIsOpen(true)}>
                   BAG
