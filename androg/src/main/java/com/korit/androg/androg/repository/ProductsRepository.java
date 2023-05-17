@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.entity.Payment;
 import com.korit.androg.androg.entity.Products;
 
 @Mapper

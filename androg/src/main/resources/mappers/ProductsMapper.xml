@@ -33,6 +33,9 @@
 		<result property="colorName" column="color_name"/>
 		<result property="countNumber" column="count_number"/>
 	</resultMap>
+	
+	
+	
 	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >
 		SELECT
 			pt.product_id,
