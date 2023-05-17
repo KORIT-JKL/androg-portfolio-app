@@ -47,6 +47,8 @@ public class ProductsService {
 		return responseMap;
 
 	}
+	
+	//여기서부터 cart
 	public void addCart(addCartRequestDto addCartRequestDto) {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("userId", addCartRequestDto.getUserId());
@@ -63,6 +65,18 @@ public class ProductsService {
 	
 	public void deleteCartByCartId(int cartId) {
 		productsRepository.deleteCartByCartId(cartId);
+		return ;
+	}
+	
+	public void plusCountByCartId(int cartId) {
+		productsRepository.plusCountByCartId(cartId);
+		return ;
+	}
+	public void minusCountByCartId(int cartId,int countNumber) {
+		if(countNumber == 1 ) {
+			productsRepository.deleteCartByCartId(cartId);
+		}
+		productsRepository.minusCountByCartId(cartId);
 		return ;
 	}
 	

@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
+import com.korit.androg.androg.dto.Product.getCartResponseDto;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -62,4 +64,20 @@ public class ProductsController {
 		return 	null;
 	}
 	
+	@PutMapping("/cart/update/countUp")
+	public ResponseEntity<?> countUp(@RequestBody getCartResponseDto cartResponseDto) {
+		System.out.println(cartResponseDto);
+		
+		
+		productsService.plusCountByCartId(cartResponseDto.getCartId());
+		return null;
+	}
+	@PutMapping("/cart/update/countDown")
+	public ResponseEntity<?> countDown(@RequestBody getCartResponseDto cartResponseDto) {
+		System.out.println(cartResponseDto);
+		
+		
+		productsService.minusCountByCartId(cartResponseDto.getCartId(),cartResponseDto.getCountNumber());
+		return null;
+	}
 }

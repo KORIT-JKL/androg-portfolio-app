@@ -194,10 +194,33 @@ const Cart = () => {
     const cartClose = () => {
         setCartIsOpen(false);
     }
-    const countplus = (count) => {
-        setCount(count+1);
-        console.log(count);
-    }
+    const countplus = useMutation(
+        async (product) => {
+            
+            // product 카운터 개수
+            // put은 바디에 파라미터를 넣어주자
+            const response = await axios.put("http://localhost:8080/cart/update/countUp",product,"");
+            return response;
+        },{
+            onSuccess : () => {
+               setDeleteSuccess(true)
+            }
+        }
+    )
+    const countMinus = useMutation(
+        async (product) => {
+            
+            // product 카운터 개수
+            // put은 바디에 파라미터를 넣어주자
+            const response = await axios.put("http://localhost:8080/cart/update/countDown",product,"");
+            return response;
+        },{
+            onSuccess : () => {
+               setDeleteSuccess(true)
+            }
+        }
+    )
+  
     const countminus = (count) => {
         setCount(count-1);
         console.log(count);
@@ -209,7 +232,7 @@ const Cart = () => {
                     product : product
                 },paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
             }
-            const response = axios.delete("http://localhost:8080/cart/delete",option)
+            const response = await axios.delete("http://localhost:8080/cart/delete",option)
             return response;
         },{
             onSuccess : () => {
@@ -300,9 +323,9 @@ const Cart = () => {
                                     </div>
                                     <div css={productCount}>
                                         
-                                        <button css={plusAndMinus} onClick={() => countminus(count)}>-</button>
+                                        <button css={plusAndMinus} onClick={() => countMinus.mutate(product)}>-</button>
                                         <button css={CountButton}>{product.countNumber}</button>
-                                        <button css={plusAndMinus} onClick={() => countplus(count)}>+</button>
+                                        <button css={plusAndMinus} onClick={() => countplus.mutate(product)}>+</button>
                                     </div>
                                 </div>
                             </div>

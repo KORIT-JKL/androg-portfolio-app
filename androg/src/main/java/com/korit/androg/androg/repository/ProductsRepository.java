@@ -16,8 +16,12 @@ public interface ProductsRepository {
 	public List<Products> getProductsBySearchInput(Map<String, Object> reqeustMap);
 	public int getTotalCountByCategoryId(int categoryId);
 	public int getTotalCountBySearchInput(String searchInput);
+	
+//	카트
 	public void addCart(Map<String, Object> reqeustMap);
 	public addCartRequestDto getCart(int userId);
 	public List<getCartResponseDto> getCartByuserId(int userId);
 	public void deleteCartByCartId(int cartId);
+	public void plusCountByCartId(int cartId);
+	public void minusCountByCartId(int cartId);
 }
