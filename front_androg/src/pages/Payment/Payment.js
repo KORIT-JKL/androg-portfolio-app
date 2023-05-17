@@ -4,6 +4,8 @@ import paymentLogoImg from '../../img/Black And White Minimalist Aesthetic Moder
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { setRefresh } from "../../atoms/authAtoms";
 
 const container = css`
     font-size: 12px;
@@ -150,54 +152,49 @@ const asideContent = css`
 
 // url 변경 => /products/payment 
 const Payment = () => {
-    // const [ inputValue , setInputValue] = useState({phone:""});
-    const [userInfoRefresh, setUserInfoRefresh] = useState(false);
+    const [principalState, setPrincipalState] = useState(false);
+    const [addressListState, setaddressListState] = useState(false);
 
-
-
-    const { data, isLoading } = useQuery(["principal"], async () => {
+    const principal = useQuery(["principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get("http://localhost:8080/auth/principal",
-        {params: {accessToken}},
-        {
-            enabled: accessToken
-        });
+        {params: {accessToken}});
         return response;
-    });
+    },
+    {   
+        onSuccess: ()=> {
+            setPrincipalState(false);
+        },
+        enabled: principalState
+    }
+    );
 
-    const paymentProducts = useQuery(["payment"], async () => {
-        const response = await axios.get("http://localhost:8080/products/payment",
-        {params: data.data.userId},
-        {
-            enabled: !!data
-        })
+    const addressList = useQuery(["addressList"], async () => {
+        const option = {
+            params: {
+                userId: principal.data.data.userId
+            }
+        };
+        const response = await axios.get("http://localhost:8080/user/mypage/address", option);
         return response;
-    })
+    }, 
+    {
+        enabled: !!principal.data && addressListState
+    }
+    );
 
-  
-    // const changeHandle = (e) => {
-    //     const regex = /^[0-9\b -]{0,13}$/;
-    //     const {name, value} = e.target;
-    //     if(regex.test(value)) {
-    //         setInputValue({...inputValue, [name]:value});
-    //     }
-    // };
 
-    // useEffect(()=> {
-    //     if (inputValue.length === 10) {
-    //         setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
-    //       }
-    //       if (inputValue.length === 13) {
-    //         setInputValue(inputValue.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-    //       }
-    // }, [inputValue])
-    useEffect(()=> {
-        if(!userInfoRefresh) {
-            setUserInfoRefresh(true);
+    
+    useEffect(() => {
+        if (!principalState) {
+            setPrincipalState(true)
         }
-    }, [])
-
-    if(isLoading && paymentProducts.isLoading) {
+        if(!addressListState) {
+            setaddressListState(true)
+        }
+      }, []);
+   
+    if(principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>
     }
     return (
@@ -208,16 +205,15 @@ const Payment = () => {
                     <a href="/"><img src={paymentLogoImg} alt="" css={logoImg} /></a>
                 </div>
                 <div css={mainContent}>
-                    <h2 css={orderUserInfo}>주문자</h2>
                     <p>
-                        <span>{data.data.name}</span>
-                        <span>({data.data.email})</span>
+                        <span>{principal.data !== undefined ? principal.data.data.name : ""}</span>
+                        <span>({principal.data !== undefined ? principal.data.data.email : ""})</span>
                     </p>
                     <div css={shipping}>
                         <h2 css={shippingAddress}>배송주소</h2>
                         
                         <select name="" id="" css={select}>
-                            <option value="">부산광역시 남구 못골로53번길 50  (대연동, 에스원), 204호, 48438 남구, 부산광역시, 대한민국 (강 의진)</option>
+                            <option value=""></option>
                             <option value="">새 주소</option>
                         </select>
                         <select name="" id="" css={select}>
