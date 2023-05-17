@@ -7,6 +7,7 @@ import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { setRefresh } from "../../atoms/authAtoms";
 import QueryString from "qs";
+import { useNavigate } from "react-router-dom";
 const cartContainer =css`
     position: fixed;
     z-index: 999;
@@ -191,6 +192,7 @@ const Cart = () => {
     const [ getproducts , setProducts] = useState([]);
     const [ totalPrice , setTotalPrice] = useState(0);
     const [deleteSuccess, setDeleteSuccess] = useState(true);
+    const navigate = useNavigate();
     const cartClose = () => {
         setCartIsOpen(false);
     }
@@ -290,6 +292,10 @@ const Cart = () => {
         }
       });
     
+    const payment = () => {
+        navigate(`/products/payment`);
+        setThiRefresh(true);
+    }
      
       
 
@@ -358,7 +364,7 @@ const Cart = () => {
                 </div>
                 <div css={footer}>
                     <button onClick={() => cartClose()} css={shoppingButton}>쇼핑 계속하기</button>
-                    <button css={payButton}>결제하기</button>
+                    <button onClick={() => payment()}css={payButton}>결제하기</button>
                 </div>
             </div>
             

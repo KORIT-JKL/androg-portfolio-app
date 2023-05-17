@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.entity.Products;
+import com.korit.androg.androg.service.CartService;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductsController {
 	private final ProductsService productsService;
+	private final CartService cartService;
 	
 	@GetMapping("/category/{categoryId}")
 	public ResponseEntity<?> getProductsByCategoyrId (@PathVariable int categoryId, @RequestParam int page) {
@@ -44,40 +47,19 @@ public class ProductsController {
 		return ResponseEntity.ok().body(productsService.getProductsBySearchInput(requestMap));
 	}
 	
-	@PostMapping("/cart/addition")
-	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
-		System.out.println(addCartRequestDto);
-		productsService.addCart(addCartRequestDto);
-		return null;
-	}
-	@GetMapping("/cart")
-	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
-//		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
-		return 	ResponseEntity.ok(
-				productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
-	}
-
-	@DeleteMapping("/cart/delete")
-	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
-//		System.out.println(params.get("product[cartId]"));
-		productsService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
-		return 	null;
+	@GetMapping("/products/{productId}/sameName")
+	public ResponseEntity<?> getSameNameProducts (@PathVariable int productId){
+//		System.out.println(productId);
+//		System.out.println(productsService.getProductByProductId(productId));
+		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
 	}
 	
-	@PutMapping("/cart/update/countUp")
-	public ResponseEntity<?> countUp(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
-		
-		
-		productsService.plusCountByCartId(cartResponseDto.getCartId());
+	@PostMapping("/products/directBuy")
+	public ResponseEntity<?> productsDirectBuy(@RequestBody addCartRequestDto addCartRequestDto){
+		cartService.addCart(addCartRequestDto);
 		return null;
 	}
-	@PutMapping("/cart/update/countDown")
-	public ResponseEntity<?> countDown(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
-		
-		
-		productsService.minusCountByCartId(cartResponseDto.getCartId(),cartResponseDto.getCountNumber());
-		return null;
-	}
+
+	
+	
 }
