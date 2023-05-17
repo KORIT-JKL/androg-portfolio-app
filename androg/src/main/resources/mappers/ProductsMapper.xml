@@ -25,6 +25,8 @@
 		<result property="colorName" column="color_name"/>
 	</resultMap>
 	
+	
+	
 	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >
 		SELECT
 			pt.product_id,

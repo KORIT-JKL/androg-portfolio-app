@@ -164,6 +164,16 @@ const Payment = () => {
         });
         return response;
     });
+
+    const paymentProducts = useQuery(["payment"], async () => {
+        const response = await axios.get("http://localhost:8080/products/payment",
+        {params: data.data.userId},
+        {
+            enabled: !!data
+        })
+        return response;
+    })
+
   
     // const changeHandle = (e) => {
     //     const regex = /^[0-9\b -]{0,13}$/;
@@ -187,7 +197,7 @@ const Payment = () => {
         }
     }, [])
 
-    if(isLoading) {
+    if(isLoading && paymentProducts.isLoading) {
         return <>로딩중...</>
     }
     return (
@@ -257,7 +267,7 @@ const Payment = () => {
             </div>
             <aside css={aside}>
                 <div css={asideContent}>
-
+                    
                 </div>
             </aside>
         </div>
