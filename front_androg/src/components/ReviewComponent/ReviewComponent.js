@@ -10,11 +10,11 @@ const reviewContainer = css`
   height: 100px;
 `;
 
-const ReviewComponent = () => {
+const ReviewComponent = ({ review }) => {
   return (
     <div css={reviewContainer}>
-      <div>작성자 : </div>
-      <div>내용 : </div>
+      <div>작성자 : {review.userName} </div>
+      <div>내용 : {review.content}</div>
     </div>
   );
 };

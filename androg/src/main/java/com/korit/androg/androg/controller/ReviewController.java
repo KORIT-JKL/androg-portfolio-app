@@ -20,6 +20,12 @@ import lombok.RequiredArgsConstructor;
 public class ReviewController {
 	private final ReviewService reviewService;
 	
+	@GetMapping("/review/{productId}")
+	public ResponseEntity<?> getReviews(@PathVariable int productId){
+		System.out.println(reviewService.getReviews(productId));
+		return ResponseEntity.ok().body(reviewService.getReviews(productId));
+	}
+	
 	@GetMapping("/product/{productId}/reviewproduct")
 	public ResponseEntity<?> getProduct(@PathVariable int productId, int userId){
 		Map<String, Object> requestMap = new HashMap<>();

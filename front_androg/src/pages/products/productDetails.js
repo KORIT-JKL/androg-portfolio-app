@@ -9,6 +9,7 @@ import axios from "axios";
 import { setRefresh } from "../../atoms/Auth/AuthAtoms";
 import { useRecoilState } from "recoil";
 import QueryString from "qs";
+import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
 const container = css`
   display: flex;
   justify-content: center;
@@ -188,6 +189,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const [sameNameProducts, setSameNameProducts] = useState([]);
   const [selectImgSuccess, setSelectImgSuccess] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
   const principal = useQuery(
     ["principal"],
@@ -254,6 +256,28 @@ const ProductDetails = () => {
     } catch {}
   };
 
+  const getReviews = useQuery(
+    ["getReviews"],
+    async () => {
+      const option = {
+        headres: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get(`http://localhost:8080/review/${productId}`, option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setReviews([...response.data]);
+      },
+      enabled: refresh,
+      onError: (error) => {
+        console.log(error);
+      },
+    }
+  );
+
   if (!product) {
     return setThiRefresh(true);
   }
@@ -295,6 +319,9 @@ const ProductDetails = () => {
       <div css={container}>
         <div css={imgContainer}>
           <img css={img} src={product.productImg} alt="productImg" />
+          {getReviews.data !== undefined
+            ? reviews.map((review) => <ReviewComponent review={review} />)
+            : "리뷰가 없습니다."}
         </div>
         <div css={detailsContainer}>
           <div css={sameNameProductsContainer}>

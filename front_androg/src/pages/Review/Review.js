@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const container = css`
   margin: 50px;
@@ -73,6 +73,7 @@ const Review = () => {
   const [userInfoRefresh, setUserInfoRefresh] = useState(true);
   const [content, setContent] = useState("");
   const { productId } = useParams();
+  const navigate = useNavigate();
   let userId = 0;
   const principal = useQuery(
     ["principal"],
@@ -115,7 +116,6 @@ const Review = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
         setUserInfoRefresh(true);
       },
       enabled: !!principal.data && userInfoRefresh,
@@ -129,7 +129,6 @@ const Review = () => {
         productId: parseInt(productId),
         content: content,
       };
-      console.log(data);
       const option = {
         headers: {
           "Content-Type": "application/json",
@@ -183,11 +182,14 @@ const Review = () => {
           css={reviewButton}
           onClick={() => {
             reviewRegister.mutate();
+            navigate("/");
           }}
         >
           리뷰등록
         </button>
-        <button css={reviewButton}>리뷰취소</button>
+        <button css={reviewButton} onClick={() => navigate("/")}>
+          리뷰취소
+        </button>
       </footer>
     </div>
   );
