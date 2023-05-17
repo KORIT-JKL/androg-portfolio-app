@@ -13,7 +13,7 @@ const orderDetailBox = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+
   margin: 10px 0px 10px 2px;
   padding: 5px;
   width: 70%;
@@ -21,7 +21,6 @@ const orderDetailBox = css`
 `;
 
 const orderImgBox = css`
-  border: 1px solid black;
   padding: 5px;
   width: 30%;
   height: 100%;
@@ -35,7 +34,6 @@ const orderImg = css`
 `;
 
 const orderInfoBox = css`
-  border: 1px solid black;
   padding: 5px;
   width: 35%;
   height: 100%;
@@ -74,7 +72,7 @@ const reviewButton = css`
   }
 `;
 
-const OrderProducts = ({ orderProduct }) => {
+const OrderProducts = ({ orderProduct, isOpen }) => {
   const navigate = useNavigate();
   const reviewClickHandle = (orderProduct) => {
     navigate(`/product/${orderProduct.productId}/review`);
@@ -96,9 +94,13 @@ const OrderProducts = ({ orderProduct }) => {
         <p css={orderInfoText}>가격 : ₩ {orderProduct.productPrice}</p>
       </div>
       <div css={reviewButtonBox}>
-        <button css={reviewButton} onClick={() => reviewClickHandle(orderProduct)}>
-          리뷰 등록
-        </button>
+        {isOpen ? (
+          <button css={reviewButton} onClick={() => reviewClickHandle(orderProduct)}>
+            리뷰 등록
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
