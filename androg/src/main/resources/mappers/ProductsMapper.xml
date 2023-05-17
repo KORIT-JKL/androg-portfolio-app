@@ -131,46 +131,6 @@
         	pt.product_name like concat("%",#{searchInput},"%")
         	or clt.color_name like concat("%",#{searchInput},"%")
 	</select>
-	<insert id="addCart">
-		insert into cart_tb
-		values(0, #{userId},#{productId},#{sizeName},#{countNumber})
-	</insert>
-	<select id="getCartByuserId" parameterType="Integer" resultMap="getCartByUserId">
-		select
-			ct.cart_id,
-		    pt.product_name,
-		    pt.product_price,
-		    pt.product_img,
-		    ct.size_name,
-		    clt.color_name,
-		    ct.count_number
-		from 
-			cart_tb ct
-			left outer join product_tb pt on (pt.product_id = ct.product_id)
-		    left outer join color_tb clt on (clt.color_id = pt.color_id)
-		where
-			ct.user_id = #{userId}
-			and ct.count_number >0
-				
-	</select>
-	<delete id="deleteCartByCartId" parameterType="Integer">
-		delete from cart_tb
-		where 
-			cart_id = #{cartId}
-		
-	</delete>
-	<update id="plusCountByCartId">
-		update cart_tb
-		set cart_tb.count_number =cart_tb.count_number + 1
-		where
-			cart_id = #{cartId};
-	</update>
-	<update id="minusCountByCartId">
-		update cart_tb
-		set cart_tb.count_number =cart_tb.count_number - 1
-		where
-			cart_id = #{cartId};
-	</update>
 	
 	<select id="getSameNameProductsByProductId" parameterType="Integer" resultMap="productsMap">
 		SELECT

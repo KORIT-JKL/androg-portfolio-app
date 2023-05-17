@@ -45,42 +45,10 @@ public class ProductsService {
 		return responseMap;
 
 	}
-	
-	//여기서부터 cart
-	public void addCart(addCartRequestDto addCartRequestDto) {
-		Map<String, Object> requestMap = new HashMap<>();
-		requestMap.put("userId", addCartRequestDto.getUserId());
-		requestMap.put("productId", addCartRequestDto.getProductId());
-		requestMap.put("sizeName", addCartRequestDto.getSizeName());
-		requestMap.put("countNumber", addCartRequestDto.getCountNumber());
-		productsRepository.addCart(requestMap);
-		return;
-	}
-	
-	public List<getCartResponseDto> getCartByUserId(int userId) {
-		return productsRepository.getCartByuserId(userId);
-	}
-	
-	public void deleteCartByCartId(int cartId) {
-		productsRepository.deleteCartByCartId(cartId);
-		return ;
-	}
-	
-	public void plusCountByCartId(int cartId) {
-		productsRepository.plusCountByCartId(cartId);
-		return ;
-	}
-	public void minusCountByCartId(int cartId,int countNumber) {
-		if(countNumber == 1 ) {
-			productsRepository.deleteCartByCartId(cartId);
-		}
-		productsRepository.minusCountByCartId(cartId);
-		return ;
-	}
 	public List<Products> getSameNameProductsByProductId(int productId) {
 		return productsRepository.getSameNameProductsByProductId(productId);
 	}
-	
+	//여기서부터 cart
 	
 	
 	

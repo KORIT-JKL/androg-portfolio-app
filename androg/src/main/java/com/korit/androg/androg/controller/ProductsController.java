@@ -52,40 +52,5 @@ public class ProductsController {
 		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
 	}
 	
-	@PostMapping("/cart/addition")
-	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
-		System.out.println(addCartRequestDto);
-		productsService.addCart(addCartRequestDto);
-		return null;
-	}
-	@GetMapping("/cart")
-	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
-//		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
-		return 	ResponseEntity.ok(
-				productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
-	}
-
-	@DeleteMapping("/cart/delete")
-	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
-//		System.out.println(params.get("produ	ct[cartId]"));
-		productsService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
-		return 	null;
-	}
 	
-	@PutMapping("/cart/update/countUp")
-	public ResponseEntity<?> countUp(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
-		
-		
-		productsService.plusCountByCartId(cartResponseDto.getCartId());
-		return null;
-	}
-	@PutMapping("/cart/update/countDown")
-	public ResponseEntity<?> countDown(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
-		
-		
-		productsService.minusCountByCartId(cartResponseDto.getCartId(),cartResponseDto.getCountNumber());
-		return null;
-	}
 }
