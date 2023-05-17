@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { setRefresh } from "../../atoms/authAtoms";
+import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
 const container = css`
     font-size: 12px;
@@ -154,6 +155,8 @@ const asideContent = css`
 const Payment = () => {
     const [principalState, setPrincipalState] = useState(false);
     const [addressListState, setaddressListState] = useState(false);
+    const [userAddressList, setUserAddressList ] = useRecoilState(getAddressListRecoil);
+
 
     const principal = useQuery(["principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");
@@ -179,10 +182,13 @@ const Payment = () => {
         return response;
     }, 
     {
+        onSuccess: (response) => {
+            setUserAddressList([...response.data])
+            setaddressListState(false)
+        },
         enabled: !!principal.data && addressListState
     }
     );
-
 
     
     useEffect(() => {
@@ -205,6 +211,7 @@ const Payment = () => {
                     <a href="/"><img src={paymentLogoImg} alt="" css={logoImg} /></a>
                 </div>
                 <div css={mainContent}>
+                    <h2 css={orderUserInfo}>주문자 정보</h2>
                     <p>
                         <span>{principal.data !== undefined ? principal.data.data.name : ""}</span>
                         <span>({principal.data !== undefined ? principal.data.data.email : ""})</span>
@@ -212,20 +219,27 @@ const Payment = () => {
                     <div css={shipping}>
                         <h2 css={shippingAddress}>배송주소</h2>
                         
-                        <select name="" id="" css={select}>
-                            <option value=""></option>
+                        <select css={select}>
+                            {userAddressList.length > 0 ? userAddressList.map((address,index)=>{
+                                console.log(index, address.address);
+                                return ( 
+                                <>
+                                    <option value="">{address.address + " " + address.addressDetail}</option>
+                                </>  
+                                )
+                            }) : <option value="">새 주소</option>}
                             <option value="">새 주소</option>
                         </select>
-                        <select name="" id="" css={select}>
+                        <select css={select}>
                             <option value="">대한민국</option>
                         </select>
-                        <input type="text" css={input}/>
-                        <input type="text" css={input}/>
+                        <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(1) : ""}/>
+                        <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(0,1) : ""}/>
                         <div>
                             <input type="text" css={postNumInput}/>
                             <button css={addressSearchBtn}>주소찾기</button>
                         </div>
-                        <select name="" id="" css={select}>
+                        <select css={select}>
                             <option disabled>시/도</option>
                             <option value="">강원도</option>
                             <option value="">경기도</option>
@@ -247,6 +261,8 @@ const Payment = () => {
                         <input type="text" placeholder="구/군/시" css={input}/>
                         <input type="text" placeholder="주소" css={input}/>
                         <input type="text" placeholder="상세주소" css={input}/>
+
+                        
                         <input type="text" placeholder="전화번호" css={phoneInput}/>
                         <button css={continueBtn}>결제하기</button>
                     </div>
