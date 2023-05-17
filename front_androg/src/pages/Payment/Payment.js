@@ -4,6 +4,9 @@ import paymentLogoImg from '../../img/Black And White Minimalist Aesthetic Moder
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { setRefresh } from "../../atoms/authAtoms";
+import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
 const container = css`
     font-size: 12px;
@@ -150,54 +153,54 @@ const asideContent = css`
 
 // url 변경 => /products/payment 
 const Payment = () => {
-    // const [ inputValue , setInputValue] = useState({phone:""});
-    const [userInfoRefresh, setUserInfoRefresh] = useState(false);
+    const [principalState, setPrincipalState] = useState(false);
+    const [addressListState, setaddressListState] = useState(false);
+    const [userAddressList, setUserAddressList ] = useRecoilState(getAddressListRecoil);
 
 
-
-    const { data, isLoading } = useQuery(["principal"], async () => {
+    const principal = useQuery(["principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get("http://localhost:8080/auth/principal",
-        {params: {accessToken}},
-        {
-            enabled: accessToken
-        });
+        {params: {accessToken}});
         return response;
-    });
+    },
+    {   
+        onSuccess: ()=> {
+            setPrincipalState(false);
+        },
+        enabled: principalState
+    }
+    );
 
-    const paymentProducts = useQuery(["payment"], async () => {
-        const response = await axios.get("http://localhost:8080/products/payment",
-        {params: data.data.userId},
-        {
-            enabled: !!data
-        })
+    const addressList = useQuery(["addressList"], async () => {
+        const option = {
+            params: {
+                userId: principal.data.data.userId
+            }
+        };
+        const response = await axios.get("http://localhost:8080/user/mypage/address", option);
         return response;
-    })
+    }, 
+    {
+        onSuccess: (response) => {
+            setUserAddressList([...response.data])
+            setaddressListState(false)
+        },
+        enabled: !!principal.data && addressListState
+    }
+    );
 
-  
-    // const changeHandle = (e) => {
-    //     const regex = /^[0-9\b -]{0,13}$/;
-    //     const {name, value} = e.target;
-    //     if(regex.test(value)) {
-    //         setInputValue({...inputValue, [name]:value});
-    //     }
-    // };
-
-    // useEffect(()=> {
-    //     if (inputValue.length === 10) {
-    //         setInputValue(inputValue.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
-    //       }
-    //       if (inputValue.length === 13) {
-    //         setInputValue(inputValue.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-    //       }
-    // }, [inputValue])
-    useEffect(()=> {
-        if(!userInfoRefresh) {
-            setUserInfoRefresh(true);
+    
+    useEffect(() => {
+        if (!principalState) {
+            setPrincipalState(true)
         }
-    }, [])
-
-    if(isLoading && paymentProducts.isLoading) {
+        if(!addressListState) {
+            setaddressListState(true)
+        }
+      }, []);
+   
+    if(principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>
     }
     return (
@@ -208,28 +211,35 @@ const Payment = () => {
                     <a href="/"><img src={paymentLogoImg} alt="" css={logoImg} /></a>
                 </div>
                 <div css={mainContent}>
-                    <h2 css={orderUserInfo}>주문자</h2>
+                    <h2 css={orderUserInfo}>주문자 정보</h2>
                     <p>
-                        <span>{data.data.name}</span>
-                        <span>({data.data.email})</span>
+                        <span>{principal.data !== undefined ? principal.data.data.name : ""}</span>
+                        <span>({principal.data !== undefined ? principal.data.data.email : ""})</span>
                     </p>
                     <div css={shipping}>
                         <h2 css={shippingAddress}>배송주소</h2>
                         
-                        <select name="" id="" css={select}>
-                            <option value="">부산광역시 남구 못골로53번길 50  (대연동, 에스원), 204호, 48438 남구, 부산광역시, 대한민국 (강 의진)</option>
+                        <select css={select}>
+                            {userAddressList.length > 0 ? userAddressList.map((address,index)=>{
+                                console.log(index, address.address);
+                                return ( 
+                                <>
+                                    <option value="">{address.address + " " + address.addressDetail}</option>
+                                </>  
+                                )
+                            }) : <option value="">새 주소</option>}
                             <option value="">새 주소</option>
                         </select>
-                        <select name="" id="" css={select}>
+                        <select css={select}>
                             <option value="">대한민국</option>
                         </select>
-                        <input type="text" css={input}/>
-                        <input type="text" css={input}/>
+                        <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(1) : ""}/>
+                        <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(0,1) : ""}/>
                         <div>
                             <input type="text" css={postNumInput}/>
                             <button css={addressSearchBtn}>주소찾기</button>
                         </div>
-                        <select name="" id="" css={select}>
+                        <select css={select}>
                             <option disabled>시/도</option>
                             <option value="">강원도</option>
                             <option value="">경기도</option>
@@ -251,6 +261,8 @@ const Payment = () => {
                         <input type="text" placeholder="구/군/시" css={input}/>
                         <input type="text" placeholder="주소" css={input}/>
                         <input type="text" placeholder="상세주소" css={input}/>
+
+                        
                         <input type="text" placeholder="전화번호" css={phoneInput}/>
                         <button css={continueBtn}>결제하기</button>
                     </div>
