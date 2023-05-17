@@ -276,7 +276,19 @@ const ProductDetails = () => {
         setThiRefresh(true);
     }
     
+    const directBuy = async (product) => {
+        const response = axios.post("http://localhost:8080/products/directBuy",JSON.stringify(searchParams)
+            , {
+                headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
+              )
 
+
+        navigate(`/products/payment`);
+        setThiRefresh(true);
+    }
     return (
         <>
         <CommonHeader  />
@@ -349,8 +361,9 @@ const ProductDetails = () => {
                     {selectSize ? 
                     <button css={addCartText} onClick={addCartSubmitHandle} >장바구니에 담기</button> : 
                     <button css={cartText} >사이즈선택</button>}
-                    
-                    <button css={directBuyText}>바로구매</button>
+                    {selectSize ? 
+                    <button css={directBuyText} onClick={() => directBuy(product)}>바로구매</button> :
+                    <button css={cartText} >사이즈선택</button>}
                 </div>
         </div>
         <CommonFooter />

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.dto.Product.getCartResponseDto;
 import com.korit.androg.androg.entity.Products;
+import com.korit.androg.androg.service.CartService;
 import com.korit.androg.androg.service.ProductsService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductsController {
 	private final ProductsService productsService;
+	private final CartService cartService;
 	
 	@GetMapping("/category/{categoryId}")
 	public ResponseEntity<?> getProductsByCategoyrId (@PathVariable int categoryId, @RequestParam int page) {
@@ -51,6 +53,13 @@ public class ProductsController {
 //		System.out.println(productsService.getProductByProductId(productId));
 		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
 	}
+	
+	@PostMapping("/products/directBuy")
+	public ResponseEntity<?> productsDirectBuy(@RequestBody addCartRequestDto addCartRequestDto){
+		cartService.addCart(addCartRequestDto);
+		return null;
+	}
+
 	
 	
 }
