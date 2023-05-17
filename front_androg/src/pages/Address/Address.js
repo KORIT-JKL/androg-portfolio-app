@@ -5,8 +5,16 @@ import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import AddressInput from "../../components/Input/AddressInput";
-import DaumPostcodeEmbed from "react-daum-postcode";
+import InsertAddress from "../../components/AddressComponent/InsertAddress/InsertAddress";
+import UpdateAddress from "../../components/AddressComponent/UpdateAddress/UpdateAddress";
+import { useRecoilState } from "recoil";
+import {
+  AddressInsertStateRecoil,
+  AddressListStateRecoil,
+  AddressUpdateStateRecoil,
+  getAddressListRecoil,
+  getAddressRecoil,
+} from "../../atoms/AddressAtoms/AddressAtoms";
 
 const mainContainer = css`
   display: grid;
@@ -59,24 +67,6 @@ const addressUpdateButton = css`
   }
 `;
 
-const addressContent = css`
-  grid-column-start: 7;
-  grid-column-end: span 6;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 10px;
-  max-width: 70%;
-  max-height: 100%;
-`;
-
-const addressDetailBox = css`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 15px;
-  font-size: 15px;
-`;
-
 const addAddressButton = css`
   border: 1px solid black;
   margin-top: 50px;
@@ -93,29 +83,24 @@ const addAddressButton = css`
     color: white;
   }
 `;
-const nameBox = css`
-  max-width: 100%;
-  height: 50px;
-  border-bottom: 1px solid black;
-  padding-top: 10px;
-  margin-bottom: 20px;
-`;
-//문제 : 해당 유저에 배송지를 저장하고 추가된 주소지가 바로바로 적용이 안됨 새로고침을 해야 적용된다.
-// 또 한 수정과 삭제 버튼의 click이 동작이 안됨 -> map으로 만들어서 그런듯 함
+
+//CommonHeader 문제가 많다 뭐가 문제인지 모를정도로 빠른 시일내에 해결을 해야함.
+
+//문제: 컴포넌트를 나누지 않고 한 곳에 다 작성을 하니 기능을 구현하기 애먹었음.
+//해결: 결국 컴포넌트를 나누었다. 하지만 컴포넌트를 이렇게 나누는게 맞는지 잘 모르겠다.
+
+//문제 : 해당 유저에 배송지를 저장하고 추가된 주소지가 바로바로 적용이 안됨 새로고침을 해야 적용된다. 삭제 수정도 마찬가지
+//해결 : 삭제는 useQuery의 내장 함수인 refetch를 써서 해결하였음 addressDelete가 성공시에 addressList에 refetch를 써서 다시
+//주소지를 가져오는 기능 같다 자세한 건 알아봐야함, 수정과 추가는 recoil을 써서 전역으로 상태를 관리해 수정이나 추가가 성공하면 addressList
+//useQuery 요청을 다시보내서 userAddressList에 다시 응답된 주소지 목록을 집어넣어서 해결하였다.
+
 const Address = () => {
-  const [addressOpen, setAddressOpen] = useState(false);
+  const [addressOpen, setAddressOpen] = useRecoilState(AddressInsertStateRecoil);
   const [principalState, setPrincipalState] = useState(false);
-  const [openPostCode, setOpenPostCode] = useState(false);
-  const [addressListState, setAddressListState] = useState(false);
-  const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
-  const [userAddressList, setUserAddressList] = useState([]);
-  const [address, setAddress] = useState({
-    address: "",
-    sigungu: "",
-    sido: "",
-    bname: "",
-    zonecode: "",
-  });
+  const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
+  const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
+  const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
+  const [addressRecoil, setAddressRecoil] = useRecoilState(getAddressRecoil);
 
   let userId = 0;
 
@@ -138,39 +123,25 @@ const Address = () => {
     }
   );
 
-  //해당 user 주소지 추가 요청
-  const addressRegister = useMutation(
-    async () => {
-      const data = {
-        userId: principal.data.data.userId,
-        address: address.address,
-        addressSigungu: address.sigungu,
-        addressSido: address.sido,
-        addressBname: address.bname,
-        addressZonecode: address.zonecode,
-        addressDetail: addressDetailInput.addressDetail,
-      };
-      // console.log(data);
+  //해당 유저의 주소 목록에서 하나 삭제 요청
+  const addressDelete = useMutation(
+    async (address) => {
       const option = {
-        headres: {
-          "Content-Type": "application/json",
+        headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      try {
-        const response = await axios.post(
-          "http://localhost:8080/user/mypage/address",
-          data,
-          option
-        );
-        return response;
-      } catch (error) {
-        // console.log(error);
-      }
+      const response = await axios.delete(
+        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        option
+      );
+      // console.log(response);
+      return response;
     },
     {
-      onSuccess: (response) => {
-        // console.log(response.data);
+      onSuccess: () => {
+        //성공적인 삭제 후 주소 목록을 다시 가져옵니다. refetch함수의 기능 ->  다시 list 항목을 불러온다고 함
+        addressList.refetch();
       },
     }
   );
@@ -191,41 +162,12 @@ const Address = () => {
     },
     {
       onSuccess: (response) => {
-        setUserAddressList([...userAddressList, ...response.data]);
+        setUserAddressList([...response.data]);
         setAddressListState(false);
       },
       enabled: !!principal.data && addressListState,
     }
   );
-
-  const addressUpdate = useMutation(async (addressId) => {
-    const option = {
-      headers: {
-        Authorization: localStorage.getItem("accessToken"),
-      },
-    };
-    const response = await axios.put(
-      `http://localhost:8080/user/mypage/address/${addressId}`,
-      option
-    );
-    console.log(response);
-    return response;
-  });
-
-  const selectAddress = (data) => {
-    setAddress((prevState) => ({
-      ...prevState,
-      address: data.address,
-      sigungu: data.sigungu,
-      sido: data.sido,
-      bname: data.bname,
-      zonecode: data.zonecode,
-    }));
-  };
-  const inputOnChangeHandle = (e) => {
-    const { name, value } = e.target;
-    setAddressDetailInput({ ...addressDetailInput, [name]: value });
-  };
   useEffect(() => {
     if (!principalState) {
       setPrincipalState(true);
@@ -235,9 +177,10 @@ const Address = () => {
     }
   }, []);
 
-  if (principal.isLoading && addressRegister.isLoading && addressList.isLoading) {
+  if (principal.isLoading && addressList.isLoading) {
     return <></>;
   }
+
   return (
     <>
       <CommonHeader />
@@ -255,15 +198,22 @@ const Address = () => {
                         <button
                           css={addressUpdateButton}
                           onClick={() => {
-                            console.log(`${address.addressId}`);
                             if (!addressOpen) {
-                              setAddressOpen(true);
+                              setUpdateOpen(true);
+                              setAddressRecoil({ ...addressRecoil, ...address });
                             }
                           }}
                         >
                           수정
                         </button>
-                        <button css={addressUpdateButton}>삭제</button>
+                        <button
+                          css={addressUpdateButton}
+                          onClick={() => {
+                            addressDelete.mutate(address);
+                          }}
+                        >
+                          삭제
+                        </button>
                       </div>
                     </div>
                     <div>{address.address}</div>
@@ -289,95 +239,8 @@ const Address = () => {
             주소 추가하기
           </button>
         </div>
-        {addressOpen ? (
-          <div css={addressContent}>
-            <h2 css={Title}>새 주소 추가</h2>
-            <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
-            <div css={nameBox}>
-              {address.address !== "" ? address.address + "(" + address.bname + ")" : "주소"}
-            </div>
-            <button
-              css={addAddressButton}
-              onClick={() => {
-                if (!openPostCode) {
-                  setOpenPostCode(true);
-                } else {
-                  setOpenPostCode(false);
-                }
-              }}
-            >
-              {" "}
-              주소찾기{" "}
-            </button>
-            {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-            <AddressInput
-              type="text"
-              placeholder="상세주소"
-              name="addressDetail"
-              onChange={inputOnChangeHandle}
-            />
-            <AddressInput
-              type="text"
-              placeholder="구/군/시"
-              name="sigungu"
-              value={address.sigungu}
-              onChange={(e) => setAddress({ ...address, sigungu: e.target.value })}
-            />
-            <AddressInput
-              type="text"
-              placeholder="시/도"
-              name="sido"
-              value={address.sido}
-              onChange={(e) => setAddress({ ...address, sido: e.target.value })}
-            />
-            <AddressInput
-              type="text"
-              placeholder="우편번호"
-              name="zonecode"
-              value={address.zonecode}
-              onChange={(e) => setAddress({ ...address, zonecode: e.target.value })}
-            />
-            <button
-              css={addAddressButton}
-              onClick={() => {
-                addressRegister.mutate();
-                setAddressOpen(true);
-                // setAddress((prevState) => ({
-                //   ...prevState,
-                //   address: "",
-                //   sigungu: "",
-                //   sido: "",
-                //   bname: "",
-                //   zonecode: "",
-                // }));
-              }}
-            >
-              저장
-            </button>
-            <button
-              css={addAddressButton}
-              onClick={() => {
-                if (!addressOpen) {
-                  setAddressOpen(true);
-                } else {
-                  setAddressOpen(false);
-                  setAddress((prevState) => ({
-                    ...prevState,
-                    address: "",
-                    sigungu: "",
-                    sido: "",
-                    bname: "",
-                    zonecode: "",
-                  }));
-                }
-              }}
-            >
-              취소
-            </button>
-          </div>
-        ) : (
-          ""
-        )}
+        {addressOpen ? <InsertAddress principal={principal} /> : ""}
+        {updateOpen ? <UpdateAddress principal={principal} address={addressRecoil} /> : ""}
       </main>
       <CommonFooter />
     </>
