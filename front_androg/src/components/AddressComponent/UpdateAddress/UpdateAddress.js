@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation } from "react-query";
@@ -8,7 +8,6 @@ import axios from "axios";
 import {
   AddressListStateRecoil,
   AddressUpdateStateRecoil,
-  getAddressListRecoil,
 } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 

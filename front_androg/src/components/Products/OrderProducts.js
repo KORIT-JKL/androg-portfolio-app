@@ -76,8 +76,8 @@ const reviewButton = css`
 
 const OrderProducts = ({ orderProduct }) => {
   const navigate = useNavigate();
-  const reviewClickHandle = () => {
-    navigate("/");
+  const reviewClickHandle = (orderProduct) => {
+    navigate(`/product/${orderProduct.productId}/review`);
   };
 
   return (
@@ -96,7 +96,7 @@ const OrderProducts = ({ orderProduct }) => {
         <p css={orderInfoText}>가격 : ₩ {orderProduct.productPrice}</p>
       </div>
       <div css={reviewButtonBox}>
-        <button css={reviewButton} onClick={reviewClickHandle}>
+        <button css={reviewButton} onClick={() => reviewClickHandle(orderProduct)}>
           리뷰 등록
         </button>
       </div>

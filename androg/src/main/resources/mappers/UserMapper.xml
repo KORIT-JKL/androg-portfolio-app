@@ -22,14 +22,6 @@
 	<association property="role" resultMap="roleMap"></association>
 </resultMap>
 
-<resultMap type="com.korit.androg.androg.entity.OrderProducts" id="orderProductsMap">
-	<id property="orderId" column="order_id"/>
-	<result property="sizeName" column="size_name"/>
-	<result property="countNumber" column="count_number"/>
-	<association property="user" resultMap="userMap"></association>
-	<association property="products" resultMap="productsMap"></association>
-	<association property="color" resultMap="colorMap"></association>
-</resultMap>
 
 <resultMap type="com.korit.androg.androg.entity.Products" id="productsMap">
 		<id property="productId" column="product_id"/>
@@ -44,6 +36,18 @@
 		<association property="category" resultMap="categoryMap"></association>
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
+
+<resultMap type="com.korit.androg.androg.entity.OrderProducts" id="orderProductsMap">
+	<id property="orderId" column="order_id"/>
+	<result property="sizeName" column="size_name"/>
+	<result property="countNumber" column="count_number"/>
+	<result property="productId" column="product_id"/>
+	<association property="user" resultMap="userMap"></association>
+	<association property="products" resultMap="productsMap"></association>
+	<association property="color" resultMap="colorMap"></association>
+</resultMap>
+
+
 
 <resultMap type="com.korit.androg.androg.entity.Category" id="categoryMap">
 		<id property="categoryId" column="category_id"/>
@@ -99,6 +103,7 @@ keyProperty="userId">
     	ot.size_name,
     	ot.order_id,
     	ot.count_number,
+    	ot.product_id,
     
     	ut.name
 	from

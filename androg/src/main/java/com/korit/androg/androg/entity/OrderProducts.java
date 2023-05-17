@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderProducts {
 	private int orderId;
-	private String sizeName;
 	private int countNumber;
+	private int productId;
+	private String sizeName;
 	
 	private User user;
 	private Products products;
@@ -23,6 +24,7 @@ public class OrderProducts {
 	public OrderProductsRespDto toDto() {
 		return OrderProductsRespDto.builder()
 				.orderId(orderId)
+				.productId(productId)
 				.productName(products.getProductName())
 				.productImg(products.getProductImg())
 				.productPrice(products.getProductPrice())

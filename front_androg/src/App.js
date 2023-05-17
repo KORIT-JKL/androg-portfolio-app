@@ -17,16 +17,18 @@ import Products from "./pages/products/products";
 import ProductDetails from "./pages/products/productDetails";
 import SearchProducts from "./pages/products/searchProducts";
 import Address from "./pages/Address/Address";
-import AuthRouteReactQuery from './components/Route/AuthRoute/AuthRouteReactQuery';
+import AuthRouteReactQuery from "./components/Route/AuthRoute/AuthRouteReactQuery";
 import Payment from "./pages/Payment/Payment";
+import Review from "./pages/Review/Review";
 
 function App() {
   return (
     <>
       <Global styles={Reset}></Global>
       <Routes>
-        <Route exact path='/' element={<Main />} />
-        <Route path='/login' element={<Login />} />
+        {/* 메인 및 로그인 회원가입 페이지 */}
+        <Route exact path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         {/* 문의페이지 Route */}
@@ -36,16 +38,21 @@ function App() {
         <Route path="/page/sizeguide" element={<SizeGuide />} />
         <Route path="/page/legal" element={<Legal />} />
 
-
         {/* 마이페이지 Route */}
-        <Route path="/mypage" element={<AuthRouteReactQuery path='/mypage' element={<MyPage />} />} />
+        <Route
+          path="/mypage"
+          element={<AuthRouteReactQuery path="/mypage" element={<MyPage />} />}
+        />
         <Route path="/mypage/address" element={<Address />}></Route>
 
-        <Route path ="/category/:categoryId" element={<Products />} />
-        <Route path="products/:productId/details" element = {<ProductDetails />}></Route>
-        <Route path ="/products/search" element = {<SearchProducts />}></Route>
-        <Route path = "/products/payment" element = {<Payment />} />
+        {/* 상품페이지 */}
+        <Route path="/category/:categoryId" element={<Products />} />
+        <Route path="products/:productId/details" element={<ProductDetails />}></Route>
+        <Route path="/products/search" element={<SearchProducts />}></Route>
+        <Route path="/products/payment" element={<Payment />} />
 
+        {/* 리뷰 페이지 */}
+        <Route path="/product/:productId/review" element={<Review />} />
       </Routes>
     </>
   );
