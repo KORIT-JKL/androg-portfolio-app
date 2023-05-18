@@ -234,12 +234,16 @@ const Payment = () => {
                     <div css={shipping}>
                         <h2 css={shippingAddress}>배송주소</h2>
                         
-                        <select css={select}>
+                        <select css={select} onc>
                             {userAddressList.length > 0 ? userAddressList.map((address, index)=> {
                                 return (
-                                    <option value="">{address.address}</option>
+                                    <>
+                                        <option value="">{address.address}</option>
+                                        
+                                    </>
                                 )
-                            }) : ""}
+                            }) : <option value="">새 주소</option>}
+                            <option value="">새 주소</option>
                         </select>
                         <select css={select}>
                             <option value="">대한민국</option>
@@ -290,15 +294,7 @@ const Payment = () => {
             </div>
             <aside css={aside}>
                 <div css={asideContent}>
-                    {cartList != null ? cartList.map(
-                        (cart)=>{
-                            <>
-                            <img src={productImg} alt="" />
-                            
-                            </>
-                        }
-                        
-                    ) : ""}
+                   
                 </div>
             </aside>
         </div>
