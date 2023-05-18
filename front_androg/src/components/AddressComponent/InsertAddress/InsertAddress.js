@@ -86,11 +86,7 @@ const InsertAddress = ({ principal }) => {
       };
       try {
         //주소지 추가 url
-        const response = await axios.post(
-          "http://localhost:8080/user/mypage/address",
-          data,
-          option
-        );
+        const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
         return response;
       } catch (error) {
         // console.log(error);
@@ -112,6 +108,7 @@ const InsertAddress = ({ principal }) => {
       bname: data.bname,
       zonecode: data.zonecode,
     }));
+    setOpenPostCode(false);
   };
 
   const inputOnChangeHandle = (e) => {
@@ -128,9 +125,7 @@ const InsertAddress = ({ principal }) => {
       <h2 css={Title}>새 주소 추가</h2>
       <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
       <div css={nameBox}>
-        {addressInput.address !== ""
-          ? addressInput.address + "(" + addressInput.bname + ")"
-          : "주소"}
+        {addressInput.address !== "" ? addressInput.address + "(" + addressInput.bname + ")" : "주소"}
       </div>
       <button
         css={addAddressButton}
@@ -146,12 +141,7 @@ const InsertAddress = ({ principal }) => {
         주소찾기{" "}
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput
-        type="text"
-        placeholder="상세주소"
-        name="addressDetail"
-        onChange={inputOnChangeHandle}
-      />
+      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
       <AddressInput
         type="text"
         placeholder="구/군/시"
@@ -176,16 +166,8 @@ const InsertAddress = ({ principal }) => {
       <button
         css={addAddressButton}
         onClick={() => {
+          setAddressOpen(false);
           addressRegister.mutate();
-          //   setAddressOpen(true);
-          // setAddress((prevState) => ({
-          //   ...prevState,
-          //   address: "",
-          //   sigungu: "",
-          //   sido: "",
-          //   bname: "",
-          //   zonecode: "",
-          // }));
         }}
       >
         저장
