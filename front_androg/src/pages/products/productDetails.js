@@ -13,10 +13,11 @@ import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
 const container = css`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 1500px;
   height: 100%;
   margin: auto;
+  
 `;
 const imgContainer = css`
   margin: 20px;
@@ -38,6 +39,7 @@ const detailsContainer = css`
   height: 100%;
   margin: 100px 20px;
   padding-left: 30px;
+  padding-top: 250px;
 `;
 const sameNameProductsContainer = css`
   display: flex;
@@ -50,6 +52,7 @@ const sameNameProductsImg = css`
   width: 80px;
   padding: 5px;
   top: 5px;
+  cursor: pointer;
   &:hover {
     background-color: #dbdbdb;
   }

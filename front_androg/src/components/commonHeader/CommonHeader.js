@@ -8,7 +8,7 @@ import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAto
 import { loginState, setPage, setProducts, setSearchParams } from "../../atoms/Auth/AuthAtoms";
 import Cart from "../../pages/Cart/cart";
 import { useQuery } from "react-query";
-import axios from "axios";
+
 
 const header = css`
   position: fixed;
