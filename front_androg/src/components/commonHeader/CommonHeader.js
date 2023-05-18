@@ -9,7 +9,6 @@ import { loginState, setPage, setProducts, setSearchParams } from "../../atoms/A
 import Cart from "../../pages/Cart/cart";
 import { useQuery } from "react-query";
 
-
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -117,7 +116,10 @@ const CommonHeader = () => {
   };
   const EnterKeyDown = (e) => {
     if (e.key === "Enter") {
-      setThisSearchParams({ setSearchPage: 1, setSearchInput: document.getElementById("searchInputText").value });
+      setThisSearchParams({
+        setSearchPage: 1,
+        setSearchInput: document.getElementById("searchInputText").value,
+      });
       console.log(searchParams);
       navigate("/products/search");
       setThisProducts([]);
@@ -131,8 +133,8 @@ const CommonHeader = () => {
   const cartOpen = () => {
     setCartIsOpen(true);
     setThiRefresh(true);
-  }
- 
+  };
+
   const logoutClickHandle = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       localStorage.removeItem("accessToken");
@@ -145,7 +147,7 @@ const CommonHeader = () => {
     if (!!localStorage.getItem("accessToken")) {
       setLoginIsState(true);
     }
-  },[loginIsState])
+  }, [loginIsState]);
 
   return (
     <>
@@ -214,7 +216,7 @@ const CommonHeader = () => {
                   SEARCH
                 </li>
                 <li css={list}>
-                  <Link to="/login">LOGIN</Link>
+                  <Link to="/auth/login">LOGIN</Link>
                 </li>
                 <li css={list} onClick={cartOpen}>
                   BAG

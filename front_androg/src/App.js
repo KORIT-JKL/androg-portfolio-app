@@ -20,6 +20,7 @@ import Address from "./pages/Address/Address";
 import AuthRouteReactQuery from "./components/Route/AuthRoute/AuthRouteReactQuery";
 import Payment from "./pages/Payment/Payment";
 import Review from "./pages/Review/Review";
+import Index from "./pages/Admin/Index";
 
 function App() {
   return (
@@ -28,8 +29,8 @@ function App() {
       <Routes>
         {/* 메인 및 로그인 회원가입 페이지 */}
         <Route exact path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/register" element={<Register />} />
 
         {/* 문의페이지 Route */}
         <Route path="/page/notice" element={<Notice />} />
@@ -41,7 +42,7 @@ function App() {
         {/* 마이페이지 Route */}
         <Route
           path="/mypage"
-          element={<AuthRouteReactQuery path="/mypage" element={<MyPage />} />}
+          element={<AuthRouteReactQuery path={"/mypage"} element={<MyPage />} />}
         />
         <Route path="/mypage/address" element={<Address />}></Route>
 
@@ -53,6 +54,12 @@ function App() {
 
         {/* 리뷰 페이지 */}
         <Route path="/product/:productId/review" element={<Review />} />
+
+        {/* 관리자페이지 */}
+        <Route
+          path="/admin"
+          element={<AuthRouteReactQuery path={"/admin"} element={<Index />} />}
+        />
       </Routes>
     </>
   );

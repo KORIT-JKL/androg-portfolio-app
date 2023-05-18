@@ -1,68 +1,81 @@
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { refreshState } from "../../../atoms/Auth/AuthAtoms";
-import { useQueries, useQuery } from "react-query";
+import { authenticationState } from "../../../atoms/Auth/AuthAtoms";
+import { useQuery } from "react-query";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AuthRouteReactQuery = ({ path, element }) => {
-  const [refresh, setRefresh] = useRecoilState(refreshState);
-
-  const { data, isLoading } = useQuery(
+  const [authState, setAuthState] = useRecoilState(authenticationState);
+  const navigate = useNavigate();
+  const authenticated = useQuery(
     ["authenticated"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get("http://localhost:8080/auth/authenticated", {
-        params: { accessToken },
-      });
-      return response;
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      return await axios.get("http://localhost:8080/auth/authenticated", option);
     },
     {
-      onSuccess: () => {
-        setRefresh(false);
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          if (response.data) {
+            setAuthState(true);
+          }
+        }
       },
-      enabled: refresh,
     }
   );
 
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get("http://localhost:8080/auth/principal", {
-        params: { accessToken },
-      });
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
+      onSuccess: (response) => {
+        console.log(response);
+      },
       enabled: !!localStorage.getItem("accessToken"),
     }
   );
-
-  useEffect(() => {
-    if (!refresh) {
-      setRefresh(true);
-    }
-  }, []);
-
-  if (isLoading) {
-    return <div>로딩중....</div>;
+  // useEffect(() => {}, []);
+  console.log(authState);
+  const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
+  const authPath = "/auth";
+  const adminPath = "/admin";
+  // console.log(authState);
+  if (authenticated.isLoading && principal.isLoading) {
+    return <></>;
   }
 
   if (principal.data !== undefined) {
     const roles = principal.data.data.authorities.split(",");
-
-    if (path.startsWith("/admin") && !roles.includes("ROLE_ADMIN")) {
-      return <Navigate to="/" />;
+    console.log(roles);
+    if (path.startsWith(adminPath) && !roles.includes("ROLE_ADMIN")) {
+      navigate("/");
     }
   }
 
-  if (!isLoading) {
-    if (!data.data) {
-      return <Navigate to="/login" />;
-    }
-    return element;
+  if (authState && path.startsWith(authPath)) {
+    navigate("/");
   }
+  if (
+    !authState &&
+    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
+  ) {
+    navigate("/auth/login");
+  }
+
+  return element;
 };
 
 export default AuthRouteReactQuery;
