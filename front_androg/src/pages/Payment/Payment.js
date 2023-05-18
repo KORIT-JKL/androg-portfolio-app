@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { setRefresh } from "../../atoms/authAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
+
 const container = css`
     font-size: 12px;
     display: flex;
@@ -142,22 +143,60 @@ const aside = css`
     padding: 56px 0 0 38px;
 `;
 
-const asideHeader = css`
-
-`;
 
 const asideContent = css`
+    display: flex;
+    flex-direction: column;
+`;
+
+const cartContainer = css`
+    display: flex;
+    flex-direction: row;
+`;
+
+const productDescription = css`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 15px 0 0 20px;
 
 `;
 
+const cartImg = css`
+    width: 100px;
+    padding-top: 15px;
+`;
+
+const cartSummary = css`
+    width: 100%;
+    padding: 30px 0;
+`;
+
+const summaryHeader = css`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 90px;
+    border-top: 1px solid #dbdbdb;
+    padding: 15px 0;
+`;
+
+const summaryFooter = css`
+    width: 100%;
+    border-top: 1px solid #dbdbdb;
+    padding-top: 15px;
+`;
 
 // url 변경 => /products/payment 
 const Payment = () => {
     const [principalState, setPrincipalState] = useState(false);
     const [addressListState, setaddressListState] = useState(false);
     const [ cartListState, setCartListState] = useState(false);
-    const [userAddressList, setUserAddressList ] = useRecoilState(getAddressListRecoil);
-    const [addressIndex, setAddressIndex] = useState();
+    const [userAddressList, setUserAddressList ] = useState([]);
+    const [ userCartList , setUserCartList] = useState([])
+    const [ userCartListAllPrice, setUserCartListAllPrice] = useState();
+    const [addressIndex, setAddressIndex] = useState(0);
 
     const principal = useQuery(["principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");
@@ -184,6 +223,7 @@ const Payment = () => {
     }, 
     {
         onSuccess: (response) => {
+            // console.log(response.data)
             setUserAddressList([...response.data])
             setaddressListState(false)
         },
@@ -193,11 +233,17 @@ const Payment = () => {
 
     const cartList = useQuery(["cartList"], async () => {
         
-        const response = await axios.get("http://localhost:8080/products/payment/cartlist", {params:{userId: principal.data.data.userId}});
+        const response = await axios.get("http://localhost:8080/cart", {params:{userId: principal.data.data.userId}});
         return response;
     },
     {
-        onSuccess: () => {
+        onSuccess: (response) => {
+            let element = 0;
+           for (let i = 0; i < response.data.length; i++) {          
+                element += response.data[i].productPrice;
+            }
+            setUserCartListAllPrice(element)
+            setUserCartList([...response.data])
             setCartListState(false)
         },
         enabled: !!principal.data && cartListState
@@ -207,14 +253,21 @@ const Payment = () => {
         if (!principalState) {
             setPrincipalState(true)
         }
-        if(!addressListState) {
+        if(!addressListState){
             setaddressListState(true)
         }
         if(!cartListState) {
             setCartListState(true)
         }
       }, []);
-   
+    
+    const clickHandle = (e) => {
+        setAddressIndex(e.target.value);
+       
+    }
+
+
+    // console.log(userAddressList)
     if(principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>
     }
@@ -234,48 +287,36 @@ const Payment = () => {
                     <div css={shipping}>
                         <h2 css={shippingAddress}>배송주소</h2>
                         
-                        <select css={select} onc>
-                            {userAddressList.length > 0 ? userAddressList.map((address, index)=> {
+                        <select css={select}  onClick={clickHandle}>
+                            { !!userAddressList ?                           
+                            userAddressList.map((address, index)=> {
                                 return (
                                     <>
-                                        <option value="">{address.address}</option>
-                                        
+                                        <option value={index}>{address.address}</option>
                                     </>
-                                )
-                            }) : <option value="">새 주소</option>}
-                            <option value="">새 주소</option>
+                                    )
+                            })  : <option value={userAddressList.length}>새 주소</option>}
                         </select>
                         <select css={select}>
-                            <option value="">대한민국</option>
+                            <option>대한민국</option>
                         </select>
                         <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(1) : ""}/>
                         <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(0,1) : ""}/>
                         <div>
-                            <input type="text" css={postNumInput}/>
+                            <input type="text" css={postNumInput} value={addressIndex !==0 && !!userAddressList ? userAddressList[addressIndex].addressZonecode:""}/>
                             <button css={addressSearchBtn}>주소찾기</button>
                         </div>
-                        <select css={select}>
-                            <option disabled>시/도</option>
-                            <option value="">강원도</option>
-                            <option value="">경기도</option>
-                            <option value="">경상남도</option>
-                            <option value="">경상북도</option>
-                            <option value="">광주광역시</option>
-                            <option value="">대구광역시</option>
-                            <option value="">부산광역시</option>
-                            <option value="">서울특별시</option>
-                            <option value="">세종특별자치시</option>
-                            <option value="">울산광역시</option>
-                            <option value="">인천광역시</option>
-                            <option value="">전라남도</option>
-                            <option value="">전라북도</option>
-                            <option value="">제주특별자치도</option>
-                            <option value="">충청남도</option>
-                            <option value="">충청북도</option>
-                        </select>
-                        <input type="text" placeholder="구/군/시" css={input}/>
-                        <input type="text" placeholder="주소" css={input}/>
-                        <input type="text" placeholder="상세주소" css={input}/>
+                       
+                        {
+                             addressIndex !==0 &&!!userAddressList ? 
+                            <>
+                            <input type="text" placeholder="구/군/시" css={input} value={userAddressList[addressIndex].addressSido + " " + userAddressList[addressIndex].addressSigungu}/>
+                            <input type="text" placeholder="주소" css={input} value={userAddressList[addressIndex].address.split(' ').slice(2).join(" ")}/> 
+                            </>
+                             : ""  
+                        } 
+
+                        <input type="text" placeholder="상세주소" css={input} />
 
                         
                         <input type="text" placeholder="전화번호" css={phoneInput} />
@@ -294,7 +335,31 @@ const Payment = () => {
             </div>
             <aside css={aside}>
                 <div css={asideContent}>
-                   
+                   {!!userCartList ? userCartList.map(userCart => {
+                    return (
+                        <>
+                        <div css={cartContainer}>                        
+                                <img src={userCart.productImg} css={cartImg} alt=""/>
+                                <div css={productDescription}>
+                                    <div>{userCart.productName}</div>
+                                    <div>{userCart.colorName + " / " + userCart.sizeName}</div>
+                                    <div>{userCart.productPrice}</div>
+                                    <div>{"수량 : "+userCart.countNumber}</div>
+                                </div>
+                        </div>
+                        </>
+                    )
+                   })
+                   : ""}
+                   <div css={cartSummary}>
+                            <div css={summaryHeader}>
+                                <div>{"총 상품금액 " + userCartListAllPrice}</div>
+                                <div>{"배송비 " + 2500}</div>
+                            </div>
+                            <div css={summaryFooter}>
+                                <div>{"총 주문금액" + (2500 + userCartListAllPrice)}</div>
+                            </div>
+                        </div>
                 </div>
             </aside>
         </div>
