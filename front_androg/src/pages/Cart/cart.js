@@ -46,6 +46,7 @@ const closeButton =css`
     font-size: 30px;
     background-color: white;
     border: 0px;
+    cursor: pointer;
 `
 const main =css`
     display: flex;
@@ -90,6 +91,7 @@ const productDelectButton =css`
     width: 25px;
     border: none;
     margin-right: 20px;
+    cursor: pointer;
     &:hover{
         background-color: #dbdbdb;
     }
@@ -121,6 +123,7 @@ const plusAndMinus =css`
     background-color: white;
     margin: 0px 5px;
     border: 1px solid #dbdbdb;
+    cursor: pointer;
 `
 const CountButton =css`
     font-size: 20px;
@@ -147,6 +150,9 @@ const checkList =css`
     display: flex;
     padding: 10px 0px;
 `
+const checkBox = css`
+    cursor: pointer;
+`
 const totalPriceContainer =css`
     display: flex;
     justify-content: space-between;
@@ -172,6 +178,7 @@ const shoppingButton =css`
     background-color: white;
     font-weight: 600;
     font-size: 17px;
+    cursor: pointer;
     &:hover {
         background-color: grey;
         color: white;
@@ -183,6 +190,7 @@ const payButton =css`
     margin: 10px;
     font-size: 17px;
     font-weight: 600;
+    cursor: pointer;
 `
 const Cart = () => {
     const [ count , setCount ] = useState(0);
@@ -192,6 +200,9 @@ const Cart = () => {
     const [ getproducts , setProducts] = useState([]);
     const [ totalPrice , setTotalPrice] = useState(0);
     const [deleteSuccess, setDeleteSuccess] = useState(true);
+    const [ chekcked1 , setChecked1] = useState(false);
+    const [ chekcked2 , setChecked2] = useState(false);
+
     const navigate = useNavigate();
     const cartClose = () => {
         setCartIsOpen(false);
@@ -293,11 +304,17 @@ const Cart = () => {
       });
     
     const payment = () => {
-        navigate(`/products/payment`);
-        setThiRefresh(true);
+        if(chekcked1 && chekcked2){
+            navigate(`/products/payment`);
+            setThiRefresh(true);
+
+        } else {
+            alert("이용 약관 동의를 체크해주세요")
+            setThiRefresh(true);
+        }
     }
      
-      
+
 
     return (
         
@@ -348,11 +365,11 @@ const Cart = () => {
                         <div css= {deliveryText}>10만원 이상 구매 시 무료배송 / 제외가 적용 됩니다.</div>
                     <div css={checkLists}>
                         <div css={checkList}>
-                            <input type="checkbox"></input>
+                            <input id="check1" type="checkbox" css={checkBox} chekced={chekcked1} onChange={() => setChecked1(!chekcked1)} ></input>
                             <div>개인정보 수집 및 이용 동의</div>
                         </div>
                         <div css={checkList}>
-                            <input type="checkbox"></input>
+                            <input id="check2" type="checkbox" css={checkBox} chekced={chekcked2} onChange={() => setChecked2(!chekcked2)}></input>
                             <div>이용약관 동의</div>
                         </div>
                     </div>
@@ -364,7 +381,9 @@ const Cart = () => {
                 </div>
                 <div css={footer}>
                     <button onClick={() => cartClose()} css={shoppingButton}>쇼핑 계속하기</button>
-                    <button onClick={() => payment()}css={payButton}>결제하기</button>
+                        <button onClick={() => payment()}  css={payButton}>결제하기</button>
+
+                                       
                 </div>
             </div>
             
