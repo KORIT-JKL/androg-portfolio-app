@@ -15,6 +15,7 @@ public class AddressReigsteReqDto {
 	private String addressSido;
 	private String addressBname;
 	private String addressZonecode;
+	private int addressFlag;
 	
 	public Address toEntity() {
 		return Address.builder()
@@ -25,6 +26,7 @@ public class AddressReigsteReqDto {
 				.addressSigungu(addressSigungu)
 				.addressBname(addressBname)
 				.addressZonecode(addressZonecode)
+				.addressFlag(addressFlag)
 				.build();
 	}
 }

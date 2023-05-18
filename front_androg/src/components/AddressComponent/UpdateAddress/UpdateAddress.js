@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React, { useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { AddressListStateRecoil, AddressUpdateStateRecoil } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
@@ -51,6 +51,7 @@ const nameBox = css`
 
 const UpdateAddress = ({ principal, address }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
+  const queryClient = useQueryClient();
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
   const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
@@ -72,6 +73,7 @@ const UpdateAddress = ({ principal, address }) => {
         addressBname: addressInput.bname,
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
+        addressFlag: 0,
       };
       const option = {
         headers: {
@@ -92,6 +94,7 @@ const UpdateAddress = ({ principal, address }) => {
     {
       onSuccess: () => {
         setAddressListState(true);
+        queryClient.fetchQuery("addressList");
       },
     }
   );

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.entity.Address;
 
 @Mapper
@@ -16,4 +17,6 @@ public interface AddressRepository {
 	public int addressUpdate(Map<String, Object> requestMap);
 	
 	public int addressDelete(int addressId);
+	
+	public int addressDefalut(AddressDefaultReqDto addressDefaultReqDto);
 }

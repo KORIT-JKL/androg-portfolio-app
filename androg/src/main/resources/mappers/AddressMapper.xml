@@ -4,11 +4,13 @@
 	<resultMap type="com.korit.androg.androg.entity.Address" id="AddressMap">
 		<id property="addressId" column="address_id"/>
 		<result property="address" column="address"/>
+		<result property="userId" column="user_id"/>
 		<result property="addressDetail" column="address_detail"/>
 		<result property="addressSido" column="address_sido"/>
 		<result property="addressSigungu" column="address_sigungu"/>
 		<result property="addressBname" column="address_bname"/>
 		<result property="addressZonecode" column="address_zonecode"/>
+		<result property="addressFlag" column="address_flag"/>
 		<association property="user" resultMap="UserMap"></association>
 	</resultMap>
 	<resultMap type="com.korit.androg.androg.entity.User" id="UserMap">
@@ -20,7 +22,7 @@
 
 	<insert id="addressRegister" parameterType="com.korit.androg.androg.entity.Address">
 	insert into address_tb
-		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode})
+		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode},#{addressFlag})
 	
 	</insert>
 	
@@ -33,6 +35,8 @@
     	ab.address_bname,
     	ab.address_zonecode,
 		ab.address_id,
+		ab.address_flag,
+		ab.user_id,
     	ut.name
     
 	from
@@ -40,6 +44,8 @@
     	left outer join user_tb ut on(ut.user_id = ab.user_id)
 	where
 		ab.user_id = #{userId}
+	order by
+		ab.address_flag desc
 	</select>
 	
 	<update id="addressUpdate" parameterType="hashmap">
@@ -60,5 +66,13 @@
 		where
 			address_id = #{addressId}
 	</delete>
+	
+	<update id="addressDefalut" parameterType="com.korit.androg.androg.dto.address.AddressDefaultReqDto">
+	 	update address_tb
+    	set 
+    		address_flag = if(address_id = #{addressId}, 1, 0)
+      	where user_id = #{userId}
+		
+	</update>
 	
 </mapper>

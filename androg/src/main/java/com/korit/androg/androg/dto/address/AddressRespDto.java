@@ -14,4 +14,5 @@ public class AddressRespDto {
 	private String addressSigungu;
 	private String addressBname;
 	private String addressZonecode;
+	private int addressFlag;
 }

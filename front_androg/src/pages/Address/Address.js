@@ -103,7 +103,7 @@ const Address = () => {
   const [addressRecoil, setAddressRecoil] = useRecoilState(getAddressRecoil);
 
   let userId = 0;
-
+  let idList = [];
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -131,10 +131,7 @@ const Address = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.delete(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
-        option
-      );
+      const response = await axios.delete(`http://localhost:8080/user/mypage/address/${address.addressId}`, option);
       // console.log(response);
       return response;
     },
@@ -157,15 +154,37 @@ const Address = () => {
       };
       //user 주소지 조회 url/user/mypage/address
       const response = await axios.get("http://localhost:8080/user/mypage/address", option);
-      // console.log(response);
+      console.log(response);
       return response;
     },
     {
       onSuccess: (response) => {
         setUserAddressList([...response.data]);
-        setAddressListState(false);
       },
       enabled: !!principal.data && addressListState,
+    }
+  );
+
+  const addressDefault = useMutation(
+    async (address) => {
+      const data = {
+        userId: address.userId,
+        addressId: address.addressId,
+      };
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.put("http://localhost:8080/user/mypage/address/default", data, option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        console.log(response);
+        setAddressListState(true);
+        addressList.refetch();
+      },
     }
   );
   useEffect(() => {
@@ -220,7 +239,8 @@ const Address = () => {
                     <div>{address.addressDetail}</div>
                     <div>
                       {address.addressSigungu}
-                      {address.addressZonecode}
+                      {address.addressZonecode}{" "}
+                      <button onClick={() => addressDefault.mutate(address)}>기본 배송지</button>
                     </div>
                   </div>
                 );

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.dto.address.AddressReigsteReqDto;
 import com.korit.androg.androg.dto.address.AddressRespDto;
 import com.korit.androg.androg.entity.Address;
@@ -48,5 +49,9 @@ public class AddressService {
 	
 	public int addressDelete(int addressId) {
 		return addressRepository.addressDelete(addressId);
+	}
+	
+	public int addressDefault(AddressDefaultReqDto addressDefaultReqDto) {
+		return addressRepository.addressDefalut(addressDefaultReqDto);
 	}
 }

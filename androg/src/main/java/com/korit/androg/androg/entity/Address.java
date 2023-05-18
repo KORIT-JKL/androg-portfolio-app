@@ -1,5 +1,7 @@
 package com.korit.androg.androg.entity;
 
+import java.util.List;
+
 import com.korit.androg.androg.dto.address.AddressRespDto;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +22,8 @@ public class Address {
 	private String addressSido;
 	private String addressBname;
 	private String addressZonecode;
+	private int addressFlag;
+	
 	
 	private User user;
 	
@@ -33,6 +37,7 @@ public class Address {
 				.addressSigungu(addressSigungu)
 				.addressBname(addressBname)
 				.addressZonecode(addressZonecode)
+				.addressFlag(addressFlag)
 				.build();
 	}
 }

@@ -1,5 +1,7 @@
 package com.korit.androg.androg.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.dto.address.AddressReigsteReqDto;
 import com.korit.androg.androg.service.AddressService;
 
@@ -39,6 +42,12 @@ public class AddressController {
 		System.out.println(addressReigsteReqDto);
 		
 		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
+	}
+	
+	@PutMapping("/user/mypage/address/default")
+	public ResponseEntity<?> addressDefault(@RequestBody AddressDefaultReqDto addressDefaultReqDto){
+		System.out.println(addressDefaultReqDto);
+		return ResponseEntity.ok().body(addressService.addressDefault(addressDefaultReqDto)); 
 	}
 	
 	@DeleteMapping("/user/mypage/address/{addressId}")

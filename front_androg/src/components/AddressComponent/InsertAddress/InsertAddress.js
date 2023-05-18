@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React, { useState } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import {
   AddressInsertStateRecoil,
@@ -55,6 +55,7 @@ const nameBox = css`
 
 const InsertAddress = ({ principal }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
+  const queryClient = useQueryClient();
   const [addressOpen, setAddressOpen] = useRecoilState(AddressInsertStateRecoil);
   const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
@@ -76,6 +77,7 @@ const InsertAddress = ({ principal }) => {
         addressBname: addressInput.bname,
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
+        addressFlag: 0,
       };
       // console.log(data);
       const option = {
@@ -95,6 +97,7 @@ const InsertAddress = ({ principal }) => {
     {
       onSuccess: () => {
         setAddressListState(true);
+        queryClient.fetchQuery("addressList");
       },
     }
   );
