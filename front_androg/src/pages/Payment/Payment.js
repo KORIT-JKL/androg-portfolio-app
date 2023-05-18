@@ -155,8 +155,9 @@ const asideContent = css`
 const Payment = () => {
     const [principalState, setPrincipalState] = useState(false);
     const [addressListState, setaddressListState] = useState(false);
+    const [ cartListState, setCartListState] = useState(false);
     const [userAddressList, setUserAddressList ] = useRecoilState(getAddressListRecoil);
-
+    const [addressIndex, setAddressIndex] = useState();
 
     const principal = useQuery(["principal"], async () => {
         const accessToken = localStorage.getItem("accessToken");
@@ -190,6 +191,17 @@ const Payment = () => {
     }
     );
 
+    const cartList = useQuery(["cartList"], async () => {
+        
+        const response = await axios.get("http://localhost:8080/products/payment/cartlist", {params:{userId: principal.data.data.userId}});
+        return response;
+    },
+    {
+        onSuccess: () => {
+            setCartListState(false)
+        },
+        enabled: !!principal.data && cartListState
+    });
     
     useEffect(() => {
         if (!principalState) {
@@ -197,6 +209,9 @@ const Payment = () => {
         }
         if(!addressListState) {
             setaddressListState(true)
+        }
+        if(!cartListState) {
+            setCartListState(true)
         }
       }, []);
    
@@ -220,15 +235,11 @@ const Payment = () => {
                         <h2 css={shippingAddress}>배송주소</h2>
                         
                         <select css={select}>
-                            {userAddressList.length > 0 ? userAddressList.map((address,index)=>{
-                                console.log(index, address.address);
-                                return ( 
-                                <>
-                                    <option value="">{address.address + " " + address.addressDetail}</option>
-                                </>  
+                            {userAddressList.length > 0 ? userAddressList.map((address, index)=> {
+                                return (
+                                    <option value="">{address.address}</option>
                                 )
-                            }) : <option value="">새 주소</option>}
-                            <option value="">새 주소</option>
+                            }) : ""}
                         </select>
                         <select css={select}>
                             <option value="">대한민국</option>
@@ -263,7 +274,7 @@ const Payment = () => {
                         <input type="text" placeholder="상세주소" css={input}/>
 
                         
-                        <input type="text" placeholder="전화번호" css={phoneInput}/>
+                        <input type="text" placeholder="전화번호" css={phoneInput} />
                         <button css={continueBtn}>결제하기</button>
                     </div>
                 </div>
@@ -279,7 +290,15 @@ const Payment = () => {
             </div>
             <aside css={aside}>
                 <div css={asideContent}>
-                    
+                    {cartList != null ? cartList.map(
+                        (cart)=>{
+                            <>
+                            <img src={productImg} alt="" />
+                            
+                            </>
+                        }
+                        
+                    ) : ""}
                 </div>
             </aside>
         </div>
