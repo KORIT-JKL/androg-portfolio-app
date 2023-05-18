@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { setRefresh } from "../../atoms/authAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
+import DaumPostcodeEmbed from "react-daum-postcode";
 
 
 const container = css`
@@ -192,8 +193,12 @@ const summaryFooter = css`
 const Payment = () => {
     const [principalState, setPrincipalState] = useState(false);
     const [addressListState, setaddressListState] = useState(false);
-    const [ cartListState, setCartListState] = useState(false);
     const [userAddressList, setUserAddressList ] = useState([]);
+    const [userAddressSigungu, setUserAddressSigungu] = useState("");
+    const [userAddressSido, setUserAddressSido] = useState("");
+    const [userAddressZonecode, setUserAddressZonecode] = useState(0);
+    const [userAddress, setUserAddress] = useState("");
+    const [ cartListState, setCartListState] = useState(false);
     const [ userCartList , setUserCartList] = useState([])
     const [ userCartListAllPrice, setUserCartListAllPrice] = useState();
     const [addressIndex, setAddressIndex] = useState(0);
@@ -223,7 +228,11 @@ const Payment = () => {
     }, 
     {
         onSuccess: (response) => {
-            // console.log(response.data)
+            setUserAddressSido(response.data[addressIndex].addressSido)
+            setUserAddressSigungu(response.data[addressIndex].addressSigungu)
+            setUserAddressZonecode(response.data[addressIndex].addressZonecode)
+            setUserAddress(response.data[addressIndex].address)
+            console.log(response.data[addressIndex].address) 
             setUserAddressList([...response.data])
             setaddressListState(false)
         },
@@ -259,15 +268,13 @@ const Payment = () => {
         if(!cartListState) {
             setCartListState(true)
         }
-      }, []);
+      }, [addressIndex]);
     
     const clickHandle = (e) => {
         setAddressIndex(e.target.value);
-       
     }
 
 
-    // console.log(userAddressList)
     if(principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>
     }
@@ -295,7 +302,7 @@ const Payment = () => {
                                         <option value={index}>{address.address}</option>
                                     </>
                                     )
-                            })  : <option value={userAddressList.length}>새 주소</option>}
+                            })  : ""}
                         </select>
                         <select css={select}>
                             <option>대한민국</option>
@@ -303,24 +310,20 @@ const Payment = () => {
                         <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(1) : ""}/>
                         <input type="text" css={input} value={principal.data !== undefined ? (principal.data.data.name).substring(0,1) : ""}/>
                         <div>
-                            <input type="text" css={postNumInput} value={addressIndex !==0 && !!userAddressList ? userAddressList[addressIndex].addressZonecode:""}/>
+                            <input type="text" css={postNumInput} value={userAddressZonecode}/>
                             <button css={addressSearchBtn}>주소찾기</button>
                         </div>
                        
-                        {
-                             addressIndex !==0 &&!!userAddressList ? 
-                            <>
-                            <input type="text" placeholder="구/군/시" css={input} value={userAddressList[addressIndex].addressSido + " " + userAddressList[addressIndex].addressSigungu}/>
-                            <input type="text" placeholder="주소" css={input} value={userAddressList[addressIndex].address.split(' ').slice(2).join(" ")}/> 
-                            </>
-                             : ""  
-                        } 
-
+                        
+                            <input type="text" placeholder="구/군/시" css={input} value={userAddressSido + " " + userAddressSigungu}/>
+                            <input type="text" placeholder="주소" css={input}
+                            value={userAddress.split(' ').slice(2).join(" ")}
+                             /> 
+                       
                         <input type="text" placeholder="상세주소" css={input} />
-
                         
                         <input type="text" placeholder="전화번호" css={phoneInput} />
-                        <button css={continueBtn}>결제하기</button>
+                        <button css={continueBtn}>주문하기</button>
                     </div>
                 </div>
 
@@ -345,6 +348,7 @@ const Payment = () => {
                                     <div>{userCart.colorName + " / " + userCart.sizeName}</div>
                                     <div>{userCart.productPrice}</div>
                                     <div>{"수량 : "+userCart.countNumber}</div>
+                                    
                                 </div>
                         </div>
                         </>
@@ -357,7 +361,7 @@ const Payment = () => {
                                 <div>{"배송비 " + 2500}</div>
                             </div>
                             <div css={summaryFooter}>
-                                <div>{"총 주문금액" + (2500 + userCartListAllPrice)}</div>
+                                <div>{"총 주문금액 " + (2500 + userCartListAllPrice)}</div>
                             </div>
                         </div>
                 </div>
