@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.korit.androg.androg.repository.UserRepository">
+<mapper namespace="com.korit.androg.androg.repository.ReviewRepository">
 
 <resultMap type="com.korit.androg.androg.entity.User" id="userMap">
 	<id property="userId" column="user_id"/>
@@ -45,7 +45,13 @@
 	<association property="color" resultMap="colorMap"></association>
 </resultMap>
 
-
+<resultMap type="com.korit.androg.androg.entity.Review" id="reviewMap">
+	<id property="reviewId" column="review_id"/>
+	<result property="userId" column="user_id"/>
+	<result property="productId" column="product_id"/>
+	<result property="content" column="content"/>
+	<association property="user" resultMap="userMap"></association>
+</resultMap>
 
 <resultMap type="com.korit.androg.androg.entity.Category" id="categoryMap">
 		<id property="categoryId" column="category_id"/>
@@ -57,42 +63,8 @@
 		<result property="colorName" column="color_name"/>
 </resultMap>
 
-
-<select id="findUserByEmail" resultMap="userMap">
-	SELECT
-		 ut.user_id,
-		 ut.email,
-		 ut.password,
-		 ut.name,
- 
-		 at.authority_id,
-		 at.user_id,
-		 at.role_id,
- 
-		 rt.role_id,
-		 rt.role_name
-	FROM 
-		user_tb ut
-		left outer join authority_tb at on(at.user_id = ut.user_id)
-		left outer join role_tb rt on(rt.role_id = at.role_id)
-		where 
-			ut.email = #{email}
-</select>
-
-<insert id="saveUser" parameterType="com.korit.androg.androg.entity.User"
-useGeneratedKeys="true"
-keyProperty="userId">
-	insert into user_tb
-	values (0, #{email}, #{password}, #{name})
-</insert>
-
-<insert id="saveAuthority" parameterType="com.korit.androg.androg.entity.Authority">
-	insert into authority_tb
-	values (0, #{userId}, #{roleId})
-</insert>
-
-<select id="getOrderProducts" parameterType="Integer" resultMap="orderProductsMap">
-	select
+<select id="getProduct" parameterType="hashmap" resultMap="orderProductsMap">
+select
 		pt.product_name,
     	pt.product_price,
     	pt.product_img,
@@ -112,15 +84,25 @@ keyProperty="userId">
 
 	where
  		ot.user_id = #{userId}
-		
+	and
+		ot.product_id = #{productId};
+
 </select>
 
-<delete id="deleteUser" parameterType="integer">
-	delete from 
-		user_tb
-	where 
-		user_id = #{userId}
-</delete>
+<insert id="reviewRegister" parameterType="com.korit.androg.androg.entity.Review">
+ insert into review_tb
+ values(0,#{userId},#{productId},#{content})
+</insert>
 
+<select id="getReviews" parameterType="Integer" resultMap="reviewMap">
+ select
+	rt.product_id,
+    rt.content,
+    ut.name
+from review_tb rt
+ left outer join user_tb ut on(ut.user_id = rt.user_id)
+ where
+  rt.product_id = #{product_id}
+</select>
 
 </mapper>
