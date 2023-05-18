@@ -20,6 +20,7 @@ import Address from "./pages/Address/Address";
 import AuthRouteReactQuery from "./components/Route/AuthRoute/AuthRouteReactQuery";
 import Payment from "./pages/Payment/Payment";
 import Review from "./pages/Review/Review";
+import AdminPage from "./pages/Admin/AdminPage";
 
 function App() {
   return (
@@ -53,6 +54,9 @@ function App() {
 
         {/* 리뷰 페이지 */}
         <Route path="/product/:productId/review" element={<Review />} />
+
+        {/* 관리자 페이지 */}
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </>
   );
