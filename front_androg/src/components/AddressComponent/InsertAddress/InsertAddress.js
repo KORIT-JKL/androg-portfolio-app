@@ -80,18 +80,13 @@ const InsertAddress = ({ principal }) => {
         addressFlag: 0,
       };
       const option = {
-        headres: {
-          "Content-Type": "application/json",
+        headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      try {
-        //주소지 추가 url
-        const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
-        return response;
-      } catch (error) {
-        // console.log(error);
-      }
+      console.log(option);
+      const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
+      return response;
     },
     {
       onSuccess: () => {
