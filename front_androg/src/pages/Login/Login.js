@@ -99,6 +99,7 @@ const Login = () => {
       localStorage.setItem("accessToken", accessToken);
       SetRefresh(false);
       setLoginIsState(true);
+      navigate("/");
     } catch (error) {
       setErrorMessages({ email: "", password: "", ...error.response.data.errorData });
     }

@@ -30,15 +30,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors();
-		http.csrf().disable();
 		http.httpBasic().disable();
 		http.formLogin().disable();
+		http.cors();
+		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.authorizeRequests()
-			.antMatchers("/**")
+			.antMatchers("/auth/**","/products/**")
 			.permitAll()
+			.antMatchers("/admin/**")
+			.hasRole("ADMIN")
 			.anyRequest()
 			.authenticated()
 			.and()

@@ -107,11 +107,10 @@ const Address = () => {
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.get("http://localhost:8080/auth/principal", option);
@@ -153,6 +152,9 @@ const Address = () => {
       const option = {
         params: {
           userId: principal.data.data.userId,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       //user 주소지 조회 url/user/mypage/address

@@ -288,13 +288,14 @@ const Cart = () => {
   const getCart = useQuery(
     ["getCart"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
+      // const accessToken = localStorage.getItem("accessToken");
       const option = {
+        params: { userId: userId },
         headers: {
-          Authorization: accessToken,
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = axios.get("http://localhost:8080/cart", { params: { userId: userId } }, option);
+      const response = await axios.get("http://localhost:8080/cart", option);
       return response;
     },
     {

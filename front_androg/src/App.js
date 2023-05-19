@@ -29,8 +29,8 @@ function App() {
       <Global styles={Reset}></Global>
       <Routes>
         {/* 메인 및 로그인 회원가입 페이지 */}
-        <Route exact path="/" element={<Main />} />
-        <Route path="/auth/login" element={<Login />} />
+        <Route exact path="/" element={<AuthRoute path="/" element={<Main />} />} />
+        <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />} />
         <Route path="/auth/register" element={<Register />} />
 
         {/* 문의페이지 Route */}
