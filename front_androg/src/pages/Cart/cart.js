@@ -8,6 +8,7 @@ import QueryString from "qs";
 import { useNavigate } from "react-router-dom";
 import { setRefresh } from "../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
+import { authenticationState } from "../../atoms/Auth/AuthAtoms";
 const cartContainer = css`
   position: fixed;
   z-index: 999;
@@ -211,7 +212,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/cart/update/countUp", product, option);
+      const response = await axios.put(
+        "http://localhost:8080/cart/update/countUp",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -227,7 +232,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/cart/update/countDown", product, option);
+      const response = await axios.put(
+        "http://localhost:8080/cart/update/countDown",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -264,10 +273,9 @@ const Cart = () => {
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
       const option = {
         headers: {
-          Authorization: accessToken,
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.get("http://localhost:8080/auth/principal", option);
@@ -344,7 +352,10 @@ const Cart = () => {
                     <div css={detailContainer}>
                       <div css={productName}>
                         {product.productName}
-                        <button css={productDelectButton} onClick={() => deleteProduct.mutate(product)}>
+                        <button
+                          css={productDelectButton}
+                          onClick={() => deleteProduct.mutate(product)}
+                        >
                           X
                         </button>
                       </div>
@@ -352,7 +363,8 @@ const Cart = () => {
                         {product.colorName} / {product.sizeName}
                       </div>
                       <div css={productPrice}>
-                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber})
+                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber}
+                        )
                       </div>
                       <div css={productCount}>
                         <button css={plusAndMinus} onClick={() => countMinus.mutate(product)}>
