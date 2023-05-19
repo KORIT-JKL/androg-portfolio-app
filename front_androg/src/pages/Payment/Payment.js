@@ -4,6 +4,7 @@ import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Moder
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
+import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 
 const container = css`
   font-size: 12px;
@@ -180,6 +181,7 @@ const summaryFooter = css`
 const Payment = () => {
   const [principalState, setPrincipalState] = useState(false);
   const [addressListState, setaddressListState] = useState(false);
+  const [addressIndex, setAddressIndex] = useState(0);
   const [userAddressList, setUserAddressList] = useState([]);
   const [userAddressSigungu, setUserAddressSigungu] = useState("");
   const [userAddressSido, setUserAddressSido] = useState("");
@@ -187,8 +189,8 @@ const Payment = () => {
   const [userAddress, setUserAddress] = useState("");
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
-  const [userCartListAllPrice, setUserCartListAllPrice] = useState();
-  const [addressIndex, setAddressIndex] = useState(0);
+  const [userCartSelectedPrice, setUserCartSelectedPrice] = useState();
+  const [userCartCheckedIndexes, setUserCartCheckedIndexes] = useState([]);
 
   const principal = useQuery(
     ["principal"],
@@ -226,7 +228,6 @@ const Payment = () => {
         setUserAddressSigungu(response.data[addressIndex].addressSigungu);
         setUserAddressZonecode(response.data[addressIndex].addressZonecode);
         setUserAddress(response.data[addressIndex].address);
-        console.log(response.data[addressIndex].address);
         setUserAddressList([...response.data]);
         setaddressListState(false);
       },
@@ -251,14 +252,10 @@ const Payment = () => {
     },
     {
       onSuccess: (response) => {
-        let element = 0;
-        for (let i = 0; i < response.data.length; i++) {
-          element += response.data[i].productPrice;
-        }
-        setUserCartListAllPrice(element);
+        // console.log(response.data[userCartCheckedIndex].productPrice)
         setUserCartList([...response.data]);
         setCartListState(false);
-        cartList.refetch();
+        // cartList.refetch();
       },
       enabled: !!principal.data && cartListState,
     }
@@ -278,6 +275,16 @@ const Payment = () => {
 
   const clickHandle = (e) => {
     setAddressIndex(e.target.value);
+  };
+
+  const getCheckBoxState = (e) => {
+    if (e.target.checked) {
+      userCartCheckedIndexes.push(e.target.id);
+    }
+    if (!e.target.checked) {
+      userCartCheckedIndexes.splice(userCartCheckedIndexes.indexOf(e.target.id), 1);
+    }
+    setUserCartCheckedIndexes([...userCartCheckedIndexes]);
   };
 
   if (principal.isLoading && addressList.isLoading) {
@@ -357,7 +364,7 @@ const Payment = () => {
         <aside css={aside}>
           <div css={asideContent}>
             {!!userCartList
-              ? userCartList.map((userCart) => {
+              ? userCartList.map((userCart, index) => {
                   return (
                     <>
                       <div css={cartContainer}>
@@ -367,6 +374,7 @@ const Payment = () => {
                           <div>{userCart.colorName + " / " + userCart.sizeName}</div>
                           <div>{userCart.productPrice}</div>
                           <div>{"수량 : " + userCart.countNumber}</div>
+                          <Checkbox id={index} onChange={getCheckBoxState} />
                         </div>
                       </div>
                     </>
@@ -375,11 +383,11 @@ const Payment = () => {
               : ""}
             <div css={cartSummary}>
               <div css={summaryHeader}>
-                <div>{"총 상품금액 " + userCartListAllPrice}</div>
+                <div>{"총 상품금액 "}</div>
                 <div>{"배송비 " + 2500}</div>
               </div>
               <div css={summaryFooter}>
-                <div>{"총 주문금액 " + (2500 + userCartListAllPrice)}</div>
+                <div>{"총 주문금액 " + 2500}</div>
               </div>
             </div>
           </div>
