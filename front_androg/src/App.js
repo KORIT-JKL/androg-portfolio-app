@@ -22,6 +22,16 @@ import Review from "./pages/Review/Review";
 import AdminPage from "./pages/Admin/AdminPage";
 import Index from "./pages/Admin/Index";
 import AuthRoute from "./components/Route/AuthRoute/AuthRoute";
+import AdminProductRegister from "./components/AdminComponent/AdminProduct/AdminProductRegister";
+import AdminProductModify from "./components/AdminComponent/AdminProduct/AdminProductModify";
+import AdminProductSoldOut from "./components/AdminComponent/AdminProduct/AdminProductSoldOut";
+import AdminReviewRegister from "./components/AdminComponent/AdminReview/AdminReviewRegister";
+import AdminReviewDelete from "./components/AdminComponent/AdminReview/AdminReviewDelete";
+import AdminReviewReview from "./components/AdminComponent/AdminReview/AdminReviewReview";
+import AdminNoticeRegitser from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminNoticeRegitser";
+import AdminPopUpRegister from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
+import AdminInquiryReview from "./components/AdminComponent/AdminInquiry/AdminInquiryReview";
+import AdminInquiry from "./components/AdminComponent/AdminInquiry/AdminInquiry";
 
 function App() {
   return (
@@ -54,7 +64,48 @@ function App() {
         <Route path="/product/:productId/review" element={<Review />} />
 
         {/* 관리자페이지 */}
-        <Route path="/admin" element={<AuthRoute path={"/admin"} element={<Index />} />} />
+        <Route path="/admin" element={<AuthRoute path={"/admin"} element={<AdminPage />} />} />
+        {/* 상품 등록, 수정, 품절 */}
+        <Route
+          path="/admin/product/register"
+          element={<AuthRoute path={"/admin/product/register"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/product/modify"
+          element={<AuthRoute path={"/admin/product/modify"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/product/soldout"
+          element={<AuthRoute path={"/admin/product/soldout"} element={<AdminPage />} />}
+        />
+        {/* 리뷰 등록, 제거 , 리뷰 */}
+        <Route
+          path="/admin/review/register"
+          element={<AuthRoute path={"/admin/review/register"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/review/delete"
+          element={<AuthRoute path={"/admin/review/delete"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/review/review"
+          element={<AuthRoute path={"/admin/review/review"} element={<AdminPage />} />}
+        />
+        {/* 공지등록, 팝업 등록 */}
+        <Route
+          path="/admin/notice/register"
+          element={<AuthRoute path={"/admin/notice/register"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/popUp/register"
+          element={<AuthRoute path={"/admin/popUp/register"} element={<AdminPage />} />}
+        />
+        {/* 문의 접수, 문의 답변 */}
+        <Route path="/admin/inquiry" element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />} />
+        <Route
+          path="/admin/inquiry/review"
+          element={<AuthRoute path={"/admin/inquiry/review"} element={<AdminPage />} />}
+        />
       </Routes>
     </>
   );

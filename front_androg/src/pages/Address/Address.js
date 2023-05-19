@@ -157,7 +157,6 @@ const Address = () => {
       };
       //user 주소지 조회 url/user/mypage/address
       const response = await axios.get("http://localhost:8080/user/mypage/address", option);
-      console.log(response);
       return response;
     },
     {
@@ -184,7 +183,6 @@ const Address = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response);
         setAddressListState(true);
         addressList.refetch();
       },

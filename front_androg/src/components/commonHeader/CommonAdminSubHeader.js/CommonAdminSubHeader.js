@@ -2,12 +2,15 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { AdminMenuSelect } from "../../../atoms/Admin/AdminAtoms";
 
 const subHeader = css`
   background-color: white;
   display: flex;
   width: 100%;
   height: 50px;
+  border-bottom: 1px solid #dbdbdb;
 `;
 const subHeaderList = css`
   display: flex;
@@ -24,44 +27,93 @@ const sublist = css`
   }
 `;
 const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
+  const [AdminMenuSelectIndex, setThisAdminMenuSelect] = useRecoilState(AdminMenuSelect);
   const navigate = useNavigate();
+  const clickProductRegister = () => {
+    setThisAdminMenuSelect(1);
+    navigate("/admin/product/register");
+  };
+  const clickProductModify = () => {
+    setThisAdminMenuSelect(2);
+    navigate("/admin/product/modify");
+  };
+  const clickProductSoldout = () => {
+    setThisAdminMenuSelect(3);
+    navigate("/admin/product/soldout");
+  };
+  const clickReviewRegister = () => {
+    setThisAdminMenuSelect(4);
+    navigate("/admin/review/register");
+  };
+  const clickReviewDelete = () => {
+    setThisAdminMenuSelect(5);
+    navigate("/admin/review/delete");
+  };
+  const clickReviewReview = () => {
+    setThisAdminMenuSelect(6);
+    navigate("/admin/review/review");
+  };
+  const clickNoticeRegister = () => {
+    setThisAdminMenuSelect(7);
+    navigate("/admin/notice/register");
+  };
+  const clickpopUpRegister = () => {
+    setThisAdminMenuSelect(8);
+    navigate("/admin/popUp/register");
+  };
+  const clickInquiry = () => {
+    setThisAdminMenuSelect(9);
+    navigate("/admin/inquiry");
+  };
+  const clickInquiryReview = () => {
+    setThisAdminMenuSelect(10);
+    navigate("/admin/inquiry/review");
+  };
 
   return (
     <div css={subHeader}>
       <ul css={subHeaderList}>
-        {subHeaderIndex == 0 ? (
+        {subHeaderIndex === 0 ? (
           <>
-            <li css={sublist} onClick={() => navigate("/admin/product/addition")}>
+            <li css={sublist} onClick={() => clickProductRegister()}>
               상품 등록
             </li>
-            <li css={sublist} onClick={() => navigate("/admin/product/modify")}>
+            <li css={sublist} onClick={() => clickProductModify()}>
               상품 수정
             </li>
-            <li css={sublist} onClick={() => navigate("/admin/product/soldout")}>
+            <li css={sublist} onClick={() => clickProductSoldout()}>
               상품 품절
             </li>
           </>
-        ) : subHeaderIndex == 1 ? (
+        ) : subHeaderIndex === 1 ? (
           <>
-            <li css={sublist} onClick={() => navigate("/admin/review/addition")}>
+            <li css={sublist} onClick={() => clickReviewRegister()}>
               리뷰 등록
             </li>
-            <li css={sublist} onClick={() => navigate("/admin/review/delete")}>
+            <li css={sublist} onClick={() => clickReviewDelete()}>
               리뷰 삭제
             </li>
-            <li css={sublist} onClick={() => navigate("/admin/review/review")}>
+            <li css={sublist} onClick={() => clickReviewReview()}>
               리뷰 댓글
             </li>
           </>
         ) : subHeaderIndex == 2 ? (
           <>
-            <li css={sublist}>공지 등록</li>
-            <li css={sublist}>팝업 등록</li>
+            <li css={sublist} onClick={() => clickNoticeRegister()}>
+              공지 등록
+            </li>
+            <li css={sublist} onClick={() => clickpopUpRegister()}>
+              팝업 등록
+            </li>
           </>
         ) : subHeaderIndex == 3 ? (
           <>
-            <li css={sublist}>문의 접수</li>
-            <li css={sublist}>문의 답변</li>
+            <li css={sublist} onClick={() => clickInquiry()}>
+              문의 접수
+            </li>
+            <li css={sublist} onClick={() => clickInquiryReview()}>
+              문의 답변
+            </li>
           </>
         ) : (
           ""

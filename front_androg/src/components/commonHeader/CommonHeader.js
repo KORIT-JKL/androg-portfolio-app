@@ -33,7 +33,7 @@ const CommonHeader = () => {
 
       <div css={header}>
         {/* authority가 1일땐 관리자 */}
-        {authority == 1 ? <CommonAdminHeader /> : <CommonUserHeader />}
+        <CommonUserHeader />
       </div>
     </>
   );

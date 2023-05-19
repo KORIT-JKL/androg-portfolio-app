@@ -226,7 +226,6 @@ const Payment = () => {
         setUserAddressSigungu(response.data[addressIndex].addressSigungu);
         setUserAddressZonecode(response.data[addressIndex].addressZonecode);
         setUserAddress(response.data[addressIndex].address);
-        console.log(response.data[addressIndex].address);
         setUserAddressList([...response.data]);
         setaddressListState(false);
       },

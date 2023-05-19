@@ -11,6 +11,7 @@ import { authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
+import Address from "./../../../pages/Address/Address";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -41,6 +42,7 @@ const headerList2 = css`
 `;
 
 const list = css`
+  width: 80px;
   padding: 0px 10px;
   cursor: pointer;
   &:hover {
@@ -65,33 +67,37 @@ const CommonUserHeader = () => {
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
   const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
-  const [userAuthority, setUserAuthority] = useState();
+  const [userAuthority, setUserAuthority] = useState("");
+  const [getauthority, Setgetauthority] = useState(true);
   const navigate = useNavigate();
   const onClickLogo = () => {
     navigate("/");
   };
-  // const authority = useQuery(["authority"], async () => {
-  //   const option = {
-  //     headers:{
-  //       Authorization : localStorage.getItem("accessToken"),
-  //     }
-  //   }
-  //   const response = await axios.get("http://localhost:8080/auth/principal",option)
-  //   return response ;
-
-  // },{
-  //     onSuccess : (response) => {
-  //       console.log(response.data)
-  //         setUserAuthority(response.authorities)
-  //         console.log(userAuthority)
-  //     }
-  // }
-  // )
+  const authority = useQuery(
+    ["authority"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setUserAuthority(response.data.authorities);
+        if (!!userAuthority) {
+          Setgetauthority(false);
+        }
+      },
+      enabled: getauthority,
+    }
+  );
 
   const EnterKeyDown = (e) => {
     if (e.key === "Enter") {
       setThisSearchParams({ setSearchPage: 1, setSearchInput: document.getElementById("searchInputText").value });
-      console.log(searchParams);
       navigate("/products/search");
       setThisProducts([]);
       setThiRefresh(true);
@@ -135,6 +141,13 @@ const CommonUserHeader = () => {
               </li>
             </ul>
             <ul css={headerList2}>
+              {userAuthority === "ROLE_ADMIN" ? (
+                <li css={list} onClick={() => navigate("/admin")}>
+                  관리자
+                </li>
+              ) : (
+                ""
+              )}
               {inputIsOpen ? (
                 <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
               ) : (

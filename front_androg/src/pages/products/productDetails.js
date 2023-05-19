@@ -248,7 +248,6 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      console.log(JSON.stringify(searchParams));
       const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
         headers: {
           "Content-Type": "application/json",

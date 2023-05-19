@@ -81,14 +81,12 @@ const UpdateAddress = ({ principal, address }) => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      //   console.log(data);
       //주소지 put url
       const response = await axios.put(
         `http://localhost:8080/user/mypage/address/${address.addressId}`,
         JSON.stringify(data),
         option
       );
-      //   console.log(response);
       return response;
     },
     {

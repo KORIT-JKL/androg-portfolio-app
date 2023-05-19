@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.AdminRepository">
+	<resultMap type="com.korit.androg.androg.dto.admin.getColorResDto" id="colorMap">
+		<result property="colorName" column="color_name"/>
+	</resultMap>
+	<select id="getColors" resultType="list" resultMap="colorMap">
+		SELECT 
+			color_name 
+		FROM 
+			androg.color_tb;
+	</select>
+</mapper>

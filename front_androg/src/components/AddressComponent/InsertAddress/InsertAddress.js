@@ -79,7 +79,6 @@ const InsertAddress = ({ principal }) => {
         addressDetail: addressDetailInput.addressDetail,
         addressFlag: 0,
       };
-      // console.log(data);
       const option = {
         headres: {
           "Content-Type": "application/json",

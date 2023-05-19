@@ -128,7 +128,7 @@ const MyPage = () => {
     {
       onSuccess: (response) => {
         setOrderProducts([...response.data]);
-        console.log(response);
+
         setProductsRefresh(false);
       },
       enabled: productsRefresh, //useQuery를 동기식으로 쓰는 꼼수

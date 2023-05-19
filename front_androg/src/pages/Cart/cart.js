@@ -278,7 +278,6 @@ const Cart = () => {
     {
       onSuccess: (response) => {
         setUserId(response.data.userId);
-        // console.log(userId);
         setThiRefresh(false);
       },
       enabled: refresh,

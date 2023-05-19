@@ -38,25 +38,20 @@ const AuthRoute = ({ path, element }) => {
       return response;
     },
     {
-      onSuccess: (response) => {
-        console.log(response);
-      },
+      onSuccess: (response) => {},
       enabled: !!localStorage.getItem("accessToken"),
     }
   );
   // useEffect(() => {}, []);
-  console.log(authState);
   const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
   const authPath = "/auth";
   const adminPath = "/admin";
-  // console.log(authState);
   if (authenticated.isLoading && principal.isLoading) {
     return <></>;
   }
 
   if (principal.data !== undefined) {
     const roles = principal.data.data.authorities.split(",");
-    console.log(roles);
     if (path.startsWith(adminPath) && !roles.includes("ROLE_ADMIN")) {
       navigate("/");
     }
