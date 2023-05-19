@@ -26,7 +26,6 @@ public class AddressController {
 	
 	@PostMapping("/user/mypage/address")
 	public ResponseEntity<?> addressRegister(@RequestBody AddressReigsteReqDto addressReigsteReqDto){
-		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressRegister(addressReigsteReqDto));
 	}
 	
@@ -38,8 +37,6 @@ public class AddressController {
 	
 	@PutMapping("/user/mypage/address/{addressId}")
 	public ResponseEntity<?> addressUpdate(@PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto){
-		System.out.println(addressId);
-		System.out.println(addressReigsteReqDto);
 		
 		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
 	}
