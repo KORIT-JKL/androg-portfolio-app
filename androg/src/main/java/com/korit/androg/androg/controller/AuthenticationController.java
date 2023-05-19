@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.aop.annotation.ValidAspect;
@@ -43,8 +44,8 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping("/authenticated")
-	public ResponseEntity<?> authenticated(String accessToken) {
-//		System.out.println(accessToken);
+	public ResponseEntity<?> authenticated(@RequestHeader(value = "Authorization") String accessToken) {
+		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.authenticated(accessToken));
 	}
 	

@@ -12,12 +12,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 	private final JwtTokenProvider jwtTokenProvider;
@@ -25,24 +24,18 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-	
-		HttpServletRequest httpRequest  = (HttpServletRequest) request;
-		String accessToken = httpRequest.getHeader("Authorization");
-		if(accessToken == null) {
-			log.warn("토큰 미발행; 미인증");
-		} else {
-			accessToken = jwtTokenProvider.getToken(accessToken);
-			jwtTokenProvider.validateToken(accessToken);
-			boolean validationFlag = jwtTokenProvider.validateToken(accessToken);
-			
-			if(validationFlag) {
-				Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			}
+
+		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+		
+		String accessToken = jwtTokenProvider.getToken(httpServletRequest.getHeader("Authorization"));
+		System.out.println(httpServletRequest.getHeader("Authorization"));
+		boolean validatedFlag = jwtTokenProvider.validateToken(accessToken);
+		System.out.println(validatedFlag);
+		if (validatedFlag) {
+			Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 		chain.doFilter(request, response);
 	}
-	
-	
-	
+
 }

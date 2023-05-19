@@ -261,12 +261,7 @@ const ProductDetails = () => {
   const getReviews = useQuery(
     ["getReviews"],
     async () => {
-      const option = {
-        headres: {
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      };
-      const response = await axios.get(`http://localhost:8080/review/${productId}`, option);
+      const response = await axios.get(`http://localhost:8080/products/review/${productId}`);
       return response;
     },
     {

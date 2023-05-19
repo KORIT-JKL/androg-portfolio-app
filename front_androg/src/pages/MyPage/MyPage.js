@@ -116,13 +116,17 @@ const MyPage = () => {
   const products = useQuery(
     ["orderProducts"],
     async () => {
-      const option = {
+      const data = {
         params: {
           userId: principal.data.data.userId,
         },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
       };
+      const option = {};
       //user가 구매한 상품 목록 url ->/user/mypage/purchases
-      const response = await axios.get("http://localhost:8080/user/mypage/purchases", option);
+      const response = await axios.get("http://localhost:8080/user/mypage/purchases", data);
       return response;
     },
     {
@@ -141,12 +145,25 @@ const MyPage = () => {
         userId: principal.data.data.userId,
       },
       headers: {
-        Authorization: localStorage.getItem("accessToken"),
+        Authorization: `${localStorage.getItem("accessToken")}`,
       },
     };
     console.log(await axios.delete(`http://localhost:8080/user/${userId}`, option));
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
+
+  const admintest = useMutation(["admin"], async () => {
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+    };
+    const response = await axios.post("http://localhost:8080/admin/test", "", option);
+    return response;
+  });
+  const onclicktest = () => {
+    admintest.mutate();
+  };
 
   // useEffect(() => {
   //   if (!infoRefresh) {
@@ -220,6 +237,7 @@ const MyPage = () => {
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
           )}
         </div>
+        <button onClick={onclicktest}>admintest</button>
       </main>
       <CommonFooter />
     </>

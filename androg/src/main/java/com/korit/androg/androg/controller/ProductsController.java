@@ -27,7 +27,7 @@ public class ProductsController {
 	private final ProductsService productsService;
 	private final CartService cartService;
 	
-	@GetMapping("/category/{categoryId}")
+	@GetMapping("/products/category/{categoryId}")
 	public ResponseEntity<?> getProductsByCategoyrId (@PathVariable int categoryId, @RequestParam int page) {
 		Map<String, Object> requestMap = new HashMap<>();
 		int startIndex = (page-1)*20;

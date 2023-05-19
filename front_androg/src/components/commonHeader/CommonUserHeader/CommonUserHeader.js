@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import impact from "../../../img/impact (1).png";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
+import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
@@ -60,6 +60,7 @@ const CommonUserHeader = () => {
   const [inputIsOpen, setInputIsOpen] = useState(false);
   const [searchInput, thisSetSearchInput] = useRecoilState(SetSearchInput);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+  const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
   const [authState, setAuthState] = useRecoilState(authenticationState);
   const [sbheader, setsbheader] = useState(0);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
@@ -117,6 +118,7 @@ const CommonUserHeader = () => {
       localStorage.removeItem("accessToken");
       setLoginIsState(false);
       setAuthState(false);
+      setAdminState(false);
       navigate("/");
     }
   };

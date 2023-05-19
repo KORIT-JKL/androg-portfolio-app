@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewController {
 	private final ReviewService reviewService;
 	
-	@GetMapping("/review/{productId}")
+	@GetMapping("/products/review/{productId}")
 	public ResponseEntity<?> getReviews(@PathVariable int productId){
 		System.out.println(reviewService.getReviews(productId));
 		return ResponseEntity.ok().body(reviewService.getReviews(productId));
@@ -34,9 +34,14 @@ public class ReviewController {
 		return ResponseEntity.ok().body(reviewService.getProduct(requestMap));
 	}
 	
-	@PostMapping("/review/register")
+	@PostMapping("/product/review/register")
 	public ResponseEntity<?> reviewRegiset(@RequestBody ReviewRegisterReqDto reviewRegisterReqDto){
 		System.out.println(reviewRegisterReqDto);
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
+	}
+	
+	@PostMapping("/admin/test")
+	public ResponseEntity<?> admintest(){
+		return ResponseEntity.ok().body("admin");
 	}
 }

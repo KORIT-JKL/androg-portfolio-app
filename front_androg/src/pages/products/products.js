@@ -72,7 +72,9 @@ const Products = () => {
   const searchProducts = useQuery(
     ["searchProducts"],
     async () => {
-      const response = await axios.get(`http://localhost:8080/category/${categoryId}`, option);
+      // console.log(categoryId);
+
+      const response = await axios.get(`http://localhost:8080/products/category/${categoryId}`, option);
 
       return response;
     },

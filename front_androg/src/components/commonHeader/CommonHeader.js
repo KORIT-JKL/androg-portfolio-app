@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import Cart from "../../pages/Cart/cart";
 import CommonAdminHeader from "./CommonAdminHeader/CommonAdminHeader";
 import CommonUserHeader from "./CommonUserHeader/CommonUserHeader";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { adminAuthenticationState, loginState } from "../../atoms/Auth/AuthAtoms";
 import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 
 const header = css`
@@ -19,6 +19,7 @@ const header = css`
 
 const CommonHeader = () => {
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+  const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const authority = 0;
 
