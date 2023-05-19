@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,6 @@ public class AuthenticationController {
 	@ValidAspect
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDto loginReqDto, BindingResult bindingResult) {
-		System.out.println(loginReqDto);
 		return ResponseEntity.ok().body(authenticationService.signin(loginReqDto));
 	}
 	
@@ -43,12 +43,14 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping("/authenticated")
-	public ResponseEntity<?> authenticated(String accessToken) {
+	public ResponseEntity<?> authenticated(@RequestHeader(value = "Authorization") String accessToken) {
+		System.out.println(authenticationService.authenticated(accessToken));
 		return ResponseEntity.ok().body(authenticationService.authenticated(accessToken));
 	}
 	
 	@GetMapping("/principal")
-	public ResponseEntity<?> principal(String accessToken) {
+	public ResponseEntity<?> principal(@RequestHeader(value = "Authorization") String accessToken) {
+		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}
 }

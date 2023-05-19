@@ -10,7 +10,6 @@ import CommonAdminHeader from "./CommonAdminHeader/CommonAdminHeader";
 import CommonUserHeader from "./CommonUserHeader/CommonUserHeader";
 
 
-
 const header = css`
   position: fixed;
   flex-direction: column;

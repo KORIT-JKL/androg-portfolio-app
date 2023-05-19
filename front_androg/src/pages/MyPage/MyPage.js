@@ -94,17 +94,20 @@ const MyPage = () => {
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/user/mypage", {
-        params: { accessToken },
-      });
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
       onSuccess: (response) => {
         userId = response.data.userId;
         setInfoRefresh(false);
+        setProductsRefresh(true);
       },
       enabled: infoRefresh,
     }
@@ -127,7 +130,7 @@ const MyPage = () => {
         console.log(response);
         setProductsRefresh(false);
       },
-      enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
+      enabled: productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
 
@@ -144,6 +147,13 @@ const MyPage = () => {
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
 
+  useEffect(() => {
+    if (!infoRefresh) {
+      // console.log(infoRefresh);
+      setInfoRefresh(true);
+    }
+  }, []);
+
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();
@@ -153,16 +163,6 @@ const MyPage = () => {
       console.log("/");
     }
   };
-
-  useEffect(() => {
-    if (!infoRefresh) {
-      // console.log(infoRefresh);
-      setInfoRefresh(true);
-    }
-    if (!productsRefresh) {
-      setProductsRefresh(true);
-    }
-  }, []);
 
   if (principal.isLoading && products.isLoading) {
     return <></>;

@@ -87,11 +87,15 @@ const Login = () => {
   const loginSubmitHandle = async () => {
     const option = {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
     };
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
+      const response = await axios.post(
+        "http://localhost:8080/auth/login",
+        JSON.stringify(loginUser),
+        option
+      );
       setErrorMessages({ email: "", password: "" });
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;
@@ -104,50 +108,58 @@ const Login = () => {
     }
   };
 
-
-
-    const onKeyPress = (e) => {
-        if(e.key==='Enter') {
-            loginSubmitHandle();
-        }
+  const onKeyPress = (e) => {
+    if (e.key === "Enter") {
+      loginSubmitHandle();
     }
+  };
 
-    return (
-        <>
-            <CommonHeader />
-            <div css={container}>
-                <header css={header}>
-                    <h1>Login</h1>
-                </header>
-                <main css={main}>
-                    <div css={inputCss}>
-                        <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
-                        <AiOutlineMail />
-                        </LoginInput>
-                        <div css={errorMsg}>{errorMessages.email}</div>
-                    </div>
+  return (
+    <>
+      <CommonHeader />
+      <div css={container}>
+        <header css={header}>
+          <h1>Login</h1>
+        </header>
+        <main css={main}>
+          <div css={inputCss}>
+            <LoginInput type="email" placeholder="Email" onChange={onChangeHandle} name="email">
+              <AiOutlineMail />
+            </LoginInput>
+            <div css={errorMsg}>{errorMessages.email}</div>
+          </div>
 
-                    <div css={inputCss}>
-                        <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
-                        <RiLockPasswordLine />
+          <div css={inputCss}>
+            <LoginInput
+              type="password"
+              placeholder="Password"
+              onChange={onChangeHandle}
+              name="password"
+            >
+              <RiLockPasswordLine />
+            </LoginInput>
+            <div css={errorMsg}>{errorMessages.password}</div>
+          </div>
+        </main>
 
-                        </LoginInput>
-                        <div css={errorMsg}>{errorMessages.password}</div>
-                    </div>
-                </main>
-               
-              
-
-                <footer css={footer}>
-                    <button css={loginButton} onClick={loginSubmitHandle} onKeyUp={onKeyPress}>로그인</button>
-                    <button css={passwordFindButton}>비밀번호 찾기</button>
-                    <button css={registerButton}><Link to="/register">회원가입</Link></button>
-                </footer>
-
-            </div>
-            <CommonFooter />
-        </>
-    );
+        <footer css={footer}>
+          <button css={loginButton} onClick={loginSubmitHandle} onKeyUp={onKeyPress}>
+            로그인
+          </button>
+          <button css={passwordFindButton}>비밀번호 찾기</button>
+          <button
+            css={registerButton}
+            onClick={() => {
+              navigate("/auth/register");
+            }}
+          >
+            회원가입
+          </button>
+        </footer>
+      </div>
+      <CommonFooter />
+    </>
+  );
 };
 
 export default Login;

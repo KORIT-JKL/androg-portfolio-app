@@ -17,7 +17,6 @@ const container = css`
   width: 1500px;
   height: 100%;
   margin: auto;
-  
 `;
 const imgContainer = css`
   margin: 20px;
@@ -197,14 +196,17 @@ const ProductDetails = () => {
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const response = await axios.get("http://localhost:8080/user/mypage", {
-        params: { accessToken },
-      });
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
       onSuccess: (response) => {
+        console.log(response.data);
         setUserId(response.data.userId);
         setSearchparams({ ...searchParams, userId: response.data.userId });
         setThiRefresh(false);
