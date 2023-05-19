@@ -197,7 +197,7 @@ const Payment = () => {
     async () => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.get("http://localhost:8080/auth/principal", option);
@@ -218,18 +218,22 @@ const Payment = () => {
         params: {
           userId: principal.data.data.userId,
         },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
       };
       const response = await axios.get("http://localhost:8080/user/mypage/address", option);
       return response;
     },
     {
       onSuccess: (response) => {
-        setUserAddressSido(response.data[addressIndex].addressSido);
-        setUserAddressSigungu(response.data[addressIndex].addressSigungu);
-        setUserAddressZonecode(response.data[addressIndex].addressZonecode);
-        setUserAddress(response.data[addressIndex].address);
-        setUserAddressList([...response.data]);
-        setaddressListState(false);
+        console.log(response);
+        // setUserAddressSido(response.data[addressIndex].addressSido);
+        // setUserAddressSigungu(response.data[addressIndex].addressSigungu);
+        // setUserAddressZonecode(response.data[addressIndex].addressZonecode);
+        // setUserAddress(response.data[addressIndex].address);
+        // setUserAddressList([...response.data]);
+        // setaddressListState(false);
       },
       enabled: !!principal.data && addressListState,
     }
@@ -239,13 +243,14 @@ const Payment = () => {
     ["cartList"],
     async () => {
       const option = {
+        params: { userId: principal.data.data.userId },
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.get(
         "http://localhost:8080/cart",
-        { params: { userId: principal.data.data.userId } },
+
         option
       );
       return response;

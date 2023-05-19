@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
@@ -27,11 +28,12 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/product/{productId}/reviewproduct")
-	public ResponseEntity<?> getProduct(@PathVariable int productId, int userId){
-		Map<String, Object> requestMap = new HashMap<>();
-		requestMap.put("userId", userId);
-		requestMap.put("productId", productId);
-		return ResponseEntity.ok().body(reviewService.getProduct(requestMap));
+	public ResponseEntity<?> getProduct(@PathVariable int productId, @RequestParam Map<String, Object> requestMap){
+		System.out.println(requestMap.get("userId"));
+		Map<String, Object> requestMap1 = new HashMap<>();
+		requestMap1.put("userId", requestMap.get("userId"));
+		requestMap1.put("productId", productId);
+		return ResponseEntity.ok().body(reviewService.getProduct(requestMap1));
 	}
 	
 	@PostMapping("/product/review/register")

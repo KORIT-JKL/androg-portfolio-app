@@ -178,7 +178,6 @@ const shippingSubText = css`
 `;
 const ProductDetails = () => {
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
-
   const [product, setProduct] = useState();
   const [shippingIsOpen, setShippingIsOpen] = useState(false);
   const [searchParams, setSearchparams] = useState({
@@ -228,7 +227,7 @@ const ProductDetails = () => {
         setSearchparams({ ...searchParams, productId: response.data.productId });
         setThiRefresh(true);
       },
-      enabled: !!principal.data,
+      enabled: !!principal.data && refresh,
     }
   );
   const getSameNameProducts = useQuery(

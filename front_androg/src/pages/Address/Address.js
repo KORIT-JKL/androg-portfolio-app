@@ -130,7 +130,7 @@ const Address = () => {
     async (address) => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.delete(`http://localhost:8080/user/mypage/address/${address.addressId}`, option);
@@ -177,7 +177,7 @@ const Address = () => {
       };
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.put("http://localhost:8080/user/mypage/address/default", data, option);

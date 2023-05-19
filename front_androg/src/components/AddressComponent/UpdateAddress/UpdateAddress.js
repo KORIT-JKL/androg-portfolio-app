@@ -78,7 +78,7 @@ const UpdateAddress = ({ principal, address }) => {
       const option = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       //주소지 put url

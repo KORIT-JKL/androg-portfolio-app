@@ -78,11 +78,12 @@ const Review = () => {
   const principal = useQuery(
     ["principal"],
     async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/user/mypage", {
-        params: { accessToken },
-      });
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/authenticated", option);
       return response;
     },
     {
@@ -101,13 +102,12 @@ const Review = () => {
         params: {
           userId: principal.data.data.userId,
         },
-      };
-      const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get(`http://localhost:8080/product/${productId}/reviewproduct`, data, option);
+
+      const response = await axios.get(`http://localhost:8080/product/${productId}/reviewproduct`, data);
       return response;
     },
     {
@@ -128,10 +128,10 @@ const Review = () => {
       const option = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://localhost:8080/review/register", data, option);
+      const response = await axios.post("http://localhost:8080/product/review/register", data, option);
       return response;
     },
     {

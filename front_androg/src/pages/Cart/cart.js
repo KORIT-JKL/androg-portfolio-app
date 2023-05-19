@@ -208,7 +208,7 @@ const Cart = () => {
     async (product) => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.put("http://localhost:8080/cart/update/countUp", product, option);
@@ -224,7 +224,7 @@ const Cart = () => {
     async (product) => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.put("http://localhost:8080/cart/update/countDown", product, option);
@@ -243,11 +243,10 @@ const Cart = () => {
         params: {
           product: product,
         },
+        headers: { Authorization: `${localStorage.getItem("accessToken")}` },
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.delete("http://localhost:8080/cart/delete", option, {
-        headers: { Authorization: localStorage.getItem("accessToken") },
-      });
+      const response = await axios.delete("http://localhost:8080/cart/delete", option);
       return response;
     },
     {

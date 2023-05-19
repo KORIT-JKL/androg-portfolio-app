@@ -97,7 +97,7 @@ const MyPage = () => {
     async () => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경

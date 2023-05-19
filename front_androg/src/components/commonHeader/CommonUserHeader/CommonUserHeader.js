@@ -79,7 +79,7 @@ const CommonUserHeader = () => {
     async () => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       const response = await axios.get("http://localhost:8080/auth/principal", option);
