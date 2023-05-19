@@ -7,5 +7,5 @@ export const loginState = atom({
 
 export const authenticationState = atom({
   key: "authenticationState",
-  default: true,
+  default: false,
 });
