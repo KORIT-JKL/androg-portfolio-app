@@ -107,11 +107,7 @@ const Review = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.get(
-        `http://localhost:8080/product/${productId}/reviewproduct`,
-        data,
-        option
-      );
+      const response = await axios.get(`http://localhost:8080/product/${productId}/reviewproduct`, data, option);
       return response;
     },
     {
@@ -159,23 +155,14 @@ const Review = () => {
         <h2 css={Title}>상품 후기 작성</h2>
         <div css={userInfo}>작성자</div>
         <div css={userInfo}>
-          {principal.data !== undefined
-            ? principal.data.data.name + "(" + principal.data.data.email + ")"
-            : ""}
+          {principal.data !== undefined ? principal.data.data.name + "(" + principal.data.data.email + ")" : ""}
         </div>
       </header>
       <main>
         <div css={productBox}>
-          <OrderProducts
-            orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""}
-            isOpen={false}
-          />
+          <OrderProducts orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""} isOpen={false} />
         </div>
-        <textarea
-          css={textArea}
-          placeholder="내용을 입력하세요"
-          onChange={onChangeHandle}
-        ></textarea>
+        <textarea css={textArea} placeholder="내용을 입력하세요" onChange={onChangeHandle}></textarea>
       </main>
       <footer css={footer}>
         <button

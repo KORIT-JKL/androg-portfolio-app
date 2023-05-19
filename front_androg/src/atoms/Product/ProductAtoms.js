@@ -1,32 +1,32 @@
 import { atom } from "recoil";
 
 export const setCategoryId = atom({
-    key: "setCategoryId",
-    default: 0,
-  });
+  key: "setCategoryId",
+  default: 0,
+});
 
 export const setProducts = atom({
-    key: "setProducts",
-    default: [],
+  key: "setProducts",
+  default: [],
 });
 
 export const setPage = atom({
-    key: "setPage",
-    default: 1,
+  key: "setPage",
+  default: 1,
 });
 
 export const setSearchParams = atom(
-    {
-      key: "setSearchPage",
-      default: 1,
-    },
-    {
-      key: "setSearchInput",
-      default: "",
-    }
+  {
+    key: "setSearchPage",
+    default: 1,
+  },
+  {
+    key: "setSearchInput",
+    default: "",
+  }
 );
 
-export const SetSearchInput = atom( {
-    key: "SetSearchInput",
-    default : ""
-})
+export const SetSearchInput = atom({
+  key: "SetSearchInput",
+  default: "",
+});

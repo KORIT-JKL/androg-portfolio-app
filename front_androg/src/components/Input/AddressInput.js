@@ -16,14 +16,7 @@ const input = css`
 const AddressInput = ({ type, placeholder, onChange, name, value }) => {
   return (
     <>
-      <input
-        css={input}
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        name={name}
-        value={value}
-      />
+      <input css={input} type={type} placeholder={placeholder} onChange={onChange} name={name} value={value} />
     </>
   );
 };

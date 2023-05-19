@@ -23,7 +23,6 @@ import AdminPage from "./pages/Admin/AdminPage";
 import Index from "./pages/Admin/Index";
 import AuthRoute from "./components/Route/AuthRoute/AuthRoute";
 
-
 function App() {
   return (
     <>

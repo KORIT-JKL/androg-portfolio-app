@@ -116,12 +116,7 @@ const Register = () => {
             <div css={errorMsg}>{errorMessages.email}</div>
           </div>
           <div css={inputCss}>
-            <RegisterInput
-              type="password"
-              placeholder="비밀번호"
-              onChange={onChange}
-              name="password"
-            />
+            <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
             <div css={errorMsg}>{errorMessages.password}</div>
           </div>
           <div css={inputCss}>

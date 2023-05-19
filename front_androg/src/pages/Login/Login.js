@@ -12,7 +12,6 @@ import { useRecoilState } from "recoil";
 import { refreshState } from "../../atoms/Common/CommonAtoms";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
 
-
 const container = css`
   display: flex;
   flex-direction: column;
