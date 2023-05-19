@@ -17,10 +17,10 @@ import Products from "./pages/products/products";
 import ProductDetails from "./pages/products/productDetails";
 import SearchProducts from "./pages/products/searchProducts";
 import Address from "./pages/Address/Address";
-import AuthRouteReactQuery from "./components/Route/AuthRoute/AuthRouteReactQuery";
 import Payment from "./pages/Payment/Payment";
 import Review from "./pages/Review/Review";
 import Index from "./pages/Admin/Index";
+import AuthRoute from "./components/Route/AuthRoute/AuthRoute";
 
 function App() {
   return (
@@ -40,11 +40,8 @@ function App() {
         <Route path="/page/legal" element={<Legal />} />
 
         {/* 마이페이지 Route */}
-        <Route
-          path="/mypage"
-          element={<AuthRouteReactQuery path={"/mypage"} element={<MyPage />} />}
-        />
-        <Route path="/mypage/address" element={<Address />}></Route>
+        <Route path="/user/mypage" element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />} />
+        <Route path="/user/mypage/address" element={<Address />}></Route>
 
         {/* 상품페이지 */}
         <Route path="/category/:categoryId" element={<Products />} />
@@ -56,10 +53,7 @@ function App() {
         <Route path="/product/:productId/review" element={<Review />} />
 
         {/* 관리자페이지 */}
-        <Route
-          path="/admin"
-          element={<AuthRouteReactQuery path={"/admin"} element={<Index />} />}
-        />
+        <Route path="/admin" element={<AuthRoute path={"/admin"} element={<Index />} />} />
       </Routes>
     </>
   );

@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AuthRouteReactQuery = ({ path, element }) => {
+const AuthRoute = ({ path, element }) => {
   const [authState, setAuthState] = useRecoilState(authenticationState);
   const navigate = useNavigate();
   const authenticated = useQuery(
@@ -68,14 +68,11 @@ const AuthRouteReactQuery = ({ path, element }) => {
   if (authState && path.startsWith(authPath)) {
     navigate("/");
   }
-  if (
-    !authState &&
-    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
-  ) {
+  if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
     navigate("/auth/login");
   }
 
   return element;
 };
 
-export default AuthRouteReactQuery;
+export default AuthRoute;

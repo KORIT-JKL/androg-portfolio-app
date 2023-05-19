@@ -183,7 +183,7 @@ const CommonHeader = () => {
                 <li css={list} onClick={logoutClickHandle}>
                   LOGOUT
                 </li>
-                <li css={list} onClick={() => navigate("/mypage")}>
+                <li css={list} onClick={() => navigate("/user/mypage")}>
                   MYPAGE
                 </li>
                 <li css={list} onClick={cartOpen}>

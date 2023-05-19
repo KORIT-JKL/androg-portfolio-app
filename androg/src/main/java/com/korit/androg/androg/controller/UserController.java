@@ -14,13 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class UserController {
-	private final AuthenticationService authenticationService;
 	private final UserService userService;
-	
-	@GetMapping("/user/mypage")
-	public ResponseEntity<?> getPrincipal(String accessToken){
-		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
-	}
+
 	
 	@GetMapping("/user/mypage/purchases")
 	public ResponseEntity<?> getOrderProducts(int userId){

@@ -42,9 +42,7 @@ public class AuthenticationService implements UserDetailsService {
 	public void signup(SignupReqDto signupReqDto) {
 		User userEntity = signupReqDto.toEntity();
 		userRepository.saveUser(userEntity);
-		
 		userRepository.saveAuthority(Authority.builder().userId(userEntity.getUserId()).roleId(2).build());
-		
 	};
 	
 	
