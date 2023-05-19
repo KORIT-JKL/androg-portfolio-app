@@ -9,7 +9,9 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginState, refreshState } from "../../atoms/Auth/AuthAtoms";
+import { refreshState } from "../../atoms/Common/CommonAtoms";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
+
 
 const container = css`
   display: flex;

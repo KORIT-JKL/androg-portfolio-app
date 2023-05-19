@@ -2,7 +2,6 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { setRefresh, setSearchInput } from '../../atoms/authAtoms';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import CommonHeader from '../../components/CommonHeader/CommonHeader';
@@ -10,7 +9,9 @@ import axios from "axios";
 import ProductsCard from "./productsCard";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import QueryString from "qs";
-import { setPage, setProducts, setSearchParams } from "../../atoms/Auth/AuthAtoms";
+import { setRefresh } from "../../atoms/Common/CommonAtoms";
+import { setProducts, setSearchParams } from "../../atoms/Product/ProductAtoms";
+
 const container= css`
     display: flex;
     width: 100%;

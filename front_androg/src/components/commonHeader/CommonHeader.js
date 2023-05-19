@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh, setSearchInput } from "../../atoms/authAtoms";
-import { loginState, setPage, setProducts, setSearchParams } from "../../atoms/Auth/AuthAtoms";
+
 import Cart from "../../pages/Cart/cart";
 import CommonAdminHeader from "./CommonAdminHeader/CommonAdminHeader";
 import CommonUserHeader from "./CommonUserHeader/CommonUserHeader";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
+
 
 
 const header = css`

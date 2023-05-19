@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { authenticationState, loginState } from "../../atoms/Auth/AuthAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
 const mainContainer = css`
@@ -84,6 +84,7 @@ const orderContent = css`
 const MyPage = () => {
   const navgate = useNavigate();
   const [orderProducts, setOrderProducts] = useState([]);
+ 
   const [infoRefresh, setInfoRefresh] = useState(false);
   const [productsRefresh, setProductsRefresh] = useState(false);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
@@ -147,12 +148,12 @@ const MyPage = () => {
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
 
-  useEffect(() => {
-    if (!infoRefresh) {
-      // console.log(infoRefresh);
-      setInfoRefresh(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!infoRefresh) {
+  //     // console.log(infoRefresh);
+  //     setInfoRefresh(true);
+  //   }
+  // }, []);
 
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
@@ -185,7 +186,7 @@ const MyPage = () => {
               회원탈퇴
             </div>
 
-            <div css={addressContent} onClick={() => navgate("/mypage/address")}>
+            <div css={addressContent} onClick={() => navgate("/user/mypage/address")}>
               주소록 보기
             </div>
           </div>

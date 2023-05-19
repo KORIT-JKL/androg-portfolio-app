@@ -2,9 +2,9 @@
 import { css } from "@emotion/react";
 import React, { useState } from 'react';
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh, setSearchInput } from "../../../atoms/authAtoms";
-import { loginState, setPage, setProducts, setSearchParams } from "../../../atoms/Auth/AuthAtoms";
 import { useNavigate } from "react-router-dom";
+import { setRefresh } from "../../../atoms/Common/CommonAtoms";
+import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
 const header = css`
   position: fixed;
   flex-direction: column;

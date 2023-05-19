@@ -6,10 +6,10 @@ import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { setRefresh } from "../../atoms/Auth/AuthAtoms";
 import { useRecoilState } from "recoil";
 import QueryString from "qs";
 import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
+import { setRefresh } from "../../atoms/Common/CommonAtoms";
 const container = css`
   display: flex;
   justify-content: center;
@@ -178,6 +178,7 @@ const shippingSubText = css`
 `;
 const ProductDetails = () => {
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
+
   const [product, setProduct] = useState();
   const [shippingIsOpen, setShippingIsOpen] = useState(false);
   const [searchParams, setSearchparams] = useState({
@@ -227,7 +228,7 @@ const ProductDetails = () => {
         setSearchparams({ ...searchParams, productId: response.data.productId });
         setThiRefresh(true);
       },
-      enabled: refresh,
+      enabled: !!principal.data
     }
   );
   const getSameNameProducts = useQuery(
@@ -254,6 +255,7 @@ const ProductDetails = () => {
         {
           headers: {
             "Content-Type": "application/json",
+             Authorization : localStorage.getItem("accessToken"),
           },
         }
       );
@@ -311,6 +313,7 @@ const ProductDetails = () => {
       {
         headers: {
           "Content-Type": "application/json",
+          Authorization : localStorage.getItem("accessToken"),
         },
       }
     );

@@ -4,10 +4,7 @@ import paymentLogoImg from '../../img/Black And White Minimalist Aesthetic Moder
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { setRefresh } from "../../atoms/authAtoms";
-import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
-import DaumPostcodeEmbed from "react-daum-postcode";
+
 
 
 const container = css`
@@ -204,10 +201,13 @@ const Payment = () => {
     const [addressIndex, setAddressIndex] = useState(0);
 
     const principal = useQuery(["principal"], async () => {
-        const accessToken = localStorage.getItem("accessToken");
-        const response = await axios.get("http://localhost:8080/auth/principal",
-        {params: {accessToken}});
-        return response;
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      return response;
     },
     {   
         onSuccess: ()=> {
@@ -241,8 +241,12 @@ const Payment = () => {
     );
 
     const cartList = useQuery(["cartList"], async () => {
-        
-        const response = await axios.get("http://localhost:8080/cart", {params:{userId: principal.data.data.userId}});
+        const option = {
+            headers: {
+              Authorization: localStorage.getItem("accessToken"),
+            },
+          };
+        const response = await axios.get("http://localhost:8080/cart", {params:{userId: principal.data.data.userId}},option);
         return response;
     },
     {
@@ -254,6 +258,7 @@ const Payment = () => {
             setUserCartListAllPrice(element)
             setUserCartList([...response.data])
             setCartListState(false)
+            cartList.refetch()
         },
         enabled: !!principal.data && cartListState
     });

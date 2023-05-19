@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CommonUserSubHeader from '../CommonUserSubHeader/CommonUserSubHeader';
 import { useRecoilState } from "recoil";
-import { cartIsOpenState, setRefresh, setSearchInput } from "../../../atoms/authAtoms";
-import { loginState, setPage, setProducts, setSearchParams } from "../../../atoms/Auth/AuthAtoms";
 import impact from "../../../img/impact (1).png";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
+import { setRefresh } from "../../../atoms/Common/CommonAtoms";
+import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
+import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -55,8 +57,9 @@ const img = css`
 
 const CommonUserHeader = () => {
     const [inputIsOpen, setInputIsOpen] = useState(false);
-    const [searchInput, thisSetSearchInput] = useRecoilState(setSearchInput);
+    const [searchInput, thisSetSearchInput] = useRecoilState(SetSearchInput);
     const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+    const [authState,setAuthState] = useRecoilState(authenticationState);
     const [sbheader, setsbheader] = useState(0);
     const [refresh, setThiRefresh] = useRecoilState(setRefresh);
     const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
@@ -68,24 +71,23 @@ const CommonUserHeader = () => {
     const onClickLogo = () => {
         navigate("/");
       };
-      const accessToken = localStorage.getItem("accessToken");
-      const authority = useQuery(["authority"], async () => {
-        
-        const response = await axios.get("http://localhost:8080/auth/principal", {
-        params: { accessToken }})
-        return response ;
+      // const authority = useQuery(["authority"], async () => {
+      //   const option = {
+      //     headers:{
+      //       Authorization : localStorage.getItem("accessToken"),
+      //     }
+      //   }
+      //   const response = await axios.get("http://localhost:8080/auth/principal",option)
+      //   return response ;
 
-      },{
-          enabled : !!accessToken,
-          onSuccess : (response) => {
-            console.log(response.data)
-              setUserAuthority(response.authorities)
-              console.log(userAuthority)
-
-            
-          }
-      }
-      )
+      // },{
+      //     onSuccess : (response) => {
+      //       console.log(response.data)
+      //         setUserAuthority(response.authorities)
+      //         console.log(userAuthority)
+      //     }
+      // }
+      // )
    
       
       
@@ -112,6 +114,7 @@ const CommonUserHeader = () => {
         if (window.confirm("로그아웃 하시겠습니까?")) {
           localStorage.removeItem("accessToken");
           setLoginIsState(false);
+          setAuthState(false);
           navigate("/");
         }
       };
@@ -121,9 +124,9 @@ const CommonUserHeader = () => {
           setLoginIsState(true);
         }
       },[loginIsState])
-    if(authority.isLoading){
-      return <>로딩중</>;
-    }
+    // if(authority.isLoading){
+    //   return <>로딩중</>;
+    // }
     return (
         <>
             <div css={mainHeader}>
@@ -155,7 +158,7 @@ const CommonUserHeader = () => {
                     <li css={list} onClick={logoutClickHandle}>
                     LOGOUT
                     </li>
-                    <li css={list} onClick={() => navigate("/mypage")}>
+                    <li css={list} onClick={() => navigate("/user/mypage")}>
                     MYPAGE
                     </li>
                     <li css={list} onClick={cartOpen}>
@@ -188,7 +191,7 @@ const CommonUserHeader = () => {
                     SEARCH
                     </li>
                     <li css={list}>
-                    <Link to="/login">LOGIN</Link>
+                    <Link to="/auth/login">LOGIN</Link>
                     </li>
                     <li css={list} onClick={cartOpen}>
                     BAG

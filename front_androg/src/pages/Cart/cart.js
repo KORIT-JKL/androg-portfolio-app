@@ -2,12 +2,12 @@
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from "recoil";
-import { cartIsOpenState } from "../../atoms/Auth/AuthAtoms";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import { setRefresh } from "../../atoms/authAtoms";
 import QueryString from "qs";
 import { useNavigate } from "react-router-dom";
+import { setRefresh } from "../../atoms/Common/CommonAtoms";
+import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 const cartContainer =css`
     position: fixed;
     z-index: 999;
@@ -209,10 +209,12 @@ const Cart = () => {
     }
     const countplus = useMutation(
         async (product) => {
-            
-            // product 카운터 개수
-            // put은 바디에 파라미터를 넣어주자
-            const response = await axios.put("http://localhost:8080/cart/update/countUp",product,"");
+            const option = {
+                headers : {
+                    Authorization : localStorage.getItem("accessToken")
+                }
+            }
+            const response = await axios.put("http://localhost:8080/cart/update/countUp",product,option);
             return response;
         },{
             onSuccess : () => {
@@ -222,10 +224,12 @@ const Cart = () => {
     )
     const countMinus = useMutation(
         async (product) => {
-            
-            // product 카운터 개수
-            // put은 바디에 파라미터를 넣어주자
-            const response = await axios.put("http://localhost:8080/cart/update/countDown",product,"");
+            const option = {
+                headers : {
+                    Authorization : localStorage.getItem("accessToken")
+                }
+            }
+            const response = await axios.put("http://localhost:8080/cart/update/countDown",product,option);
             return response;
         },{
             onSuccess : () => {
@@ -234,10 +238,6 @@ const Cart = () => {
         }
     )
   
-    const countminus = (count) => {
-        setCount(count-1);
-        console.log(count);
-    }
     const deleteProduct = useMutation(
         async (product) => {
             const option = {
@@ -245,7 +245,7 @@ const Cart = () => {
                     product : product
                 },paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" })
             }
-            const response = await axios.delete("http://localhost:8080/cart/delete",option)
+            const response = await axios.delete("http://localhost:8080/cart/delete",option, {headers: {Authorization : localStorage.getItem("accessToken")}})
             return response;
         },{
             onSuccess : () => {
@@ -267,9 +267,12 @@ const Cart = () => {
         ["principal"],
         async () => {
           const accessToken = localStorage.getItem("accessToken");
-          const response = await axios.get("http://localhost:8080/user/mypage", {
-            params: { accessToken },
-          });
+          const option = {
+            headers :{
+                Authorization : accessToken,
+            }  
+          }
+          const response = await axios.get("http://localhost:8080/auth/principal",option);
           
           return response;
         },
@@ -284,7 +287,13 @@ const Cart = () => {
       );
     
       const getCart = useQuery(["getCart"], async () => {
-        const response = axios.get("http://localhost:8080/cart", { params: { userId: userId } });
+        const accessToken = localStorage.getItem("accessToken");
+        const option = {
+            headers :{
+                Authorization : accessToken,
+            }  
+          }
+        const response = axios.get("http://localhost:8080/cart", { params: { userId: userId } },option);
         return response;
       }, {
         enabled: (userId !== 0) && deleteSuccess,

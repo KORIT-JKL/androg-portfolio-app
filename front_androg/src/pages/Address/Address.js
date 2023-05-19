@@ -109,9 +109,12 @@ const Address = () => {
     async () => {
       const accessToken = localStorage.getItem("accessToken");
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/user/mypage", {
-        params: { accessToken },
-      });
+      const option = {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
