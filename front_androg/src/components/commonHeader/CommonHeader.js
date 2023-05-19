@@ -25,7 +25,6 @@ const CommonHeader = () => {
 
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
-  const navigate = useNavigate();
   const authority = 0;
   
   useEffect(() => {
@@ -33,7 +32,6 @@ const CommonHeader = () => {
       setLoginIsState(true);
     }
   },[loginIsState])
-
   return (
     <>
       {CartIsOpen ? <Cart /> : ""}

@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { cartIsOpenState, setRefresh, setSearchInput } from "../../../atoms/authAtoms";
 import { loginState, setPage, setProducts, setSearchParams } from "../../../atoms/Auth/AuthAtoms";
 import impact from "../../../img/impact (1).png";
+import { useQuery } from "react-query";
+import axios from "axios";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -61,11 +63,33 @@ const CommonUserHeader = () => {
     const [products, setThisProducts] = useRecoilState(setProducts);
     const [page, setThisPage] = useRecoilState(setPage);
     const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
+    const [ userAuthority , setUserAuthority] = useState()
     const navigate = useNavigate();
     const onClickLogo = () => {
         navigate("/");
       };
-    
+      const accessToken = localStorage.getItem("accessToken");
+      const authority = useQuery(["authority"], async () => {
+        
+        const response = await axios.get("http://localhost:8080/auth/principal", {
+        params: { accessToken }})
+        return response ;
+
+      },{
+          enabled : !!accessToken,
+          onSuccess : (response) => {
+            console.log(response.data)
+              setUserAuthority(response.authorities)
+              console.log(userAuthority)
+
+            
+          }
+      }
+      )
+   
+      
+      
+      
       const EnterKeyDown = (e) => {
         if (e.key === "Enter") {
           setThisSearchParams({ setSearchPage: 1, setSearchInput: document.getElementById("searchInputText").value });
@@ -97,7 +121,9 @@ const CommonUserHeader = () => {
           setLoginIsState(true);
         }
       },[loginIsState])
-    
+    if(authority.isLoading){
+      return <>로딩중</>;
+    }
     return (
         <>
             <div css={mainHeader}>
