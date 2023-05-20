@@ -124,7 +124,6 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const option = {};
       //user가 구매한 상품 목록 url ->/user/mypage/purchases
       const response = await axios.get("http://localhost:8080/user/mypage/purchases", data);
       return response;
@@ -196,7 +195,9 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <span css={subTitle}>
+              {principal.data !== undefined ? principal.data.data.email : <></>}
+            </span>
             <div css={addressContent} onClick={withdrawalSubmit}>
               회원탈퇴
             </div>
@@ -231,7 +232,13 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} isOpen={true} />;
+              return (
+                <OrderProducts
+                  key={orderProduct.orderId}
+                  orderProduct={orderProduct}
+                  isOpen={true}
+                />
+              );
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>

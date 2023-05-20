@@ -37,7 +37,7 @@ const ReviewComponent = ({ review }) => {
     <div css={reviewContainer}>
       <div css={reviewTitle}>
         <div css={reviewUser}>작성자 : {review.userName} </div>
-        <div css={reviewDate}> 등록일 : 2023-05-18</div>
+        <div css={reviewDate}> 등록일 : {review.reviewDate}</div>
       </div>
       <div css={reviewContent}>내용 : {review.content}</div>
     </div>

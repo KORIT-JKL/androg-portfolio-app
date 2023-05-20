@@ -40,6 +40,7 @@
 	<result property="sizeName" column="size_name"/>
 	<result property="countNumber" column="count_number"/>
 	<result property="productId" column="product_id"/>
+	<result property="reviewFlag" column="review_flag"/>
 	<association property="user" resultMap="userMap"></association>
 	<association property="products" resultMap="productsMap"></association>
 	<association property="color" resultMap="colorMap"></association>
@@ -102,6 +103,7 @@ keyProperty="userId">
     	ot.order_id,
     	ot.count_number,
     	ot.product_id,
+    	ot.review_flag,
     
     	ut.name
 	from

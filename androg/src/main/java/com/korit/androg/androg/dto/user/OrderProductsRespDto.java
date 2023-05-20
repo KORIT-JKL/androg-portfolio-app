@@ -14,6 +14,7 @@ public class OrderProductsRespDto {
 	private int countNumber;
 	private int productId;
 	private int productPrice;
+	private int reviewFlag;
 	private String productName;
 	private String productImg;
 	private String colorName;

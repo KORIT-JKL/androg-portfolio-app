@@ -16,7 +16,7 @@ public class Review {
 	private int userId;
 	private int productId;
 	private String content;
-	
+	private String reviewDate;
 	private User user;
 	
 	public ReviewRespDto toDto() {
@@ -24,6 +24,7 @@ public class Review {
 							.productId(productId)
 							.userName(user.getName())
 							.content(content)
+							.reviewDate(reviewDate)
 							.build();
 	}
 }

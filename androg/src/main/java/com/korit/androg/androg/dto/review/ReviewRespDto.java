@@ -9,4 +9,5 @@ public class ReviewRespDto {
 	private int productId;
 	private String userName;
 	private String content;
+	private String reviewDate;
 }

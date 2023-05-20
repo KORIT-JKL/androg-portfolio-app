@@ -15,6 +15,7 @@ public class OrderProducts {
 	private int orderId;
 	private int countNumber;
 	private int productId;
+	private int reviewFlag;
 	private String sizeName;
 	
 	private User user;
