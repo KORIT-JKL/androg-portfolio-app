@@ -70,9 +70,10 @@ function App() {
           path="/admin/product/register"
           element={<AuthRoute path={"/admin/product/register"} element={<AdminPage />} />}
         />
+        {/* 수정 카테고리별 params 사용 */}
         <Route
-          path="/admin/product/modify"
-          element={<AuthRoute path={"/admin/product/modify"} element={<AdminPage />} />}
+          path="/admin/product/modify/:categoryId"
+          element={<AuthRoute path={"/admin/product/modify/:categoryId"} element={<AdminPage />} />}
         />
         <Route
           path="/admin/product/soldout"

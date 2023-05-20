@@ -35,7 +35,7 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
   };
   const clickProductModify = () => {
     setThisAdminMenuSelect(2);
-    navigate("/admin/product/modify");
+    navigate("/admin/product/modify/1");
   };
   const clickProductSoldout = () => {
     setThisAdminMenuSelect(3);
