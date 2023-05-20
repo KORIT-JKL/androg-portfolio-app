@@ -17,14 +17,14 @@ const AuthRoute = ({ path, element }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      console.log(option);
+      // console.log(option);
       const response = await axios.get("http://localhost:8080/auth/authenticated", option);
       return response;
     },
     {
       onSuccess: (response) => {
         if (response.status === 200) {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data) {
             setAuthState(true);
           }
@@ -46,7 +46,7 @@ const AuthRoute = ({ path, element }) => {
     },
     {
       onSuccess: (response) => {
-        console.log(response);
+        // console.log(response);
         const roles = response.data.authorities.split(",");
         if (roles.includes("ROLE_ADMIN")) {
           setAdminState(true);
@@ -65,7 +65,7 @@ const AuthRoute = ({ path, element }) => {
   }
 
   if (principal.data !== undefined) {
-    console.log("admin:" + adminState);
+    // console.log("admin:" + adminState);
     if (path.startsWith(adminPath) && !adminState) {
       console.log("admin페이지 접속 제한");
       navigate("/");

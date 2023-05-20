@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		
 		String accessToken = jwtTokenProvider.getToken(httpServletRequest.getHeader("Authorization"));
-		System.out.println(httpServletRequest.getHeader("Authorization"));
+//		System.out.println(httpServletRequest.getHeader("Authorization"));
 		boolean validatedFlag = jwtTokenProvider.validateToken(accessToken);
 		if (validatedFlag) {
 			Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);

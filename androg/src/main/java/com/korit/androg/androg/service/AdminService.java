@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.getColorResDto;
+import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.repository.AdminRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,5 +16,9 @@ public class AdminService {
 	public final AdminRepository adminRepository;
 	public List<getColorResDto> getColors() {
 		return adminRepository.getColors();
+	}
+	public void registerProductDetails(registerProductReqDto productReqDto) {
+		adminRepository.registerProductDetail(productReqDto);
+		return ;
 	}
 }

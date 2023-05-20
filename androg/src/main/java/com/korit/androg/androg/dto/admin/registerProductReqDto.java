@@ -1,9 +1,5 @@
 package com.korit.androg.androg.dto.admin;
 
-import java.util.List;
-
-import com.korit.androg.androg.entity.Color;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class getColorResDto {
-	private int colorId;
-	private String colorName;
-	
+public class registerProductReqDto {
+	private String productName;
+	private int productPrice;
+	private String categoryId;
+	private String colorId;
+	private String productImg;
 }

@@ -2,12 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.androg.androg.repository.AdminRepository">
 	<resultMap type="com.korit.androg.androg.dto.admin.getColorResDto" id="colorMap">
+		<id property="colorId" column="color_id"/>
 		<result property="colorName" column="color_name"/>
 	</resultMap>
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
+			color_id,
 			color_name 
 		FROM 
 			androg.color_tb;
 	</select>
+	<insert id="registerProductDetail">
+		<if test="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4" >
+			insert into product_tb
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"S","M","L","XL","XXL",#{colorId})
+		</if>
+		<if test="categoryId == 5 " >
+			insert into product_tb
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"ONESIZE",NULL,NULL,NULL,NULL,#{colorId})
+		</if>
+		<if test="categoryId == 6" >
+			insert into product_tb
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},240,250,260,270,280,#{colorId})
+		</if>
+	</insert>
 </mapper>

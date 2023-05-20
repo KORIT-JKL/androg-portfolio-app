@@ -67,6 +67,9 @@ const registerButton = css`
   border: 1px solid black;
   border-radius: 7px;
   margin: 10px;
+  &:hover {
+    background-color: #dbdbdb;
+  }
 `;
 const AdminProductRegister = () => {
   const [colors, setColors] = useState([]);
@@ -75,8 +78,9 @@ const AdminProductRegister = () => {
     productPrice: 0,
     categoryId: 0,
     productImg: "",
-    colorName: "",
+    colorId: 0,
   });
+  const [register, setRegister] = useState(false);
   const getColor = useQuery(
     ["getAllColor"],
     async () => {
@@ -92,10 +96,43 @@ const AdminProductRegister = () => {
     {
       onSuccess: (response) => {
         setColors(response.data);
-        console.log(response.data);
       },
     }
   );
+  const productNameInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, productName: e.target.value });
+  };
+
+  const productPriceInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, productPrice: e.target.value });
+  };
+  const productCategorySelectHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, categoryId: e.target.value });
+  };
+  const productColorSelectHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, colorId: e.target.value });
+  };
+  const productImgUrlInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, productImg: e.target.value });
+    console.log(productsDetails);
+  };
+  const registerClickHandle = () => {
+    console.log(productsDetails);
+  };
+  const registerProductsDetails = async () => {
+    const option = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    };
+    const response = await axios.post(
+      "http://localhost:8080/admin/product/register",
+      JSON.stringify(productsDetails),
+      option
+    );
+    return response;
+  };
   if (getColor.isLoading) {
     return <>로딩중</>;
   }
@@ -103,11 +140,11 @@ const AdminProductRegister = () => {
     <div>
       <div css={container}>
         <div css={containerHeader}>
-          <input css={productNameInput} type="text" placeholder="상품이름" />
-          <input css={productPriceInput} type="text" placeholder="상품가격(원)" />
+          <input css={productNameInput} onChange={productNameInputHandle} type="text" placeholder="상품이름" />
+          <input css={productPriceInput} onChange={productPriceInputHandle} type="text" placeholder="상품가격(원)" />
         </div>
         <div css={containerMiddle}>
-          <select css={productCategoryInput} name="Category" id="categoryId">
+          <select css={productCategoryInput} onChange={productCategorySelectHandle} name="Category" id="categoryId">
             <option value="1">TEES</option>
             <option value="2">SWEATS</option>
             <option value="3">PANTS</option>
@@ -115,17 +152,27 @@ const AdminProductRegister = () => {
             <option value="5">HEADWEAR</option>
             <option value="6">SHOES</option>
           </select>
-          <select css={productColorInput} name="Color" id="colorId">
+          <select css={productColorInput} onChange={productColorSelectHandle} name="Color" id="colorId">
             {colors.map((color) => (
-              <option key={color.id} value={color.id}>
+              <option key={color.id} value={color.colorId}>
                 {color.colorName}
               </option>
             ))}
           </select>
         </div>
         <div css={containerFooter}>
-          <input css={productUrlInput} type="text" placeholder="이미지URL" />
-          <button css={registerButton}>등록</button>
+          <input css={productUrlInput} onChange={productImgUrlInputHandle} type="text" placeholder="이미지URL" />
+          {productsDetails.productName == "" ||
+          productsDetails.productPrice == 0 ||
+          productsDetails.categoryId == 0 ||
+          productsDetails.productImg == "" ||
+          productsDetails.colorId == 0 ? (
+            <button css={registerButton}>전부 입력시 등록가능</button>
+          ) : (
+            <button css={registerButton} onClick={() => registerProductsDetails()}>
+              등록
+            </button>
+          )}
         </div>
       </div>
     </div>
