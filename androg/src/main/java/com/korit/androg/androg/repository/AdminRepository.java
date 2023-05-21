@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
+import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.entity.Products;
 
@@ -14,4 +15,5 @@ public interface AdminRepository {
 	public List<getColorResDto> getColors();
 	public void registerProductDetail(registerProductReqDto productReqDto);
 	public List<Products> getProducts(int categoryId);
+	public void productModify(modifyProductReqDto modifyProductReqDto);
 }

@@ -39,12 +39,12 @@ const containerMiddle = css`
   width: 100%;
 `;
 const productCategoryInput = css`
-  width: 200px;
+  width: 170px;
   height: 30px;
   margin: 0px 30px;
 `;
 const productColorInput = css`
-  width: 200px;
+  width: 170px;
   height: 30px;
   margin: 0px 30px;
 `;
@@ -135,6 +135,7 @@ const AdminProductRegister = () => {
       JSON.stringify(productsDetails),
       option
     );
+    alert("등록되었습니다.");
     return response;
   };
   if (getColor.isLoading) {
@@ -156,6 +157,7 @@ const AdminProductRegister = () => {
             <option value="5">HEADWEAR</option>
             <option value="6">SHOES</option>
           </select>
+          {productsDetails.categoryId == 0 ? <>선택안됨</> : <>선택 완료</>}
           <select css={productColorInput} onChange={productColorSelectHandle} name="Color" id="colorId">
             {colors.map((color) => (
               <option key={color.id} value={color.colorId}>
@@ -163,6 +165,7 @@ const AdminProductRegister = () => {
               </option>
             ))}
           </select>
+          {productsDetails.colorId == 0 ? <>선택안됨</> : <>선택 완료</>}
         </div>
         <div css={containerFooter}>
           {productsDetails.productImg != "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}

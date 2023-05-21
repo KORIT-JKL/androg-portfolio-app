@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
+import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.repository.AdminRepository;
 
@@ -29,5 +30,9 @@ public class AdminService {
 			resultList.add(product.toAdminDto());
 		});
 		return resultList; 
+	}
+	public void productModify(modifyProductReqDto modifyProductReqDto) {
+		adminRepository.productModify(modifyProductReqDto);
+		return ;
 	}
 }

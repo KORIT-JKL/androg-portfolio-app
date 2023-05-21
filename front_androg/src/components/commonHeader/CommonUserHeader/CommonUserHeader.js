@@ -92,7 +92,7 @@ const CommonUserHeader = () => {
           Setgetauthority(false);
         }
       },
-      enabled: getauthority,
+      enabled: getauthority && !!localStorage.getItem("accessToken"),
     }
   );
 

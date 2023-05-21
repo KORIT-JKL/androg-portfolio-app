@@ -47,7 +47,7 @@ public class AuthenticationService implements UserDetailsService {
 	
 	
 	public JwtRespDto signin(LoginReqDto loginReqDto) {
-		System.out.println(loginReqDto);
+		System.out.println(loginReqDto);	
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(loginReqDto.getEmail(), loginReqDto.getPassword());
 		

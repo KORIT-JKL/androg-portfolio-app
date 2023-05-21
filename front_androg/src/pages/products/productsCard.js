@@ -22,6 +22,7 @@ const productName = css`
 `;
 const productNameContainer = css`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding-left: 20px;
   width: 100%;
