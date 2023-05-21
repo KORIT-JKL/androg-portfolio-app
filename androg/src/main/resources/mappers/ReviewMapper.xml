@@ -107,4 +107,13 @@ from review_tb rt
   rt.product_id = #{product_id}
 </select>
 
+<update id="reviewFlag" parameterType="hashmap">
+	update order_tb
+	set review_flag = 1
+	where 
+		user_id = #{userId}
+	and
+		product_id = #{productId};
+</update>
+
 </mapper>

@@ -113,6 +113,28 @@ const MyPage = () => {
       enabled: infoRefresh,
     }
   );
+  const addressList = useQuery(
+    ["addressList"],
+    async () => {
+      const option = {
+        params: {
+          userId: principal.data.data.userId,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      //user 주소지 조회 url/user/mypage/address
+      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setUserAddressList([...response.data]);
+      },
+      enabled: !!principal.data,
+    }
+  );
   const products = useQuery(
     ["orderProducts"],
     async () => {
@@ -134,7 +156,7 @@ const MyPage = () => {
 
         setProductsRefresh(false);
       },
-      enabled: productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
+      enabled: !!principal.data, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
 
@@ -181,7 +203,7 @@ const MyPage = () => {
     }
   };
 
-  if (principal.isLoading && products.isLoading) {
+  if (principal.isLoading && products.isLoading && addressList.isLoading) {
     return <></>;
   }
 
@@ -198,10 +220,16 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.email : <></>}
             </span>
+            <div>{userAddressList[0].address}</div>
+            <div>{userAddressList[0].addressDetail}</div>
+            <div>
+              {userAddressList[0].addressSigungu}
+              {userAddressList[0].addressZonecode}
+            </div>
+
             <div css={addressContent} onClick={withdrawalSubmit}>
               회원탈퇴
             </div>
-
             <div css={addressContent} onClick={() => navgate("/user/mypage/address")}>
               주소록 보기
             </div>

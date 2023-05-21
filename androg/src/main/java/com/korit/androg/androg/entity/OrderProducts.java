@@ -33,6 +33,7 @@ public class OrderProducts {
 				.sizeName(sizeName)
 				.countNumber(countNumber)
 				.userName(user.getName())
+				.reviewFlag(reviewFlag)
 				.build();
 	}
 }

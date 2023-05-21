@@ -15,4 +15,6 @@ public interface ReviewRepository {
 	public int reviewRegister(Review review);
 	
 	public List<Review> getReviews(int productId);
+	
+	public int reviewFlag(Map<String, Object> requestMap);
 }

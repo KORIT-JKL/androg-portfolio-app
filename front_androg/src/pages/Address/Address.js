@@ -84,6 +84,20 @@ const addAddressButton = css`
   }
 `;
 
+const addressText = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const defaultAddress = (index) => css`
+  border: none;
+  padding: 3px;
+  background-color: white;
+
+  ${index === 0 ? "" : "cursor: pointer"};
+  ${index === 0 ? "" : "&:hover {font-weight: 600}"};
+`;
+
 //CommonHeader 문제가 많다 뭐가 문제인지 모를정도로 빠른 시일내에 해결을 해야함.
 
 //문제: 컴포넌트를 나누지 않고 한 곳에 다 작성을 하니 기능을 구현하기 애먹었음.
@@ -133,7 +147,10 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(`http://localhost:8080/user/mypage/address/${address.addressId}`, option);
+      const response = await axios.delete(
+        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        option
+      );
       // console.log(response);
       return response;
     },
@@ -180,7 +197,11 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/user/mypage/address/default", data, option);
+      const response = await axios.put(
+        "http://localhost:8080/user/mypage/address/default",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -211,7 +232,7 @@ const Address = () => {
           <h1 css={Title}>주소록</h1>
           <h2 css={subTitle}>모든 주소</h2>
           {userAddressList.length > 0
-            ? userAddressList.map((address) => {
+            ? userAddressList.map((address, index) => {
                 return (
                   <div css={submitAddresBox} key={address.addressId}>
                     <div css={userUpdateBox}>
@@ -240,10 +261,15 @@ const Address = () => {
                     </div>
                     <div>{address.address}</div>
                     <div>{address.addressDetail}</div>
-                    <div>
+                    <div css={addressText}>
                       {address.addressSigungu}
                       {address.addressZonecode}{" "}
-                      <button onClick={() => addressDefault.mutate(address)}>기본 배송지</button>
+                      <button
+                        css={defaultAddress(index)}
+                        onClick={() => addressDefault.mutate(address)}
+                      >
+                        {index === 0 ? "기본 배송지" : "기본 배송지 설정"}
+                      </button>
                     </div>
                   </div>
                 );

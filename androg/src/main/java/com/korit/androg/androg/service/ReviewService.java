@@ -37,4 +37,8 @@ public class ReviewService {
 		});
 		return reviewList;
 	}
+	
+	public int reviewFlag(Map<String, Object> requestMap) {
+		return reviewRepository.reviewFlag(requestMap);
+	}
 }

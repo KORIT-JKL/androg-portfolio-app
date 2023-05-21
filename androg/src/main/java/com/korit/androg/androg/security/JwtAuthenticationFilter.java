@@ -30,16 +30,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		
 		String accessToken = jwtTokenProvider.getToken(httpServletRequest.getHeader("Authorization"));
-		System.out.println("filter 요청 Token:" + httpServletRequest.getHeader("Authorization"));
+//		System.out.println("filter 요청 Token:" + httpServletRequest.getHeader("Authorization"));
 		boolean validatedFlag = jwtTokenProvider.validateToken(accessToken);
 		if (validatedFlag) {
 			Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
-		System.out.println(httpServletRequest.getRequestURI());
+//		System.out.println(httpServletRequest.getRequestURI());
 		chain.doFilter(request, response);
-		System.out.println(httpServletRequest.getRequestURI());
-		System.out.println(httpServletResponse.getStatus());
+//		System.out.println(httpServletRequest.getRequestURI());
+//		System.out.println(httpServletResponse.getStatus());
 	}
 
 }

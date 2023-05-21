@@ -121,6 +121,32 @@ const Review = () => {
     }
   );
 
+  const reviewFlagUpdate = useMutation(
+    async () => {
+      const data = {
+        userId: principal.data.data.userId,
+        productId: parseInt(productId),
+      };
+      const option = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.put(
+        "http://localhost:8080/product/review/reviewflag",
+        data,
+        option
+      );
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        console.log(response.data);
+      },
+    }
+  );
+
   const reviewRegister = useMutation(
     async () => {
       const data = {
@@ -143,7 +169,7 @@ const Review = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response);
+        reviewFlagUpdate.mutate();
       },
     }
   );
