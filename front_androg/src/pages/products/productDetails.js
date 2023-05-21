@@ -272,9 +272,6 @@ const ProductDetails = () => {
         setReviews([...response.data]);
       },
       enabled: refresh,
-      onError: (error) => {
-        console.log(error);
-      },
     }
   );
 

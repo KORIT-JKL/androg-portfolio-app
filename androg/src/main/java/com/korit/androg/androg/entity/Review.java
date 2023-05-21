@@ -23,8 +23,10 @@ public class Review {
 		return ReviewRespDto.builder()
 							.productId(productId)
 							.userName(user.getName())
+							.userId(userId)
 							.content(content)
 							.reviewDate(reviewDate)
+							.reviewId(reviewId)
 							.build();
 	}
 }

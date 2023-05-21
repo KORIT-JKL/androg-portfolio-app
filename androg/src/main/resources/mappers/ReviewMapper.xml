@@ -100,6 +100,8 @@ select
 	rt.product_id,
     rt.content,
     rt.review_date,
+    rt.user_id,
+    rt.review_id,
     ut.name
 from review_tb rt
  left outer join user_tb ut on(ut.user_id = rt.user_id)
@@ -114,6 +116,16 @@ from review_tb rt
 		user_id = #{userId}
 	and
 		product_id = #{productId};
+</update>
+
+<update id="reviewModify" parameterType="com.korit.androg.androg.dto.review.ReviewModifyReqDto">
+
+	update review_tb
+	set review_date = #{reviewDate},
+		content = #{content}
+	where
+		review_id = #{reviewId}
+
 </update>
 
 </mapper>

@@ -5,11 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ReviewRespDto {
-	private int productId;
-	private int userId;
+public class ReviewModifyReqDto {
 	private int reviewId;
-	private String userName;
-	private String content;
 	private String reviewDate;
+	private String content;
 }

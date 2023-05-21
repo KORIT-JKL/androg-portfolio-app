@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
 import com.korit.androg.androg.service.ReviewService;
 
@@ -48,7 +49,11 @@ public class ReviewController {
 	
 	@PutMapping("/product/review/reviewflag")
 	public ResponseEntity<?> reviewFlag(@RequestBody Map<String, Object> requestMap){
-		System.out.println(requestMap);
+//		System.out.println(requestMap);
 		return ResponseEntity.ok().body(reviewService.reviewFlag(requestMap));
+	}
+	@PutMapping("/product/review/modify")
+	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
+		return ResponseEntity.ok().body(reviewService.reviewModify(modifyReqDto));
 	}
 }
