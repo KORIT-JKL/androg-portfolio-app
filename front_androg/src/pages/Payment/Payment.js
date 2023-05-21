@@ -191,7 +191,7 @@ const Payment = () => {
   const [userCartList, setUserCartList] = useState([]);
   const [userCartSelectedPrice, setUserCartSelectedPrice] = useState();
   const [userCartCheckedIndexes, setUserCartCheckedIndexes] = useState([]);
-
+  
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -204,7 +204,7 @@ const Payment = () => {
       return response;
     },
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         setPrincipalState(false);
       },
       enabled: principalState,
@@ -228,12 +228,12 @@ const Payment = () => {
     {
       onSuccess: (response) => {
         console.log(response);
-        // setUserAddressSido(response.data[addressIndex].addressSido);
-        // setUserAddressSigungu(response.data[addressIndex].addressSigungu);
-        // setUserAddressZonecode(response.data[addressIndex].addressZonecode);
-        // setUserAddress(response.data[addressIndex].address);
-        // setUserAddressList([...response.data]);
-        // setaddressListState(false);
+        setUserAddressSido(response.data[addressIndex].addressSido);
+        setUserAddressSigungu(response.data[addressIndex].addressSigungu);
+        setUserAddressZonecode(response.data[addressIndex].addressZonecode);
+        setUserAddress(response.data[addressIndex].address);
+        setUserAddressList([...response.data]);
+        setaddressListState(false);
       },
       enabled: !!principal.data && addressListState,
     }
@@ -257,7 +257,12 @@ const Payment = () => {
     },
     {
       onSuccess: (response) => {
-        // console.log(response.data[userCartCheckedIndex].productPrice)
+        let price = 0;
+        for (let i = 0; i < userCartCheckedIndexes.length; i++) {
+          price += response.data[userCartCheckedIndexes[i]].productPrice * response.data[userCartCheckedIndexes[i]].countNumber;
+        }
+        console.log(price)
+        setUserCartSelectedPrice(price);
         setUserCartList([...response.data]);
         setCartListState(false);
         // cartList.refetch();
@@ -276,7 +281,11 @@ const Payment = () => {
     if (!cartListState) {
       setCartListState(true);
     }
-  }, [addressIndex]);
+  }, [addressIndex, userCartCheckedIndexes]);
+
+  const orderSubmitHandle = async () => {
+    // const response = axios.post("http://localhost:8080/payment/order", JSON.stringify)
+  }
 
   const clickHandle = (e) => {
     setAddressIndex(e.target.value);
@@ -353,7 +362,7 @@ const Payment = () => {
               <input type="text" placeholder="상세주소" css={input} />
 
               <input type="text" placeholder="전화번호" css={phoneInput} />
-              <button css={continueBtn}>주문하기</button>
+              <button css={continueBtn} onClick={orderSubmitHandle}>주문하기</button>
             </div>
           </div>
 
@@ -388,11 +397,11 @@ const Payment = () => {
               : ""}
             <div css={cartSummary}>
               <div css={summaryHeader}>
-                <div>{"총 상품금액 "}</div>
+                <div>{"총 상품금액 " + userCartSelectedPrice}</div>
                 <div>{"배송비 " + 2500}</div>
               </div>
               <div css={summaryFooter}>
-                <div>{"총 주문금액 " + 2500}</div>
+                <div>{"총 주문금액 " + (2500 + userCartSelectedPrice)}</div>
               </div>
             </div>
           </div>
