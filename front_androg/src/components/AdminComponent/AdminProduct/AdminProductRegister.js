@@ -11,14 +11,14 @@ const container = css`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 400px;
+  height: 500px;
   width: 600px;
 `;
 const containerHeader = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 300px;
+  height: 100px;
   width: 100%;
 `;
 const productNameInput = css`
@@ -35,7 +35,7 @@ const containerMiddle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 300px;
+  height: 100px;
   width: 100%;
 `;
 const productCategoryInput = css`
@@ -51,10 +51,14 @@ const productColorInput = css`
 const containerFooter = css`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
-  height: 200px;
+  height: 500px;
   width: 100%;
+`;
+const img = css`
+  height: 200px;
+  width: 150px;
 `;
 const productUrlInput = css`
   width: 540px;
@@ -161,6 +165,8 @@ const AdminProductRegister = () => {
           </select>
         </div>
         <div css={containerFooter}>
+          {productsDetails.productImg != "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}
+
           <input css={productUrlInput} onChange={productImgUrlInputHandle} type="text" placeholder="이미지URL" />
           {productsDetails.productName == "" ||
           productsDetails.productPrice == 0 ||

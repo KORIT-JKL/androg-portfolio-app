@@ -24,6 +24,7 @@
 		<id property="colorId" column="color_id"/>
 		<result property="colorName" column="color_name"/>
 	</resultMap>
+	
 	<resultMap type="com.korit.androg.androg.dto.Product.getCartResponseDto" id="getCartByUserId">
 		<id property="cartId" column="cart_id"/>	
 		<result property="productName" column="product_name"/>

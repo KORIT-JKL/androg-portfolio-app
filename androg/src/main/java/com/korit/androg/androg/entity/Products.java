@@ -1,6 +1,7 @@
 package com.korit.androg.androg.entity;
 
 import com.korit.androg.androg.dto.Product.SearchProductsRespDto;
+import com.korit.androg.androg.dto.admin.getProductRespDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,4 +43,16 @@ public class Products {
 				.build();
 				
 	}
+	public getProductRespDto toAdminDto() {
+		return getProductRespDto.builder()
+				.productId(productId)
+				.productName(productName)
+				.productPrice(productPrice)
+				.productImg(productImg)
+				.categoryId(category.getCategoryId())
+				.categoryName(category.getCategoryName())
+				.colorId(color.getColorId())
+				.colorName(color.getColorName())
+				.build();
+				}
 }

@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.androg.androg.repository.AdminRepository">
-	<resultMap type="com.korit.androg.androg.dto.admin.getColorResDto" id="colorMap">
+	
+
+	<resultMap type="com.korit.androg.androg.entity.Color" id="colorMap">
 		<id property="colorId" column="color_id"/>
 		<result property="colorName" column="color_name"/>
 	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Category" id="categoryMap">
+		<id property="categoryId" column="category_id"/>
+		<result property="categoryName" column="category_name"/>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Products" id="productsMap">
+		<id property="productId" column="product_id"/>
+		<result property="productName" column="product_name"/>
+		<result property="productPrice" column="product_Price"/>
+		<result property="productImg" column="product_img"/>
+		<result property="sizeS" column="size_s"/>
+		<result property="sizeM" column="size_m"/>
+		<result property="sizeL" column="size_l"/>
+		<result property="sizeXL" column="size_xl"/>
+		<result property="sizeXXL" column="size_xxl"/>
+		<association property="category" resultMap="categoryMap"></association>
+		<association property="color" resultMap="colorMap"></association>
+	</resultMap>
+
+	
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
 			color_id,
@@ -26,4 +49,26 @@
 			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},240,250,260,270,280,#{colorId})
 		</if>
 	</insert>
+	<select id="getProducts" parameterType="Integer" resultMap="productsMap">
+		SELECT
+			pt.product_id,
+            pt.product_name,
+            pt.product_price,
+            pt.product_img,
+            pt.size_s,
+            pt.size_m,
+            pt.size_l,
+            pt.size_xl,
+            pt.size_xxl,
+			ct.category_id,
+            ct.category_name,
+            clt.color_id,
+            clt.color_name
+		FROM
+			product_tb pt
+            left outer join category_tb ct on(ct.category_id = pt.category_id)
+            left outer join color_tb clt on(clt.color_id = pt.color_id)
+		where
+			 pt.category_id = #{categoryId}
+	</select>
 </mapper>

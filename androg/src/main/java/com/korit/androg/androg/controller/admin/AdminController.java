@@ -2,6 +2,7 @@ package com.korit.androg.androg.controller.admin;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,10 @@ public class AdminController {
 	public ResponseEntity<?> registerProduct(@RequestBody registerProductReqDto productReqDto) {
 		adminService.registerProductDetails(productReqDto);
 		return null;
+	}
+	
+	@GetMapping("admin/products/{categoryId}")
+	public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId) {
+		return ResponseEntity.ok().body(adminService.getProducts(categoryId));
 	}
 }
