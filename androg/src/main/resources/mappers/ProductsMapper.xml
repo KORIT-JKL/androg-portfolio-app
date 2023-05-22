@@ -11,6 +11,7 @@
 		<result property="sizeL" column="size_l"/>
 		<result property="sizeXL" column="size_xl"/>
 		<result property="sizeXXL" column="size_xxl"/>
+		<result property="soldoutFlag" column="soldout_flag" />
 		<association property="category" resultMap="categoryMap"></association>
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
@@ -51,7 +52,8 @@
 			ct.category_id,
             ct.category_name,
             clt.color_id,
-            clt.color_name
+            clt.color_name,
+            pt.soldout_flag
 		FROM
 			product_tb pt
             left outer join category_tb ct on(ct.category_id = pt.category_id)

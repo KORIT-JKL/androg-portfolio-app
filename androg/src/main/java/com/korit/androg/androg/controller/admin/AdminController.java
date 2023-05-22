@@ -1,5 +1,7 @@
 package com.korit.androg.androg.controller.admin;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,12 @@ public class AdminController {
 	@DeleteMapping("admin/products/delete")
 	public ResponseEntity<?> productDelete(@RequestParam int productId) {
 		adminService.productDelte(productId);
+		return null;
+	}
+	
+	@PutMapping("/admin/products/soldout")
+	public ResponseEntity<?> productSoldout(@RequestParam Map<String, Object> reqeustMap) {
+		adminService.modifySoldOut(reqeustMap);
 		return null;
 	}
 }

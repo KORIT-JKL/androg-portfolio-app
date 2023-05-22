@@ -2,6 +2,7 @@ package com.korit.androg.androg.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,12 @@ public class AdminService {
 	}
 	public void productDelte(int productId) {
 		adminRepository.productDelte(productId);
+		return ;
+	}
+	public void modifySoldOut(Map<String, Object> requestMap) {
+		int productId = Integer.parseInt((String)requestMap.get("productId"));
+		int soldoutFlag = Integer.parseInt((String)requestMap.get("value"));
+		adminRepository.modifySodlout(productId,soldoutFlag);
 		return ;
 	}
 }

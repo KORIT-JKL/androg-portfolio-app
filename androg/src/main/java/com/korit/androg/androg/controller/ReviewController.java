@@ -23,13 +23,13 @@ public class ReviewController {
 	
 	@GetMapping("/products/review/{productId}")
 	public ResponseEntity<?> getReviews(@PathVariable int productId){
-		System.out.println(reviewService.getReviews(productId));
+//		System.out.println(reviewService.getReviews(productId));
 		return ResponseEntity.ok().body(reviewService.getReviews(productId));
 	}
 	
 	@GetMapping("/product/{productId}/reviewproduct")
 	public ResponseEntity<?> getProduct(@PathVariable int productId, @RequestParam Map<String, Object> requestMap){
-		System.out.println(requestMap.get("userId"));
+//		System.out.println(requestMap.get("userId"));
 		Map<String, Object> requestMap1 = new HashMap<>();
 		requestMap1.put("userId", requestMap.get("userId"));
 		requestMap1.put("productId", productId);
@@ -38,7 +38,7 @@ public class ReviewController {
 	
 	@PostMapping("/product/review/register")
 	public ResponseEntity<?> reviewRegiset(@RequestBody ReviewRegisterReqDto reviewRegisterReqDto){
-		System.out.println(reviewRegisterReqDto);
+//		System.out.println(reviewRegisterReqDto);
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
 	}
 	

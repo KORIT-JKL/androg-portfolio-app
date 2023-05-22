@@ -21,4 +21,5 @@ public class getProductRespDto {
 	private String colorName;
 	private int categoryId;
 	private String categoryName;
+	private int soldoutFlag;
 }

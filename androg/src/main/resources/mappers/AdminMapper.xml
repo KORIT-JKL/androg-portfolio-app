@@ -23,6 +23,7 @@
 		<result property="sizeL" column="size_l"/>
 		<result property="sizeXL" column="size_xl"/>
 		<result property="sizeXXL" column="size_xxl"/>
+		<result property="soldoutFlag" column="soldout_flag" />
 		<association property="category" resultMap="categoryMap"></association>
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
@@ -38,15 +39,15 @@
 	<insert id="registerProductDetail">
 		<if test="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4" >
 			insert into product_tb
-			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"S","M","L","XL","XXL",#{colorId})
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"S","M","L","XL","XXL",#{colorId},1)
 		</if>
 		<if test="categoryId == 5 " >
 			insert into product_tb
-			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"ONESIZE",NULL,NULL,NULL,NULL,#{colorId})
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},"ONESIZE",NULL,NULL,NULL,NULL,#{colorId},1)
 		</if>
 		<if test="categoryId == 6" >
 			insert into product_tb
-			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},240,250,260,270,280,#{colorId})
+			values(0 , #{productName}, #{productPrice}, #{categoryId} ,#{productImg},240,250,260,270,280,#{colorId},1)
 		</if>
 	</insert>
 	<select id="getProducts" parameterType="Integer" resultMap="productsMap">
@@ -63,7 +64,8 @@
 			ct.category_id,
             ct.category_name,
             clt.color_id,
-            clt.color_name
+            clt.color_name,
+            pt.soldout_flag
 		FROM
 			product_tb pt
             left outer join category_tb ct on(ct.category_id = pt.category_id)
@@ -87,4 +89,12 @@
 		delete from product_tb
 		where product_id = #{productId};
 	</delete>
+	<update id="modifySodlout" parameterType="Integer">
+		update
+			product_tb
+		set
+			soldout_flag = #{soldoutFlag}
+		where
+			product_id = #{productId};
+	</update>
 </mapper>

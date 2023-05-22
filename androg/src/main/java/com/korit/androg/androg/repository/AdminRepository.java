@@ -17,4 +17,5 @@ public interface AdminRepository {
 	public List<Products> getProducts(int categoryId);
 	public void productModify(modifyProductReqDto modifyProductReqDto);
 	public void productDelte(int productId);
+	public void modifySodlout(int productId, int soldoutFlag);
 }

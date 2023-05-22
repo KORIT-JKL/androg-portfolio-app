@@ -43,7 +43,22 @@ const productCard = css`
     background-color: #fafafa;
   }
 `;
-
+const soldoutcontainer = css`
+  padding: 0px;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  width: 290px;
+  height: 420px;
+  background-color: #00000099;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+`;
+const soldoutText = css`
+  color: red;
+  font-size: 140px;
+`;
 const Products = () => {
   const { categoryId } = useParams();
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
@@ -83,6 +98,7 @@ const Products = () => {
       onSuccess: (response) => {
         // 여기 어딘가 아주 문제 product리스트가 초기화도 안되고 추가만 됨
         setThiRefresh(false);
+        console.log(response.data.productList);
         const totalCount = response.data.productTotalCount;
         setThisProducts([...products, ...response.data.productList]);
         setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
@@ -103,9 +119,22 @@ const Products = () => {
           {products.length > 0
             ? products.map((product) => (
                 <>
-                  <li css={productCard} onClick={() => ProductsCardClick(product.productId)}>
-                    <ProductsCard product={product} key={product.productId} />
-                  </li>
+                  {product.soldoutFlag === 0 ? (
+                    <>
+                      <li css={productCard}>
+                        <div css={soldoutcontainer}>
+                          <div css={soldoutText}>품절</div>
+                        </div>
+                        <ProductsCard product={product} key={product.productId} />
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li css={productCard} onClick={() => ProductsCardClick(product.productId)}>
+                        <ProductsCard product={product} key={product.productId} />
+                      </li>
+                    </>
+                  )}
                 </>
               ))
             : ""}

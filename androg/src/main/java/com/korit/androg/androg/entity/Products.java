@@ -25,6 +25,7 @@ public class Products {
 	
 	private Category category;
 	private Color color;
+	private int soldoutFlag;
 	public SearchProductsRespDto toDto() {
 		return SearchProductsRespDto.builder()
 				.productId(productId)
@@ -53,6 +54,7 @@ public class Products {
 				.categoryName(category.getCategoryName())
 				.colorId(color.getColorId())
 				.colorName(color.getColorName())
+				.soldoutFlag(soldoutFlag)
 				.build();
 				}
 }

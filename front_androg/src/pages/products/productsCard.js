@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 const productCard = css`
