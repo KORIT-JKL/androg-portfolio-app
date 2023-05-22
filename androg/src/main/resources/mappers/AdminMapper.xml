@@ -10,4 +10,9 @@
 		FROM 
 			androg.color_tb;
 	</select>
+	
+	<insert id="popUpRegister" >
+		insert into popup_tb
+		values(0,#{content});
+	</insert>
 </mapper>

@@ -16,4 +16,8 @@ public class AdminService {
 	public List<getColorResDto> getColors() {
 		return adminRepository.getColors();
 	}
+	
+	public int popUpRegister (String content) {
+		return adminRepository.popUpRegister(content);
+	}
 }

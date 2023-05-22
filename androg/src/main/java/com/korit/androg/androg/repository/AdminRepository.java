@@ -9,4 +9,8 @@ import com.korit.androg.androg.dto.admin.getColorResDto;
 @Mapper
 public interface AdminRepository {
 	public List<getColorResDto> getColors();
+	
+	public int popUpRegister (String content);
+	
+	
 }

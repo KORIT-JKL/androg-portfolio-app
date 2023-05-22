@@ -217,14 +217,12 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>
-              {principal.data !== undefined ? principal.data.data.email : <></>}
-            </span>
-            <div>{userAddressList[0].address}</div>
-            <div>{userAddressList[0].addressDetail}</div>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <div>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
+            <div>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
             <div>
-              {userAddressList[0].addressSigungu}
-              {userAddressList[0].addressZonecode}
+              {userAddressList[0] !== undefined ? userAddressList[0].addressSigungu : ""}
+              {userAddressList[0] !== undefined ? userAddressList[0].addressZonecode : ""}
             </div>
 
             <div css={addressContent} onClick={withdrawalSubmit}>
@@ -260,13 +258,7 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return (
-                <OrderProducts
-                  key={orderProduct.orderId}
-                  orderProduct={orderProduct}
-                  isOpen={true}
-                />
-              );
+              return <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} isOpen={true} />;
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
