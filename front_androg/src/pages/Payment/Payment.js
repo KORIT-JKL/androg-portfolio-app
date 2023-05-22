@@ -186,7 +186,9 @@ const Payment = () => {
   const [userAddressSigungu, setUserAddressSigungu] = useState("");
   const [userAddressSido, setUserAddressSido] = useState("");
   const [userAddressZonecode, setUserAddressZonecode] = useState(0);
+  const [userAddressDetail, setUserAddressDetail] = useState("");
   const [userAddress, setUserAddress] = useState("");
+  const [userAddressId, setUserAddressId] = useState(0);
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
   const [orderParams, setOrderParams] = useState({
@@ -229,7 +231,8 @@ const Payment = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response);
+        setUserAddressId(response.data[addressIndex].addressId);
+        setUserAddressDetail(response.data[addressIndex].addressDetail);
         setUserAddressSido(response.data[addressIndex].addressSido);
         setUserAddressSigungu(response.data[addressIndex].addressSigungu);
         setUserAddressZonecode(response.data[addressIndex].addressZonecode);
@@ -285,9 +288,18 @@ const Payment = () => {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
+      })
+      return response;
+    } catch (error) {};
+    try {
+      const response = axios.post(`http://localhost:8080/products/order/address/${userAddressId}`,{
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
       });
       return response;
-    } catch (error) {}
+
+    } catch(error) {};
   };
 
   const clickHandle = (e) => {
@@ -306,14 +318,19 @@ const Payment = () => {
           ...cartList.data.data.filter((cart) => cart.cartId === parseInt(e.target.id)),
         ],
       });
+    
+      let price = orderParams.products.cartId
+     console.log(price)
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
         products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
       });
+      
     }
+    
   };
-
+  
   if (principal.isLoading && addressList.isLoading) {
     return <>로딩중...</>;
   }
@@ -372,7 +389,7 @@ const Payment = () => {
               />
               <input type="text" placeholder="주소" css={input} value={userAddress.split(" ").slice(2).join(" ")} />
 
-              <input type="text" placeholder="상세주소" css={input} />
+              <input type="text" placeholder="상세주소" css={input} value={userAddressDetail}/>
 
               <input type="text" placeholder="전화번호" css={phoneInput} />
               <button css={continueBtn} onClick={orderSubmitHandle}>
@@ -412,7 +429,7 @@ const Payment = () => {
               : ""}
             <div css={cartSummary}>
               <div css={summaryHeader}>
-                <div>{"총 상품금액 "}</div>
+                <div>{"총 상품금액 "  }</div>
                 <div>{"배송비 " + 2500}</div>
               </div>
               <div css={summaryFooter}>
