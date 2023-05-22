@@ -35,4 +35,8 @@ public class AdminService {
 		adminRepository.productModify(modifyProductReqDto);
 		return ;
 	}
+	public void productDelte(int productId) {
+		adminRepository.productDelte(productId);
+		return ;
+	}
 }

@@ -83,4 +83,8 @@
 		where 
 			product_id= #{productId};
 	</update>
+	<delete id="productDelte" parameterType="Integer">
+		delete from product_tb
+		where product_id = #{productId};
+	</delete>
 </mapper>

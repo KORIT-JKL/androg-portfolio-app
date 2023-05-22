@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
-import AdminProductsCard from "./AdminProductCard";
 import ProductsCard from "../../../pages/products/productsCard";
 const categoryIdContainer = css`
   display: flex;
@@ -41,17 +39,8 @@ const productCardContainer = css`
   flex-wrap: wrap;
   height: auto;
   margin: auto;
-  width: 1000px;
+  width: 1400px;
   justify-content: flex-start;
-`;
-const deleteButton = css`
-  position: relative;
-  display: flex;
-  width: 25px;
-  height: 25px;
-  background-color: white;
-  border-radius: 50px;
-  left: 250px;
 `;
 const productCard = css`
   display: flex;
@@ -153,7 +142,25 @@ const AdminProductModify = () => {
     productImg: "",
     colorId: 0,
   });
-
+  const productDelteFunction = useMutation(
+    async () => {
+      const option = {
+        params: {
+          productId: productsDetails.productId,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.delete("http://localhost:8080/admin/products/delete", option);
+      return response;
+    },
+    {
+      onSuccess: () => {
+        setRefresh(true);
+      },
+    }
+  );
   const searchProducts = useQuery(
     ["searchProducts"],
     async () => {
@@ -238,6 +245,14 @@ const AdminProductModify = () => {
       colorId: 0,
     });
   };
+  const productDelete = () => {
+    if (window.confirm("삭제 하시겠습니까?")) {
+      productDelteFunction.mutate();
+      alert("삭제 완료");
+    } else {
+      alert("삭제 취소");
+    }
+  };
 
   const modify = async () => {
     const option = {
@@ -282,7 +297,6 @@ const AdminProductModify = () => {
           {products.length > 0
             ? products.map((product) => (
                 <>
-                  <button css={deleteButton}>X</button>
                   <li css={productCard} onClick={() => productCartClick(product)}>
                     <ProductsCard product={product} key={product.productId} />
                   </li>
@@ -358,7 +372,9 @@ const AdminProductModify = () => {
               <button css={buttons} onClick={() => modify()}>
                 수정
               </button>
-              <button css={buttons}>삭제</button>
+              <button css={buttons} onClick={() => productDelete()}>
+                삭제
+              </button>
               <button css={buttons} onClick={() => modifyCancel()}>
                 취소
               </button>
