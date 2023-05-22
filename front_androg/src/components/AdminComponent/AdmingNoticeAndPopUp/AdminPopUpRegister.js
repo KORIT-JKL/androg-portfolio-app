@@ -79,7 +79,7 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/admin/pop-up");
+      const response = await axios.get("http://localhost:8080/admin/pop-up", option);
       return response;
     },
     {
