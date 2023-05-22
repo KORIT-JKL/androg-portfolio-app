@@ -26,6 +26,7 @@
 	</resultMap>
 	<resultMap type="com.korit.androg.androg.dto.Product.getCartResponseDto" id="getCartByUserId">
 		<id property="cartId" column="cart_id"/>	
+		<result property="productId" column="product_id"/>
 		<result property="productName" column="product_name"/>
 		<result property="productPrice" column="product_price"/>
 		<result property="productImg" column="product_img"/>
@@ -41,6 +42,7 @@
 	<select id="getCartByuserId" parameterType="Integer" resultMap="getCartByUserId">
 		select
 			ct.cart_id,
+			pt.product_id,
 		    pt.product_name,
 		    pt.product_price,
 		    pt.product_img,
