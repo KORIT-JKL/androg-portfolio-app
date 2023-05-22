@@ -29,8 +29,6 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/product/{productId}/reviewproduct")
-
-=======
 	public ResponseEntity<?> getProduct(@PathVariable int productId, int userId){
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("userId", userId);

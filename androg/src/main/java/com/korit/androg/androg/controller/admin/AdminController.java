@@ -52,4 +52,15 @@ public class AdminController {
 		adminService.modifySoldOut(reqeustMap);
 		return null;
 	}
+	
+	@GetMapping("/admin/pop-up")
+	public ResponseEntity<?> getPopUp() {
+		return ResponseEntity.ok().body(null);
+	}
+	
+	@PostMapping("/admin/pop-up/register")
+	public ResponseEntity<?> popUpRegister(@RequestBody Map<String, Object> requestMap) {
+		String content = (String) requestMap.get("content");
+		return ResponseEntity.ok().body(adminService.popUpRegister(content));
+	}
 }

@@ -67,17 +67,17 @@ const AuthRoute = ({ path, element }) => {
   if (principal.data !== undefined) {
     // console.log("admin:" + adminState);
     if (path.startsWith(adminPath) && !adminState) {
-      console.log("admin페이지 접속 제한");
       navigate("/");
     }
   }
 
   if (authState && path.startsWith(authPath)) {
-    console.log("로그인 했을때");
-    // navigate("/");
+    navigate("/");
   }
-  if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
-    console.log("....토큰이 없음");
+  if (
+    !authState &&
+    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
+  ) {
     navigate("/auth/login");
   }
 

@@ -45,7 +45,7 @@ public class AdminService {
 		int soldoutFlag = Integer.parseInt((String)requestMap.get("value"));
 		adminRepository.modifySodlout(productId,soldoutFlag);
 		return ;
-	
+	}
 	public int popUpRegister (String content) {
 		return adminRepository.popUpRegister(content);
 	}
