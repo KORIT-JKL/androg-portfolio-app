@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
@@ -189,8 +189,10 @@ const Payment = () => {
   const [userAddress, setUserAddress] = useState("");
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
-  const [userCartSelectedPrice, setUserCartSelectedPrice] = useState();
-  const [userCartCheckedIndexes, setUserCartCheckedIndexes] = useState([]);
+  const [orderParams, setOrderParams] = useState({
+    userId: 0,
+    products: [],
+  });
 
   const principal = useQuery(
     ["principal"],
@@ -228,12 +230,12 @@ const Payment = () => {
     {
       onSuccess: (response) => {
         console.log(response);
-        // setUserAddressSido(response.data[addressIndex].addressSido);
-        // setUserAddressSigungu(response.data[addressIndex].addressSigungu);
-        // setUserAddressZonecode(response.data[addressIndex].addressZonecode);
-        // setUserAddress(response.data[addressIndex].address);
-        // setUserAddressList([...response.data]);
-        // setaddressListState(false);
+        setUserAddressSido(response.data[addressIndex].addressSido);
+        setUserAddressSigungu(response.data[addressIndex].addressSigungu);
+        setUserAddressZonecode(response.data[addressIndex].addressZonecode);
+        setUserAddress(response.data[addressIndex].address);
+        setUserAddressList([...response.data]);
+        setaddressListState(false);
       },
       enabled: !!principal.data && addressListState,
     }
@@ -257,10 +259,8 @@ const Payment = () => {
     },
     {
       onSuccess: (response) => {
-        // console.log(response.data[userCartCheckedIndex].productPrice)
         setUserCartList([...response.data]);
         setCartListState(false);
-        // cartList.refetch();
       },
       enabled: !!principal.data && cartListState,
     }
@@ -278,18 +278,40 @@ const Payment = () => {
     }
   }, [addressIndex]);
 
+  const orderSubmitHandle = async () => {
+    console.log(orderParams);
+    try {
+      const response = axios.post("http://localhost:8080/products/order", orderParams, {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      });
+      return response;
+    } catch (error) {}
+  };
+
   const clickHandle = (e) => {
     setAddressIndex(e.target.value);
   };
 
   const getCheckBoxState = (e) => {
+    const { id, checked } = e.target;
+    console.log(id + ", " + checked);
+    console.log(cartList.data.data);
     if (e.target.checked) {
-      userCartCheckedIndexes.push(e.target.id);
+      setOrderParams({
+        userId: principal.data.data.userId,
+        products: [
+          ...orderParams.products,
+          ...cartList.data.data.filter((cart) => cart.cartId === parseInt(e.target.id)),
+        ],
+      });
+    } else {
+      setOrderParams({
+        userId: principal.data.data.userId,
+        products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
+      });
     }
-    if (!e.target.checked) {
-      userCartCheckedIndexes.splice(userCartCheckedIndexes.indexOf(e.target.id), 1);
-    }
-    setUserCartCheckedIndexes([...userCartCheckedIndexes]);
   };
 
   if (principal.isLoading && addressList.isLoading) {
@@ -353,7 +375,9 @@ const Payment = () => {
               <input type="text" placeholder="상세주소" css={input} />
 
               <input type="text" placeholder="전화번호" css={phoneInput} />
-              <button css={continueBtn}>주문하기</button>
+              <button css={continueBtn} onClick={orderSubmitHandle}>
+                주문하기
+              </button>
             </div>
           </div>
 
@@ -369,7 +393,7 @@ const Payment = () => {
         <aside css={aside}>
           <div css={asideContent}>
             {!!userCartList
-              ? userCartList.map((userCart, index) => {
+              ? userCartList.map((userCart) => {
                   return (
                     <>
                       <div css={cartContainer}>
@@ -379,7 +403,7 @@ const Payment = () => {
                           <div>{userCart.colorName + " / " + userCart.sizeName}</div>
                           <div>{userCart.productPrice}</div>
                           <div>{"수량 : " + userCart.countNumber}</div>
-                          <Checkbox id={index} onChange={getCheckBoxState} />
+                          <Checkbox id={userCart.cartId} onChange={getCheckBoxState} />
                         </div>
                       </div>
                     </>

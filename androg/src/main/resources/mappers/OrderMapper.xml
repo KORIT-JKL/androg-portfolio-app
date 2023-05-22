@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.OrderRepository">
+
+
+<insert id="saveOrder" useGeneratedKeys="true" keyProperty="orderId" parameterType="com.korit.androg.androg.entity.Order">
+	insert into order_tb
+	values(0,#{userId}, current_date())
+</insert>
+
+<insert id="completeOrder">
+	insert into order_detail_tb
+	values 
+	<foreach collection="products" item="product" separator="," >
+		(0, #{orderId}, #{product.productId}, #{product.sizeName}, #{product.countNumber})	
+	</foreach>
+</insert>
+
+
+
+
+</mapper>

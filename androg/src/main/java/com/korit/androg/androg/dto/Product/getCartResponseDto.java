@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class getCartResponseDto {
 	private int cartId;
+	private int productId;
 	private String productName;
 	private int productPrice;
 	private String productImg;
