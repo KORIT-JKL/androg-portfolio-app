@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.entity.OrderProducts;
 import com.korit.androg.androg.entity.Review;
 
@@ -15,4 +16,8 @@ public interface ReviewRepository {
 	public int reviewRegister(Review review);
 	
 	public List<Review> getReviews(int productId);
+	
+	public int reviewFlag(Map<String, Object> requestMap);
+	
+	public int reviewModify(ReviewModifyReqDto modifyReqDto);
 }

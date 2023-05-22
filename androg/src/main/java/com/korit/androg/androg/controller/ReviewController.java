@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
 import com.korit.androg.androg.service.ReviewService;
 
@@ -23,17 +25,28 @@ public class ReviewController {
 	
 	@GetMapping("/products/review/{productId}")
 	public ResponseEntity<?> getReviews(@PathVariable int productId){
+<<<<<<< HEAD
 //		System.out.println(reviewService.getReviews(productId));
+=======
+>>>>>>> sung
 		return ResponseEntity.ok().body(reviewService.getReviews(productId));
 	}
 	
 	@GetMapping("/product/{productId}/reviewproduct")
+<<<<<<< HEAD
 	public ResponseEntity<?> getProduct(@PathVariable int productId, @RequestParam Map<String, Object> requestMap){
 //		System.out.println(requestMap.get("userId"));
 		Map<String, Object> requestMap1 = new HashMap<>();
 		requestMap1.put("userId", requestMap.get("userId"));
 		requestMap1.put("productId", productId);
 		return ResponseEntity.ok().body(reviewService.getProduct(requestMap1));
+=======
+	public ResponseEntity<?> getProduct(@PathVariable int productId, int userId){
+		Map<String, Object> requestMap = new HashMap<>();
+		requestMap.put("userId", userId);
+		requestMap.put("productId", productId);
+		return ResponseEntity.ok().body(reviewService.getProduct(requestMap));
+>>>>>>> sung
 	}
 	
 	@PostMapping("/product/review/register")
@@ -45,5 +58,15 @@ public class ReviewController {
 	@PostMapping("/admin/test")
 	public ResponseEntity<?> admintest(){
 		return ResponseEntity.ok().body("admin");
+	}
+	
+	@PutMapping("/product/review/reviewflag")
+	public ResponseEntity<?> reviewFlag(@RequestBody Map<String, Object> requestMap){
+//		System.out.println(requestMap);
+		return ResponseEntity.ok().body(reviewService.reviewFlag(requestMap));
+	}
+	@PutMapping("/product/review/modify")
+	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
+		return ResponseEntity.ok().body(reviewService.reviewModify(modifyReqDto));
 	}
 }

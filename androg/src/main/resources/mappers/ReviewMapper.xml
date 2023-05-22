@@ -50,6 +50,7 @@
 	<result property="userId" column="user_id"/>
 	<result property="productId" column="product_id"/>
 	<result property="content" column="content"/>
+	<result property="reviewDate" column="review_date"/>
 	<association property="user" resultMap="userMap"></association>
 </resultMap>
 
@@ -91,18 +92,40 @@ select
 
 <insert id="reviewRegister" parameterType="com.korit.androg.androg.entity.Review">
  insert into review_tb
- values(0,#{userId},#{productId},#{content})
+ values(0,#{userId},#{productId},#{content},CURDATE())
 </insert>
 
 <select id="getReviews" parameterType="Integer" resultMap="reviewMap">
  select
 	rt.product_id,
     rt.content,
+    rt.review_date,
+    rt.user_id,
+    rt.review_id,
     ut.name
 from review_tb rt
  left outer join user_tb ut on(ut.user_id = rt.user_id)
  where
   rt.product_id = #{product_id}
 </select>
+
+<update id="reviewFlag" parameterType="hashmap">
+	update order_tb
+	set review_flag = 1
+	where 
+		user_id = #{userId}
+	and
+		product_id = #{productId};
+</update>
+
+<update id="reviewModify" parameterType="com.korit.androg.androg.dto.review.ReviewModifyReqDto">
+
+	update review_tb
+	set review_date = #{reviewDate},
+		content = #{content}
+	where
+		review_id = #{reviewId}
+
+</update>
 
 </mapper>

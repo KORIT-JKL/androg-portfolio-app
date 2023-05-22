@@ -58,18 +58,20 @@ const reviewButtonBox = css`
   height: 100%;
 `;
 
-const reviewButton = css`
+const reviewButton = (state) => css`
   font-weight: 600;
   font-size: 17px;
   height: 100%;
   width: 100%;
   background-color: black;
   color: white;
-  cursor: pointer;
-  &:hover {
+
+  ${state === 1 ? "" : "cursor: pointer"};
+  ${state === 1 ? "background-color: grey" : "&:hover {background-color: grey}"};
+  /* &:hover {
     background-color: grey;
     color: white;
-  }
+  } */
 `;
 
 const OrderProducts = ({ orderProduct, isOpen }) => {
@@ -95,8 +97,12 @@ const OrderProducts = ({ orderProduct, isOpen }) => {
       </div>
       <div css={reviewButtonBox}>
         {isOpen ? (
-          <button css={reviewButton} onClick={() => reviewClickHandle(orderProduct)}>
-            리뷰 등록
+          <button
+            css={reviewButton(orderProduct.reviewFlag)}
+            onClick={() => reviewClickHandle(orderProduct)}
+            disabled={orderProduct.reviewFlag === 1 ? true : false}
+          >
+            {orderProduct.reviewFlag === 1 ? "등록완료" : "리뷰등록"}
           </button>
         ) : (
           ""

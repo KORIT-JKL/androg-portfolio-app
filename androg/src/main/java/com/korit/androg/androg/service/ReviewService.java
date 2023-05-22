@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
 import com.korit.androg.androg.dto.review.ReviewRespDto;
 import com.korit.androg.androg.dto.user.OrderProductsRespDto;
@@ -36,5 +37,13 @@ public class ReviewService {
 			reviewList.add(review.toDto());
 		});
 		return reviewList;
+	}
+	
+	public int reviewFlag(Map<String, Object> requestMap) {
+		return reviewRepository.reviewFlag(requestMap);
+	}
+	
+	public int reviewModify(ReviewModifyReqDto modifyReqDto) {
+		return reviewRepository.reviewModify(modifyReqDto);
 	}
 }

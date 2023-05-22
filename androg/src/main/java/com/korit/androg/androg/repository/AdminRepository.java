@@ -13,9 +13,16 @@ import com.korit.androg.androg.entity.Products;
 @Mapper
 public interface AdminRepository {
 	public List<getColorResDto> getColors();
+<<<<<<< HEAD
 	public void registerProductDetail(registerProductReqDto productReqDto);
 	public List<Products> getProducts(int categoryId);
 	public void productModify(modifyProductReqDto modifyProductReqDto);
 	public void productDelte(int productId);
 	public void modifySodlout(int productId, int soldoutFlag);
+=======
+	
+	public int popUpRegister (String content);
+	
+	
+>>>>>>> sung
 }

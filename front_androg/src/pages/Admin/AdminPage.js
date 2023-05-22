@@ -21,6 +21,7 @@ const AdmingPage = css`
   display: flex;
   justify-content: center;
 `;
+
 const AdminPage = () => {
   const [AdminMenuSelectIndex, setThisAdminMenuSelect] = useRecoilState(AdminMenuSelect);
   return (

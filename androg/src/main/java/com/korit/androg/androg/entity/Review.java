@@ -16,14 +16,17 @@ public class Review {
 	private int userId;
 	private int productId;
 	private String content;
-	
+	private String reviewDate;
 	private User user;
 	
 	public ReviewRespDto toDto() {
 		return ReviewRespDto.builder()
 							.productId(productId)
 							.userName(user.getName())
+							.userId(userId)
 							.content(content)
+							.reviewDate(reviewDate)
+							.reviewId(reviewId)
 							.build();
 	}
 }
