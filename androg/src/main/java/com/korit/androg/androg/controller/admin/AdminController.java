@@ -2,6 +2,7 @@ package com.korit.androg.androg.controller.admin;
 
 import java.util.Map;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,5 +63,18 @@ public class AdminController {
 	public ResponseEntity<?> popUpRegister(@RequestBody Map<String, Object> requestMap) {
 		String content = (String) requestMap.get("content");
 		return ResponseEntity.ok().body(adminService.popUpRegister(content));
+	}
+	
+//	리뷰
+	@GetMapping("/admin/reviews")
+	public ResponseEntity<?> getreviews() {
+//		System.out.println(adminService.getReviews());
+		return ResponseEntity.ok().body(adminService.getReviews());
+	
+	}
+	@DeleteMapping("admin/reviews/delete")
+	public ResponseEntity<?> deleteReviews(@RequestParam int reviewID) {
+		adminService.reviesDelete(reviewID);
+		return null;
 	}
 }

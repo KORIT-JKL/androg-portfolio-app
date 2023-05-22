@@ -87,9 +87,6 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
           </>
         ) : subHeaderIndex === 1 ? (
           <>
-            <li css={sublist} onClick={() => clickReviewRegister()}>
-              리뷰 등록
-            </li>
             <li css={sublist} onClick={() => clickReviewDelete()}>
               리뷰 삭제
             </li>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
+import com.korit.androg.androg.dto.admin.getReviewsRespDto;
 import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.repository.AdminRepository;
@@ -48,5 +49,16 @@ public class AdminService {
 	}
 	public int popUpRegister (String content) {
 		return adminRepository.popUpRegister(content);
+	}
+	
+//	리뷰
+	public List<getReviewsRespDto> getReviews() {
+		return adminRepository.getReviews();
+	}
+	
+	public void reviesDelete(int reviewsId) {
+		System.out.println(reviewsId);
+		adminRepository.delteReivews(reviewsId);
+		return;
 	}
 }

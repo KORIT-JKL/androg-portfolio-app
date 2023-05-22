@@ -28,7 +28,13 @@
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
 
-	
+	<resultMap type="com.korit.androg.androg.dto.admin.getReviewsRespDto" id="reviewMap">
+		<id property="reviewId" column="review_id"/>
+		<result property="name" column="name"/>
+		<result property="productName" column="product_name"/>
+		<result property="content" column="content"/>
+		<result property="date" column="review_date"/>
+	</resultMap>
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
 			color_id,
@@ -103,5 +109,22 @@
 		insert into popup_tb
 		values(0,#{content});
 	</insert>
-
+	<select id="getReviews" resultType="List" resultMap="reviewMap">
+		select
+			rt.review_id,
+		    ut.name,
+		    pt.product_name,
+		    rt.content,
+		    rt.review_date
+		FROM
+			review_tb rt
+		    left outer join user_tb ut on (ut.user_id = rt.user_id)
+		    left outer join product_tb pt on(pt.product_id = rt.product_id)
+		order by
+			rt.review_date desc;
+	</select>
+	<delete id="delteReivews" parameterType="Integer">
+		delete from review_tb
+		where review_id = #{reviewsId};
+	</delete>
 </mapper>
