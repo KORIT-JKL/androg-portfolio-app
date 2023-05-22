@@ -19,7 +19,7 @@ public class UserController {
 	
 	@GetMapping("/user/mypage/purchases")
 	public ResponseEntity<?> getOrderProducts(int userId){
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body(userService.getOrderProducts(userId));
 	}
 	
 	@DeleteMapping("/user/{userId}")

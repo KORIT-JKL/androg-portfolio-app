@@ -169,7 +169,7 @@ const Review = () => {
     },
     {
       onSuccess: (response) => {
-        reviewFlagUpdate.mutate();
+        // reviewFlagUpdate.mutate();
       },
     }
   );

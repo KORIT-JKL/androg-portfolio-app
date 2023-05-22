@@ -11,20 +11,21 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProducts {
-	private int orderId;
+public class OrderDetail {
+	private int orderDetailId;
 	private int countNumber;
 	private int productId;
-	private int reviewFlag;
 	private String sizeName;
 	
 	private User user;
 	private Products products;
 	private Color color;
+	private Order order;
 	
 	public OrderProductsRespDto toDto() {
+		System.out.println(orderDetailId);
 		return OrderProductsRespDto.builder()
-				.orderId(orderId)
+				.orderDetailId(orderDetailId)
 				.productId(productId)
 				.productName(products.getProductName())
 				.productImg(products.getProductImg())
@@ -33,7 +34,7 @@ public class OrderProducts {
 				.sizeName(sizeName)
 				.countNumber(countNumber)
 				.userName(user.getName())
-				.reviewFlag(reviewFlag)
+				.orderId(order.getOrderId())
 				.build();
 	}
 }

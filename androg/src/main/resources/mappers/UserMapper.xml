@@ -35,12 +35,17 @@
 		<association property="color" resultMap="colorMap"></association>
 	</resultMap>
 
-<resultMap type="com.korit.androg.androg.entity.OrderProducts" id="orderProductsMap">
+<resultMap type="com.korit.androg.androg.entity.Order" id="orderMap">
 	<id property="orderId" column="order_id"/>
+	<result property="userId" column="user_id"/>
+</resultMap>
+
+<resultMap type="com.korit.androg.androg.entity.OrderDetail" id="orderProductsMap">
+	<id property="orderDetailId" column="order_detail_id"/>
 	<result property="sizeName" column="size_name"/>
 	<result property="countNumber" column="count_number"/>
 	<result property="productId" column="product_id"/>
-	<result property="reviewFlag" column="review_flag"/>
+	<association property="order" resultMap="orderMap"></association>
 	<association property="user" resultMap="userMap"></association>
 	<association property="products" resultMap="productsMap"></association>
 	<association property="color" resultMap="colorMap"></association>
@@ -99,16 +104,16 @@ keyProperty="userId">
     	pt.product_img,
     
    	 	ct.color_name,
-    	ot.size_name,
-    	ot.order_id,
-    	ot.count_number,
-    	ot.product_id,
-    	ot.review_flag,
-    
+    	otb.size_name,
+    	otb.order_id,
+    	otb.count_number,
+    	otb.product_id,
+    	order_detail_id,
     	ut.name
 	from
-		order_tb ot
-	left outer join product_tb pt on(pt.product_id = ot.product_id)
+		order_detail_tb otb
+	left outer join product_tb pt on(pt.product_id = otb.product_id)
+    left outer join order_tb ot on (ot.order_id = otb.order_id)
 	left outer join user_tb ut on(ut.user_id = ot.user_id)
 	left outer join color_tb ct on(ct.color_id = pt.color_id)
 

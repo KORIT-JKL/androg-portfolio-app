@@ -10,7 +10,7 @@ import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
 import com.korit.androg.androg.dto.review.ReviewRespDto;
 import com.korit.androg.androg.dto.user.OrderProductsRespDto;
-import com.korit.androg.androg.entity.OrderProducts;
+import com.korit.androg.androg.entity.OrderDetail;
 import com.korit.androg.androg.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	
 	public OrderProductsRespDto getProduct(Map<String, Object> requestMap) {
-		OrderProducts orderProducts = reviewRepository.getProduct(requestMap);
+		OrderDetail orderProducts = reviewRepository.getProduct(requestMap);
 		
 		return orderProducts.toDto();
 	}

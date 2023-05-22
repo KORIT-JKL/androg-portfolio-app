@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korit.androg.androg.entity.Authority;
-import com.korit.androg.androg.entity.OrderProducts;
+import com.korit.androg.androg.entity.OrderDetail;
 import com.korit.androg.androg.entity.User;
 
 @Mapper
@@ -14,7 +14,7 @@ public interface UserRepository {
 	public int saveUser(User user);
 	public int saveAuthority(Authority authority);
 	
-	public List<OrderProducts>getOrderProducts(int userId);
+	public List<OrderDetail>getOrderProducts(int userId);
 	
 	public int deleteUser(int userId);
 }
