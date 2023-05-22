@@ -21,7 +21,6 @@ public class AdminService {
 	public List<getColorResDto> getColors() {
 		return adminRepository.getColors();
 	}
-<<<<<<< HEAD
 	public void registerProductDetails(registerProductReqDto productReqDto) {
 		adminRepository.registerProductDetail(productReqDto);
 		return ;
@@ -46,10 +45,8 @@ public class AdminService {
 		int soldoutFlag = Integer.parseInt((String)requestMap.get("value"));
 		adminRepository.modifySodlout(productId,soldoutFlag);
 		return ;
-=======
 	
 	public int popUpRegister (String content) {
 		return adminRepository.popUpRegister(content);
->>>>>>> sung
 	}
 }

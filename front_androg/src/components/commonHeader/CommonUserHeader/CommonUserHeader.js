@@ -101,11 +101,7 @@ const CommonUserHeader = () => {
           Setgetauthority(false);
         }
       },
-<<<<<<< HEAD
       enabled: getauthority && !!localStorage.getItem("accessToken"),
-=======
-      enabled: authState,
->>>>>>> sung
     }
   );
 

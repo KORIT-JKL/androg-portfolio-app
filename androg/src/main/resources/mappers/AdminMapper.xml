@@ -36,7 +36,7 @@
 		FROM 
 			androg.color_tb;
 	</select>
-<<<<<<< HEAD
+
 	<insert id="registerProductDetail">
 		<if test="categoryId == 1 || categoryId == 2 || categoryId == 3 || categoryId == 4" >
 			insert into product_tb
@@ -98,11 +98,10 @@
 		where
 			product_id = #{productId};
 	</update>
-=======
 	
 	<insert id="popUpRegister" >
 		insert into popup_tb
 		values(0,#{content});
 	</insert>
->>>>>>> sung
+
 </mapper>
