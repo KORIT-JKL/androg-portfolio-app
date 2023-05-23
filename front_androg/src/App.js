@@ -61,7 +61,7 @@ function App() {
         <Route path="/products/payment" element={<Payment />} />
 
         {/* 리뷰 페이지 */}
-        <Route path="/product/:productId/review" element={<Review />} />
+        <Route path="/product/:orderDetailId/review" element={<Review />} />
 
         {/* 관리자페이지 */}
         <Route path="/admin" element={<AuthRoute path={"/admin"} element={<AdminPage />} />} />

@@ -40,6 +40,13 @@
 	<result property="userId" column="user_id"/>
 </resultMap>
 
+<resultMap type="com.korit.androg.androg.entity.Review" id="reviewMap">
+	<id property="reviewId" column="review_id"/>
+	<result property="orderDetailId" column="order_detail_id"/>
+	<result property="content" column="content"/>
+	<result property="reviewDate" column="review_date"/>
+</resultMap>
+
 <resultMap type="com.korit.androg.androg.entity.OrderDetail" id="orderProductsMap">
 	<id property="orderDetailId" column="order_detail_id"/>
 	<result property="sizeName" column="size_name"/>
@@ -49,6 +56,7 @@
 	<association property="user" resultMap="userMap"></association>
 	<association property="products" resultMap="productsMap"></association>
 	<association property="color" resultMap="colorMap"></association>
+	<association property="review" resultMap="reviewMap"></association>
 </resultMap>
 
 
@@ -98,8 +106,8 @@ keyProperty="userId">
 </insert>
 
 <select id="getOrderProducts" parameterType="Integer" resultMap="orderProductsMap">
-	select
-		pt.product_name,
+SELECT
+	pt.product_name,
     	pt.product_price,
     	pt.product_img,
     
@@ -108,17 +116,21 @@ keyProperty="userId">
     	otb.order_id,
     	otb.count_number,
     	otb.product_id,
-    	order_detail_id,
+        otb.order_detail_id,
+        
+        rt.review_id,
     	ut.name
-	from
-		order_detail_tb otb
-	left outer join product_tb pt on(pt.product_id = otb.product_id)
-    left outer join order_tb ot on (ot.order_id = otb.order_id)
+FROM
+	order_detail_tb otb
+    left outer join product_tb pt on(pt.product_id = otb.product_id)
+    left outer join order_tb ot on(ot.order_id = otb.order_id)
 	left outer join user_tb ut on(ut.user_id = ot.user_id)
 	left outer join color_tb ct on(ct.color_id = pt.color_id)
-
-	where
- 		ot.user_id = #{userId}
+	left outer join review_tb rt on(rt.order_detail_id = otb.order_detail_id)
+where
+	ot.user_id = #{userId}
+	and (rt.review_id is null  or rt.review_id is not null)
+	
 		
 </select>
 

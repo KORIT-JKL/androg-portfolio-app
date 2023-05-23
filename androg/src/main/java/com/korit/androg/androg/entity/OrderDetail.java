@@ -21,9 +21,8 @@ public class OrderDetail {
 	private Products products;
 	private Color color;
 	private Order order;
-	
+	private Review review; 	
 	public OrderProductsRespDto toDto() {
-		System.out.println(orderDetailId);
 		return OrderProductsRespDto.builder()
 				.orderDetailId(orderDetailId)
 				.productId(productId)
@@ -35,6 +34,7 @@ public class OrderDetail {
 				.countNumber(countNumber)
 				.userName(user.getName())
 				.orderId(order.getOrderId())
+				.reviewId(review.getReviewId())
 				.build();
 	}
 }

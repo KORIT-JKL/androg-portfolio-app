@@ -5,6 +5,8 @@ import OrderProducts from "../../components/Products/OrderProducts";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { productInfoState } from "../../atoms/ReviewAtoms/ReviewAtom";
 
 const container = css`
   margin: 50px;
@@ -72,7 +74,8 @@ const reviewButton = css`
 const Review = () => {
   const [userInfoRefresh, setUserInfoRefresh] = useState(true);
   const [content, setContent] = useState("");
-  const { productId } = useParams();
+  const { orderDetailId } = useParams();
+  const [reviewInfo, setReviewInfo] = useRecoilState(productInfoState);
   const navigate = useNavigate();
   let userId = 0;
   const principal = useQuery(
@@ -101,16 +104,14 @@ const Review = () => {
       const data = {
         params: {
           userId: principal.data.data.userId,
+          productId: reviewInfo,
         },
         headers: {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
 
-      const response = await axios.get(
-        `http://localhost:8080/product/${productId}/reviewproduct`,
-        data
-      );
+      const response = await axios.get(`http://localhost:8080/product/${orderDetailId}/reviewproduct`, data);
       return response;
     },
     {
@@ -121,37 +122,10 @@ const Review = () => {
     }
   );
 
-  const reviewFlagUpdate = useMutation(
-    async () => {
-      const data = {
-        userId: principal.data.data.userId,
-        productId: parseInt(productId),
-      };
-      const option = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-      };
-      const response = await axios.put(
-        "http://localhost:8080/product/review/reviewflag",
-        data,
-        option
-      );
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        console.log(response.data);
-      },
-    }
-  );
-
   const reviewRegister = useMutation(
     async () => {
       const data = {
-        userId: principal.data.data.userId,
-        productId: parseInt(productId),
+        orderDetailId: orderDetailId,
         content: content,
       };
       const option = {
@@ -160,11 +134,7 @@ const Review = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post(
-        "http://localhost:8080/product/review/register",
-        data,
-        option
-      );
+      const response = await axios.post("http://localhost:8080/product/review/register", data, option);
       return response;
     },
     {
@@ -188,23 +158,14 @@ const Review = () => {
         <h2 css={Title}>상품 후기 작성</h2>
         <div css={userInfo}>작성자</div>
         <div css={userInfo}>
-          {principal.data !== undefined
-            ? principal.data.data.name + "(" + principal.data.data.email + ")"
-            : ""}
+          {principal.data !== undefined ? principal.data.data.name + "(" + principal.data.data.email + ")" : ""}
         </div>
       </header>
       <main>
         <div css={productBox}>
-          <OrderProducts
-            orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""}
-            isOpen={false}
-          />
+          <OrderProducts orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""} isOpen={false} />
         </div>
-        <textarea
-          css={textArea}
-          placeholder="내용을 입력하세요"
-          onChange={onChangeHandle}
-        ></textarea>
+        <textarea css={textArea} placeholder="내용을 입력하세요" onChange={onChangeHandle}></textarea>
       </main>
       <footer css={footer}>
         <button
