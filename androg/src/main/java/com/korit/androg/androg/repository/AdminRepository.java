@@ -1,9 +1,11 @@
 package com.korit.androg.androg.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
@@ -19,7 +21,10 @@ public interface AdminRepository {
 	public void productModify(modifyProductReqDto modifyProductReqDto);
 	public void productDelte(int productId);
 	public void modifySodlout(int productId, int soldoutFlag);
+//popUp
+	public List<PopUpRespDto> getPopUpList();
 	public int popUpRegister (String content);
+	public int popUpModify(String content);
 //	리뷰
 	public List<getReviewsRespDto> getReviews();
 	public void delteReivews(int reviewsId);

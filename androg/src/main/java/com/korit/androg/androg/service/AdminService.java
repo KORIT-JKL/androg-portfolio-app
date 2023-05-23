@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
@@ -47,9 +48,7 @@ public class AdminService {
 		adminRepository.modifySodlout(productId,soldoutFlag);
 		return ;
 	}
-	public int popUpRegister (String content) {
-		return adminRepository.popUpRegister(content);
-	}
+	
 	
 //	리뷰
 	public List<getReviewsRespDto> getReviews() {
@@ -60,5 +59,16 @@ public class AdminService {
 		System.out.println(reviewsId);
 		adminRepository.delteReivews(reviewsId);
 		return;
+	}
+	
+//	popUp
+	public int popUpRegister (String content) {
+		return adminRepository.popUpRegister(content);
+	}
+	public List<PopUpRespDto> getPopUpList(){
+		return adminRepository.getPopUpList();
+	}
+	public int popUpModify(String content) {
+		return adminRepository.popUpModify(content);
 	}
 }

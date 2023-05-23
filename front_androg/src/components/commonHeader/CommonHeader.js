@@ -21,6 +21,7 @@ const CommonHeader = () => {
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
+
   const authority = 0;
 
   useEffect(() => {

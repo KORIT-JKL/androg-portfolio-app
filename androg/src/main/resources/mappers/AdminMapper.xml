@@ -35,6 +35,12 @@
 		<result property="content" column="content"/>
 		<result property="date" column="review_date"/>
 	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.dto.admin.PopUpRespDto" id="popUpMap">
+		<id property="popUpId" column="popup_id"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
 			color_id,
@@ -105,10 +111,26 @@
 			product_id = #{productId};
 	</update>
 	
+	
+	
 	<insert id="popUpRegister" >
 		insert into popup_tb
 		values(0,#{content});
 	</insert>
+	<select id="getPopUpList" resultMap="popUpMap">
+		select
+			*
+		from popup_tb;
+	</select>
+	
+	<update id="popUpModify" >
+		update popup_tb
+			set content = #{content}
+		where
+			popup_id = 1
+	
+	</update>
+	
 	<select id="getReviews" resultType="List" resultMap="reviewMap">
 		select
 			rt.review_id,

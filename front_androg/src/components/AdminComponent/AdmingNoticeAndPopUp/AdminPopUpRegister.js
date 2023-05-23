@@ -51,6 +51,29 @@ const popUpButton = css`
   }
 `;
 
+const tableStyle = css`
+  border-collapse: collapse;
+  font-size: 14px;
+  width: 100%;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    &:first-of-type {
+      font-weight: bold;
+      line-height: 16.5px;
+    }
+    &:nth-of-type(2n) {
+      color: #757575;
+    }
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: normal;
+  }
+`;
+
 const AdminPopUpRegister = () => {
   const [popUpInput, setPopUpInput] = useState("");
   const [popUpList, setPopUpList] = useState([]);
@@ -79,15 +102,40 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/admin/pop-up", option);
+      const response = await axios.get("http://localhost:8080/pop-up", option);
       return response;
     },
     {
       onSuccess: (response) => {
         setPopUpList(response.data);
+        console.log(popUpList);
       },
     }
   );
+
+  const popUpmodify = useMutation(
+    async () => {
+      const data = {
+        content: popUpInput,
+      };
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.put("http://localhost:8080/admin/pop-up/modify", data, option);
+      return response;
+    },
+    {
+      onSuccess: () => {
+        getPopUp.refetch();
+      },
+    }
+  );
+
+  if (getPopUp.isLoading) {
+    return <></>;
+  }
 
   return (
     <div css={mainContainer}>
@@ -97,13 +145,55 @@ const AdminPopUpRegister = () => {
       <main css={main}>
         <AddressInput onChange={onChangeHandle} value={popUpInput} placeholder={"등록할 팝업을 입력하세요"} />
         <div>
-          <button css={popUpButton} onClick={() => popUpRegister.mutate()}>
-            등록
-          </button>
+          {popUpList.length > 0 ? (
+            <button
+              css={popUpButton}
+              onClick={() => {
+                popUpmodify.mutate();
+                setPopUpInput("");
+              }}
+            >
+              수정
+            </button>
+          ) : (
+            <button
+              css={popUpButton}
+              onClick={() => {
+                popUpRegister.mutate();
+                setPopUpInput("");
+              }}
+            >
+              등록
+            </button>
+          )}
         </div>
       </main>
       <footer css={footer}>
         <h2>팝업목록</h2>
+        <table css={tableStyle}>
+          <thead>
+            <tr>
+              <th>번호</th>
+              <th>내용</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            {popUpList.length > 0
+              ? popUpList.map((popUp, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{popUp.popUpId}</td>
+                      <td>{popUp.content}</td>
+                      <td>
+                        <button>삭제</button>
+                      </td>
+                    </tr>
+                  );
+                })
+              : ""}
+          </tbody>
+        </table>
       </footer>
     </div>
   );
