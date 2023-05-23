@@ -9,3 +9,10 @@ export const AdminPopUp = atom({
   key: "AdminPopUp",
   default: [],
 });
+export const AdminNotice = atom({
+  key: "AdminNotice",
+  default: {
+    subject: "",
+    content: "",
+  },
+});

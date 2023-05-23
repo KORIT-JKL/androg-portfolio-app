@@ -12,6 +12,7 @@ import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
 import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
+import com.korit.androg.androg.entity.Notice;
 import com.korit.androg.androg.repository.AdminRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,13 @@ public class AdminService {
 		System.out.println(reviewsId);
 		adminRepository.delteReivews(reviewsId);
 		return;
+	}
+//notice
+	public int noticeRegister(Map<String, Object>requestMap) {
+		return adminRepository.noticeRegister(requestMap);
+	}
+	public Notice getNotice() {
+		return adminRepository.getNotice();
 	}
 	
 //	popUp

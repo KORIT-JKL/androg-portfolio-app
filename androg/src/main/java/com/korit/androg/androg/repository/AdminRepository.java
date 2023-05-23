@@ -11,6 +11,7 @@ import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
 import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
+import com.korit.androg.androg.entity.Notice;
 import com.korit.androg.androg.entity.Products;
 
 @Mapper
@@ -25,6 +26,9 @@ public interface AdminRepository {
 	public List<PopUpRespDto> getPopUpList();
 	public int popUpRegister (String content);
 	public int popUpModify(String content);
+//notice
+	public int noticeRegister(Map<String, Object> requestMap);
+	public Notice getNotice();
 //	리뷰
 	public List<getReviewsRespDto> getReviews();
 	public void delteReivews(int reviewsId);

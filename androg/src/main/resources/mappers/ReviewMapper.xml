@@ -110,19 +110,19 @@ and
 
 <select id="getReviews" parameterType="Integer" resultMap="reviewMap">
 select 
- rt.review_id,
- rt.content,
- rt.review_date,
- ut.user_id,
- ut.name,
- pt.product_id,
- odt.order_detail_id
+ 	rt.review_id,
+ 	rt.content,
+ 	rt.review_date,
+ 	ut.user_id,
+ 	ut.name,
+ 	pt.product_id,
+ 	odt.order_detail_id
 from
-	product_tb pt
-left outer join order_detail_tb  odt on(odt.product_id = pt.product_id)
-left outer join review_tb rt on(rt.order_detail_id = odt.order_detail_id)
-left outer join order_tb ot on(ot.order_id = odt.order_id)
-left outer join user_tb ut on(ut.user_id = ot.user_id)
+		product_tb pt
+	left outer join order_detail_tb  odt on(odt.product_id = pt.product_id)
+	left outer join review_tb rt on(rt.order_detail_id = odt.order_detail_id)
+	left outer join order_tb ot on(ot.order_id = odt.order_id)
+	left outer join user_tb ut on(ut.user_id = ot.user_id)
 where
 	pt.product_id = #{productId}
 and rt.review_id is not null
