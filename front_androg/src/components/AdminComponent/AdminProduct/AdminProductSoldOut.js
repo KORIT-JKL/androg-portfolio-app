@@ -82,7 +82,6 @@ const AdminProductSoldOut = () => {
     {
       enabled: selectCategoryId !== 0 && refresh,
       onSuccess: (response) => {
-        console.log(response);
         setThisProducts(response.data);
         setRefresh(false);
       },
@@ -133,7 +132,6 @@ const AdminProductSoldOut = () => {
           products.map((product) => (
             <div css={productTable}>
               <div css={textContainer}>
-                {/* <div css={productIdText}>{product.productId}</div> */}
                 <div css={productNameText}>{product.productName}</div>
               </div>
 

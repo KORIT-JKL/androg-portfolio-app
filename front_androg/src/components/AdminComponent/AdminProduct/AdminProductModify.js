@@ -176,7 +176,6 @@ const AdminProductModify = () => {
     {
       enabled: selectCategoryId !== 0 && refresh,
       onSuccess: (response) => {
-        console.log(response);
         setThisProducts(response.data);
         setRefresh(false);
       },
@@ -211,7 +210,6 @@ const AdminProductModify = () => {
       productImg: product.productImg,
     });
     setRefresh(true);
-    console.log(productsDetails);
   };
 
   const setcategoryIdClick = (e) => {
@@ -233,7 +231,6 @@ const AdminProductModify = () => {
   };
   const productImgUrlInputHandle = (e) => {
     setProductsDetatils({ ...productsDetails, productImg: e.target.value });
-    console.log(productsDetails);
   };
   const modifyCancel = () => {
     setProductsDetatils({

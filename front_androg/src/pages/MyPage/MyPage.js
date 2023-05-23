@@ -186,13 +186,6 @@ const MyPage = () => {
     admintest.mutate();
   };
 
-  // useEffect(() => {
-  //   if (!infoRefresh) {
-  //     // console.log(infoRefresh);
-  //     setInfoRefresh(true);
-  //   }
-  // }, []);
-
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();

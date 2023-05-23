@@ -118,11 +118,8 @@ const AdminProductRegister = () => {
   };
   const productImgUrlInputHandle = (e) => {
     setProductsDetatils({ ...productsDetails, productImg: e.target.value });
-    console.log(productsDetails);
   };
-  const registerClickHandle = () => {
-    console.log(productsDetails);
-  };
+  const registerClickHandle = () => {};
   const registerProductsDetails = async () => {
     const option = {
       headers: {

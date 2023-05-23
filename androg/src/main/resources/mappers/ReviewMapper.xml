@@ -127,5 +127,8 @@ from review_tb rt
 		review_id = #{reviewId}
 
 </update>
-
+<insert id="adminreview_tb">
+	insert into adminreview_tb
+	values(0, #{reviewId}, "", #{productId},0)
+</insert>
 </mapper>

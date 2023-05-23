@@ -7,32 +7,40 @@ import { useQuery } from "react-query";
 const Cotainer = css`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin: auto;
   height: 100%;
-  width: 100%;
+  width: 90%;
   border: 1px solid black;
 `;
+
 const reviewContainer = css`
   display: flex;
-  width: 1500px;
+  width: 100%;
   height: 40px;
   border: 1px solid #dbdbdb;
 `;
 const reviewId = css`
-  width: 75px;
+  width: 10%;
+  text-align: center;
 `;
 const reviewName = css`
-  width: 100px;
+  width: 10%;
+  text-align: center;
 `;
 const reviewProductName = css`
-  width: 400px;
+  width: 20%;
+  text-align: center;
 `;
 const reviewContent = css`
-  width: 700px;
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
+  text-align: center;
 `;
 const reviewDate = css`
-  width: 150px;
+  width: 10%;
+  text-align: center;
 `;
 const reviewDelteButton = css`
   width: 25px;
@@ -63,7 +71,6 @@ const AdminReviewDelete = () => {
     {
       onSuccess: (response) => {
         setReviews(response.data);
-        console.log(response);
         setRefresh(false);
       },
     }

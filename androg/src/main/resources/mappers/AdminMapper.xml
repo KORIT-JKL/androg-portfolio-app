@@ -112,14 +112,16 @@
 	<select id="getReviews" resultType="List" resultMap="reviewMap">
 		select
 			rt.review_id,
-		    ut.name,
 		    pt.product_name,
+			ut.name,
 		    rt.content,
 		    rt.review_date
 		FROM
 			review_tb rt
-		    left outer join user_tb ut on (ut.user_id = rt.user_id)
-		    left outer join product_tb pt on(pt.product_id = rt.product_id)
+		    left outer join order_detail_tb odt on(odt.order_detail_id = rt.order_detail_id)
+            left outer join product_tb pt on (odt.product_id = pt.product_id)
+            left outer join order_tb ot on (ot.order_id = odt.order_id)
+            left outer join user_tb ut on(ut.user_id = ot.user_id)
 		order by
 			rt.review_date desc;
 	</select>

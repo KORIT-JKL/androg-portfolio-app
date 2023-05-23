@@ -246,16 +246,12 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      const response = axios.post(
-        "http://localhost:8080/cart/addition",
-        JSON.stringify(searchParams),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("accessToken"),
-          },
-        }
-      );
+      const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      });
       return response;
     } catch {}
   };
@@ -268,7 +264,6 @@ const ProductDetails = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
         setReviews([...response.data]);
       },
       enabled: refresh,
@@ -297,16 +292,12 @@ const ProductDetails = () => {
   };
 
   const directBuy = async (product) => {
-    const response = axios.post(
-      "http://localhost:8080/products/directBuy",
-      JSON.stringify(searchParams),
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      }
-    );
+    const response = axios.post("http://localhost:8080/products/directBuy", JSON.stringify(searchParams), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("accessToken"),
+      },
+    });
 
     navigate(`/products/payment`);
     setThiRefresh(true);

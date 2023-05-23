@@ -53,16 +53,18 @@ const SearchProducts = () => {
   const lastProductRef = useRef();
 
   useEffect(() => {
-    const observerService = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setThiRefresh(true);
-        }
-      });
-    };
-    const observer = new IntersectionObserver(observerService, { threshold: 1 });
-    observer.observe(lastProductRef.current);
-  }, [setThiRefresh]);
+    if (!searchProducts.isLoading) {
+      const observerService = (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setThiRefresh(true);
+          }
+        });
+      };
+      const observer = new IntersectionObserver(observerService, { threshold: 1 });
+      observer.observe(lastProductRef.current);
+    }
+  }, [refresh]);
 
   const option = {
     params: {
@@ -79,6 +81,7 @@ const SearchProducts = () => {
     },
     {
       onSuccess: (response) => {
+        console.log("실행1");
         const totalCount = response.data.productTotalCount;
         setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
         setThisProducts([...products, ...response.data.productList]);
@@ -100,6 +103,7 @@ const SearchProducts = () => {
   if (searchProducts.isLoading) {
     return <></>;
   }
+
   return (
     <div>
       <CommonHeader />
