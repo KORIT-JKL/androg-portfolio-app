@@ -16,7 +16,10 @@
 	</foreach>
 </insert>
 
-
+<insert id="saveAddress" parameterType="Integer">
+	insert into arrival_tb
+	values (0, #{addressId})
+</insert>
 
 
 </mapper>

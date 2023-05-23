@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.order.OrderCompleteReqDto;
-import com.korit.androg.androg.dto.order.SaveAddressReqDto;
 import com.korit.androg.androg.entity.Order;
 import com.korit.androg.androg.repository.OrderRepository;
 
@@ -29,11 +28,7 @@ public class OrderService {
 		return orderRepository.completeOrder(requestMap);
 	}
 	
-	public int saveAddress(SaveAddressReqDto saveAddressReqDto) {
-		Map<String, Object> requestMap = new HashMap<>();
-		requestMap.put("arrivalId", saveAddressReqDto.getAddressId());
-		requestMap.put("addressId", saveAddressReqDto.getAddressId());
-		requestMap.put("phone", saveAddressReqDto.getPhone());
-		return orderRepository.saveAddress(requestMap);
+	public int saveAddress(int addressId) {
+		return orderRepository.saveAddress(addressId);
 	}
 }	
