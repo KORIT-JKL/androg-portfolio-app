@@ -5,6 +5,9 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { popUpState, setRefresh } from "../../../atoms/Common/CommonAtoms";
 import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
+import { AdminPopUp } from "../../../atoms/Admin/AdminAtoms";
+import axios from "axios";
+import { useQuery } from "react-query";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -105,6 +108,26 @@ const CommonUserSubHeader = ({ sbheader }) => {
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
   const [isVisible, setIsVisible] = useRecoilState(popUpState);
+  const [popUpList, setPopUpList] = useRecoilState(AdminPopUp);
+
+  const getPopUp = useQuery(
+    ["userPopUpList"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get("http://localhost:8080/pop-up", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        setPopUpList(response.data);
+      },
+      enabled: isVisible,
+    }
+  );
 
   const navigate = useNavigate();
   const onClickNotice = () => {
@@ -181,12 +204,16 @@ const CommonUserSubHeader = ({ sbheader }) => {
           </ul>
         )}
       </div>
-      <div css={[popup, isVisible ? null : hiddenStyles]}>
-        <h2 css={popupContent}>팝업</h2>
-        <button css={popupButton} onClick={onClickPopCloseHandle}>
-          닫기
-        </button>
-      </div>
+      {popUpList.length > 0 ? (
+        <div css={[popup, isVisible ? null : hiddenStyles]}>
+          <h2 css={popupContent}>{popUpList[0].content}</h2>
+          <button css={popupButton} onClick={onClickPopCloseHandle}>
+            닫기
+          </button>
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

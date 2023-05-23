@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { AdminPopUp } from "../../../atoms/Admin/AdminAtoms";
 
 const mainContainer = css`
   display: flex;
@@ -76,7 +78,7 @@ const tableStyle = css`
 
 const AdminPopUpRegister = () => {
   const [popUpInput, setPopUpInput] = useState("");
-  const [popUpList, setPopUpList] = useState([]);
+  const [popUpList, setPopUpList] = useRecoilState(AdminPopUp);
   const onChangeHandle = (e) => {
     setPopUpInput(e.target.value);
   };
