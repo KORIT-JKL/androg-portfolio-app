@@ -10,6 +10,7 @@ import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
+import com.korit.androg.androg.dto.admin.getReviewsReviewRespDto;
 import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.repository.AdminRepository;
@@ -59,6 +60,12 @@ public class AdminService {
 		System.out.println(reviewsId);
 		adminRepository.delteReivews(reviewsId);
 		return;
+	}
+	public List<getReviewsReviewRespDto> getReivewsReview(int answer) {
+		if(answer == 0) {
+			return adminRepository.getReviewsYesReview();
+		}
+		return adminRepository.getReviewsNoReview();
 	}
 	
 //	popUp

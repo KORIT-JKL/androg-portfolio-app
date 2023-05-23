@@ -1,6 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import axios from "axios";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 const cotainer = css`
   display: flex;
   flex-direction: column;
@@ -60,14 +62,40 @@ const reviewDate = css`
 `;
 const AdminReviewReview = () => {
   const [reviewTextSelect, SetReviewTextSelect] = useState(0);
-  console.log(reviewTextSelect);
+  const [refresh, setRefresh] = useState(true);
+  const option = {
+    headers: {
+      Authorization: `${localStorage.getItem("accessToken")}`,
+    },
+    params: {
+      answer: reviewTextSelect,
+    },
+  };
+  const getReviews = useQuery(
+    ["getReviews"],
+    async () => {
+      const response = await axios.get("http://localhost:8080/admin/reviews/review", option);
+      return response;
+    },
+    {
+      enabled: refresh,
+      onSuccess: (response) => {
+        setRefresh(false);
+        console.log(response);
+      },
+    }
+  );
+  const reviewButtonClick = (e) => {
+    SetReviewTextSelect(e);
+    setRefresh(true);
+  };
   return (
     <div css={cotainer}>
       <div css={reviewReviewContainer}>
-        <button css={reveiwSelectButton} onClick={() => SetReviewTextSelect(0)}>
+        <button css={reveiwSelectButton} onClick={() => reviewButtonClick(0)}>
           답변
         </button>
-        <button css={reveiwSelectButton} onClick={() => SetReviewTextSelect(1)}>
+        <button css={reveiwSelectButton} onClick={() => reviewButtonClick(1)}>
           미답변
         </button>
       </div>

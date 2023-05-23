@@ -151,4 +151,38 @@
 		delete from review_tb
 		where review_id = #{reviewsId};
 	</delete>
+	<select id="getReviewsYesReview">
+		SELECT 
+		    rt.review_id,
+		    rt.content,
+		    ut.name,
+		    pt.product_name,
+		    rt.review_date
+		FROM
+			review_tb rt
+		    left outer join adminreview_tb art on(art.review_id = rt.review_id)
+		    left outer join order_detail_tb odt on(odt.order_detail_id = rt.order_detail_id)
+		    left outer join order_tb ot on(ot.order_id = odt.order_id)
+		    left outer join user_tb ut on (ut.user_id = ot.user_id)
+		    left outer join product_tb pt on(pt.product_id = odt.product_id)
+		where
+			art.adminreview_id is not null
+	</select>
+	<select id="getReviewsNoReview">
+		SELECT 
+		    rt.review_id,
+		    rt.content,
+		    ut.name,
+		    pt.product_name,
+		    rt.review_date
+		FROM
+			review_tb rt
+		    left outer join adminreview_tb art on(art.review_id = rt.review_id)
+		    left outer join order_detail_tb odt on(odt.order_detail_id = rt.order_detail_id)
+		    left outer join order_tb ot on(ot.order_id = odt.order_id)
+		    left outer join user_tb ut on (ut.user_id = ot.user_id)
+		    left outer join product_tb pt on(pt.product_id = odt.product_id)
+		where
+			art.adminreview_id is null
+	</select>
 </mapper>

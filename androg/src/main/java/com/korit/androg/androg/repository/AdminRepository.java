@@ -9,6 +9,7 @@ import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.dto.admin.getColorResDto;
 import com.korit.androg.androg.dto.admin.getProductRespDto;
 import com.korit.androg.androg.dto.admin.getReviewsRespDto;
+import com.korit.androg.androg.dto.admin.getReviewsReviewRespDto;
 import com.korit.androg.androg.dto.admin.modifyProductReqDto;
 import com.korit.androg.androg.dto.admin.registerProductReqDto;
 import com.korit.androg.androg.entity.Products;
@@ -28,4 +29,6 @@ public interface AdminRepository {
 //	리뷰
 	public List<getReviewsRespDto> getReviews();
 	public void delteReivews(int reviewsId);
+	public List<getReviewsReviewRespDto> getReviewsNoReview();
+	public List<getReviewsReviewRespDto> getReviewsYesReview();
 }

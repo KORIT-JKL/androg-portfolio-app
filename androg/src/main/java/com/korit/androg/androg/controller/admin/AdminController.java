@@ -83,4 +83,8 @@ public class AdminController {
 		adminService.reviesDelete(reviewID);
 		return null;
 	}
+	@GetMapping("admin/reviews/review")
+	public ResponseEntity<?> getReviewsReview(@RequestParam int answer) {
+		return ResponseEntity.ok().body(adminService.getReivewsReview(answer));
+	}
 }
