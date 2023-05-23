@@ -31,4 +31,5 @@ public interface AdminRepository {
 	public void delteReivews(int reviewsId);
 	public List<getReviewsReviewRespDto> getReviewsNoReview();
 	public List<getReviewsReviewRespDto> getReviewsYesReview();
+	public void reviewReviewRegister(int reviewId, String content);
 }

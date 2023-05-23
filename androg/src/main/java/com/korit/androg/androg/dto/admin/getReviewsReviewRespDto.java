@@ -17,4 +17,5 @@ public class getReviewsReviewRespDto {
 	private String productName;
 	private String content;
 	private Date date;
+	private String reviewContent;
 }

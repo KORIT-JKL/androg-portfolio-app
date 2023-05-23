@@ -71,6 +71,7 @@ const registerButton = css`
   border: 1px solid black;
   border-radius: 7px;
   margin: 10px;
+  cursor: pointer;
   &:hover {
     background-color: #dbdbdb;
   }

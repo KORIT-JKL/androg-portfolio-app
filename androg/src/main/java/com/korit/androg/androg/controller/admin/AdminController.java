@@ -85,6 +85,14 @@ public class AdminController {
 	}
 	@GetMapping("admin/reviews/review")
 	public ResponseEntity<?> getReviewsReview(@RequestParam int answer) {
+		System.out.println(adminService.getReivewsReview(answer));
 		return ResponseEntity.ok().body(adminService.getReivewsReview(answer));
+	}
+	@PostMapping("/admin/reviews/review/register")
+	public ResponseEntity<?> reviewsReviewRegister(@RequestParam Map<String, Object> requestmaMap) {
+		int reviewId = Integer.parseInt((String)requestmaMap.get("reviewId")) ;
+		String content = (String)requestmaMap.get("content") ;
+		adminService.reviewReviewRegister(reviewId, content);
+		return null;
 	}
 }

@@ -47,6 +47,7 @@ const reviewDelteButton = css`
   height: 25px;
   background-color: white;
   border-radius: 10px;
+  cursor: pointer;
   &:hover {
     background-color: #dbdbdb;
   }

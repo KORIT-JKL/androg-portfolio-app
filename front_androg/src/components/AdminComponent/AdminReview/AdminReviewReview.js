@@ -27,6 +27,7 @@ const reveiwSelectButton = css`
   border-radius: 15px;
   background-color: white;
   margin: 0px 20px;
+  cursor: pointer;
   &:hover {
     background-color: #dbdbdb;
   }
@@ -34,88 +35,307 @@ const reveiwSelectButton = css`
     background-color: #fafafa;
   }
 `;
-const reviewContainer = css`
+const reviewTitleContainer = css`
   display: flex;
   width: 100%;
   height: 40px;
   border: 1px solid black;
 `;
 
-const reviewName = css`
+const reviewNameTitle = css`
   text-align: center;
   width: 15%;
 `;
-const reviewProductName = css`
+const reviewProductNameTitle = css`
   text-align: center;
   width: 15%;
 `;
-const reviewContent = css`
+const reviewContentTitle = css`
   text-align: center;
   width: 55%;
-  display: flex;
-  flex-wrap: wrap;
   text-align: center;
 `;
 const reviewDate = css`
   text-align: center;
   width: 15%;
 `;
+const reviewContainer = css`
+  display: flex;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #dbdbdb;
+`;
+const reviewName = css`
+  width: 15%;
+  text-align: center;
+`;
+const reviewProductName = css`
+  width: 15%;
+  text-align: center;
+`;
+const reviewContent = css`
+  width: 55%;
+  text-align: center;
+`;
+const inputButton = css`
+  text-align: center;
+  width: 10%;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  &:hover {
+    background-color: #dbdbdb;
+  }
+  &:active {
+    background-color: #fafafa;
+  }
+`;
+const inputButtonTitle = css`
+  text-align: center;
+  width: 10%;
+`;
+const adminReviewModalContainer = css`
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #00000099;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const adminReviewModal = css`
+  height: 70%;
+  width: 40%;
+  background-color: white;
+`;
+const modalTitle = css`
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dbdbdb;
+`;
+const modalname = css`
+  width: 100%;
+  height: 40px;
+  font-size: 25px;
+  text-align: center;
+`;
+const modalProductName = css`
+  width: 100%;
+  height: 40px;
+  font-size: 25px;
+  text-align: center;
+`;
+const modalContent = css`
+  width: 100%;
+  height: 40px;
+  font-size: 15px;
+  text-align: center;
+`;
+
+const modalbody = css`
+  display: flex;
+  width: 100%;
+  height: 60%;
+  border-bottom: 1px solid #dbdbdb;
+`;
+
+const modalreviewContent = css`
+  height: 100%;
+  width: 100%;
+  font-size: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  border: none;
+`;
+const modalFooter = css`
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  width: 100%;
+  height: 20%;
+`;
+const reviewbutton = css`
+  margin: 10px 20px;
+  height: 100px;
+  width: 200px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 25px;
+  &:hover {
+    background-color: #dbdbdb;
+  }
+  &:active {
+    background-color: #fafafa;
+  }
+`;
 const AdminReviewReview = () => {
   const [reviewTextSelect, SetReviewTextSelect] = useState(0);
+  const [reviews, setReviews] = useState([]);
   const [refresh, setRefresh] = useState(true);
-  const option = {
-    headers: {
-      Authorization: `${localStorage.getItem("accessToken")}`,
-    },
-    params: {
-      answer: reviewTextSelect,
-    },
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [reviewParams, setReviewParams] = useState({ reviewId: 0, content: "" });
+  const [selectReview, setSelectReivew] = useState({ reviewId: 0, name: "", productName: "", content: "" });
+  const [noReviewCount, setnoReviewCount] = useState(0);
+  const registerReview = async () => {
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+      params: {
+        reviewId: reviewParams.reviewId,
+        content: reviewParams.content,
+      },
+    };
+    const response = await axios.post("http://localhost:8080/admin/reviews/review/register", "", option);
+    setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
+    setReviewParams({ reviewId: 0, content: "" });
+    setModalIsOpen(false);
+    alert("리뷰 등록 완료");
+    setRefresh(true);
+    return response;
   };
   const getReviews = useQuery(
     ["getReviews"],
     async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+        params: {
+          answer: reviewTextSelect,
+        },
+      };
       const response = await axios.get("http://localhost:8080/admin/reviews/review", option);
       return response;
     },
     {
       enabled: refresh,
       onSuccess: (response) => {
+        setReviews(response.data);
+        setnoReviewCount(response.data.length);
         setRefresh(false);
-        console.log(response);
+        console.log(response.data);
       },
     }
   );
-  const reviewButtonClick = (e) => {
+  const reviewSelectButtonClick = (e) => {
     SetReviewTextSelect(e);
     setRefresh(true);
   };
+  const reviewButtonClick = (review) => {
+    setSelectReivew({
+      reviewId: review.reviewId,
+      name: review.name,
+      productName: review.productName,
+      content: review.content,
+    });
+    setReviewParams({ reviewId: review.reviewId });
+
+    setModalIsOpen(true);
+  };
+  const modalCancleClick = () => {
+    setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
+    setReviewParams({ reviewId: 0, content: "" });
+    setModalIsOpen(false);
+  };
+  const modalReviewContentInput = (e) => {
+    setReviewParams({ ...reviewParams, content: e.target.value });
+  };
   return (
-    <div css={cotainer}>
-      <div css={reviewReviewContainer}>
-        <button css={reveiwSelectButton} onClick={() => reviewButtonClick(0)}>
-          답변
-        </button>
-        <button css={reveiwSelectButton} onClick={() => reviewButtonClick(1)}>
-          미답변
-        </button>
-      </div>
-      {reviewTextSelect === 0 ? (
-        <div css={reviewContainer}>
-          <div css={reviewName}>작성자</div>
-          <div css={reviewProductName}>상품 이름</div>
-          <div css={reviewContent}>리뷰 내용</div>
-          <div css={reviewContent}>답변 내용</div>
-          <div css={reviewDate}>작성 날짜</div>
+    <>
+      {modalIsOpen ? (
+        <div css={adminReviewModalContainer}>
+          <div css={adminReviewModal}>
+            <div css={modalTitle}>
+              <div css={modalname}>작성자 : {selectReview.name}</div>
+              <div css={modalProductName}>상품명 : {selectReview.productName}</div>
+              <div css={modalContent}>리뷰 내용 :{selectReview.content}</div>
+            </div>
+            <div css={modalbody}>
+              <input css={modalreviewContent} onChange={modalReviewContentInput} type="text"></input>
+            </div>
+            <div css={modalFooter}>
+              <button css={reviewbutton} onClick={() => registerReview()}>
+                작성
+              </button>
+              <button css={reviewbutton} onClick={() => modalCancleClick()}>
+                취소
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
-        <div css={reviewContainer}>
-          <div css={reviewName}>작성자</div>
-          <div css={reviewProductName}>상품 이름</div>
-          <div css={reviewContent}>리뷰 내용</div>
-          <div css={reviewDate}>작성 날짜</div>
-        </div>
+        ""
       )}
-    </div>
+
+      <div css={cotainer}>
+        <div css={reviewReviewContainer}>
+          <button css={reveiwSelectButton} onClick={() => reviewSelectButtonClick(0)}>
+            답변
+          </button>
+          <button css={reveiwSelectButton} onClick={() => reviewSelectButtonClick(1)}>
+            미답변
+          </button>
+        </div>
+        {reviewTextSelect === 0 ? (
+          <>
+            <div css={reviewTitleContainer}>
+              <div css={reviewNameTitle}>작성자</div>
+              <div css={reviewProductNameTitle}>상품 이름</div>
+              <div css={reviewContentTitle}>리뷰 내용</div>
+              <div css={reviewContentTitle}>답변 내용</div>
+              <div css={reviewDate}>작성 날짜</div>
+            </div>
+            {!!reviews ? (
+              <>
+                {reviews.map((review) => (
+                  <div css={reviewContainer}>
+                    <div css={reviewName}>{review.name}</div>
+                    <div css={reviewProductName}>{review.productName}</div>
+                    <div css={reviewContent}>{review.content}</div>
+                    <div css={reviewDate}>{review.date}</div>
+                    <button>수정</button>
+                  </div>
+                ))}
+              </>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          <>
+            <div css={reviewTitleContainer}>
+              <div css={reviewNameTitle}>작성자</div>
+              <div css={reviewProductNameTitle}>상품 이름</div>
+              <div css={reviewContentTitle}>리뷰 내용</div>
+              <div css={reviewDate}>작성 날짜</div>
+              <div css={inputButtonTitle}>리뷰 답변</div>
+            </div>
+            {reviews.map((review) => (
+              <div css={reviewContainer}>
+                <div css={reviewName}>{review.name}</div>
+                <div css={reviewProductName}>{review.productName}</div>
+                <div css={reviewContent}>{review.content}</div>
+                <div css={reviewDate}>{review.date}</div>
+                <button
+                  css={inputButton}
+                  onClick={() => {
+                    reviewButtonClick(review);
+                  }}
+                >
+                  리뷰 작성
+                </button>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -40,7 +40,14 @@
 		<id property="popUpId" column="popup_id"/>
 		<result property="content" column="content"/>
 	</resultMap>
-	
+	<resultMap type="com.korit.androg.androg.dto.admin.getReviewsReviewRespDto" id="reviewreviewMap">
+		<id property="reviewId" column="review_id"/>
+		<result property="name" column="name"/>
+		<result property="productName" column="product_name"/>
+		<result property="reviewContent" column="review_content" />
+		<result property="content" column="content"/>
+		<result property="date" column="review_date"/>
+	</resultMap>
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
 			color_id,
@@ -151,11 +158,12 @@
 		delete from review_tb
 		where review_id = #{reviewsId};
 	</delete>
-	<select id="getReviewsYesReview">
+	<select id="getReviewsYesReview" resultMap="reviewreviewMap">
 		SELECT 
 		    rt.review_id,
 		    rt.content,
 		    ut.name,
+		    art.review_content,
 		    pt.product_name,
 		    rt.review_date
 		FROM
@@ -168,11 +176,12 @@
 		where
 			art.adminreview_id is not null
 	</select>
-	<select id="getReviewsNoReview">
+	<select id="getReviewsNoReview" resultMap="reviewreviewMap">
 		SELECT 
 		    rt.review_id,
 		    rt.content,
 		    ut.name,
+		    art.review_content,
 		    pt.product_name,
 		    rt.review_date
 		FROM
@@ -185,4 +194,8 @@
 		where
 			art.adminreview_id is null
 	</select>
+	<insert id="reviewReviewRegister">
+		insert into adminreview_tb
+		values ( 0 , #{reviewId},#{content});
+	</insert>
 </mapper>

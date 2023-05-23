@@ -67,6 +67,10 @@ public class AdminService {
 		}
 		return adminRepository.getReviewsNoReview();
 	}
+	public void reviewReviewRegister(int reviewId, String content) {
+		adminRepository.reviewReviewRegister(reviewId, content);
+		return ;
+	}
 	
 //	popUp
 	public int popUpRegister (String content) {
