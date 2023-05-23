@@ -152,6 +152,7 @@ const MyPage = () => {
     },
     {
       onSuccess: (response) => {
+        console.log(response.data);
         setOrderProducts([...response.data]);
 
         setProductsRefresh(false);
@@ -251,7 +252,7 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return <OrderProducts key={orderProduct.orderId} orderProduct={orderProduct} isOpen={true} />;
+              return <OrderProducts key={orderProduct.orderDetailId} orderProduct={orderProduct} isOpen={true} />;
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>

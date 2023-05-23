@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderProductsRespDto {
-	private int orderId;
+	private int orderDetailId;
 	private int countNumber;
 	private int productId;
 	private int productPrice;
-	private int reviewFlag;
+	private int orderId;
+	private int reviewId;
 	private String productName;
 	private String productImg;
 	private String colorName;

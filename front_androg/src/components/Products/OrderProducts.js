@@ -2,6 +2,8 @@
 import { css } from "@emotion/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { productInfoState } from "../../atoms/ReviewAtoms/ReviewAtom";
 
 const orderbox = css`
   width: 1030px;
@@ -66,8 +68,8 @@ const reviewButton = (state) => css`
   background-color: black;
   color: white;
 
-  ${state === 1 ? "" : "cursor: pointer"};
-  ${state === 1 ? "background-color: grey" : "&:hover {background-color: grey}"};
+  ${state !== 0 ? "" : "cursor: pointer"};
+  ${state !== 0 ? "background-color: grey" : "&:hover {background-color: grey}"};
   /* &:hover {
     background-color: grey;
     color: white;
@@ -76,8 +78,11 @@ const reviewButton = (state) => css`
 
 const OrderProducts = ({ orderProduct, isOpen }) => {
   const navigate = useNavigate();
+  const [reviewInfo, setReviewInfo] = useRecoilState(productInfoState);
+
   const reviewClickHandle = (orderProduct) => {
-    navigate(`/product/${orderProduct.productId}/review`);
+    setReviewInfo(orderProduct.productId);
+    navigate(`/product/${orderProduct.orderDetailId}/review`);
   };
 
   return (
@@ -98,11 +103,11 @@ const OrderProducts = ({ orderProduct, isOpen }) => {
       <div css={reviewButtonBox}>
         {isOpen ? (
           <button
-            css={reviewButton(orderProduct.reviewFlag)}
+            css={reviewButton(orderProduct.reviewId)}
             onClick={() => reviewClickHandle(orderProduct)}
-            disabled={orderProduct.reviewFlag === 1 ? true : false}
+            disabled={orderProduct.reviewId !== 0 ? true : false}
           >
-            {orderProduct.reviewFlag === 1 ? "등록완료" : "리뷰등록"}
+            {orderProduct.reviewId !== 0 ? "등록완료" : "리뷰등록"}
           </button>
         ) : (
           ""

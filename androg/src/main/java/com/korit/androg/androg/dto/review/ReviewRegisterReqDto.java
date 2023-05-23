@@ -8,14 +8,12 @@ import lombok.Data;
 @Data
 @Builder
 public class ReviewRegisterReqDto {
-	private int userId;
-	private int productId;
+	private int orderDetailId;
 	private String content;
 	
 	public Review toEntity() {
 		return Review.builder()
-				.userId(userId)
-				.productId(productId)
+				.orderDetailId(orderDetailId)
 				.content(content)
 				.build();
 	}

@@ -13,20 +13,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Review {
 	private int reviewId;
-	private int userId;
-	private int productId;
+	private int orderDetailId;
 	private String content;
 	private String reviewDate;
+	
 	private User user;
+	private Products products;
 	
 	public ReviewRespDto toDto() {
 		return ReviewRespDto.builder()
-							.productId(productId)
-							.userName(user.getName())
-							.userId(userId)
+							.orderDetailId(orderDetailId)
 							.content(content)
 							.reviewDate(reviewDate)
 							.reviewId(reviewId)
+							.productId(products.getProductId())
+							.userId(user.getUserId())
+							.userName(user.getName())
 							.build();
 	}
 }
