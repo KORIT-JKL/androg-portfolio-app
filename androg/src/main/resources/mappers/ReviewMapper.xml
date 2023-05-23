@@ -105,7 +105,7 @@ and
 
 <insert id="reviewRegister" parameterType="com.korit.androg.androg.entity.Review">
  insert into review_tb
- values(0,#{orderDetailId},#{content},CURDATE())
+ values(#{reviewId},#{orderDetailId},#{content},CURDATE());
 </insert>
 
 <select id="getReviews" parameterType="Integer" resultMap="reviewMap">
@@ -138,8 +138,5 @@ and rt.review_id is not null
 		review_id = #{reviewId}
 
 </update>
-<insert id="adminreview_tb">
-	insert into adminreview_tb
-	values(0, #{reviewId}, "", #{productId},0)
-</insert>
+
 </mapper>

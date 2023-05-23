@@ -28,8 +28,7 @@ public class ReviewService {
 	}
 	
 	public int reviewRegister(ReviewRegisterReqDto reviewRegisterReqDto) {
-//		reviewRepository.adminreview_tb(reviewRegisterReqDto.toEntity());
-		
+
 		return reviewRepository.reviewRegister(reviewRegisterReqDto.toEntity());
 	}
 	

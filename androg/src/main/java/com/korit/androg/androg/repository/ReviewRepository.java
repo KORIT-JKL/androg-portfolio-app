@@ -20,6 +20,5 @@ public interface ReviewRepository {
 	public int reviewFlag(Map<String, Object> requestMap);
 	
 	public int reviewModify(ReviewModifyReqDto modifyReqDto);
-//	adminreview_tb에 등록
-	public int adminreview_tb(Review review);
+
 }
