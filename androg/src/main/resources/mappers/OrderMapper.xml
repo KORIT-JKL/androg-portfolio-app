@@ -5,7 +5,7 @@
 
 <insert id="saveOrder" useGeneratedKeys="true" keyProperty="orderId" parameterType="com.korit.androg.androg.entity.Order">
 	insert into order_tb
-	values(0,#{userId}, current_date())
+	values(0,#{userId}, current_date(), #{addressId})
 </insert>
 
 <insert id="completeOrder">

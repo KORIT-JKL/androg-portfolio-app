@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
+import { useNavigate } from "react-router-dom";
 
 const container = css`
   font-size: 12px;
@@ -194,8 +195,11 @@ const Payment = () => {
   const [orderParams, setOrderParams] = useState({
     userId: 0,
     products: [],
+    addressId: userAddressId,
   });
 
+  const navigate = useNavigate();
+  console.log(orderParams.products);
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -282,19 +286,19 @@ const Payment = () => {
   }, [addressIndex]);
 
   const orderSubmitHandle = async () => {
-    console.log(orderParams);
     try {
       const response = axios.post("http://localhost:8080/products/order", orderParams, {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
       });
-      const response2 = axios.post(`http://localhost:8080/products/order/address/${userAddressId}`, {
-        headers: {
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
+      // const response2 = axios.post(`http://localhost:8080/products/order/address/${userAddressId}`, {
+      //   headers: {
+      //     Authorization: localStorage.getItem("accessToken"),
+      //   },
+      // });
     } catch (error) {}
+    navigate("/user/mypage");
   };
 
   const clickHandle = (e) => {
@@ -305,6 +309,7 @@ const Payment = () => {
     const { id, checked } = e.target;
     console.log(id + ", " + checked);
     console.log(cartList.data.data);
+    console.log(orderParams.products)
     if (e.target.checked) {
       setOrderParams({
         userId: principal.data.data.userId,
@@ -312,10 +317,8 @@ const Payment = () => {
           ...orderParams.products,
           ...cartList.data.data.filter((cart) => cart.cartId === parseInt(e.target.id)),
         ],
+        addressId: userAddressId,
       });
-
-      let price = orderParams.products.cartId;
-      console.log(price);
     } else {
       setOrderParams({
         userId: principal.data.data.userId,

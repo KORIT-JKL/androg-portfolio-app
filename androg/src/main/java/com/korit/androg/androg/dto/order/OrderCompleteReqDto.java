@@ -11,4 +11,5 @@ import lombok.Data;
 public class OrderCompleteReqDto {
 	private int userId;
 	private List<Map<String, Object>> products;
+	private int addressId;
 }

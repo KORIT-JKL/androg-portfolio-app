@@ -17,7 +17,11 @@ public class OrderService {
 	private final OrderRepository orderRepository;
 	
 	public int completeOrder(OrderCompleteReqDto orderCompleteReqDto) {
-		Order order = Order.builder().userId(orderCompleteReqDto.getUserId()).build();
+		Order order = Order
+				.builder()
+				.userId(orderCompleteReqDto.getUserId())
+				.addressId(orderCompleteReqDto.getAddressId())
+				.build();
 		orderRepository.saveOrder(order);
 		
 		Map<String, Object> requestMap = new HashMap<>();
