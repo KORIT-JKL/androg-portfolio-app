@@ -9,3 +9,8 @@ export const refreshState = atom({
   key: "refreshState",
   default: true,
 });
+
+export const popUpState = atom({
+  key: "popUpState",
+  default: true,
+});

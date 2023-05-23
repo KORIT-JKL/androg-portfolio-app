@@ -54,15 +54,21 @@ public class AdminController {
 		return null;
 	}
 	
-	@GetMapping("/admin/pop-up")
+	@GetMapping("/pop-up")
 	public ResponseEntity<?> getPopUp() {
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.ok().body(adminService.getPopUpList());
 	}
 	
 	@PostMapping("/admin/pop-up/register")
 	public ResponseEntity<?> popUpRegister(@RequestBody Map<String, Object> requestMap) {
 		String content = (String) requestMap.get("content");
 		return ResponseEntity.ok().body(adminService.popUpRegister(content));
+	}
+	
+	@PutMapping("/admin/pop-up/modify")
+	public ResponseEntity<?> popUpModify(@RequestBody Map<String, Object> requestMap){
+		String content = (String) requestMap.get("content");
+		return ResponseEntity.ok().body(adminService.popUpModify(content));
 	}
 	
 //	리뷰

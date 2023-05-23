@@ -70,6 +70,7 @@ const CommonUserHeader = () => {
   const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
   const [userAuthority, setUserAuthority] = useState("");
   const [getauthority, Setgetauthority] = useState(true);
+
   const navigate = useNavigate();
   const onClickLogo = () => {
     navigate("/");

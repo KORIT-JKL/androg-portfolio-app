@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
