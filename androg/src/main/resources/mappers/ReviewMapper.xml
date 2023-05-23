@@ -128,14 +128,6 @@ where
 and rt.review_id is not null
 </select>
 
-<!--  <update id="reviewFlag" parameterType="hashmap">
-	update order_tb
-	set review_flag = 1
-	where 
-		user_id = #{userId}
-	and
-		product_id = #{productId};
-</update>-->
 
 <update id="reviewModify" parameterType="com.korit.androg.androg.dto.review.ReviewModifyReqDto">
 
