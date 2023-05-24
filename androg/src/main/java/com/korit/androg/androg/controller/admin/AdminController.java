@@ -78,7 +78,7 @@ public class AdminController {
 // notice
 	@PostMapping("/admin/notice/register")
 	public ResponseEntity<?> noticeRegister(@RequestBody Map<String, Object> requestMap){
-		System.out.println(requestMap);
+//		System.out.println(requestMap);
 		return ResponseEntity.ok().body(adminService.noticeRegister(requestMap));
 	}
 	@GetMapping("/auth/notice")

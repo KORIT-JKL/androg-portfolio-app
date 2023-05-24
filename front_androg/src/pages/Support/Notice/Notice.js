@@ -23,7 +23,8 @@ const main = css`
 `;
 
 const mainContainer = css`
-  word-wrap: break-word;
+  /* word-wrap: break-word; */
+  white-space: pre-line;
   padding: 10px;
   margin: 10px;
   width: 300px;
@@ -72,7 +73,13 @@ const Notice = () => {
         <h1>{getNotice.data !== undefined ? notice.subject : ""}</h1>
       </header>
       <main css={main}>
-        <div css={mainContainer}>{getNotice.data !== undefined ? notice.content : ""}</div>
+        <div css={mainContainer}>
+          {getNotice.data !== undefined ? (
+            <div dangerouslySetInnerHTML={{ __html: notice.content.replaceAll(/\n/g, "<br>") }} />
+          ) : (
+            ""
+          )}
+        </div>
       </main>
       <CommonFooter />
     </>
