@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import QueryString from "qs";
 import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
 import { setRefresh } from "../../atoms/Common/CommonAtoms";
+import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
 const container = css`
   display: flex;
   justify-content: center;
@@ -192,6 +193,8 @@ const ProductDetails = () => {
   const [sameNameProducts, setSameNameProducts] = useState([]);
   const [selectImgSuccess, setSelectImgSuccess] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [reviewsIdList, setreviewIdList] = useState([]);
+  const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
   const navigate = useNavigate();
   const principal = useQuery(
     ["principal"],
@@ -265,11 +268,39 @@ const ProductDetails = () => {
     {
       onSuccess: (response) => {
         setReviews([...response.data]);
+        const IdList = [];
+        response.data.forEach((review) => {
+          IdList.push(review.reviewId);
+        });
+        const result1 = [...new Set(IdList)];
+        setreviewIdList(result1);
       },
-      enabled: refresh,
+      enabled: refresh && !!getProduct,
     }
   );
+  const getAdminReview = useQuery(
+    ["getAdminReview"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+        params: {
+          reviewsIdList,
+        },
 
+        paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
+      };
+      const response = await axios.get("http://localhost:8080/products/adminReview", option);
+      return response;
+    },
+    {
+      enabled: !!getReviews && reviewsIdList.length > 0,
+      onSuccess: (response) => {
+        setThisAdminReviews(response.data);
+      },
+    }
+  );
   if (!product) {
     return setThiRefresh(true);
   }

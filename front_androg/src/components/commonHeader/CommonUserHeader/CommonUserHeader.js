@@ -99,7 +99,6 @@ const CommonUserHeader = () => {
 
   const EnterKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.log(e.target.value);
       setThisSearchParams({
         setSearchPage: 1,
         setSearchInput: e.target.value,

@@ -1,6 +1,7 @@
 package com.korit.androg.androg.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.Product.addCartRequestDto;
 import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.service.CartService;
 import com.korit.androg.androg.service.ProductsService;
@@ -49,8 +51,7 @@ public class ProductsController {
 	
 	@GetMapping("/products/{productId}/sameName")
 	public ResponseEntity<?> getSameNameProducts (@PathVariable int productId){
-//		System.out.println(productId);
-//		System.out.println(productsService.getProductByProductId(productId));
+
 		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
 	}
 	
@@ -58,6 +59,11 @@ public class ProductsController {
 	public ResponseEntity<?> productsDirectBuy(@RequestBody addCartRequestDto addCartRequestDto){
 		cartService.addCart(addCartRequestDto);
 		return null;
+	}
+	@GetMapping("/products/adminReview")
+	public ResponseEntity<?> getAdmingReview(AdminReviewIdReqDto adminReviewIdReqDto){
+		
+		return ResponseEntity.ok().body(productsService.getAdminReview(adminReviewIdReqDto));
 	}
 
 	

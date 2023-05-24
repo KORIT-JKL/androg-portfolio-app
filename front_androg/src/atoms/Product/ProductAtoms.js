@@ -30,3 +30,8 @@ export const SetSearchInput = atom({
   key: "SetSearchInput",
   default: "",
 });
+
+export const SetAdminReviews = atom({
+  key: "SetAdminReviews",
+  default: [],
+});

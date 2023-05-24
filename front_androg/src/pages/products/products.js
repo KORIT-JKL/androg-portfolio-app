@@ -96,7 +96,6 @@ const Products = () => {
       onSuccess: (response) => {
         // 여기 어딘가 아주 문제 product리스트가 초기화도 안되고 추가만 됨
         setThiRefresh(false);
-        console.log(response.data.productList);
         const totalCount = response.data.productTotalCount;
         setThisProducts([...products, ...response.data.productList]);
         setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
@@ -119,7 +118,7 @@ const Products = () => {
                 <>
                   {product.soldoutFlag === 0 ? (
                     <>
-                      <li css={productCard}>
+                      <li css={productCard} key={product.productId}>
                         <div css={soldoutcontainer}>
                           <div css={soldoutText}>품절</div>
                         </div>
@@ -128,7 +127,11 @@ const Products = () => {
                     </>
                   ) : (
                     <>
-                      <li css={productCard} onClick={() => ProductsCardClick(product.productId)}>
+                      <li
+                        key={product.productId}
+                        css={productCard}
+                        onClick={() => ProductsCardClick(product.productId)}
+                      >
                         <ProductsCard product={product} key={product.productId} />
                       </li>
                     </>

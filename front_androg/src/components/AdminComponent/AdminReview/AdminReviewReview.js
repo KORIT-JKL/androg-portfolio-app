@@ -48,7 +48,7 @@ const reviewNameTitle = css`
 `;
 const reviewProductNameTitle = css`
   text-align: center;
-  width: 15%;
+  width: 25%;
 `;
 const reviewContentTitle = css`
   text-align: center;
@@ -70,7 +70,7 @@ const reviewName = css`
   text-align: center;
 `;
 const reviewProductName = css`
-  width: 15%;
+  width: 25%;
   text-align: center;
 `;
 const reviewContent = css`
@@ -81,8 +81,9 @@ const inputButton = css`
   text-align: center;
   width: 10%;
   background-color: white;
+  border: none;
   cursor: pointer;
-  border-radius: 10px;
+  font-size: 20px;
   &:hover {
     background-color: #dbdbdb;
   }
@@ -277,7 +278,7 @@ const AdminReviewReview = () => {
   const modalCancleClick = () => {
     setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
     setReviewParams({ reviewId: 0, content: "" });
-    setModifyModalIsOpen(false);
+    setModalIsOpen(false);
   };
   const modifyModalCancleClick = () => {
     setSelectModifyReview({ reviewId: 0, name: "", productName: "", content: "" });

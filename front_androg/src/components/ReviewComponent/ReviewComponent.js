@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import ReviewUpdateModal from "./ReviewUpdateModal";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
 
 const reviewContainer = css`
   margin: 10px 0px 10px 0px;
@@ -55,9 +57,19 @@ const reviewBtnBox = css`
   display: flex;
   justify-content: flex-end;
 `;
-
+const adminReviewContainer = css`
+  border-top: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+`;
+const adminReviewText = css`
+  padding: 10px 20px;
+`;
 const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -101,6 +113,16 @@ const ReviewComponent = ({ review }) => {
         )}
 
         {isModalOpen && <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />}
+      </div>
+
+      <div css={adminReviewContainer}>
+        {adminReviews.map((adminReview) =>
+          adminReview.reviewId === review.reviewId ? (
+            <div css={adminReviewText}> ↪관리자 : {adminReview.content}</div>
+          ) : (
+            ""
+          )
+        )}
       </div>
     </div>
   );

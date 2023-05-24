@@ -35,7 +35,10 @@
 		<result property="colorName" column="color_name"/>
 		<result property="countNumber" column="count_number"/>
 	</resultMap>
-	
+	<resultMap type="com.korit.androg.androg.dto.admin.getAdminReviewRespdto" id="getadminMap">
+		<id property="reviewId" column="review_id"/>
+		<result property="content" column="review_content"/>
+	</resultMap>
 	
 	
 	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >
@@ -152,4 +155,16 @@
 		
 		
 	</select>
+		<select id="getAdminReviews" parameterType="com.korit.androg.androg.dto.admin.AdminReviewIdReqDto" resultMap="getadminMap">
+		  SELECT
+		    review_id,
+		    review_content
+		  FROM
+		    adminreview_tb
+		  WHERE
+		  1 = 1 or
+		   	<foreach collection="reviewsIdList" item="reviewId" separator=" OR ">
+			  review_id = ${reviewId}
+			</foreach>
+</select>
 </mapper>

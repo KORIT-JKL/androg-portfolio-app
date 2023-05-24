@@ -81,7 +81,6 @@ const SearchProducts = () => {
     },
     {
       onSuccess: (response) => {
-        console.log("실행1");
         const totalCount = response.data.productTotalCount;
         setlastPage(totalCount % 20 === 0 ? totalCount / 20 : Math.ceil(totalCount / 20));
         setThisProducts([...products, ...response.data.productList]);
