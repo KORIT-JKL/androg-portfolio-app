@@ -46,7 +46,7 @@ const productCard = css`
 const soldoutcontainer = css`
   padding: 0px;
   position: absolute;
-  z-index: 999;
+  z-index: 10;
   display: flex;
   width: 290px;
   height: 420px;

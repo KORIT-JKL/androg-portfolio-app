@@ -11,10 +11,17 @@ const input = css`
   height: 30px;
   outline: none;
 `;
-const SupprotInput = ({ type, placeholder }) => {
+const SupprotInput = ({ type, placeholder, name, value, onChange }) => {
   return (
     <>
-      <input css={input} type={type} placeholder={placeholder} />
+      <input
+        css={input}
+        type={type}
+        placeholder={placeholder}
+        name={name}
+        value={value}
+        onChange={onChange}
+      />
     </>
   );
 };

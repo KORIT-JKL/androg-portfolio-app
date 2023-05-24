@@ -10,7 +10,7 @@ const container = css`
   justify-content: space-between;
   flex-direction: center;
   align-items: center;
-  margin: 10px;
+  margin: 0px;
   padding: 120px 0px 0px 50px;
   max-width: 100%;
   height: 1000px;

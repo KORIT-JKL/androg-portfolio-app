@@ -53,8 +53,8 @@ public class AdminController {
 		adminService.modifySoldOut(reqeustMap);
 		return null;
 	}
-	
-	@GetMapping("/pop-up")
+// popup
+	@GetMapping("/auth/pop-up")
 	public ResponseEntity<?> getPopUp() {
 		return ResponseEntity.ok().body(adminService.getPopUpList());
 	}
@@ -69,6 +69,21 @@ public class AdminController {
 	public ResponseEntity<?> popUpModify(@RequestBody Map<String, Object> requestMap){
 		String content = (String) requestMap.get("content");
 		return ResponseEntity.ok().body(adminService.popUpModify(content));
+	}
+	@DeleteMapping("/admin/pop-up")
+	public ResponseEntity<?> popUpDelete(int popUpId){
+		System.out.println(popUpId);
+		return ResponseEntity.ok().body(adminService.popUpDelete(popUpId));
+	}
+// notice
+	@PostMapping("/admin/notice/register")
+	public ResponseEntity<?> noticeRegister(@RequestBody Map<String, Object> requestMap){
+//		System.out.println(requestMap);
+		return ResponseEntity.ok().body(adminService.noticeRegister(requestMap));
+	}
+	@GetMapping("/auth/notice")
+	public ResponseEntity<?> getNotice(){
+		return ResponseEntity.ok().body(adminService.getNotice());
 	}
 	
 //	리뷰

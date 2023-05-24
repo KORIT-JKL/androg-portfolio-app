@@ -48,6 +48,13 @@
 		<result property="content" column="content"/>
 		<result property="date" column="review_date"/>
 	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Notice" id="noticeMap">
+		<id property="noticeId" column="notice_id"/>
+		<result property="subject" column="subject"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
 	<select id="getColors" resultType="list" resultMap="colorMap">
 		SELECT 
 			color_id,
@@ -120,9 +127,9 @@
 	
 	
 	
-	<insert id="popUpRegister" >
+	<insert id="popUpRegister">
 		insert into popup_tb
-		values(0,#{content});
+		values(1,#{content});
 	</insert>
 	<select id="getPopUpList" resultMap="popUpMap">
 		select
@@ -137,6 +144,25 @@
 			popup_id = 1
 	
 	</update>
+	
+	<delete id="popDelete" parameterType="Integer">
+		delete from popup_tb
+		where
+			popup_id = #{popUpId};
+	</delete>
+	
+	<insert id="noticeRegister" parameterType="hashmap">
+	insert into notice_tb
+	values(1,#{subject},#{content},CURDATE())
+	</insert>
+	<select id="getNotice" resultMap="noticeMap">
+	select
+		notice_id,
+		subject,
+		content
+	from
+		notice_tb
+	</select>
 	
 	<select id="getReviews" resultType="List" resultMap="reviewMap">
 		select

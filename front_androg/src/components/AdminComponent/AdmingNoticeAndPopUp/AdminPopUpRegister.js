@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { AdminPopUp } from "../../../atoms/Admin/AdminAtoms";
 
 const mainContainer = css`
   display: flex;
@@ -76,23 +78,30 @@ const tableStyle = css`
 
 const AdminPopUpRegister = () => {
   const [popUpInput, setPopUpInput] = useState("");
-  const [popUpList, setPopUpList] = useState([]);
+  const [popUpList, setPopUpList] = useRecoilState(AdminPopUp);
   const onChangeHandle = (e) => {
     setPopUpInput(e.target.value);
   };
 
-  const popUpRegister = useMutation(async () => {
-    const data = {
-      content: popUpInput,
-    };
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+  const popUpRegister = useMutation(
+    async () => {
+      const data = {
+        content: popUpInput,
+      };
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.post("http://localhost:8080/admin/pop-up/register", data, option);
+      return response;
+    },
+    {
+      onSuccess: () => {
+        getPopUp.refetch();
       },
-    };
-    const response = await axios.post("http://localhost:8080/admin/pop-up/register", data, option);
-    return response;
-  });
+    }
+  );
 
   const getPopUp = useQuery(
     ["popUpList"],
@@ -102,7 +111,7 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/pop-up", option);
+      const response = await axios.get("http://localhost:8080/auth/pop-up", option);
       return response;
     },
     {
@@ -132,6 +141,25 @@ const AdminPopUpRegister = () => {
       },
     }
   );
+  const popUpDelete = useMutation(
+    async (popUpId) => {
+      const option = {
+        params: {
+          popUpId: popUpId,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.delete("http://localhost:8080/admin/pop-up", option);
+      return response;
+    },
+    {
+      onSuccess: () => {
+        getPopUp.refetch();
+      },
+    }
+  );
 
   if (getPopUp.isLoading) {
     return <></>;
@@ -145,7 +173,7 @@ const AdminPopUpRegister = () => {
       <main css={main}>
         <AddressInput onChange={onChangeHandle} value={popUpInput} placeholder={"등록할 팝업을 입력하세요"} />
         <div>
-          {popUpList.length > 0 ? (
+          {popUpList.content !== undefined ? (
             <button
               css={popUpButton}
               onClick={() => {
@@ -179,19 +207,23 @@ const AdminPopUpRegister = () => {
             </tr>
           </thead>
           <tbody>
-            {popUpList.length > 0
-              ? popUpList.map((popUp, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{popUp.popUpId}</td>
-                      <td>{popUp.content}</td>
-                      <td>
-                        <button>삭제</button>
-                      </td>
-                    </tr>
-                  );
-                })
-              : ""}
+            {popUpList.content !== undefined ? (
+              <tr>
+                <td>{popUpList.popUpId}</td>
+                <td>{popUpList.content}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      popUpDelete.mutate(popUpList.popUpId);
+                    }}
+                  >
+                    삭제
+                  </button>
+                </td>
+              </tr>
+            ) : (
+              ""
+            )}
           </tbody>
         </table>
       </footer>

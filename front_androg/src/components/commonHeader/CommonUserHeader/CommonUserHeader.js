@@ -12,6 +12,7 @@ import { setRefresh } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
 import Address from "./../../../pages/Address/Address";
+import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 const header = css`
   position: fixed;
   flex-direction: column;
