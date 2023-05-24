@@ -7,10 +7,11 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
-import com.korit.androg.androg.dto.admin.getAdminReviewRespdto;
+import com.korit.androg.androg.dto.admin.AdminReviewRespdto;
+import com.korit.androg.androg.entity.AdminReview;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.repository.ProductsRepository;
 
@@ -51,7 +52,7 @@ public class ProductsService {
 		return productsRepository.getSameNameProductsByProductId(productId);
 	}
 	//여기서부터 cart
-	public List<getAdminReviewRespdto> getAdminReview(AdminReviewIdReqDto adminReviewIdReqDto) {
+	public List<AdminReview> getAdminReview(AdminReviewIdReqDto adminReviewIdReqDto) {
 		return productsRepository.getAdminReviews(adminReviewIdReqDto);
 	}
 	

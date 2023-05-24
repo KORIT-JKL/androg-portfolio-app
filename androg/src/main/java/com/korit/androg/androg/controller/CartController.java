@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.service.CartService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class CartController {
 	private final CartService cartService;
 	@PostMapping("/cart/addition")
-	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
+	public ResponseEntity<?> addCart(@RequestBody CartReqDto addCartRequestDto) {
 		cartService.addCart(addCartRequestDto);
 		return null;
 	}
@@ -40,14 +40,14 @@ public class CartController {
 	}
 	
 	@PutMapping("/cart/update/countUp")
-	public ResponseEntity<?> countUp(@RequestBody getCartResponseDto cartResponseDto) {
+	public ResponseEntity<?> countUp(@RequestBody CartRespDto cartResponseDto) {
 		
 		
 		cartService.plusCountByCartId(cartResponseDto.getCartId());
 		return null;
 	}
 	@PutMapping("/cart/update/countDown")
-	public ResponseEntity<?> countDown(@RequestBody getCartResponseDto cartResponseDto) {
+	public ResponseEntity<?> countDown(@RequestBody CartRespDto cartResponseDto) {
 
 		
 		

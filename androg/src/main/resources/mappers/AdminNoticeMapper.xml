@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.admin.AdminNoticeRepository">
+	<resultMap type="com.korit.androg.androg.dto.admin.PopUpRespDto" id="popUpMap">
+		<id property="popUpId" column="popup_id"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Notice" id="noticeMap">
+		<id property="noticeId" column="notice_id"/>
+		<result property="subject" column="subject"/>
+		<result property="content" column="content"/>
+	</resultMap>
+
+	<insert id="popUpRegister">
+		insert into popup_tb
+		values(1,#{content});
+	</insert>
+	<select id="getPopUpList" resultMap="popUpMap">
+		select
+			*
+		from popup_tb;
+	</select>
+	
+	<update id="popUpModify" >
+		update popup_tb
+			set content = #{content}
+		where
+			popup_id = 1
+	
+	</update>
+	
+	<delete id="popDelete" parameterType="Integer">
+		delete from popup_tb
+		where
+			popup_id = #{popUpId};
+	</delete>
+	
+	<insert id="noticeRegister" parameterType="hashmap">
+	insert into notice_tb
+	values(1,#{subject},#{content},CURDATE())
+	</insert>
+	<select id="getNotice" resultMap="noticeMap">
+	select
+		notice_id,
+		subject,
+		content
+	from
+		notice_tb
+	</select>
+	
+</mapper>

@@ -24,6 +24,6 @@ public class UserController {
 	
 	@DeleteMapping("/user/{userId}")
 	public ResponseEntity<?> withdrawal(int userId) {
-		return ResponseEntity.ok().body(userService.deletelUser(userId));
+		return ResponseEntity.ok().body(userService.deleteUser(userId));
 	}
 }

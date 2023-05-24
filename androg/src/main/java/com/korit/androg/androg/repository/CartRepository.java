@@ -5,13 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 @Mapper
 public interface CartRepository {
 	public void addCart(Map<String, Object> reqeustMap);
-	public addCartRequestDto getCart(int userId);
-	public List<getCartResponseDto> getCartByuserId(int userId);
+	public CartReqDto getCart(int userId);
+	public List<CartRespDto> getCartByuserId(int userId);
 	public void deleteCartByCartId(int cartId);
 	public void plusCountByCartId(int cartId);
 	public void minusCountByCartId(int cartId);

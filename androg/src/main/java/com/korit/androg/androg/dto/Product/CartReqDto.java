@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class addCartRequestDto {
+public class CartReqDto {
 	private int userId;
 	private int productId;
 	private String sizeName;

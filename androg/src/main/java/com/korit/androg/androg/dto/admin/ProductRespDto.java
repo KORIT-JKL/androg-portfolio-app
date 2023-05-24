@@ -1,6 +1,7 @@
-package com.korit.androg.androg.dto.Product;
+package com.korit.androg.androg.dto.admin;
 
-import com.korit.androg.androg.entity.Products;
+import com.korit.androg.androg.entity.Category;
+import com.korit.androg.androg.entity.Color;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class getCartResponseDto {
-	private int cartId;
+public class ProductRespDto {
 	private int productId;
 	private String productName;
 	private int productPrice;
 	private String productImg;
-	private String sizeName;
+	private	int colorId;
 	private String colorName;
-	private int countNumber;
+	private int categoryId;
+	private String categoryName;
+	private int soldoutFlag;
 }

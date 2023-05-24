@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.repository.CartRepository;
 import com.korit.androg.androg.repository.ProductsRepository;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CartService {
 	private final CartRepository cartRepository;
-	public void addCart(addCartRequestDto addCartRequestDto) {
+	public void addCart(CartReqDto addCartRequestDto) {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("userId", addCartRequestDto.getUserId());
 		requestMap.put("productId", addCartRequestDto.getProductId());
@@ -28,7 +28,7 @@ public class CartService {
 		return;
 	}
 	
-	public List<getCartResponseDto> getCartByUserId(int userId) {
+	public List<CartRespDto> getCartByUserId(int userId) {
 		return cartRepository.getCartByuserId(userId);
 	}
 	

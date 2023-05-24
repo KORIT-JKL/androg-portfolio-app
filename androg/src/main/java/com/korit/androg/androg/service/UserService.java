@@ -23,7 +23,7 @@ public class UserService {
 		return orderProducts; 
 	}
 	
-	public int deletelUser(int userId) {
+	public int deleteUser(int userId) {
 		return userRepository.deleteUser(userId);
 	}
 }

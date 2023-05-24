@@ -1,4 +1,6 @@
-package com.korit.androg.androg.dto.admin;
+package com.korit.androg.androg.dto.Product;
+
+import com.korit.androg.androg.entity.Products;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class registerProductReqDto {
+public class CartRespDto {
+	private int cartId;
+	private int productId;
 	private String productName;
 	private int productPrice;
-	private String categoryId;
-	private String colorId;
 	private String productImg;
+	private String sizeName;
+	private String colorName;
+	private int countNumber;
 }

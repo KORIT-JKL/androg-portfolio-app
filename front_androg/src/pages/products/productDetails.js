@@ -254,6 +254,7 @@ const ProductDetails = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       });
+      alert("상품을 장바구니에 등록 성공");
       return response;
     } catch {}
   };

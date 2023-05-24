@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SearchProductReqDto {
+public class ProductReqDto {
 	private String searchInput;
 	private int page;
 }

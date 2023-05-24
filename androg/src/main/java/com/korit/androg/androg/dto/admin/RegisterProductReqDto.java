@@ -1,7 +1,5 @@
 package com.korit.androg.androg.dto.admin;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class getReviewsRespDto {
-	private int reviewId;
-	private String name;
+public class RegisterProductReqDto {
 	private String productName;
-	private String content;
-	private Date date;
+	private int productPrice;
+	private String categoryId;
+	private String colorId;
+	private String productImg;
 }

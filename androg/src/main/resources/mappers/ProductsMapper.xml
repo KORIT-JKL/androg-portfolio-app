@@ -25,22 +25,12 @@
 		<id property="colorId" column="color_id"/>
 		<result property="colorName" column="color_name"/>
 	</resultMap>
-	
-	<resultMap type="com.korit.androg.androg.dto.Product.getCartResponseDto" id="getCartByUserId">
-		<id property="cartId" column="cart_id"/>	
-		<result property="productName" column="product_name"/>
-		<result property="productPrice" column="product_price"/>
-		<result property="productImg" column="product_img"/>
-		<result property="sizeName" column="size_name"/>
-		<result property="colorName" column="color_name"/>
-		<result property="countNumber" column="count_number"/>
-	</resultMap>
-	<resultMap type="com.korit.androg.androg.dto.admin.getAdminReviewRespdto" id="getadminMap">
+
+	<resultMap type="com.korit.androg.androg.entity.AdminReview" id="adminMap">
 		<id property="reviewId" column="review_id"/>
 		<result property="content" column="review_content"/>
 	</resultMap>
-	
-	
+
 	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >
 		SELECT
 			pt.product_id,
@@ -155,7 +145,7 @@
 		
 		
 	</select>
-		<select id="getAdminReviews" parameterType="com.korit.androg.androg.dto.admin.AdminReviewIdReqDto" resultMap="getadminMap">
+		<select id="getAdminReviews" parameterType="com.korit.androg.androg.dto.admin.AdminReviewIdReqDto" resultMap="adminMap">
 		  SELECT
 		    review_id,
 		    review_content

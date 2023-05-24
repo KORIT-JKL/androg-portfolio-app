@@ -5,10 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
-import com.korit.androg.androg.dto.admin.getAdminReviewRespdto;
+import com.korit.androg.androg.dto.admin.AdminReviewRespdto;
+import com.korit.androg.androg.entity.AdminReview;
 import com.korit.androg.androg.entity.Products;
 
 @Mapper
@@ -20,6 +21,6 @@ public interface ProductsRepository {
 	public int getTotalCountBySearchInput(String searchInput);
 	public List<Products> getSameNameProductsByProductId(int productId);
 //	카트
-	public List<getAdminReviewRespdto> getAdminReviews(AdminReviewIdReqDto adminReviewIdReqDto);
+	public List<AdminReview> getAdminReviews(AdminReviewIdReqDto adminReviewIdReqDto);
 
 }

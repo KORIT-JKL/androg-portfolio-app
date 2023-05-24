@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.dto.Product.addCartRequestDto;
-import com.korit.androg.androg.dto.Product.getCartResponseDto;
+import com.korit.androg.androg.dto.Product.CartReqDto;
+import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
 import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.service.CartService;
@@ -56,7 +56,7 @@ public class ProductsController {
 	}
 	
 	@PostMapping("/products/directBuy")
-	public ResponseEntity<?> productsDirectBuy(@RequestBody addCartRequestDto addCartRequestDto){
+	public ResponseEntity<?> productsDirectBuy(@RequestBody CartReqDto addCartRequestDto){
 		cartService.addCart(addCartRequestDto);
 		return null;
 	}

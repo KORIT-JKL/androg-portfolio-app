@@ -9,11 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class modifyProductReqDto {
-	private int productId;
-	private String productName;
-	private int productPrice;
-	private String categoryId;
-	private String colorId;
-	private String productImg;
+public class AdminReviewRespdto {
+	private int reviewId;
+	private String content;
 }

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 @Data
 @Builder
-public class SearchProductsRespDto {
+public class ProductsRespDto {
 	private int productId;
 	private String productName;
 	private int productPrice;

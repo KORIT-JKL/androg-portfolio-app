@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class getReviewsReviewRespDto {
-	private String reviewId;
+public class ReviewsRespDto {
+	private int reviewId;
 	private String name;
 	private String productName;
 	private String content;
 	private Date date;
-	private String reviewContent;
 }
