@@ -198,4 +198,9 @@
 		insert into adminreview_tb
 		values ( 0 , #{reviewId},#{content});
 	</insert>
+	<insert id="reviewReviewModify">
+		update adminreview_tb
+		set review_content= #{content}
+		where review_id = #{reviewId}
+	</insert>
 </mapper>

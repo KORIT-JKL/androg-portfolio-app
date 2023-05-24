@@ -95,4 +95,11 @@ public class AdminController {
 		adminService.reviewReviewRegister(reviewId, content);
 		return null;
 	}
+	@PutMapping("/admin/reviews/review/modify")
+	public ResponseEntity<?> reviewsReviewModify(@RequestParam Map<String, Object> requestmaMap) {
+		int reviewId = Integer.parseInt((String)requestmaMap.get("reviewId")) ;
+		String content = (String)requestmaMap.get("content") ;
+		adminService.reviewReviewModify(reviewId, content);
+		return null;
+	}
 }

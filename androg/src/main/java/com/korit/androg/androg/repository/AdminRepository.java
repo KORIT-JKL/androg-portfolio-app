@@ -32,4 +32,5 @@ public interface AdminRepository {
 	public List<getReviewsReviewRespDto> getReviewsNoReview();
 	public List<getReviewsReviewRespDto> getReviewsYesReview();
 	public void reviewReviewRegister(int reviewId, String content);
+	public void reviewReviewModify(int reviewId, String content);
 }

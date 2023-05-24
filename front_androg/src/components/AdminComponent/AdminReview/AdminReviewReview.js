@@ -9,7 +9,7 @@ const cotainer = css`
   justify-content: center;
   margin: auto;
   height: 100%;
-  width: 80%;
+  width: 70%;
 `;
 const reviewReviewContainer = css`
   display: flex;
@@ -38,7 +38,7 @@ const reveiwSelectButton = css`
 const reviewTitleContainer = css`
   display: flex;
   width: 100%;
-  height: 40px;
+  height: 25px;
   border: 1px solid black;
 `;
 
@@ -132,7 +132,7 @@ const modalProductName = css`
 const modalContent = css`
   width: 100%;
   height: 40px;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
 `;
 
@@ -180,7 +180,15 @@ const AdminReviewReview = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewParams, setReviewParams] = useState({ reviewId: 0, content: "" });
   const [selectReview, setSelectReivew] = useState({ reviewId: 0, name: "", productName: "", content: "" });
-  const [noReviewCount, setnoReviewCount] = useState(0);
+  const [modifyModalIsOpen, setModifyModalIsOpen] = useState(false);
+  const [reviewModifyParams, setReviewModifyParams] = useState({ reviewId: 0, content: "" });
+  const [selectModifyReview, setSelectModifyReview] = useState({
+    reviewId: 0,
+    name: "",
+    productName: "",
+    content: "",
+    reviewContent: "",
+  });
   const registerReview = async () => {
     const option = {
       headers: {
@@ -196,6 +204,24 @@ const AdminReviewReview = () => {
     setReviewParams({ reviewId: 0, content: "" });
     setModalIsOpen(false);
     alert("리뷰 등록 완료");
+    setRefresh(true);
+    return response;
+  };
+  const modifyReview = async () => {
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+      params: {
+        reviewId: reviewModifyParams.reviewId,
+        content: reviewModifyParams.content,
+      },
+    };
+    const response = await axios.put("http://localhost:8080/admin/reviews/review/modify", "", option);
+    setReviewModifyParams({ reviewId: 0, name: "", productName: "", content: "" });
+    setReviewModifyParams({ reviewId: 0, content: "" });
+    setModifyModalIsOpen(false);
+    alert("리뷰 수정 완료");
     setRefresh(true);
     return response;
   };
@@ -217,9 +243,7 @@ const AdminReviewReview = () => {
       enabled: refresh,
       onSuccess: (response) => {
         setReviews(response.data);
-        setnoReviewCount(response.data.length);
         setRefresh(false);
-        console.log(response.data);
       },
     }
   );
@@ -238,13 +262,33 @@ const AdminReviewReview = () => {
 
     setModalIsOpen(true);
   };
+  const modifyButtonClick = (review) => {
+    setSelectModifyReview({
+      reviewId: review.reviewId,
+      name: review.name,
+      productName: review.productName,
+      content: review.content,
+      reviewContent: review.reviewContent,
+    });
+    setReviewModifyParams({ reviewId: review.reviewId });
+
+    setModifyModalIsOpen(true);
+  };
   const modalCancleClick = () => {
     setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
     setReviewParams({ reviewId: 0, content: "" });
-    setModalIsOpen(false);
+    setModifyModalIsOpen(false);
+  };
+  const modifyModalCancleClick = () => {
+    setSelectModifyReview({ reviewId: 0, name: "", productName: "", content: "" });
+    setReviewModifyParams({ reviewId: 0, content: "" });
+    setModifyModalIsOpen(false);
   };
   const modalReviewContentInput = (e) => {
     setReviewParams({ ...reviewParams, content: e.target.value });
+  };
+  const modifyModalReviewContentInput = (e) => {
+    setReviewModifyParams({ ...reviewModifyParams, content: e.target.value });
   };
   return (
     <>
@@ -272,6 +316,31 @@ const AdminReviewReview = () => {
       ) : (
         ""
       )}
+      {modifyModalIsOpen ? (
+        <div css={adminReviewModalContainer}>
+          <div css={adminReviewModal}>
+            <div css={modalTitle}>
+              <div css={modalname}>작성자 : {selectModifyReview.name}</div>
+              <div css={modalProductName}>상품명 : {selectModifyReview.productName}</div>
+              <div css={modalContent}>리뷰 내용 :{selectModifyReview.content}</div>
+              <div css={modalContent}>답변 내용 :{selectModifyReview.reviewContent} </div>
+            </div>
+            <div css={modalbody}>
+              <input css={modalreviewContent} onChange={modifyModalReviewContentInput} type="text"></input>
+            </div>
+            <div css={modalFooter}>
+              <button css={reviewbutton} onClick={() => modifyReview()}>
+                수정
+              </button>
+              <button css={reviewbutton} onClick={() => modifyModalCancleClick()}>
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
 
       <div css={cotainer}>
         <div css={reviewReviewContainer}>
@@ -290,6 +359,7 @@ const AdminReviewReview = () => {
               <div css={reviewContentTitle}>리뷰 내용</div>
               <div css={reviewContentTitle}>답변 내용</div>
               <div css={reviewDate}>작성 날짜</div>
+              <div css={inputButtonTitle}>리뷰 수정</div>
             </div>
             {!!reviews ? (
               <>
@@ -298,8 +368,11 @@ const AdminReviewReview = () => {
                     <div css={reviewName}>{review.name}</div>
                     <div css={reviewProductName}>{review.productName}</div>
                     <div css={reviewContent}>{review.content}</div>
+                    <div css={reviewContent}>{review.reviewContent}</div>
                     <div css={reviewDate}>{review.date}</div>
-                    <button>수정</button>
+                    <button css={inputButton} onClick={() => modifyButtonClick(review)}>
+                      수정
+                    </button>
                   </div>
                 ))}
               </>
