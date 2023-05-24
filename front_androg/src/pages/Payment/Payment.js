@@ -197,9 +197,10 @@ const Payment = () => {
     products: [],
     addressId: userAddressId,
   });
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
-  console.log(orderParams.products);
+
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -285,6 +286,14 @@ const Payment = () => {
     }
   }, [addressIndex]);
 
+  useEffect(() => {
+    let sum = 0;
+    orderParams.products.forEach((product) => {
+      sum += product.productPrice * product.countNumber;
+    });
+    setTotalPrice(sum);
+  }, [orderParams]);
+
   const orderSubmitHandle = async () => {
     try {
       const response = axios.post("http://localhost:8080/products/order", orderParams, {
@@ -292,11 +301,6 @@ const Payment = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       });
-      // const response2 = axios.post(`http://localhost:8080/products/order/address/${userAddressId}`, {
-      //   headers: {
-      //     Authorization: localStorage.getItem("accessToken"),
-      //   },
-      // });
     } catch (error) {}
     navigate("/user/mypage");
   };
@@ -306,10 +310,9 @@ const Payment = () => {
   };
 
   const getCheckBoxState = (e) => {
+    setTotalPrice(0);
     const { id, checked } = e.target;
     console.log(id + ", " + checked);
-    console.log(cartList.data.data);
-    console.log(orderParams.products)
     if (e.target.checked) {
       setOrderParams({
         userId: principal.data.data.userId,
@@ -425,11 +428,11 @@ const Payment = () => {
               : ""}
             <div css={cartSummary}>
               <div css={summaryHeader}>
-                <div>{"총 상품금액 "}</div>
+                <div>{"총 상품금액 " + totalPrice}</div>
                 <div>{"배송비 " + 2500}</div>
               </div>
               <div css={summaryFooter}>
-                <div>{"총 주문금액 " + 2500}</div>
+                <div>{"총 주문금액 " + (2500 + totalPrice)}</div>
               </div>
             </div>
           </div>

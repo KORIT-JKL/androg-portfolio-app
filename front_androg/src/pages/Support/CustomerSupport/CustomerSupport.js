@@ -5,6 +5,8 @@ import CommonHeader from "../../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../../components/CommonFooter/CommonFooter";
 import SupprotInput from "./../../../components/SupportUI/Input/SupprotInput";
 import FAQItem from "../../../components/SupportUI/Button/FAQItem";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const main = css`
   display: grid;
@@ -31,12 +33,22 @@ const headerText = css`
   font-weight: 800;
 `;
 
+const select = css`
+  width: 400px;
+  height: 30px;
+  margin-bottom: 10px;
+  border-radius: 0;
+  outline: none;
+`;
+
 const textArea = css`
   margin-bottom: 10px;
   padding: 5px;
   width: 400px;
   height: 250px;
   resize: none;
+  border-radius: 0;
+  outline: none;
 `;
 
 const inquiryButton = css`
@@ -53,6 +65,21 @@ const inquiryButton = css`
 `;
 
 const CustomerSupport = () => {
+
+
+  const inquiry = useMutation(["inquiry"], async () => {
+    const option= {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+    }
+    const response = await axios.post("http://localhost:8080/");
+  })
+
+  const inquirySubmitHandle = () => {
+
+  }
+
   return (
     <>
       <CommonHeader />
@@ -61,11 +88,18 @@ const CustomerSupport = () => {
           <div css={headerText}>
             <h1>문의하기</h1>
           </div>
-          <SupprotInput type="text" placeholder="name" />
-          <SupprotInput type="text" placeholder="email" />
           <SupprotInput type="text" placeholder="orderNumber" />
-          <textarea css={textArea} placeholder="내용을 입력하세요"></textarea>
-          <button css={inquiryButton}>확인</button>
+          {/* <select name="" id="" css={select}>
+            <option value="">문의사항을 선택해주세요</option>
+            <option value="">주문상태</option>
+            <option value="">반품</option>
+            <option value="">주소변경</option>
+            <option value="">배송조회</option>
+            <option value="">오류문의</option>
+            <option value="">기타</option>
+          </select> */}
+          <textarea css={textArea} placeholder="내용을 입력하세요.200자"></textarea>
+          <button css={inquiryButton} onClick={inquirySubmitHandle}>확인</button>
         </div>
 
         <div css={mainContainer}>
