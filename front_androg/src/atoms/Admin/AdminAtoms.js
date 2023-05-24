@@ -7,7 +7,10 @@ export const AdminMenuSelect = atom({
 
 export const AdminPopUp = atom({
   key: "AdminPopUp",
-  default: [],
+  default: {
+    pupUpId: 0,
+    content: "",
+  },
 });
 export const AdminNotice = atom({
   key: "AdminNotice",

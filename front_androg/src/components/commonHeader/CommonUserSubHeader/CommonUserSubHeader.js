@@ -1,13 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { popUpState, setRefresh } from "../../../atoms/Common/CommonAtoms";
+import { setRefresh } from "../../../atoms/Common/CommonAtoms";
 import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
-import { AdminPopUp } from "../../../atoms/Admin/AdminAtoms";
-import axios from "axios";
-import { useQuery } from "react-query";
+
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -55,6 +53,7 @@ const subHeader = css`
   display: flex;
   width: 100%;
   height: 50px;
+  z-index: 100;
 `;
 const subHeaderList = css`
   display: flex;
@@ -70,64 +69,10 @@ const sublist = css`
     font-weight: 600;
   }
 `;
-const popup = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 30px;
-  background-color: black;
-  font-size: 15px;
-  transition: transform 0.3s, opacity 0.3s;
-  transform: translateY(0);
-  opacity: 1;
-`;
-const popupContent = css`
-  margin: 0px 10px 0px 10px;
-  color: white;
-`;
-const popupButton = css`
-  margin: 0px 10px 0px 10px;
-  border: none;
-  cursor: pointer;
-  background-color: black;
-  color: white;
-  &:hover {
-    font-weight: 600;
-    text-decoration: underline;
-  }
-`;
-const hiddenStyles = css`
-  transform: translateY(-100%);
-  opacity: 0;
-  display: none;
-`;
-
 const CommonUserSubHeader = ({ sbheader }) => {
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
-  const [isVisible, setIsVisible] = useRecoilState(popUpState);
-  const [popUpList, setPopUpList] = useRecoilState(AdminPopUp);
-
-  const getPopUp = useQuery(
-    ["userPopUpList"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-      };
-      const response = await axios.get("http://localhost:8080/pop-up", option);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        setPopUpList(response.data);
-      },
-      enabled: isVisible,
-    }
-  );
 
   const navigate = useNavigate();
   const onClickNotice = () => {
@@ -152,11 +97,7 @@ const CommonUserSubHeader = ({ sbheader }) => {
     setThisPage(1);
     setThiRefresh(true);
   };
-  const onClickPopCloseHandle = () => {
-    if (isVisible) {
-      setIsVisible(false);
-    }
-  };
+
   return (
     <>
       <div css={subHeader}>
@@ -204,16 +145,6 @@ const CommonUserSubHeader = ({ sbheader }) => {
           </ul>
         )}
       </div>
-      {popUpList.length > 0 ? (
-        <div css={[popup, isVisible ? null : hiddenStyles]}>
-          <h2 css={popupContent}>{popUpList[0].content}</h2>
-          <button css={popupButton} onClick={onClickPopCloseHandle}>
-            닫기
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
     </>
   );
 };

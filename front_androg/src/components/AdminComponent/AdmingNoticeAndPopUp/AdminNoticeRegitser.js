@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useState } from "react";
 import SupprotInput from "./../../SupportUI/Input/SupprotInput";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
@@ -53,6 +53,7 @@ const inquiryButton = css`
 
 const AdminNoticeRegitser = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
+  const [wrappedContent, setWrappedContent] = useState("");
   const noticeRegister = useMutation(async () => {
     const data = {
       ...notice,
@@ -68,6 +69,7 @@ const AdminNoticeRegitser = () => {
 
   const onchangeHandle = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
     setNotice({
       ...notice,
       [name]: value,
@@ -82,12 +84,7 @@ const AdminNoticeRegitser = () => {
       <div css={inputbox}>
         <SupprotInput type="text" placeholder="제목" name="subject" onChange={onchangeHandle} />
       </div>
-      <textarea
-        css={textArea}
-        placeholder="내용을 입력하세요"
-        name="content"
-        onChange={onchangeHandle}
-      ></textarea>
+      <textarea css={textArea} placeholder="내용을 입력하세요" name="content" onChange={onchangeHandle}></textarea>
       <button
         css={inquiryButton}
         onClick={() => {

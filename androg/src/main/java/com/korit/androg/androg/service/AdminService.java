@@ -73,10 +73,13 @@ public class AdminService {
 	public int popUpRegister (String content) {
 		return adminRepository.popUpRegister(content);
 	}
-	public List<PopUpRespDto> getPopUpList(){
+	public PopUpRespDto getPopUpList(){
 		return adminRepository.getPopUpList();
 	}
 	public int popUpModify(String content) {
 		return adminRepository.popUpModify(content);
+	}
+	public int popUpDelete(int popUpId) {
+		return adminRepository.popDelete(popUpId);
 	}
 }

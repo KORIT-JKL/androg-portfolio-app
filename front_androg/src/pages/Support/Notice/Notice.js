@@ -23,9 +23,10 @@ const main = css`
 `;
 
 const mainContainer = css`
+  word-wrap: break-word;
   padding: 10px;
   margin: 10px;
-  width: 600px;
+  width: 300px;
   height: 350px;
 `;
 
@@ -51,7 +52,7 @@ const Notice = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/notice", option);
+      const response = await axios.get("http://localhost:8080/auth/notice", option);
       return response;
     },
     {

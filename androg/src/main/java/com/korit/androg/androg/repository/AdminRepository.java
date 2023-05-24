@@ -23,9 +23,10 @@ public interface AdminRepository {
 	public void productDelte(int productId);
 	public void modifySodlout(int productId, int soldoutFlag);
 //popUp
-	public List<PopUpRespDto> getPopUpList();
+	public PopUpRespDto getPopUpList();
 	public int popUpRegister (String content);
 	public int popUpModify(String content);
+	public int popDelete(int popUpId);
 //notice
 	public int noticeRegister(Map<String, Object> requestMap);
 	public Notice getNotice();

@@ -121,7 +121,7 @@
 	
 	<insert id="popUpRegister">
 		insert into popup_tb
-		values(0,#{content});
+		values(1,#{content});
 	</insert>
 	<select id="getPopUpList" resultMap="popUpMap">
 		select
@@ -136,6 +136,12 @@
 			popup_id = 1
 	
 	</update>
+	
+	<delete id="popDelete" parameterType="Integer">
+		delete from popup_tb
+		where
+			popup_id = #{popUpId};
+	</delete>
 	
 	<insert id="noticeRegister" parameterType="hashmap">
 	insert into notice_tb
