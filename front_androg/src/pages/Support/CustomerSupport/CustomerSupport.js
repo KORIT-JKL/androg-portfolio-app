@@ -1,12 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CommonHeader from "../../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../../components/CommonFooter/CommonFooter";
 import SupprotInput from "./../../../components/SupportUI/Input/SupprotInput";
 import FAQItem from "../../../components/SupportUI/Button/FAQItem";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const main = css`
   display: grid;
@@ -64,16 +65,80 @@ const inquiryButton = css`
 `;
 
 const CustomerSupport = () => {
+  const [principalState, setPrincipalState] = useState(false);
+  const [orderDtlId, setOrderDtlId] = useState(0);
+  const [category, setCategory] = useState("");
+  const [inquiryContent, setInquiryContent] = useState("");
+  const navigate = useNavigate();
+
+  const principal = useQuery(
+    ["principal"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      return response;
+    },
+    {
+      onSuccess: () => {
+        setPrincipalState(false);
+      },
+      enabled: principalState
+    });
+
+
   const inquiry = useMutation(["inquiry"], async () => {
+    const data = {
+      userId: principal.data.data.userId,
+      orderId: orderDtlId,
+      category: category,
+      inquiryContent: inquiryContent
+    };
     const option = {
       headers: {
+        "content-type":"application/json",
         Authorization: `${localStorage.getItem("accessToken")}`,
       },
     };
-    const response = await axios.post("http://localhost:8080/");
+    const response = await axios.post("http://localhost:8080/user/inquiry", data ,option);
+    return response;
   });
 
-  const inquirySubmitHandle = () => {};
+  useEffect(()=>{
+    if (!principalState) {
+      setPrincipalState(true);
+    }
+  },[])
+
+  
+  const getOrderId = (e) => {
+    setOrderDtlId(e.target.value);
+    console.log(e.target.value)
+  };
+
+  const getInquiryCategory = (e) => {
+    setCategory(e.target.value);
+    console.log(e.target.value);
+  };
+  
+  const getContent = (e) => {
+    setInquiryContent(e.target.value);
+    console.log(e.target.value)
+  }
+  const inquirySubmitHandle = () => {
+    if(!!principal.data) {
+      inquiry.mutate();
+      alert("문의가 정상적으로 접수되었습니다.")
+      window.location.reload();
+    } else {
+      alert("로그인 후 이용해주세요.");
+      navigate("/auth/login");
+    }
+    
+  };
 
   return (
     <>
@@ -83,17 +148,17 @@ const CustomerSupport = () => {
           <div css={headerText}>
             <h1>문의하기</h1>
           </div>
-          <SupprotInput type="text" placeholder="orderNumber" />
-          {/* <select name="" id="" css={select}>
+          <SupprotInput type="text" placeholder="orderNumber" onChange={getOrderId}/>
+          <select name="" id="" css={select} onClick={getInquiryCategory}>
             <option value="">문의사항을 선택해주세요</option>
-            <option value="">주문상태</option>
-            <option value="">반품</option>
-            <option value="">주소변경</option>
-            <option value="">배송조회</option>
-            <option value="">오류문의</option>
-            <option value="">기타</option>
-          </select> */}
-          <textarea css={textArea} placeholder="내용을 입력하세요.200자"></textarea>
+            <option value="주문상태">주문상태</option>
+            <option value="반품">반품</option>
+            <option value="주소변경">주소변경</option>
+            <option value="배송조회">배송조회</option>
+            <option value="오류문의">오류문의</option>
+            <option value="기타">기타</option>
+          </select>
+          <textarea css={textArea} placeholder="내용을 입력하세요.200자" onChange={getContent}></textarea>
           <button css={inquiryButton} onClick={inquirySubmitHandle}>
             확인
           </button>

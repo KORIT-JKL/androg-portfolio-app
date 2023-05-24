@@ -16,9 +16,9 @@ public class InquiryService {
 	private final InquiryRepository inquiryRepository;
 	public int submitInquiry(InquirySubmitReqDto inquirySubmitReqDto) {
 		Map<String, Object> requestMap = new HashMap<>();
-		requestMap.put("inquiryId", inquirySubmitReqDto.getInquiryId());
 		requestMap.put("userId", inquirySubmitReqDto.getUserId());
-		requestMap.put("orderDetailId", inquirySubmitReqDto.getOrderDetailId());
+		requestMap.put("orderId", inquirySubmitReqDto.getOrderId());
+		requestMap.put("category", inquirySubmitReqDto.getCategory());
 		requestMap.put("inquiryContent", inquirySubmitReqDto.getInquiryContent());
 		return inquiryRepository.submitInquiry(requestMap); 
 	}
