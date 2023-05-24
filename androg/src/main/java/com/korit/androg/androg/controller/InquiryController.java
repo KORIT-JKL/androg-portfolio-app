@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InquiryController {
 	private final InquiryService inquiryService;
-	@PostMapping("/users/inquiry")
+	@PostMapping("/user/inquiry")
 	public ResponseEntity<?> submitInquiry(@RequestBody InquirySubmitReqDto inquirySubmitReqDto) {
 		return ResponseEntity.ok().body(inquiryService.submitInquiry(inquirySubmitReqDto));
 	}
