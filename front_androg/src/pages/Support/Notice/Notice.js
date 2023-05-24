@@ -9,7 +9,6 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const header = css`
-  padding-top: 120px;
   padding-left: 50px;
   font-size: 20px;
   font-weight: 600;
@@ -58,7 +57,6 @@ const Notice = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
         setNotice(response.data);
       },
     }

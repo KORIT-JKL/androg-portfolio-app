@@ -18,7 +18,6 @@ const container = css`
   flex-direction: column;
   justify-content: center;
   margin: auto;
-  padding-top: 100px;
 `;
 const productCardContainer = css`
   display: flex;

@@ -15,6 +15,7 @@ const cartContainer = css`
   background-color: #00000099;
   width: 100%;
   height: 100%;
+  padding-top: 100px;
 `;
 const mainCartContainer = css`
   display: flex;
@@ -212,11 +213,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/cart/update/countUp",
-        product,
-        option
-      );
+      const response = await axios.put("http://localhost:8080/cart/update/countUp", product, option);
       return response;
     },
     {
@@ -232,11 +229,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/cart/update/countDown",
-        product,
-        option
-      );
+      const response = await axios.put("http://localhost:8080/cart/update/countDown", product, option);
       return response;
     },
     {
@@ -352,10 +345,7 @@ const Cart = () => {
                     <div css={detailContainer}>
                       <div css={productName}>
                         {product.productName}
-                        <button
-                          css={productDelectButton}
-                          onClick={() => deleteProduct.mutate(product)}
-                        >
+                        <button css={productDelectButton} onClick={() => deleteProduct.mutate(product)}>
                           X
                         </button>
                       </div>
@@ -363,8 +353,7 @@ const Cart = () => {
                         {product.colorName} / {product.sizeName}
                       </div>
                       <div css={productPrice}>
-                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber}
-                        )
+                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber})
                       </div>
                       <div css={productCount}>
                         <button css={plusAndMinus} onClick={() => countMinus.mutate(product)}>

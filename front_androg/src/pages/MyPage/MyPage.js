@@ -16,7 +16,6 @@ import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 const mainContainer = css`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  padding: 120px 20px;
 `;
 
 const informationContent = css`
@@ -152,7 +151,6 @@ const MyPage = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
         setOrderProducts([...response.data]);
 
         setProductsRefresh(false);
@@ -170,7 +168,6 @@ const MyPage = () => {
         Authorization: `${localStorage.getItem("accessToken")}`,
       },
     };
-    console.log(await axios.delete(`http://localhost:8080/user/${userId}`, option));
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
 
@@ -193,7 +190,6 @@ const MyPage = () => {
       localStorage.removeItem("accessToken");
       setLoginIsState(false);
       navgate("/");
-      console.log("/");
     }
   };
 

@@ -80,7 +80,6 @@ const CommonHeader = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response.data);
         setPopUpList(response.data);
       },
       enabled: isVisible,

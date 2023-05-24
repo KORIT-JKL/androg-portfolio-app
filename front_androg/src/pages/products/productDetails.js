@@ -21,7 +21,6 @@ const container = css`
 `;
 const imgContainer = css`
   margin: 20px;
-  padding-top: 100px;
   width: 50%;
   height: 100%;
 `;

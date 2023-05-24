@@ -20,7 +20,6 @@ const mainContainer = css`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 10px;
-  padding: 120px 20px;
 `;
 const informationContent = css`
   grid-column-start: 2;

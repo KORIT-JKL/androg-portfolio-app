@@ -11,7 +11,6 @@ import axios from "axios";
 const main = css`
   display: grid;
   grid-template-columns: repeat(12);
-  padding-top: 120px;
 `;
 
 const mainContainer = css`
@@ -65,20 +64,16 @@ const inquiryButton = css`
 `;
 
 const CustomerSupport = () => {
-
-
   const inquiry = useMutation(["inquiry"], async () => {
-    const option= {
+    const option = {
       headers: {
         Authorization: `${localStorage.getItem("accessToken")}`,
       },
-    }
+    };
     const response = await axios.post("http://localhost:8080/");
-  })
+  });
 
-  const inquirySubmitHandle = () => {
-
-  }
+  const inquirySubmitHandle = () => {};
 
   return (
     <>
@@ -99,7 +94,9 @@ const CustomerSupport = () => {
             <option value="">기타</option>
           </select> */}
           <textarea css={textArea} placeholder="내용을 입력하세요.200자"></textarea>
-          <button css={inquiryButton} onClick={inquirySubmitHandle}>확인</button>
+          <button css={inquiryButton} onClick={inquirySubmitHandle}>
+            확인
+          </button>
         </div>
 
         <div css={mainContainer}>
