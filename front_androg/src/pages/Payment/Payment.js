@@ -192,12 +192,12 @@ const Payment = () => {
   const [userAddressId, setUserAddressId] = useState(0);
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
-  const [sum, setSum] = useState(0);
   const [orderParams, setOrderParams] = useState({
     userId: 0,
     products: [],
     addressId: userAddressId,
   });
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
 
@@ -286,6 +286,14 @@ const Payment = () => {
     }
   }, [addressIndex]);
 
+  useEffect(() => {
+    let sum = 0;
+    orderParams.products.forEach((product) => {
+      sum += product.productPrice * product.countNumber;
+    });
+    setTotalPrice(sum);
+  }, [orderParams]);
+
   const orderSubmitHandle = async () => {
     try {
       const response = axios.post("http://localhost:8080/products/order", orderParams, {
@@ -300,9 +308,9 @@ const Payment = () => {
   const clickHandle = (e) => {
     setAddressIndex(e.target.value);
   };
-  console.log(orderParams.products);
 
   const getCheckBoxState = (e) => {
+    setTotalPrice(0);
     const { id, checked } = e.target;
     console.log(id + ", " + checked);
     if (e.target.checked) {
@@ -314,13 +322,6 @@ const Payment = () => {
         ],
         addressId: userAddressId,
       });
-      if(orderParams.products.length !==0) {
-        let sum = 0;
-        for (let i = 0; i < orderParams.products.length; i++) {
-          sum += orderParams.products[i].productPrice * orderParams.products[i].countNumber;
-          setSum(sum);
-        }
-      }
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
@@ -427,11 +428,11 @@ const Payment = () => {
               : ""}
             <div css={cartSummary}>
               <div css={summaryHeader}>
-                <div>{"총 상품금액 " + sum}</div>
+                <div>{"총 상품금액 " + totalPrice}</div>
                 <div>{"배송비 " + 2500}</div>
               </div>
               <div css={summaryFooter}>
-                <div>{"총 주문금액 " + (2500 + sum)}</div>
+                <div>{"총 주문금액 " + (2500 + totalPrice)}</div>
               </div>
             </div>
           </div>

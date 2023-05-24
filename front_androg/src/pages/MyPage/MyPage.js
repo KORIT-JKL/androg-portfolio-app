@@ -219,11 +219,11 @@ const MyPage = () => {
               {userAddressList[0] !== undefined ? userAddressList[0].addressZonecode : ""}
             </div>
 
-            <div css={addressContent} onClick={withdrawalSubmit}>
-              회원탈퇴
-            </div>
             <div css={addressContent} onClick={() => navgate("/user/mypage/address")}>
               주소록 보기
+            </div>
+            <div css={addressContent} onClick={withdrawalSubmit}>
+              회원탈퇴
             </div>
           </div>
           <div css={supportContent}>
