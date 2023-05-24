@@ -15,6 +15,7 @@ export const AdminPopUp = atom({
 export const AdminNotice = atom({
   key: "AdminNotice",
   default: {
+    noticeId: 0,
     subject: "",
     content: "",
   },

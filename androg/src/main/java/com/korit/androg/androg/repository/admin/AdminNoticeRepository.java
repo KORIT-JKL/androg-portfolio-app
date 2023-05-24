@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.admin.AdminNoticeReqDto;
 import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.entity.Notice;
 @Mapper
@@ -14,6 +15,8 @@ public interface AdminNoticeRepository {
 		public int popUpModify(String content);
 		public int popDelete(int popUpId);
 	//notice
-		public int noticeRegister(Map<String, Object> requestMap);
+		public int noticeRegister(AdminNoticeReqDto adminNoticeReqDto);
 		public Notice getNotice();
+		public int noticeModify(AdminNoticeReqDto adminNoticeReqDto);
+		public int noticeDelete(int noticeId);
 }

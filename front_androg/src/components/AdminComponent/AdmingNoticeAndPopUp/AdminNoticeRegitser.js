@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import SupprotInput from "./../../SupportUI/Input/SupprotInput";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 import axios from "axios";
@@ -37,7 +37,7 @@ const textArea = css`
 `;
 
 const inquiryButton = css`
-  margin: 30px 0px 30px 0px;
+  margin-top: 25px;
   outline: none;
   width: 70%;
   height: 10%;
@@ -53,7 +53,7 @@ const inquiryButton = css`
 
 const AdminNoticeRegitser = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
-  const [wrappedContent, setWrappedContent] = useState("");
+  const [wrappedContent, setWrappedContent] = useState({ noticeId: 0, subject: "", content: "" });
   const noticeRegister = useMutation(async () => {
     const data = {
       ...notice,
@@ -66,6 +66,50 @@ const AdminNoticeRegitser = () => {
     const response = await axios.post("http://localhost:8080/admin/notice/register", data, option);
     return response;
   });
+  const noticeModify = useMutation(async () => {
+    const data = {
+      ...notice,
+    };
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+    };
+    const response = await axios.put("http://localhost:8080/admin/notice/modify", data, option);
+    return response;
+  });
+
+  const noticeDelete = useMutation(async (notice) => {
+    const option = {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+    };
+    const response = await axios.delete(
+      `http://localhost:8080/admin/notice/${notice.noticeId}`,
+      option
+    );
+    return response;
+  });
+
+  const getNotice = useQuery(
+    ["getUserNotice"],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.get("http://localhost:8080/auth/notice", option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        console.log(response.data);
+        setNotice(response.data);
+      },
+    }
+  );
 
   const onchangeHandle = (e) => {
     const { name, value } = e.target;
@@ -76,6 +120,10 @@ const AdminNoticeRegitser = () => {
     });
   };
 
+  if (getNotice.isLoading) {
+    return <></>;
+  }
+
   return (
     <div css={mainContainer}>
       <div css={headerText}>
@@ -84,15 +132,41 @@ const AdminNoticeRegitser = () => {
       <div css={inputbox}>
         <SupprotInput type="text" placeholder="제목" name="subject" onChange={onchangeHandle} />
       </div>
-      <textarea css={textArea} placeholder="내용을 입력하세요" name="content" onChange={onchangeHandle}></textarea>
-      <button
-        css={inquiryButton}
-        onClick={() => {
-          noticeRegister.mutate();
-        }}
-      >
-        공지 등록
-      </button>
+      <textarea
+        css={textArea}
+        placeholder="내용을 입력하세요"
+        name="content"
+        onChange={onchangeHandle}
+      ></textarea>
+      {notice.noticeId !== undefined ? (
+        <>
+          <button
+            css={inquiryButton}
+            onClick={() => {
+              noticeModify.mutate();
+            }}
+          >
+            수정
+          </button>
+          <button
+            css={inquiryButton}
+            onClick={() => {
+              noticeDelete.mutate(notice);
+            }}
+          >
+            삭제
+          </button>
+        </>
+      ) : (
+        <button
+          css={inquiryButton}
+          onClick={() => {
+            noticeRegister.mutate();
+          }}
+        >
+          공지 등록
+        </button>
+      )}
     </div>
   );
 };

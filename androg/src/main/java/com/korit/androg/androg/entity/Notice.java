@@ -13,4 +13,6 @@ public class Notice {
 	private int noticeId;
 	private String subject;
 	private String content;
+	
+
 }
