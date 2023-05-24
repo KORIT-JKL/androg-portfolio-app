@@ -40,7 +40,6 @@ public class ReviewController {
 	
 	@PostMapping("/product/review/register")
 	public ResponseEntity<?> reviewRegiset(@RequestBody ReviewRegisterReqDto reviewRegisterReqDto){
-		System.out.println(reviewRegisterReqDto);
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
 	}
 	

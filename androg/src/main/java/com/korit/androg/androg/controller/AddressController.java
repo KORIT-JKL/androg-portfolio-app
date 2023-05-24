@@ -44,7 +44,6 @@ public class AddressController {
 	
 	@PutMapping("/user/mypage/address/default")
 	public ResponseEntity<?> addressDefault(@RequestBody AddressDefaultReqDto addressDefaultReqDto){
-		System.out.println(addressDefaultReqDto);
 		return ResponseEntity.ok().body(addressService.addressDefault(addressDefaultReqDto)); 
 	}
 	

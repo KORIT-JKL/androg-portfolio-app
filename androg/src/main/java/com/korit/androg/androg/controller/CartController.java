@@ -23,27 +23,24 @@ public class CartController {
 	private final CartService cartService;
 	@PostMapping("/cart/addition")
 	public ResponseEntity<?> addCart(@RequestBody addCartRequestDto addCartRequestDto) {
-		System.out.println(addCartRequestDto);
 		cartService.addCart(addCartRequestDto);
 		return null;
 	}
 	@GetMapping("/cart")
 	public ResponseEntity<?> getCart(@RequestParam Map<String, Object> searchParams) {
-//		System.out.println(productsService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
-		return 	ResponseEntity.ok(
+	return 	ResponseEntity.ok(
 				cartService.getCartByUserId(Integer.parseInt((String)searchParams.get("userId"))));
 	}
 
 	@DeleteMapping("/cart/delete")
 	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
-//		System.out.println(params.get("produ	ct[cartId]"));
+
 		cartService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
 		return 	null;
 	}
 	
 	@PutMapping("/cart/update/countUp")
 	public ResponseEntity<?> countUp(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
 		
 		
 		cartService.plusCountByCartId(cartResponseDto.getCartId());
@@ -51,7 +48,7 @@ public class CartController {
 	}
 	@PutMapping("/cart/update/countDown")
 	public ResponseEntity<?> countDown(@RequestBody getCartResponseDto cartResponseDto) {
-		System.out.println(cartResponseDto);
+
 		
 		
 		cartService.minusCountByCartId(cartResponseDto.getCartId(),cartResponseDto.getCountNumber());

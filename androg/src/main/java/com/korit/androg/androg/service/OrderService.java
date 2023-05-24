@@ -28,7 +28,6 @@ public class OrderService {
 		requestMap.put("userId", orderCompleteReqDto.getUserId());
 		requestMap.put("products", orderCompleteReqDto.getProducts());
 		requestMap.put("orderId", order.getOrderId());
-		System.out.println(requestMap);
 		return orderRepository.completeOrder(requestMap);
 	}
 	

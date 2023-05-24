@@ -57,7 +57,6 @@ public class AdminService {
 	}
 	
 	public void reviesDelete(int reviewsId) {
-		System.out.println(reviewsId);
 		adminRepository.delteReivews(reviewsId);
 		return;
 	}
