@@ -1,0 +1,80 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import React from "react";
+import { useRecoilState } from "recoil";
+import { InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
+
+const answerContainer = css`
+  position: fixed;
+  z-index: 999;
+  background-color: #00000099;
+  width: 100%;
+  height: 100%;
+`;
+
+const answerBox = css`
+  position: absolute;
+  top: 150px;
+  left: 700px;
+  width: 30%;
+  height: 50%;
+  background-color: white;
+  border: 1px solid black;
+`;
+
+const header = css`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 15%;
+    background-color: #dbdbdb;
+    font-size: 30px;
+    font-weight: 500;
+`;
+
+const main = css`
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+`;
+
+const text = css`
+    height: 100%;
+    border-radius: 0;
+    outline: none;
+    border-left: 0;
+    border-right: 0;
+    resize: none;
+`;
+
+const footer = css`
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const InquiryAnswer = ({inquiryId}) => {
+  const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
+
+  return (
+    <div>
+      <div css={answerContainer}>
+        <div css={answerBox}>
+          <header css={header}>
+            문의 답변
+          </header>
+          <main css={main}>
+            <textarea css={text} placeholder="답변을 입력해주세요..." />
+          </main>
+          <footer css={footer}>
+            <button >보내기</button>
+            <button onClick={()=>{setAnswerState(false)}}>취소</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default InquiryAnswer;

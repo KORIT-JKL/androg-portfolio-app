@@ -1,3 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.korit.androg.androg.repository.admin.AdminInquiryRepository"></mapper>
+<mapper namespace="com.korit.androg.androg.repository.admin.AdminInquiryRepository">
+	<resultMap type="com.korit.androg.androg.entity.Inquiry" id="InquiryMap">
+		<id property="inquiryId" column="inquiry_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="orderId" column="order_detail_id"/>
+		<result property="category" column="inquiry_category"/>
+		<result property="inquiryContent" column="inquiry_content"/>
+		<result property="date" column="inquiry_date"/>
+		<association property="user" resultMap="UserMap"></association>
+	</resultMap>
+	<resultMap type="com.korit.androg.androg.entity.User" id="UserMap">
+		<id property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+	</resultMap>
+
+	<select id="getInquiries" resultType="list" resultMap="InquiryMap">
+		select 
+			it.inquiry_id,
+			ut.email,
+			it.order_detail_id,
+			it.inquiry_category,
+			it.inquiry_content,
+			it.inquiry_date
+		from
+			inquiry_tb it
+			left outer join user_tb ut on(ut.user_id = it.user_id)	
+	</select>
+
+
+</mapper>

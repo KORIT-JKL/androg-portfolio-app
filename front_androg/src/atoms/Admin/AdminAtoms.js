@@ -19,3 +19,13 @@ export const AdminNotice = atom({
     content: "",
   },
 });
+
+export const AdminInquiries = atom({
+  key: "AdminInquiry",
+  default: [],
+});
+
+export const InquiryAnswerState = atom({
+  key: "InquiryAnswerState",
+  default: false,
+});

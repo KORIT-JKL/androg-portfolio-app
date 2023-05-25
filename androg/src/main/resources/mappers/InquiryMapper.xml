@@ -3,6 +3,6 @@
 <mapper namespace="com.korit.androg.androg.repository.InquiryRepository">
 	<insert id="submitInquiry">
 		insert into inquiry_tb
-		values (0, #{userId},#{orderId}, #{category}, #{inquiryContent})
+		values (0, #{userId},#{orderId}, #{category}, #{inquiryContent}, CURDATE())
 	</insert>
 </mapper>
