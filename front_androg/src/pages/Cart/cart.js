@@ -301,7 +301,6 @@ const Cart = () => {
     {
       enabled: userId !== 0 && deleteSuccess,
       onSuccess: (response) => {
-        console.log(response.data);
         if (response == null) {
           setThiRefresh(true);
         }
@@ -326,7 +325,6 @@ const Cart = () => {
       setThiRefresh(true);
     }
   };
-  console.log(getproducts);
   return (
     <div css={cartContainer}>
       <div css={mainCartContainer}>

@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminReview {
 	private int adminReviewId;
+	private int reviewId;
 	private String reviewContent;
 }

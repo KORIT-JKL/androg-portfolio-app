@@ -8,11 +8,9 @@ import impact from "../../../img/impact (1).png";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
-import { setRefresh } from "../../../atoms/Common/CommonAtoms";
+import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
-import Address from "./../../../pages/Address/Address";
-import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -63,7 +61,7 @@ const CommonUserHeader = () => {
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
   const [authState, setAuthState] = useRecoilState(authenticationState);
-  const [sbheader, setsbheader] = useState(0);
+  const [sbheader, setThissbheader] = useRecoilState(setsbheader);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [products, setThisProducts] = useRecoilState(setProducts);
@@ -139,10 +137,10 @@ const CommonUserHeader = () => {
         {authState ? (
           <>
             <ul css={headerList}>
-              <li css={list} onMouseOver={() => setsbheader(0)}>
+              <li css={list} onMouseOver={() => setThissbheader(1)}>
                 SHOP
               </li>
-              <li css={list} onMouseOver={() => setsbheader(1)}>
+              <li css={list} onMouseOver={() => setThissbheader(0)}>
                 SUPPORT
               </li>
             </ul>
@@ -176,10 +174,10 @@ const CommonUserHeader = () => {
         ) : (
           <>
             <ul css={headerList}>
-              <li css={list} onMouseOver={() => setsbheader(false)}>
+              <li css={list} onMouseOver={() => setThissbheader(1)}>
                 SHOP
               </li>
-              <li css={list} onMouseOver={() => setsbheader(true)}>
+              <li css={list} onMouseOver={() => setThissbheader(0)}>
                 SUPPORT
               </li>
             </ul>

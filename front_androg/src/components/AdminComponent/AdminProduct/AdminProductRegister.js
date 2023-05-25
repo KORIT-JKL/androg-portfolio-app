@@ -39,12 +39,12 @@ const containerMiddle = css`
   width: 100%;
 `;
 const productCategoryInput = css`
-  width: 170px;
+  width: 200px;
   height: 30px;
   margin: 0px 30px;
 `;
 const productColorInput = css`
-  width: 170px;
+  width: 200px;
   height: 30px;
   margin: 0px 30px;
 `;
@@ -81,9 +81,9 @@ const AdminProductRegister = () => {
   const [productsDetails, setProductsDetatils] = useState({
     productName: "",
     productPrice: 0,
-    categoryId: 0,
+    categoryId: 1,
     productImg: "",
-    colorId: 0,
+    colorId: 1,
   });
   const [register, setRegister] = useState(false);
   const getColor = useQuery(
@@ -155,7 +155,6 @@ const AdminProductRegister = () => {
             <option value="5">HEADWEAR</option>
             <option value="6">SHOES</option>
           </select>
-          {productsDetails.categoryId == 0 ? <>선택안됨</> : <>선택 완료</>}
           <select css={productColorInput} onChange={productColorSelectHandle} name="Color" id="colorId">
             {colors.map((color) => (
               <option key={color.id} value={color.colorId}>
@@ -163,7 +162,6 @@ const AdminProductRegister = () => {
               </option>
             ))}
           </select>
-          {productsDetails.colorId == 0 ? <>선택안됨</> : <>선택 완료</>}
         </div>
         <div css={containerFooter}>
           {productsDetails.productImg != "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}

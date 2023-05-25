@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { setRefresh } from "../../../atoms/Common/CommonAtoms";
+import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
 
 const header = css`
@@ -73,22 +73,27 @@ const CommonUserSubHeader = ({ sbheader }) => {
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
-
+  const [subheader, setThissbheader] = useRecoilState(setsbheader);
   const navigate = useNavigate();
   const onClickNotice = () => {
     navigate("/page/notice");
+    setThissbheader(0);
   };
   const onClickCoustomer = () => {
     navigate("/page/customer");
+    setThissbheader(0);
   };
   const onClickShipping = () => {
     navigate("/page/shipping");
+    setThissbheader(0);
   };
   const onClickSizeGuide = () => {
     navigate("/page/sizeguide");
+    setThissbheader(0);
   };
   const onClickLegal = () => {
     navigate("/page/legal");
+    setThissbheader(0);
   };
 
   const onClickCategory = (e) => {
@@ -101,28 +106,28 @@ const CommonUserSubHeader = ({ sbheader }) => {
   return (
     <>
       <div css={subHeader}>
-        {!sbheader ? (
+        {sbheader === 1 ? (
           <ul css={subHeaderList}>
             <li css={sublist} onClick={() => onClickCategory(1)}>
-              tees
+              TEES
             </li>
             <li css={sublist} onClick={() => onClickCategory(2)}>
-              swaets
+              SWEATS
             </li>
             <li css={sublist} onClick={() => onClickCategory(3)}>
-              pants
+              PANTS
             </li>
             <li css={sublist} onClick={() => onClickCategory(4)}>
-              outerwear
+              OUTERWEAR
             </li>
             <li css={sublist} onClick={() => onClickCategory(5)}>
-              headwear
+              HEADWEAR
             </li>
             <li css={sublist} onClick={() => onClickCategory(6)}>
-              shoes
+              SHOES
             </li>
             <li css={sublist} onClick={() => onClickCategory(7)}>
-              all
+              ALL
             </li>
           </ul>
         ) : (

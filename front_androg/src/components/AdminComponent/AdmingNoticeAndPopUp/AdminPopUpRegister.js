@@ -117,7 +117,6 @@ const AdminPopUpRegister = () => {
     {
       onSuccess: (response) => {
         setPopUpList(response.data);
-        console.log(popUpList);
       },
     }
   );

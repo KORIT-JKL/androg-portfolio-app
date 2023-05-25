@@ -66,6 +66,7 @@ const adminReviewContainer = css`
 const adminReviewText = css`
   padding: 10px 20px;
 `;
+
 const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -95,7 +96,6 @@ const ReviewComponent = ({ review }) => {
   if (principal.isLoading) {
     return <></>;
   }
-  console.log(review);
   return (
     <div css={reviewContainer}>
       <div css={reviewTitle}>
@@ -117,7 +117,7 @@ const ReviewComponent = ({ review }) => {
 
       <div css={adminReviewContainer}>
         {adminReviews.map((adminReview) =>
-          adminReview.reviewId === review.adminReviewId ? (
+          adminReview.reviewId === review.reviewId ? (
             <div css={adminReviewText}> ↪관리자 : {adminReview.reviewContent}</div>
           ) : (
             ""

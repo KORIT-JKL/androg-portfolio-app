@@ -14,3 +14,8 @@ export const popUpState = atom({
   key: "popUpState",
   default: true,
 });
+
+export const setsbheader = atom({
+  key: "setsbheader",
+  default: true,
+});

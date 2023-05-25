@@ -226,7 +226,7 @@ const ProductDetails = () => {
     {
       onSuccess: (response) => {
         setProduct(response.data);
-        // setSearchparams({ ...searchParams, productId: response.data.productId });
+
         setThiRefresh(false);
       },
       enabled: refresh && !!principal,
@@ -249,7 +249,6 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      console.log(searchParams);
       const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
         headers: {
           "Content-Type": "application/json",
@@ -335,7 +334,7 @@ const ProductDetails = () => {
     navigate(`/products/payment`);
     setThiRefresh(true);
   };
-  console.log(adminReviews);
+
   return (
     <>
       <CommonHeader />
