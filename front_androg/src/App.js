@@ -32,6 +32,7 @@ import AdminNoticeRegitser from "./components/AdminComponent/AdmingNoticeAndPopU
 import AdminPopUpRegister from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
 import AdminInquiryReview from "./components/AdminComponent/AdminInquiry/AdminInquiryReview";
 import AdminInquiry from "./components/AdminComponent/AdminInquiry/AdminInquiry";
+import InquiryResponse from "./pages/Support/CustomerSupport/InquiryResponse";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         {/* 문의페이지 Route */}
         <Route path="/page/notice" element={<Notice />} />
         <Route path="/page/customer" element={<CustomerSupport />} />
+        <Route path="/page/customer/inquiry" element={<InquiryResponse />} />
         <Route path="/page/shipping" element={<Shipping />} />
         <Route path="/page/sizeguide" element={<SizeGuide />} />
         <Route path="/page/legal" element={<Legal />} />

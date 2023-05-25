@@ -29,6 +29,10 @@
 			inquiry_tb it
 			left outer join user_tb ut on(ut.user_id = it.user_id)	
 	</select>
-
+	
+	<insert id="submitAnswer">
+		insert into inquiry_resp_tb
+		values (0, #{inquiryId}, #{answer})	
+	</insert>
 
 </mapper>

@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.androg.androg.repository.InquiryRepository">
+	<resultMap type="com.korit.androg.androg.entity.InquiryAnswer" id="InquiryAnswerMap">
+	<id property="inquiryRespId" column="inquiry_resp_id"/>
+	<result property="inquiryId" column="inquiry_id"/>
+	<result property="answer" column="answer"/>
+	<association property="inquiry" resultMap="InquiryMap"></association>
+	</resultMap>
+	<resultMap type="com.korit.androg.androg.entity.Inquiry" id="InquiryMap">
+		<id property="inquiryId" column="inquiry_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="orderId" column="order_detail_id"/>
+		<result property="category" column="inquiry_category"/>
+		<result property="inquiryContent" column="inquiry_content"/>
+		<result property="date" column="inquiry_date"/>
+		<association property="user" resultMap="UserMap"></association>
+	</resultMap>
+	<resultMap type="com.korit.androg.androg.entity.User" id="UserMap">
+		<id property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+	</resultMap>
 	<insert id="submitInquiry">
 		insert into inquiry_tb
 		values (0, #{userId},#{orderId}, #{category}, #{inquiryContent}, CURDATE())
 	</insert>
+	
+	<select id="getAnswer" resultType="list" resultMap="InquiryAnswerMap" parameterType="Integer">
+		select 
+			irt.inquiry_resp_id,
+			it.inquiry_id,
+			irt.answer
+		from
+			inquiry_resp_tb irt
+			left outer join inquiry_tb it on(it.inquiry_id = irt.inquiry_id)
+			left outer join user_tb ut on(ut.user_id = it.user_id)
+		where 
+			it.user_id = #{userId}
+	</select>
 </mapper>

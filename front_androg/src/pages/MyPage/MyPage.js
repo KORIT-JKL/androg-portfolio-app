@@ -171,19 +171,6 @@ const MyPage = () => {
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
 
-  const admintest = useMutation(["admin"], async () => {
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.post("http://localhost:8080/admin/test", "", option);
-    return response;
-  });
-  const onclicktest = () => {
-    admintest.mutate();
-  };
-
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();
@@ -235,6 +222,9 @@ const MyPage = () => {
               <li css={supportLi} onClick={() => navgate("/page/customer")}>
                 문의하기
               </li>
+              <li css={supportLi} onClick={() => navgate("/page/customer/inquiry")}>
+                문의답변
+              </li>
               <li css={supportLi} onClick={() => navgate("/page/customer")}>
                 자주 묻는 질문
               </li>
@@ -254,7 +244,6 @@ const MyPage = () => {
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
           )}
         </div>
-        <button onClick={onclicktest}>admintest</button>
       </main>
       <CommonFooter />
     </>
