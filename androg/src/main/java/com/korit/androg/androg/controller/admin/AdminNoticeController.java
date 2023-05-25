@@ -5,11 +5,13 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.dto.admin.AdminNoticeReqDto;
 import com.korit.androg.androg.service.admin.AdminNoticeService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,14 +41,23 @@ public class AdminNoticeController {
 		System.out.println(popUpId);
 		return ResponseEntity.ok().body(adminNoticeService.popUpDelete(popUpId));
 	}
+	//notice
 	@PostMapping("/admin/notice/register")
-	public ResponseEntity<?> noticeRegister(@RequestBody Map<String, Object> requestMap){
+	public ResponseEntity<?> noticeRegister(@RequestBody AdminNoticeReqDto adminNoticeReqDto){
 //		System.out.println(requestMap);
-		return ResponseEntity.ok().body(adminNoticeService.noticeRegister(requestMap));
+		return ResponseEntity.ok().body(adminNoticeService.noticeRegister(adminNoticeReqDto));
 	}
 	@GetMapping("/auth/notice")
 	public ResponseEntity<?> getNotice(){
 		return ResponseEntity.ok().body(adminNoticeService.getNotice());
 	}
-	
+	@PutMapping("/admin/notice/modify")
+	public ResponseEntity<?> noticeModify(@RequestBody AdminNoticeReqDto adminNoticeReqDto){
+		return ResponseEntity.ok().body(adminNoticeService.noticeModify(adminNoticeReqDto));
+	}
+	@DeleteMapping("/admin/notice/{noticeId}")
+	public ResponseEntity<?> noticeDelete(@PathVariable int noticeId){
+		System.out.println(noticeId);
+		return ResponseEntity.ok(null);
+	}
 }

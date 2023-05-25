@@ -36,7 +36,8 @@
 			popup_id = #{popUpId};
 	</delete>
 	
-	<insert id="noticeRegister" parameterType="hashmap">
+	<insert id="noticeRegister" parameterType="com.korit.androg.androg.dto.admin.AdminNoticeReqDto"
+	useGeneratedKeys="true" keyProperty="noticeId">
 	insert into notice_tb
 	values(1,#{subject},#{content},CURDATE())
 	</insert>
@@ -48,5 +49,19 @@
 	from
 		notice_tb
 	</select>
+	
+	<update id="noticeModify" parameterType="com.korit.androg.androg.dto.admin.AdminNoticeReqDto">
+	update notice_tb
+	set subject = #{subject},
+		content = #{content}
+	where
+		notice_id = #{noticeId}
+	</update>
+	
+	<delete id="noticeDelete">
+	delete from notice_tb
+	where
+		notice_id = #{noticeId}
+	</delete>
 	
 </mapper>

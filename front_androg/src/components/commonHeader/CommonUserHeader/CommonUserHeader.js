@@ -122,7 +122,6 @@ const CommonUserHeader = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       localStorage.removeItem("accessToken");
       setLoginIsState(false);
-      setAuthState(false);
       setAdminState(false);
       navigate("/");
     }
@@ -137,7 +136,7 @@ const CommonUserHeader = () => {
     <>
       <div css={mainHeader}>
         <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
-        {loginIsState ? (
+        {authState ? (
           <>
             <ul css={headerList}>
               <li css={list} onMouseOver={() => setsbheader(0)}>
