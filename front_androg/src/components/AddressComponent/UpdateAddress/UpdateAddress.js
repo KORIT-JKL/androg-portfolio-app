@@ -5,7 +5,10 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import { AddressListStateRecoil, AddressUpdateStateRecoil } from "../../../atoms/AddressAtoms/AddressAtoms";
+import {
+  AddressListStateRecoil,
+  AddressUpdateStateRecoil,
+} from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 
 const Title = css`
@@ -141,27 +144,32 @@ const UpdateAddress = ({ principal, address }) => {
         주소찾기{" "}
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+      <AddressInput
+        type="text"
+        placeholder="상세주소"
+        name="addressDetail"
+        onChange={inputOnChangeHandle}
+      />
       <AddressInput
         type="text"
         placeholder="구/군/시"
         name="sigungu"
         value={addressInitState ? address.addressSigungu : addressInput.sigungu}
-        onChange={(e) => setAddressInput({ ...addressInput, sigungu: e.target.value })}
+        onChange={(e) => setAddressInput({ sigungu: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="시/도"
         name="sido"
         value={addressInitState ? address.addressSido : addressInput.sido}
-        onChange={(e) => setAddressInput({ ...addressInput, sido: e.target.value })}
+        onChange={(e) => setAddressInput({ sido: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="우편번호"
         name="zonecode"
         value={addressInitState ? address.addressZonecode : addressInput.zonecode}
-        onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+        onChange={(e) => setAddressInput({ zonecode: e.target.value })}
       />
       <button
         css={addAddressButton}
