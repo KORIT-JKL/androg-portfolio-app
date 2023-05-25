@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.entity.Notice;
+import com.korit.androg.androg.entity.PopUp;
 import com.korit.androg.androg.repository.admin.AdminNoticeRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,8 @@ public class AdminNoticeService {
 		return adminNoticeRepository.popUpRegister(content);
 	}
 	public PopUpRespDto getPopUpList(){
-		return adminNoticeRepository.getPopUpList();
+		PopUp popUp = adminNoticeRepository.getPopUpList();
+		return popUp.toDto();
 	}
 	public int popUpModify(String content) {
 		return adminNoticeRepository.popUpModify(content);

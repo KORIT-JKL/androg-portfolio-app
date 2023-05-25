@@ -95,7 +95,7 @@ const ReviewComponent = ({ review }) => {
   if (principal.isLoading) {
     return <></>;
   }
-
+  console.log(review);
   return (
     <div css={reviewContainer}>
       <div css={reviewTitle}>
@@ -117,8 +117,8 @@ const ReviewComponent = ({ review }) => {
 
       <div css={adminReviewContainer}>
         {adminReviews.map((adminReview) =>
-          adminReview.reviewId === review.reviewId ? (
-            <div css={adminReviewText}> ↪관리자 : {adminReview.content}</div>
+          adminReview.reviewId === review.adminReviewId ? (
+            <div css={adminReviewText}> ↪관리자 : {adminReview.reviewContent}</div>
           ) : (
             ""
           )

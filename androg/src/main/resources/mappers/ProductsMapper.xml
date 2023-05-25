@@ -27,8 +27,8 @@
 	</resultMap>
 
 	<resultMap type="com.korit.androg.androg.entity.AdminReview" id="adminMap">
-		<id property="reviewId" column="review_id"/>
-		<result property="content" column="review_content"/>
+		<id property="adminReviewId" column="review_id"/>
+		<result property="reviewContent" column="review_content"/>
 	</resultMap>
 
 	<select id="getProductsByCategoryId" parameterType="hashmap" resultMap="productsMap" >

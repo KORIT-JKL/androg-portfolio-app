@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korit.androg.androg.dto.admin.ReviewsRespDto;
-import com.korit.androg.androg.dto.admin.ReviewsReviewRespDto;
+import com.korit.androg.androg.entity.Review;
 @Mapper
 public interface AdminReviewRepository {
 //	리뷰
-	public List<ReviewsRespDto> getReviews();
+	public List<Review> getReviews();
 	public void delteReivews(int reviewsId);
-	public List<ReviewsReviewRespDto> getReviewsNoReview();
-	public List<ReviewsReviewRespDto> getReviewsYesReview();
+	public List<Review> getReviewsNoReview();
+	public List<Review> getReviewsYesReview();
 	public void reviewReviewRegister(int reviewId, String content);
 	public void reviewReviewModify(int reviewId, String content);
 }

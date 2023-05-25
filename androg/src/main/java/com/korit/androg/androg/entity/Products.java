@@ -1,6 +1,7 @@
 package com.korit.androg.androg.entity;
 
 import com.korit.androg.androg.dto.Product.ProductsRespDto;
+import com.korit.androg.androg.dto.Product.SameProductRespDto;
 import com.korit.androg.androg.dto.admin.ProductRespDto;
 
 import lombok.AllArgsConstructor;
@@ -57,4 +58,10 @@ public class Products {
 				.soldoutFlag(soldoutFlag)
 				.build();
 				}
+	public SameProductRespDto toSameProductDto() {
+		return SameProductRespDto.builder()
+				.productId(productId)
+				.productImg(productImg)
+				.build();
+	}
 }

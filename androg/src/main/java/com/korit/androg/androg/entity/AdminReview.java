@@ -1,7 +1,5 @@
 package com.korit.androg.androg.entity;
 
-import com.korit.androg.androg.dto.admin.AdminReviewRespdto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminReview {
-	private int reviewId;
-	private String content;
+	private int adminReviewId;
+	private String reviewContent;
 }

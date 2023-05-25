@@ -33,9 +33,9 @@ public class CartController {
 	}
 
 	@DeleteMapping("/cart/delete")
-	public ResponseEntity<?> deleteCartByProductId(@RequestParam Map<String, Object> params) {
+	public ResponseEntity<?> deleteCartByProductId(@RequestParam int cartId) {
 
-		cartService.deleteCartByCartId(Integer.parseInt((String)params.get("product[cartId]")));
+		cartService.deleteCartByCartId(cartId);
 		return 	null;
 	}
 	

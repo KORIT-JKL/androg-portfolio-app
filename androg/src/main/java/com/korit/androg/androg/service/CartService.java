@@ -1,5 +1,6 @@
 package com.korit.androg.androg.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,24 +30,30 @@ public class CartService {
 	}
 	
 	public List<CartRespDto> getCartByUserId(int userId) {
-		return cartRepository.getCartByuserId(userId);
+		List<CartRespDto> cartRespDtos = new ArrayList<>();
+		cartRepository.getCartByuserId(userId).forEach((cart) -> {
+		cartRespDtos.add(cart.toDto());
+		});
+				
+		
+		return cartRespDtos;
 	}
 	
-	public void deleteCartByCartId(int cartId) {
-		cartRepository.deleteCartByCartId(cartId);
-		return ;
+	public int deleteCartByCartId(int cartId) {
+		
+		return cartRepository.deleteCartByCartId(cartId);
 	}
 	
-	public void plusCountByCartId(int cartId) {
-		cartRepository.plusCountByCartId(cartId);
-		return ;
+	public int plusCountByCartId(int cartId) {
+		
+		return cartRepository.plusCountByCartId(cartId);
 	}
-	public void minusCountByCartId(int cartId,int countNumber) {
+	public int minusCountByCartId(int cartId,int countNumber) {
 		if(countNumber == 1 ) {
-			cartRepository.deleteCartByCartId(cartId);
+			return cartRepository.deleteCartByCartId(cartId);
 		}
-		cartRepository.minusCountByCartId(cartId);
-		return ;
+		
+		return cartRepository.minusCountByCartId(cartId);
 	}
 	
 	

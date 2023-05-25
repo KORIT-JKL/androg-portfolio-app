@@ -31,6 +31,7 @@ const header = css`
   align-items: center;
   height: 70px;
   border-bottom: 1px solid #dbdbdb;
+  margin-top: 20px;
 `;
 const cartText = css`
   display: flex;
@@ -243,7 +244,7 @@ const Cart = () => {
     async (product) => {
       const option = {
         params: {
-          product: product,
+          cartId: product.cartId,
         },
         headers: { Authorization: `${localStorage.getItem("accessToken")}` },
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
@@ -300,6 +301,7 @@ const Cart = () => {
     {
       enabled: userId !== 0 && deleteSuccess,
       onSuccess: (response) => {
+        console.log(response.data);
         if (response == null) {
           setThiRefresh(true);
         }
@@ -324,7 +326,7 @@ const Cart = () => {
       setThiRefresh(true);
     }
   };
-
+  console.log(getproducts);
   return (
     <div css={cartContainer}>
       <div css={mainCartContainer}>

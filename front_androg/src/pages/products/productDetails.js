@@ -180,15 +180,16 @@ const ProductDetails = () => {
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [product, setProduct] = useState();
   const [shippingIsOpen, setShippingIsOpen] = useState(false);
+  const { productId } = useParams();
   const [searchParams, setSearchparams] = useState({
     userId: 0,
-    productId: 0,
+    productId: productId,
     sizeName: "",
     countNumber: 1,
   });
   const [selectSize, setSelectSize] = useState(false);
   const [userId, setUserId] = useState(0);
-  const { productId } = useParams();
+
   const [sameNameProducts, setSameNameProducts] = useState([]);
   const [selectImgSuccess, setSelectImgSuccess] = useState(false);
   const [reviews, setReviews] = useState([]);
@@ -225,10 +226,10 @@ const ProductDetails = () => {
     {
       onSuccess: (response) => {
         setProduct(response.data);
-        setSearchparams({ ...searchParams, productId: response.data.productId });
-        setThiRefresh(true);
+        // setSearchparams({ ...searchParams, productId: response.data.productId });
+        setThiRefresh(false);
       },
-      enabled: !!principal.data && refresh,
+      enabled: refresh && !!principal,
     }
   );
   const getSameNameProducts = useQuery(
@@ -248,6 +249,7 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
+      console.log(searchParams);
       const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
         headers: {
           "Content-Type": "application/json",
@@ -333,6 +335,7 @@ const ProductDetails = () => {
     navigate(`/products/payment`);
     setThiRefresh(true);
   };
+  console.log(adminReviews);
   return (
     <>
       <CommonHeader />

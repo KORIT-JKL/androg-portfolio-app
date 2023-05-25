@@ -10,6 +10,7 @@ import com.korit.androg.androg.dto.admin.ColorRespDto;
 import com.korit.androg.androg.dto.admin.ProductRespDto;
 import com.korit.androg.androg.dto.admin.ModifyProductReqDto;
 import com.korit.androg.androg.dto.admin.RegisterProductReqDto;
+import com.korit.androg.androg.entity.Color;
 import com.korit.androg.androg.repository.admin.AdminProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,11 @@ import lombok.RequiredArgsConstructor;
 public class AdminProductService {
 	public final AdminProductRepository adminProductRepository;
 	public List<ColorRespDto> getColors() {
-		return adminProductRepository.getColors();
+		List<ColorRespDto> colorRespDtos = new ArrayList<>();
+		adminProductRepository.getColors().forEach(color ->{
+			colorRespDtos.add(color.toDto());
+		});
+		return colorRespDtos;
 	}
 	public void registerProductDetails(RegisterProductReqDto productReqDto) {
 		adminProductRepository.registerProductDetail(productReqDto);

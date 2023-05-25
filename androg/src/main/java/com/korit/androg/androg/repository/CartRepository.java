@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.korit.androg.androg.dto.Product.CartReqDto;
 import com.korit.androg.androg.dto.Product.CartRespDto;
+import com.korit.androg.androg.entity.Cart;
 @Mapper
 public interface CartRepository {
 	public void addCart(Map<String, Object> reqeustMap);
-	public CartReqDto getCart(int userId);
-	public List<CartRespDto> getCartByuserId(int userId);
-	public void deleteCartByCartId(int cartId);
-	public void plusCountByCartId(int cartId);
-	public void minusCountByCartId(int cartId);
+	public List<Cart> getCartByuserId(int userId);
+	public int deleteCartByCartId(int cartId);
+	public int plusCountByCartId(int cartId);
+	public int minusCountByCartId(int cartId);
 }

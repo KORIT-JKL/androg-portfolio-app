@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.androg.androg.repository.admin.AdminNoticeRepository">
-	<resultMap type="com.korit.androg.androg.dto.admin.PopUpRespDto" id="popUpMap">
+	<resultMap type="com.korit.androg.androg.entity.PopUp" id="popUpMap">
 		<id property="popUpId" column="popup_id"/>
 		<result property="content" column="content"/>
 	</resultMap>

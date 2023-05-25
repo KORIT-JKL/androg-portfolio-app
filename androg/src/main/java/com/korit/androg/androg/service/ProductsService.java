@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.Product.CartReqDto;
 import com.korit.androg.androg.dto.Product.CartRespDto;
+import com.korit.androg.androg.dto.Product.SameProductRespDto;
 import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
 import com.korit.androg.androg.dto.admin.AdminReviewRespdto;
 import com.korit.androg.androg.entity.AdminReview;
@@ -48,8 +49,12 @@ public class ProductsService {
 		return responseMap;
 
 	}
-	public List<Products> getSameNameProductsByProductId(int productId) {
-		return productsRepository.getSameNameProductsByProductId(productId);
+	public List<SameProductRespDto> getSameNameProductsByProductId(int productId) {
+		List<SameProductRespDto> productRespDtos = new ArrayList<>();
+		productsRepository.getSameNameProductsByProductId(productId).forEach((product) -> {
+			productRespDtos.add(product.toSameProductDto());
+		});
+		return productRespDtos;
 	}
 	//여기서부터 cart
 	public List<AdminReview> getAdminReview(AdminReviewIdReqDto adminReviewIdReqDto) {

@@ -18,6 +18,7 @@ public class CartRespDto {
 	private int productPrice;
 	private String productImg;
 	private String sizeName;
+	private int colorId;
 	private String colorName;
 	private int countNumber;
 }

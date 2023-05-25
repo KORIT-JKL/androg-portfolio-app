@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.korit.androg.androg.repository.admin.AdminReviewRepository">
-	<resultMap type="com.korit.androg.androg.dto.admin.ReviewsRespDto" id="reviewMap">
+	<resultMap type="com.korit.androg.androg.entity.Review" id="reviewMap">
 		<id property="reviewId" column="review_id"/>
-		<result property="name" column="name"/>
-		<result property="productName" column="product_name"/>
 		<result property="content" column="content"/>
-		<result property="date" column="review_date"/>
+		<result property="reviewDate" column="review_date"/>
+		<association property="user" resultMap="userMap"></association>
+		<association property="products" resultMap="productsMap"></association>
+		<association property="adminReview" resultMap="adminReviewMap"></association>
 	</resultMap>
-	<resultMap type="com.korit.androg.androg.dto.admin.ReviewsReviewRespDto" id="reviewreviewMap">
-		<id property="reviewId" column="review_id"/>
-		<result property="name" column="name"/>
+	
+	<resultMap type="com.korit.androg.androg.entity.Products" id="productsMap">
+		<id property="productId" column="product_id"/>
 		<result property="productName" column="product_name"/>
-		<result property="reviewContent" column="review_content" />
-		<result property="content" column="content"/>
-		<result property="date" column="review_date"/>
+		<result property="productPrice" column="product_Price"/>
+		<result property="productImg" column="product_img"/>
+		<result property="sizeS" column="size_s"/>
+		<result property="sizeM" column="size_m"/>
+		<result property="sizeL" column="size_l"/>
+		<result property="sizeXL" column="size_xl"/>
+		<result property="sizeXXL" column="size_xxl"/>
 	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.User" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.AdminReview" id="adminReviewMap">
+		<id property="adminReviewId" column="adminreview_id"/>
+		<result property="reviewContent" column="review_content"/>
+	</resultMap>
+	
 	<select id="getReviews" resultType="List" resultMap="reviewMap">
 		select
 			rt.review_id,
@@ -36,7 +54,7 @@
 		delete from review_tb
 		where review_id = #{reviewsId};
 	</delete>
-	<select id="getReviewsYesReview" resultMap="reviewreviewMap">
+	<select id="getReviewsYesReview" resultMap="reviewMap">
 		SELECT 
 		    rt.review_id,
 		    rt.content,
@@ -54,7 +72,7 @@
 		where
 			art.adminreview_id is not null
 	</select>
-	<select id="getReviewsNoReview" resultMap="reviewreviewMap">
+	<select id="getReviewsNoReview" resultMap="reviewMap">
 		SELECT 
 		    rt.review_id,
 		    rt.content,
