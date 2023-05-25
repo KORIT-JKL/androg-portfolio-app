@@ -18,14 +18,16 @@ const AuthRoute = ({ path, element }) => {
         },
       };
 
-      const response = await axios.get("http://localhost:8080/auth/authenticated", option);
-      return response;
+      return await axios.get("http://localhost:8080/auth/authenticated", option);
     },
     {
       onSuccess: (response) => {
         if (response.status === 200) {
+          console.log(response.data);
           if (response.data) {
             setAuthState(true);
+          } else {
+            setAuthState(false);
           }
         }
       },
@@ -60,17 +62,20 @@ const AuthRoute = ({ path, element }) => {
   if (authenticated.isLoading && principal.isLoading) {
     return <></>;
   }
-
+  console.log(authState + "지금 상태");
   if (principal.data !== undefined) {
     if (path.startsWith(adminPath) && !adminState) {
       navigate("/");
+      console.log("admin권한없음");
     }
   }
 
   if (authState && path.startsWith(authPath)) {
     navigate("/");
+    console.log("로그인 했을때");
   }
   if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
+    console.log("인증받지 않은 유저 혹은 로그인을 안했을때");
     navigate("/auth/login");
   }
 

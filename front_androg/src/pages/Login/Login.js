@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { refreshState } from "../../atoms/Common/CommonAtoms";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { useQueryClient } from "react-query";
 
 const container = css`
   display: flex;
@@ -77,6 +78,7 @@ const Login = () => {
   const [errorMessages, setErrorMessages] = useState({ email: "", password: "" });
   const [refresh, SetRefresh] = useRecoilState(refreshState);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -97,9 +99,7 @@ const Login = () => {
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;
       localStorage.setItem("accessToken", accessToken);
-      SetRefresh(false);
-      setLoginIsState(true);
-      navigate("/");
+      queryClient.fetchQuery("authenticated");
     } catch (error) {
       setErrorMessages({ email: "", password: "", ...error.response.data.errorData });
     }
