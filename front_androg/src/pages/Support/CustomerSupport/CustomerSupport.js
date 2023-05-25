@@ -103,7 +103,7 @@ const CustomerSupport = () => {
         Authorization: `${localStorage.getItem("accessToken")}`,
       },
     };
-    const response = await axios.post("http://localhost:8080/user/inquiry", data ,option);
+    const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
     return response;
   });
 
@@ -129,7 +129,7 @@ const CustomerSupport = () => {
     console.log(e.target.value)
   }
   const inquirySubmitHandle = () => {
-    if(!!principal.data) {
+    if(!!localStorage.getItem("accessToken")) {
       inquiry.mutate();
       alert("문의가 정상적으로 접수되었습니다.")
       window.location.reload();

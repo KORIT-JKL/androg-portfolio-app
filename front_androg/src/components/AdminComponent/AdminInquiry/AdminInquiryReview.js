@@ -1,7 +1,7 @@
 import React from "react";
 
 const AdminInquiryReview = () => {
-  return <div></div>;
+  return <div>dasdasdassadasda</div>;
 };
 
 export default AdminInquiryReview;
