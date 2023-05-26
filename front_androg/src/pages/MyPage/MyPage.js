@@ -165,6 +165,9 @@ const MyPage = () => {
     if (!productsRefresh) {
       setProductsRefresh(true);
     }
+    if (!infoRefresh) {
+      setInfoRefresh(true);
+    }
   }, []);
   const withdrawal = useMutation(async () => {
     const option = {

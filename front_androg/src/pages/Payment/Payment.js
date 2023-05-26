@@ -8,6 +8,7 @@ import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
 import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 import { useRecoilState } from "recoil";
+import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 
 const container = css`
   font-size: 12px;
@@ -195,6 +196,7 @@ const Payment = () => {
   const [userAddressId, setUserAddressId] = useState(0);
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
+  const [cartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [orderParams, setOrderParams] = useState({
     userId: 0,
     products: [],
@@ -304,6 +306,7 @@ const Payment = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       });
+      setCartIsOpen(false);
       setOrderList(true);
     } catch (error) {}
     navigate("/user/mypage");
@@ -328,9 +331,7 @@ const Payment = () => {
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
-        products: [
-          ...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id)),
-        ],
+        products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
       });
     }
   };
@@ -391,12 +392,7 @@ const Payment = () => {
                 css={input}
                 value={userAddressSido + " " + userAddressSigungu}
               />
-              <input
-                type="text"
-                placeholder="주소"
-                css={input}
-                value={userAddress.split(" ").slice(2).join(" ")}
-              />
+              <input type="text" placeholder="주소" css={input} value={userAddress.split(" ").slice(2).join(" ")} />
 
               <input type="text" placeholder="상세주소" css={input} value={userAddressDetail} />
 
