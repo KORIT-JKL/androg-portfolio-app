@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import FAQItem from "./../../SupportUI/Button/FAQItem";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { AdminInquiries, InquiryAnswerState, answerComplete } from "../../../atoms/Admin/AdminAtoms";
+import { AdminInquiries, InquiryAnswerState, answerComplete, disabledState } from "../../../atoms/Admin/AdminAtoms";
 import InquiryAnswer from "./InquiryAnswer";
 
 const mainContainer = css`
@@ -61,7 +61,7 @@ const AdminInquiry = () => {
   const [inquiries, setInquiries] = useRecoilState(AdminInquiries);
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [selectedInquiryId, setSelectedInquiryId] = useState(0);
-
+  const [disabled1, setDisabled] = useRecoilState(disabledState);
 
   const getInquiries = useQuery(
     ["getInquiries"],
@@ -83,7 +83,7 @@ const AdminInquiry = () => {
 
   return (
     <>
-      {answerState ? <InquiryAnswer inquiryId={selectedInquiryId}/> : ""}
+      {answerState ? <InquiryAnswer inquiryId={selectedInquiryId} /> : ""}
       <div css={mainContainer}>
         <header css={header}>
           <h2>접수문의</h2>
@@ -117,10 +117,13 @@ const AdminInquiry = () => {
                           onClick={() => {
                             setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
+                            setDisabled({ ...disabled1, id: inquiry.inquiryId });
                           }}
+                          disabled={inquiry.inquiryId === disabled1.id ? true : false}
                         >
                           답변하기
                         </button>
+                        <button disabled>삭제</button>
                       </td>
                     </tr>
                   ))}
