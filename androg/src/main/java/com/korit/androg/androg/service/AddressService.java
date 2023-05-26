@@ -36,15 +36,8 @@ public class AddressService {
 	}
 	
 	public int addressUpdate(int addressId, AddressReigsteReqDto addressReigsteReqDto) {
-		Map<String, Object> requestMap = new HashMap<>();
-		requestMap.put("addressId", addressId);
-		requestMap.put("address", addressReigsteReqDto.getAddress());
-		requestMap.put("addressSigungu", addressReigsteReqDto.getAddressSigungu());
-		requestMap.put("addressSido", addressReigsteReqDto.getAddressSido());
-		requestMap.put("addressBname", addressReigsteReqDto.getAddressBname());
-		requestMap.put("addressZonecode", addressReigsteReqDto.getAddressZonecode());
-		requestMap.put("addressDetail", addressReigsteReqDto.getAddressDetail());
-		return addressRepository.addressUpdate(requestMap);
+		Address address = addressReigsteReqDto.toEntity();
+		return addressRepository.addressUpdate(address);
 	}
 	
 	public int addressDelete(int addressId) {

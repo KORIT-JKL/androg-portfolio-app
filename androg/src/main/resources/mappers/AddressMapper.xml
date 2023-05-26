@@ -48,7 +48,7 @@
 		ab.address_flag desc
 	</select>
 	
-	<update id="addressUpdate" parameterType="hashmap">
+	<update id="addressUpdate" parameterType="com.korit.androg.androg.entity.Address">
 		update address_tb
 		set
 			address = #{address},

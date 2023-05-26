@@ -5,10 +5,7 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import {
-  AddressListStateRecoil,
-  AddressUpdateStateRecoil,
-} from "../../../atoms/AddressAtoms/AddressAtoms";
+import { AddressListStateRecoil, AddressUpdateStateRecoil } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 
 const Title = css`
@@ -76,7 +73,8 @@ const UpdateAddress = ({ principal, address }) => {
         addressBname: addressInput.bname,
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
-        addressFlag: 0,
+        addressId: address.addressId,
+        addressFlag: address.addressFlag,
       };
       const option = {
         headers: {
@@ -144,12 +142,7 @@ const UpdateAddress = ({ principal, address }) => {
         주소찾기{" "}
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput
-        type="text"
-        placeholder="상세주소"
-        name="addressDetail"
-        onChange={inputOnChangeHandle}
-      />
+      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
       <AddressInput
         type="text"
         placeholder="구/군/시"
