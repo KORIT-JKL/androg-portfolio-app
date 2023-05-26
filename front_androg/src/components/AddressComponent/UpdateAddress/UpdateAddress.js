@@ -127,7 +127,7 @@ const UpdateAddress = ({ principal, address }) => {
       <div css={nameBox}>
         {addressInitState
           ? address.address + "(" + address.addressBname + ")"
-          : addressInput.address + "(" + addressInput.bname + ")"}
+          : addressInput.address + "(" + addressInput.addressBname + ")"}
       </div>
       <button
         css={addAddressButton}

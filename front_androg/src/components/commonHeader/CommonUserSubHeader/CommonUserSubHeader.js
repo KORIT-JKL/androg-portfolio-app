@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
+import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 /*
 const header = css`
   position: fixed;
@@ -74,6 +75,7 @@ const CommonUserSubHeader = ({ sbheader }) => {
   const [, setThisProducts] = useRecoilState(setProducts);
   const [, setThisPage] = useRecoilState(setPage);
   const [, setThissbheader] = useRecoilState(setsbheader);
+  const [notice] = useRecoilState(AdminNotice);
   const navigate = useNavigate();
   const onClickNotice = () => {
     navigate("/page/notice");
@@ -132,9 +134,14 @@ const CommonUserSubHeader = ({ sbheader }) => {
           </ul>
         ) : (
           <ul css={subHeaderList}>
-            <li css={sublist} onClick={onClickNotice}>
-              NOTICE
-            </li>
+            {notice.content !== undefined ? (
+              <li css={sublist} onClick={onClickNotice}>
+                NOTICE
+              </li>
+            ) : (
+              ""
+            )}
+
             <li css={sublist} onClick={onClickCoustomer}>
               CUSTOMER SUPPORT
             </li>

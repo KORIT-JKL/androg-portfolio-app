@@ -53,18 +53,29 @@ const inquiryButton = css`
 
 const AdminNoticeRegitser = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
-  const noticeRegister = useMutation(async () => {
-    const data = {
-      ...notice,
-    };
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+  const noticeRegister = useMutation(
+    async () => {
+      const data = {
+        ...notice,
+      };
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:8080/admin/notice/register",
+        data,
+        option
+      );
+      return response;
+    },
+    {
+      onSuccess: () => {
+        getNotice.refetch();
       },
-    };
-    const response = await axios.post("http://localhost:8080/admin/notice/register", data, option);
-    return response;
-  });
+    }
+  );
   const noticeModify = useMutation(async () => {
     const data = {
       ...notice,
