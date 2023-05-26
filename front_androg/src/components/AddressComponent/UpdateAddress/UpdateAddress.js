@@ -5,7 +5,11 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import { AddressListStateRecoil, AddressUpdateStateRecoil } from "../../../atoms/AddressAtoms/AddressAtoms";
+import {
+  AddressListStateRecoil,
+  AddressUpdateStateRecoil,
+  getAddressRecoil,
+} from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 
 const Title = css`
@@ -56,14 +60,9 @@ const UpdateAddress = ({ principal, address }) => {
   const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
-  const [addressInput, setAddressInput] = useState({
-    address: address.address,
-    sigungu: address.addressSigungu,
-    sido: address.addressSido,
-    bname: address.addressBname,
-    zonecode: address.addressZonecode,
-    ponenumber: address.poneNumber,
-  });
+  const [addressInput, setAddressInput] = useRecoilState(getAddressRecoil);
+  console.log(addressInput.address);
+  console.log(address);
 
   const addressUpdate = useMutation(
     async (address) => {
@@ -78,6 +77,7 @@ const UpdateAddress = ({ principal, address }) => {
         poneNumber: addressInput.ponenumber,
         addressFlag: address.addressFlag,
       };
+      console.log(data);
       const option = {
         headers: {
           "Content-Type": "application/json",
@@ -116,6 +116,7 @@ const UpdateAddress = ({ principal, address }) => {
     const { name, value } = e.target;
     setAddressDetailInput({ ...addressDetailInput, [name]: value });
   };
+
   //   useEffect(() => {});
   if (addressUpdate.isLoading) {
     return <></>;
@@ -140,8 +141,7 @@ const UpdateAddress = ({ principal, address }) => {
           }
         }}
       >
-        {" "}
-        주소찾기{" "}
+        주소찾기
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
       <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />

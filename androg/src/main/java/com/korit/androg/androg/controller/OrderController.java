@@ -19,6 +19,7 @@ public class OrderController {
 	// api 수정 products/buying 
 	@PostMapping("/products/order")
 	public ResponseEntity<?> completeOrder(@RequestBody OrderCompleteReqDto orderCompleteReqDto) {
+		System.out.println(orderCompleteReqDto);
 		return ResponseEntity.ok().body(orderService.completeOrder(orderCompleteReqDto));
 	}
 	

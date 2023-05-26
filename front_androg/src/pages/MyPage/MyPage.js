@@ -90,7 +90,6 @@ const MyPage = () => {
   const [productsRefresh, setProductsRefresh] = useState(false);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
-  const [orderList, setOrderList] = useRecoilState(orderProductsState);
 
   let userId = 0;
 
@@ -111,7 +110,6 @@ const MyPage = () => {
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
-        setOrderList(true);
       },
       enabled: infoRefresh,
     }
@@ -158,17 +156,9 @@ const MyPage = () => {
         setOrderProducts([...response.data]);
         setProductsRefresh(false);
       },
-      enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
+      enabled: !!principal.data, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
-  useEffect(() => {
-    if (!productsRefresh) {
-      setProductsRefresh(true);
-    }
-    if (!infoRefresh) {
-      setInfoRefresh(true);
-    }
-  }, []);
   const withdrawal = useMutation(async () => {
     const option = {
       params: {
