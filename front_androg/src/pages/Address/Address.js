@@ -232,9 +232,11 @@ const Address = () => {
                         <button
                           css={addressUpdateButton}
                           onClick={() => {
-                            if (!addressOpen) {
+                            if (!addressOpen || addressOpen) {
                               setUpdateOpen(true);
-                              setAddressRecoil({ ...addressRecoil, ...address });
+                              setAddressOpen(false);
+                              console.log(address);
+                              setAddressRecoil({ ...address });
                             }
                           }}
                         >
@@ -271,6 +273,7 @@ const Address = () => {
               } else {
                 setAddressOpen(false);
               }
+              setUpdateOpen(false);
             }}
           >
             주소 추가하기

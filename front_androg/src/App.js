@@ -53,7 +53,10 @@ function App() {
 
         {/* 마이페이지 Route */}
         <Route path="/user/mypage" element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />} />
-        <Route path="/user/mypage/address" element={<Address />}></Route>
+        <Route
+          path="/user/mypage/address"
+          element={<AuthRoute path={"/user/mypage/address"} element={<Address />} />}
+        ></Route>
 
         {/* 상품페이지 */}
         <Route path="/category/:categoryId" element={<Products />} />

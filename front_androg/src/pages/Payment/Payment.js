@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
 import { useEffect, useRef, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
@@ -183,7 +183,6 @@ const summaryFooter = css`
 
 // url 변경 => /products/payment
 const Payment = () => {
-  const [orderList, setOrderList] = useRecoilState(orderProductsState);
   const [principalState, setPrincipalState] = useState(false);
   const [addressListState, setaddressListState] = useState(false);
   const [addressIndex, setAddressIndex] = useState(0);
@@ -281,6 +280,26 @@ const Payment = () => {
     }
   );
 
+  const orderBuy = useMutation(
+    async () => {
+      const response = axios.post("http://localhost:8080/products/order", orderParams, {
+        headers: {
+          Authorization: localStorage.getItem("accessToken"),
+        },
+      });
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          // queryClient.fetchQuery("orderProducts");
+          setCartIsOpen(false);
+          navigate("/user/mypage");
+        }
+      },
+    }
+  );
+
   useEffect(() => {
     if (!principalState) {
       setPrincipalState(true);
@@ -301,17 +320,8 @@ const Payment = () => {
     setTotalPrice(sum);
   }, [orderParams]);
 
-  const orderSubmitHandle = async () => {
-    try {
-      const response = axios.post("http://localhost:8080/products/order", orderParams, {
-        headers: {
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
-      setCartIsOpen(false);
-      setOrderList(true);
-    } catch (error) {}
-    navigate("/user/mypage");
+  const orderSubmitHandle = () => {
+    orderBuy.mutate();
   };
 
   const clickHandle = (e) => {
