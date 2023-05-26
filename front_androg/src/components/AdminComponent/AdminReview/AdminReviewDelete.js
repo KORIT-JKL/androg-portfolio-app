@@ -10,40 +10,35 @@ const Cotainer = css`
   justify-content: center;
   margin: auto;
   height: 100%;
-  width: 90%;
+  width: 70%;
   border: 1px solid black;
 `;
 
 const reviewContainer = css`
-  display: flex;
+  border-collapse: collapse;
+  font-size: 14px;
   width: 100%;
-  height: 40px;
-  border: 1px solid #dbdbdb;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    &:first-of-type {
+      font-weight: bold;
+      line-height: 16.5px;
+    }
+    &:nth-of-type(2n) {
+      color: #757575;
+    }
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: normal;
+  }
 `;
-const reviewId = css`
-  width: 10%;
-  text-align: center;
-`;
-const reviewName = css`
-  width: 10%;
-  text-align: center;
-`;
-const reviewProductName = css`
-  width: 20%;
-  text-align: center;
-`;
-const reviewContent = css`
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  text-align: center;
-`;
-const reviewDate = css`
-  width: 10%;
-  text-align: center;
-`;
+
 const reviewDelteButton = css`
-  width: 25px;
+  width: 70px;
   height: 25px;
   background-color: white;
   border-radius: 10px;
@@ -97,32 +92,45 @@ const AdminReviewDelete = () => {
   };
   return (
     <div css={Cotainer}>
-      <div css={reviewContainer}>
-        <div css={reviewId}>리뷰 Id</div>
-        <div css={reviewName}>작성자</div>
-        <div css={reviewProductName}>상품 이름</div>
-        <div css={reviewContent}>리뷰 내용</div>
-        <div css={reviewDate}>작성 날짜</div>
-        {/* <button css={reviewDelteButton}>X</button> */}
-      </div>
-      {!!reviews ? (
-        <>
-          {reviews.map((review) => (
-            <div css={reviewContainer}>
-              <div css={reviewId}>{review.reviewId}</div>
-              <div css={reviewName}>{review.userName}</div>
-              <div css={reviewProductName}>{review.productName}</div>
-              <div css={reviewContent}>{review.content}</div>
-              <div css={reviewDate}>{review.date}</div>
-              <button onClick={(e) => reviewDelete(e.target.value)} value={review.reviewId} css={reviewDelteButton}>
-                X
-              </button>
-            </div>
-          ))}
-        </>
-      ) : (
-        ""
-      )}
+      <table css={reviewContainer}>
+        <thead>
+          <tr>
+            <th>리뷰 Id</th>
+            <th>작성자</th>
+            <th>상품 이름</th>
+            <th>리뷰 내용</th>
+            <th>작성 날짜</th>
+            <th>리뷰 삭제</th>
+          </tr>
+        </thead>
+
+        {!!reviews ? (
+          <>
+            {reviews.map((review) => (
+              <tbody>
+                <tr>
+                  <td>{review.reviewId}</td>
+                  <td>{review.userName}</td>
+                  <td>{review.productName}</td>
+                  <td>{review.content}</td>
+                  <td>{review.date}</td>
+                  <td>
+                    <button
+                      onClick={(e) => reviewDelete(e.target.value)}
+                      value={review.reviewId}
+                      css={reviewDelteButton}
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </>
+        ) : (
+          ""
+        )}
+      </table>
     </div>
   );
 };

@@ -35,65 +35,19 @@ const reveiwSelectButton = css`
     background-color: #fafafa;
   }
 `;
-const reviewTitleContainer = css`
-  display: flex;
-  width: 100%;
-  height: 25px;
-  border: 1px solid black;
-`;
 
-const reviewNameTitle = css`
-  text-align: center;
-  width: 15%;
-`;
-const reviewProductNameTitle = css`
-  text-align: center;
-  width: 25%;
-`;
-const reviewContentTitle = css`
-  text-align: center;
-  width: 55%;
-  text-align: center;
-`;
-const reviewDate = css`
-  text-align: center;
-  width: 15%;
-`;
-const reviewContainer = css`
-  display: flex;
-  width: 100%;
-  height: 40px;
-  border: 1px solid #dbdbdb;
-`;
-const reviewName = css`
-  width: 15%;
-  text-align: center;
-`;
-const reviewProductName = css`
-  width: 25%;
-  text-align: center;
-`;
-const reviewContent = css`
-  width: 55%;
-  text-align: center;
-`;
 const inputButton = css`
-  text-align: center;
-  width: 10%;
+  width: 100px;
+  height: 25px;
   background-color: white;
   border: none;
   cursor: pointer;
-  font-size: 20px;
   &:hover {
     background-color: #dbdbdb;
   }
   &:active {
     background-color: #fafafa;
   }
-`;
-const inputButtonTitle = css`
-  text-align: center;
-  width: 10%;
 `;
 const adminReviewModalContainer = css`
   top: 0;
@@ -172,6 +126,28 @@ const reviewbutton = css`
   }
   &:active {
     background-color: #fafafa;
+  }
+`;
+const tableStyle = css`
+  border-collapse: collapse;
+  font-size: 14px;
+  width: 100%;
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    &:first-of-type {
+      font-weight: bold;
+      line-height: 16.5px;
+    }
+    &:nth-of-type(2n) {
+      color: #757575;
+    }
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: normal;
   }
 `;
 const AdminReviewReview = () => {
@@ -354,58 +330,76 @@ const AdminReviewReview = () => {
         </div>
         {reviewTextSelect === 0 ? (
           <>
-            <div css={reviewTitleContainer}>
-              <div css={reviewNameTitle}>작성자</div>
-              <div css={reviewProductNameTitle}>상품 이름</div>
-              <div css={reviewContentTitle}>리뷰 내용</div>
-              <div css={reviewContentTitle}>답변 내용</div>
-              <div css={reviewDate}>작성 날짜</div>
-              <div css={inputButtonTitle}>리뷰 수정</div>
-            </div>
-            {!!reviews ? (
-              <>
-                {reviews.map((review) => (
-                  <div css={reviewContainer}>
-                    <div css={reviewName}>{review.name}</div>
-                    <div css={reviewProductName}>{review.productName}</div>
-                    <div css={reviewContent}>{review.content}</div>
-                    <div css={reviewContent}>{review.reviewContent}</div>
-                    <div css={reviewDate}>{review.date}</div>
-                    <button css={inputButton} onClick={() => modifyButtonClick(review)}>
-                      수정
-                    </button>
-                  </div>
-                ))}
-              </>
-            ) : (
-              ""
-            )}
+            <table css={tableStyle}>
+              <thead>
+                <tr>
+                  <th>작성자</th>
+                  <th>상품 이름</th>
+                  <th>리뷰 내용</th>
+                  <th>답변 내용</th>
+                  <th>작성 날짜</th>
+                  <th>리뷰 수정</th>
+                </tr>
+              </thead>
+
+              {!!reviews ? (
+                <>
+                  {reviews.map((review) => (
+                    <tbody>
+                      <tr>
+                        <td>{review.name}</td>
+                        <td>{review.productName}</td>
+                        <td>{review.content}</td>
+                        <td>{review.reviewContent}</td>
+                        <td>{review.date}</td>
+                        <td>
+                          <button css={inputButton} onClick={() => modifyButtonClick(review)}>
+                            수정
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </>
+              ) : (
+                ""
+              )}
+            </table>
           </>
         ) : (
           <>
-            <div css={reviewTitleContainer}>
-              <div css={reviewNameTitle}>작성자</div>
-              <div css={reviewProductNameTitle}>상품 이름</div>
-              <div css={reviewContentTitle}>리뷰 내용</div>
-              <div css={reviewDate}>작성 날짜</div>
-              <div css={inputButtonTitle}>리뷰 답변</div>
-            </div>
-            {reviews.map((review) => (
-              <div css={reviewContainer}>
-                <div css={reviewName}>{review.name}</div>
-                <div css={reviewProductName}>{review.productName}</div>
-                <div css={reviewContent}>{review.content}</div>
-                <div css={reviewDate}>{review.date}</div>
-                <button
-                  css={inputButton}
-                  onClick={() => {
-                    reviewButtonClick(review);
-                  }}
-                >
-                  리뷰 작성
-                </button>
-              </div>
-            ))}
+            <table css={tableStyle}>
+              <thead>
+                <tr>
+                  <th>작성자</th>
+                  <th>상품 이름</th>
+                  <th>리뷰 내용</th>
+                  <th>작성 날짜</th>
+                  <th>리뷰 답변</th>
+                </tr>
+              </thead>
+
+              {reviews.map((review) => (
+                <tbody>
+                  <tr>
+                    <td>{review.name}</td>
+                    <td>{review.productName}</td>
+                    <td>{review.content}</td>
+                    <td>{review.date}</td>
+                    <td>
+                      <button
+                        css={inputButton}
+                        onClick={() => {
+                          reviewButtonClick(review);
+                        }}
+                      >
+                        리뷰 작성
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
+            </table>
           </>
         )}
       </div>
