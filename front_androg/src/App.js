@@ -30,7 +30,6 @@ import AdminReviewDelete from "./components/AdminComponent/AdminReview/AdminRevi
 import AdminReviewReview from "./components/AdminComponent/AdminReview/AdminReviewReview";
 import AdminNoticeRegitser from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminNoticeRegitser";
 import AdminPopUpRegister from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
-import AdminInquiryReview from "./components/AdminComponent/AdminInquiry/AdminInquiryReview";
 import AdminInquiry from "./components/AdminComponent/AdminInquiry/AdminInquiry";
 import InquiryResponse from "./pages/Support/CustomerSupport/InquiryResponse";
 
@@ -105,10 +104,6 @@ function App() {
         />
         {/* 문의 접수, 문의 답변 */}
         <Route path="/admin/inquiry" element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />} />
-        <Route
-          path="/admin/inquiry/review"
-          element={<AuthRoute path={"/admin/inquiry/review"} element={<AdminPage />} />}
-        />
       </Routes>
     </>
   );

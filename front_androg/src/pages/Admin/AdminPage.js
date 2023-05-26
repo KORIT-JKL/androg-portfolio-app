@@ -13,7 +13,6 @@ import AdminReviewDelete from "../../components/AdminComponent/AdminReview/Admin
 import AdminReviewReview from "../../components/AdminComponent/AdminReview/AdminReviewReview";
 import AdminReviewRegister from "../../components/AdminComponent/AdminReview/AdminReviewRegister";
 import AdminPopUpRegister from "../../components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
-import AdminInquiryReview from "../../components/AdminComponent/AdminInquiry/AdminInquiryReview";
 import AdminInquiry from "../../components/AdminComponent/AdminInquiry/AdminInquiry";
 import AdminNoticeRegitser from "../../components/AdminComponent/AdmingNoticeAndPopUp/AdminNoticeRegitser";
 
@@ -48,9 +47,7 @@ const AdminPage = () => {
           <AdminPopUpRegister />
         ) : AdminMenuSelectIndex === 9 ? (
           <AdminInquiry />
-        ) : AdminMenuSelectIndex === 10 ? (
-          <AdminInquiryReview />
-        ) : (
+        ) :  (
           ""
         )}
       </div>

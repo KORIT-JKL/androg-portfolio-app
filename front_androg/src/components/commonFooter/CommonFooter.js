@@ -51,7 +51,6 @@ const CommonFooter = () => {
           JKL | 개인정보취급방침
         </div>
       </div>
-      <div css={androgText}>© 2023 Androg</div>
     </>
   );
 };

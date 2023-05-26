@@ -108,9 +108,9 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
             <li css={sublist} onClick={() => clickInquiry()}>
               문의 접수
             </li>
-            <li css={sublist} onClick={() => clickInquiryReview()}>
+            {/* <li css={sublist} onClick={() => clickInquiryReview()}>
               문의 답변
-            </li>
+            </li> */}
           </>
         ) : (
           ""

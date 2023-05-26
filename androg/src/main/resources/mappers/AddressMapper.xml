@@ -58,8 +58,8 @@
 			address_sido = #{addressSido},
 			address_sigungu = #{addressSigungu},
 			address_bname = #{addressBname},
-			address_zonecode = #{addressZonecode}
-			ponenubmer = #{poneNumber}
+			address_zonecode = #{addressZonecode},
+			ponenumber = #{poneNumber}
 		where
 			address_id = #{addressId}
 	</update>

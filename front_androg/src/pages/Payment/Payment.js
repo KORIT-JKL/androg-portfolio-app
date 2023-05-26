@@ -193,6 +193,7 @@ const Payment = () => {
   const [userAddressZonecode, setUserAddressZonecode] = useState(0);
   const [userAddressDetail, setUserAddressDetail] = useState("");
   const [userAddress, setUserAddress] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   const [userAddressId, setUserAddressId] = useState(0);
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
@@ -247,6 +248,7 @@ const Payment = () => {
         setUserAddressSigungu(response.data[addressIndex].addressSigungu);
         setUserAddressZonecode(response.data[addressIndex].addressZonecode);
         setUserAddress(response.data[addressIndex].address);
+        setUserPhone(response.data[addressIndex].poneNumber);
         setUserAddressList([...response.data]);
         setaddressListState(false);
       },
@@ -396,7 +398,7 @@ const Payment = () => {
 
               <input type="text" placeholder="상세주소" css={input} value={userAddressDetail} />
 
-              <input type="text" placeholder="전화번호" css={phoneInput} />
+              <input type="text" placeholder="전화번호" css={phoneInput} value={userPhone} />
               <button css={continueBtn} onClick={orderSubmitHandle}>
                 주문하기
               </button>
