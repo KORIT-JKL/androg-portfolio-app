@@ -115,8 +115,6 @@ const Address = () => {
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
   const [addressRecoil, setAddressRecoil] = useRecoilState(getAddressRecoil);
 
-  let userId = 0;
-  let idList = [];
   const principal = useQuery(
     ["principal"],
     async () => {
@@ -131,7 +129,6 @@ const Address = () => {
     },
     {
       onSuccess: (response) => {
-        userId = response.data.userId;
         setPrincipalState(false);
       },
       enabled: principalState,
@@ -146,7 +143,10 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(`http://localhost:8080/user/mypage/address/${address.addressId}`, option);
+      const response = await axios.delete(
+        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        option
+      );
       return response;
     },
     {
@@ -192,7 +192,11 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/user/mypage/address/default", data, option);
+      const response = await axios.put(
+        "http://localhost:8080/user/mypage/address/default",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -257,7 +261,10 @@ const Address = () => {
                     <div css={addressText}>
                       {address.addressSigungu}
                       {address.addressZonecode}
-                      <button css={defaultAddress(index)} onClick={() => addressDefault.mutate(address)}>
+                      <button
+                        css={defaultAddress(index)}
+                        onClick={() => addressDefault.mutate(address)}
+                      >
                         {index === 0 ? "기본 배송지" : "기본 배송지 설정"}
                       </button>
                     </div>

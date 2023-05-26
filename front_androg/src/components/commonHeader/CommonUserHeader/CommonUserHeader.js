@@ -7,17 +7,14 @@ import { useRecoilState } from "recoil";
 import impact from "../../../img/impact (1).png";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
+import {
+  adminAuthenticationState,
+  authenticationState,
+  loginState,
+} from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
-import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
-const header = css`
-  position: fixed;
-  flex-direction: column;
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #dbdbdb;
-`;
+import { SetSearchInput, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
 
 const mainHeader = css`
   display: flex;
@@ -57,16 +54,15 @@ const img = css`
 
 const CommonUserHeader = () => {
   const [inputIsOpen, setInputIsOpen] = useState(false);
-  const [searchInput, thisSetSearchInput] = useRecoilState(SetSearchInput);
+  const [, thisSetSearchInput] = useRecoilState(SetSearchInput);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
-  const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
-  const [authState, setAuthState] = useRecoilState(authenticationState);
+  const [, setAdminState] = useRecoilState(adminAuthenticationState);
+  const [authState] = useRecoilState(authenticationState);
   const [sbheader, setThissbheader] = useRecoilState(setsbheader);
-  const [refresh, setThiRefresh] = useRecoilState(setRefresh);
-  const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
-  const [products, setThisProducts] = useRecoilState(setProducts);
-  const [page, setThisPage] = useRecoilState(setPage);
-  const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
+  const [, setThiRefresh] = useRecoilState(setRefresh);
+  const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
+  const [, setThisProducts] = useRecoilState(setProducts);
+  const [, setThisSearchParams] = useRecoilState(setSearchParams);
   const [userAuthority, setUserAuthority] = useState("");
   const [getauthority, Setgetauthority] = useState(true);
 
@@ -130,6 +126,11 @@ const CommonUserHeader = () => {
       setLoginIsState(true);
     }
   }, [loginIsState]);
+
+  if (authority.isLoading) {
+    return <></>;
+  }
+
   return (
     <>
       <div css={mainHeader}>
@@ -153,7 +154,12 @@ const CommonUserHeader = () => {
                 ""
               )}
               {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
+                <input
+                  placeholder="대문자로 입력해주세요"
+                  type="text"
+                  id="searchInputText"
+                  onKeyDown={EnterKeyDown}
+                />
               ) : (
                 ""
               )}
@@ -183,7 +189,12 @@ const CommonUserHeader = () => {
             </ul>
             <ul css={headerList2}>
               {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
+                <input
+                  placeholder="대문자로 입력해주세요"
+                  type="text"
+                  id="searchInputText"
+                  onKeyDown={EnterKeyDown}
+                />
               ) : (
                 ""
               )}

@@ -57,7 +57,6 @@ public class AdminNoticeController {
 	}
 	@DeleteMapping("/admin/notice/{noticeId}")
 	public ResponseEntity<?> noticeDelete(@PathVariable int noticeId){
-		System.out.println(noticeId);
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok().body(adminNoticeService.noticeDelete(noticeId));
 	}
 }

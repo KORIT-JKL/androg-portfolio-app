@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
-import { useEffect, useRef, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
-import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 
@@ -196,14 +195,13 @@ const Payment = () => {
   const [userAddressId, setUserAddressId] = useState(0);
   const [cartListState, setCartListState] = useState(false);
   const [userCartList, setUserCartList] = useState([]);
-  const [cartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
+  const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [orderParams, setOrderParams] = useState({
     userId: 0,
     products: [],
     addressId: userAddressId,
   });
   const [totalPrice, setTotalPrice] = useState(0);
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const principal = useQuery(
@@ -330,6 +328,7 @@ const Payment = () => {
 
   const getCheckBoxState = (e) => {
     setTotalPrice(0);
+    // eslint-disable-next-line no-unused-vars
     const { id, checked } = e.target;
     if (e.target.checked) {
       setOrderParams({
@@ -343,7 +342,9 @@ const Payment = () => {
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
-        products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
+        products: [
+          ...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id)),
+        ],
       });
     }
   };
@@ -404,7 +405,12 @@ const Payment = () => {
                 css={input}
                 value={userAddressSido + " " + userAddressSigungu}
               />
-              <input type="text" placeholder="주소" css={input} value={userAddress.split(" ").slice(2).join(" ")} />
+              <input
+                type="text"
+                placeholder="주소"
+                css={input}
+                value={userAddress.split(" ").slice(2).join(" ")}
+              />
 
               <input type="text" placeholder="상세주소" css={input} value={userAddressDetail} />
 

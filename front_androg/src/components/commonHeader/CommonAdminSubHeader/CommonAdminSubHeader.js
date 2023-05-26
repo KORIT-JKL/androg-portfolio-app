@@ -27,7 +27,7 @@ const sublist = css`
   }
 `;
 const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
-  const [AdminMenuSelectIndex, setThisAdminMenuSelect] = useRecoilState(AdminMenuSelect);
+  const [, setThisAdminMenuSelect] = useRecoilState(AdminMenuSelect);
   const navigate = useNavigate();
   const clickProductRegister = () => {
     setThisAdminMenuSelect(1);
@@ -41,10 +41,7 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
     setThisAdminMenuSelect(3);
     navigate("/admin/product/soldout");
   };
-  const clickReviewRegister = () => {
-    setThisAdminMenuSelect(4);
-    navigate("/admin/review/register");
-  };
+
   const clickReviewDelete = () => {
     setThisAdminMenuSelect(5);
     navigate("/admin/review/delete");
@@ -65,11 +62,6 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
     setThisAdminMenuSelect(9);
     navigate("/admin/inquiry");
   };
-  const clickInquiryReview = () => {
-    setThisAdminMenuSelect(10);
-    navigate("/admin/inquiry/review");
-  };
-
   return (
     <div css={subHeader}>
       <ul css={subHeaderList}>
@@ -94,7 +86,7 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
               리뷰 댓글
             </li>
           </>
-        ) : subHeaderIndex == 2 ? (
+        ) : subHeaderIndex === 2 ? (
           <>
             <li css={sublist} onClick={() => clickNoticeRegister()}>
               공지 등록
@@ -103,7 +95,7 @@ const CommonHeaderSubHeader = ({ subHeaderIndex }) => {
               팝업 등록
             </li>
           </>
-        ) : subHeaderIndex == 3 ? (
+        ) : subHeaderIndex === 3 ? (
           <>
             <li css={sublist} onClick={() => clickInquiry()}>
               문의 접수

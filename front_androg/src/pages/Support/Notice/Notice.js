@@ -30,6 +30,7 @@ const mainContainer = css`
   height: 350px;
 `;
 
+/*
 const p = css`
   font-size: 13px;
   padding-bottom: 10px;
@@ -40,7 +41,7 @@ const span = css`
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-`;
+`;*/
 
 const Notice = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
@@ -72,7 +73,7 @@ const Notice = () => {
       </header>
       <main css={main}>
         <div css={mainContainer}>
-          {getNotice.data !== undefined ? (
+          {notice.content !== undefined ? (
             <div dangerouslySetInnerHTML={{ __html: notice.content.replaceAll(/\n/g, "<br>") }} />
           ) : (
             ""

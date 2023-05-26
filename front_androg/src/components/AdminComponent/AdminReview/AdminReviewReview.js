@@ -156,7 +156,12 @@ const AdminReviewReview = () => {
   const [refresh, setRefresh] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [reviewParams, setReviewParams] = useState({ reviewId: 0, content: "" });
-  const [selectReview, setSelectReivew] = useState({ reviewId: 0, name: "", productName: "", content: "" });
+  const [selectReview, setSelectReivew] = useState({
+    reviewId: 0,
+    name: "",
+    productName: "",
+    content: "",
+  });
   const [modifyModalIsOpen, setModifyModalIsOpen] = useState(false);
   const [reviewModifyParams, setReviewModifyParams] = useState({ reviewId: 0, content: "" });
   const [selectModifyReview, setSelectModifyReview] = useState({
@@ -176,7 +181,11 @@ const AdminReviewReview = () => {
         content: reviewParams.content,
       },
     };
-    const response = await axios.post("http://localhost:8080/admin/reviews/review/register", "", option);
+    const response = await axios.post(
+      "http://localhost:8080/admin/reviews/review/register",
+      "",
+      option
+    );
     setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
     setReviewParams({ reviewId: 0, content: "" });
     setModalIsOpen(false);
@@ -194,7 +203,11 @@ const AdminReviewReview = () => {
         content: reviewModifyParams.content,
       },
     };
-    const response = await axios.put("http://localhost:8080/admin/reviews/review/modify", "", option);
+    const response = await axios.put(
+      "http://localhost:8080/admin/reviews/review/modify",
+      "",
+      option
+    );
     setReviewModifyParams({ reviewId: 0, name: "", productName: "", content: "" });
     setReviewModifyParams({ reviewId: 0, content: "" });
     setModifyModalIsOpen(false);
@@ -267,6 +280,9 @@ const AdminReviewReview = () => {
   const modifyModalReviewContentInput = (e) => {
     setReviewModifyParams({ ...reviewModifyParams, content: e.target.value });
   };
+  if (getReviews.isLoading) {
+    return <></>;
+  }
   return (
     <>
       {modalIsOpen ? (
@@ -278,7 +294,11 @@ const AdminReviewReview = () => {
               <div css={modalContent}>리뷰 내용 :{selectReview.content}</div>
             </div>
             <div css={modalbody}>
-              <input css={modalreviewContent} onChange={modalReviewContentInput} type="text"></input>
+              <input
+                css={modalreviewContent}
+                onChange={modalReviewContentInput}
+                type="text"
+              ></input>
             </div>
             <div css={modalFooter}>
               <button css={reviewbutton} onClick={() => registerReview()}>
@@ -303,7 +323,11 @@ const AdminReviewReview = () => {
               <div css={modalContent}>답변 내용 :{selectModifyReview.reviewContent} </div>
             </div>
             <div css={modalbody}>
-              <input css={modalreviewContent} onChange={modifyModalReviewContentInput} type="text"></input>
+              <input
+                css={modalreviewContent}
+                onChange={modifyModalReviewContentInput}
+                type="text"
+              ></input>
             </div>
             <div css={modalFooter}>
               <button css={reviewbutton} onClick={() => modifyReview()}>

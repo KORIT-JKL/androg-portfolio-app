@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
@@ -12,7 +12,6 @@ import OrderProducts from "../../components/Products/OrderProducts";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms/Auth/AuthAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
-import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 
 const mainContainer = css`
   display: grid;
@@ -87,8 +86,8 @@ const MyPage = () => {
   const [orderProducts, setOrderProducts] = useState([]);
 
   const [infoRefresh, setInfoRefresh] = useState(false);
-  const [productsRefresh, setProductsRefresh] = useState(false);
-  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+  const [, setProductsRefresh] = useState(false);
+  const [, setLoginIsState] = useRecoilState(loginState);
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
 
   let userId = 0;
@@ -194,7 +193,9 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <span css={subTitle}>
+              {principal.data !== undefined ? principal.data.data.email : <></>}
+            </span>
             <div>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
             <div>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
             <div>
@@ -238,7 +239,13 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return <OrderProducts key={orderProduct.orderDetailId} orderProduct={orderProduct} isOpen={true} />;
+              return (
+                <OrderProducts
+                  key={orderProduct.orderDetailId}
+                  orderProduct={orderProduct}
+                  isOpen={true}
+                />
+              );
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>

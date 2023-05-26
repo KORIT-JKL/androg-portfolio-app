@@ -8,7 +8,6 @@ import axios from "axios";
 import {
   AddressInsertStateRecoil,
   AddressListStateRecoil,
-  getAddressListRecoil,
 } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 
@@ -57,7 +56,7 @@ const InsertAddress = ({ principal }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
   const queryClient = useQueryClient();
   const [addressOpen, setAddressOpen] = useRecoilState(AddressInsertStateRecoil);
-  const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
+  const [, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
   const [addressInput, setAddressInput] = useState({
     address: "",
@@ -123,7 +122,9 @@ const InsertAddress = ({ principal }) => {
       <h2 css={Title}>새 주소 추가</h2>
       <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
       <div css={nameBox}>
-        {addressInput.address !== "" ? addressInput.address + "(" + addressInput.bname + ")" : "주소"}
+        {addressInput.address !== ""
+          ? addressInput.address + "(" + addressInput.bname + ")"
+          : "주소"}
       </div>
       <button
         css={addAddressButton}
@@ -139,7 +140,12 @@ const InsertAddress = ({ principal }) => {
         주소찾기{" "}
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+      <AddressInput
+        type="text"
+        placeholder="상세주소"
+        name="addressDetail"
+        onChange={inputOnChangeHandle}
+      />
       <AddressInput
         type="text"
         placeholder="구/군/시"

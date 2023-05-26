@@ -1,13 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import QueryString from "qs";
 import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
 import { setRefresh } from "../../atoms/Common/CommonAtoms";
 import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
@@ -188,12 +187,17 @@ const ProductDetails = () => {
     countNumber: 1,
   });
   const [selectSize, setSelectSize] = useState(false);
-  const [userId, setUserId] = useState(0);
+  const [, setUserId] = useState(0);
 
+  // eslint-disable-next-line no-unused-vars
   const [sameNameProducts, setSameNameProducts] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
   const [selectImgSuccess, setSelectImgSuccess] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [reviewsIdList, setreviewIdList] = useState([]);
+  const [, setreviewIdList] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
   const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
   const navigate = useNavigate();
   const principal = useQuery(
@@ -232,29 +236,20 @@ const ProductDetails = () => {
       enabled: refresh && !!principal,
     }
   );
-  const getSameNameProducts = useQuery(
-    ["getSameNameProducts"],
-    async () => {
-      const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`);
-      return response;
-    },
-    {
-      enabled: !!productId,
-      onSuccess: (response) => {
-        setSameNameProducts(response.data);
-      },
-    }
-  );
 
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
+      const response = axios.post(
+        "http://localhost:8080/cart/addition",
+        JSON.stringify(searchParams),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("accessToken"),
+          },
+        }
+      );
       alert("상품을 장바구니에 등록 성공");
       return response;
     } catch {}
@@ -279,29 +274,6 @@ const ProductDetails = () => {
       enabled: refresh && !!getProduct,
     }
   );
-  const getAdminReview = useQuery(
-    ["getAdminReview"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-        params: {
-          reviewsIdList,
-        },
-
-        paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
-      };
-      const response = await axios.get("http://localhost:8080/products/adminReview", option);
-      return response;
-    },
-    {
-      enabled: !!getReviews && reviewsIdList.length > 0,
-      onSuccess: (response) => {
-        setThisAdminReviews(response.data);
-      },
-    }
-  );
   if (!product) {
     return setThiRefresh(true);
   }
@@ -324,14 +296,7 @@ const ProductDetails = () => {
     setSearchparams({ ...searchParams, productId: product.productId });
   };
 
-  const directBuy = async (product) => {
-    const response = axios.post("http://localhost:8080/products/directBuy", JSON.stringify(searchParams), {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("accessToken"),
-      },
-    });
-
+  const directBuy = async () => {
     navigate(`/products/payment`);
     setThiRefresh(true);
   };

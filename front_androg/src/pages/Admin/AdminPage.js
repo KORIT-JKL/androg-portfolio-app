@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonAdminHeader from "../../components/CommonHeader/CommonAdminHeader/CommonAdminHeader";
 import { useRecoilState } from "recoil";
@@ -22,7 +21,7 @@ const AdmingPage = css`
 `;
 
 const AdminPage = () => {
-  const [AdminMenuSelectIndex, setThisAdminMenuSelect] = useRecoilState(AdminMenuSelect);
+  const [AdminMenuSelectIndex] = useRecoilState(AdminMenuSelect);
   return (
     <>
       <CommonAdminHeader />
@@ -47,7 +46,7 @@ const AdminPage = () => {
           <AdminPopUpRegister />
         ) : AdminMenuSelectIndex === 9 ? (
           <AdminInquiry />
-        ) :  (
+        ) : (
           ""
         )}
       </div>

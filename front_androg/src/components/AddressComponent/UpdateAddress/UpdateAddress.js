@@ -57,24 +57,22 @@ const UpdateAddress = ({ principal, address }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
   const queryClient = useQueryClient();
   const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
-  const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
+  const [, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
   const [addressInput, setAddressInput] = useRecoilState(getAddressRecoil);
-  console.log(addressInput.address);
-  console.log(address);
 
   const addressUpdate = useMutation(
     async (address) => {
       const data = {
         address: addressInput.address,
-        addressSigungu: addressInput.sigungu,
-        addressSido: addressInput.sido,
-        addressBname: addressInput.bname,
-        addressZonecode: addressInput.zonecode,
+        addressSigungu: addressInput.addressSigungu,
+        addressSido: addressInput.addressSido,
+        addressBname: addressInput.addressBname,
+        addressZonecode: addressInput.addressZonecode,
         addressDetail: addressDetailInput.addressDetail,
         addressId: address.addressId,
-        poneNumber: addressInput.ponenumber,
+        poneNumber: addressInput.poneNumber,
         addressFlag: address.addressFlag,
       };
       console.log(data);
@@ -104,10 +102,10 @@ const UpdateAddress = ({ principal, address }) => {
     setAddressInput((prevState) => ({
       ...prevState,
       address: data.address,
-      sigungu: data.sigungu,
-      sido: data.sido,
-      bname: data.bname,
-      zonecode: data.zonecode,
+      addressSigungu: data.sigungu,
+      addressSido: data.sido,
+      addressBname: data.bname,
+      addressZonecode: data.zonecode,
     }));
     setAddressInitState(false);
     setOpenPostCode(false);
@@ -144,34 +142,44 @@ const UpdateAddress = ({ principal, address }) => {
         주소찾기
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+      <AddressInput
+        type="text"
+        placeholder="상세주소"
+        name="addressDetail"
+        onChange={inputOnChangeHandle}
+      />
       <AddressInput
         type="text"
         placeholder="구/군/시"
         name="sigungu"
-        value={addressInitState ? address.addressSigungu : addressInput.sigungu}
-        onChange={(e) => setAddressInput({ ...addressInput, sigungu: e.target.value })}
+        value={addressInitState ? address.addressSigungu : addressInput.addressSigungu}
+        onChange={(e) => setAddressInput({ ...addressInput, addressSigungu: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="시/도"
         name="sido"
-        value={addressInitState ? address.addressSido : addressInput.sido}
-        onChange={(e) => setAddressInput({ ...addressInput, sido: e.target.value })}
+        value={addressInitState ? address.addressSido : addressInput.addressSido}
+        onChange={(e) => setAddressInput({ ...addressInput, addressSido: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="우편번호"
         name="zonecode"
-        value={addressInitState ? address.addressZonecode : addressInput.zonecode}
-        onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+        value={addressInitState ? address.addressZonecode : addressInput.addressZonecode}
+        onChange={(e) => setAddressInput({ ...addressInput, addressZonecode: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="전화번호"
         name="ponenumber"
-        value={addressInitState ? address.poneNumber : addressInput.ponenumber}
-        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value }, setAddressInitState(false))}
+        value={addressInitState ? address.poneNumber : addressInput.poneNumber}
+        onChange={(e) =>
+          setAddressInput(
+            { ...addressInput, ponenumber: e.target.value },
+            setAddressInitState(false)
+          )
+        }
       />
       <button
         css={addAddressButton}

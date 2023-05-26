@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import impact from "../../../img/impact (1).png";
 import { useNavigate } from "react-router-dom";
-import CommonHeaderSubHeader from "../CommonAdminSubHeader.js/CommonAdminSubHeader";
+import CommonHeaderSubHeader from "../CommonAdminSubHeader/CommonAdminSubHeader";
 const mainHeader = css`
   display: flex;
   width: 100%;

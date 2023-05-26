@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import { async } from "q";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 const Cotainer = css`
@@ -51,7 +50,7 @@ const reviewDelteButton = css`
   }
 `;
 const AdminReviewDelete = () => {
-  const [refresh, setRefresh] = useState(true);
+  const [, setRefresh] = useState(true);
   const [reviews, setReviews] = useState([]);
   const getreviews = useQuery(
     ["getreviews"],
@@ -90,6 +89,9 @@ const AdminReviewDelete = () => {
       return null;
     }
   };
+  if (getreviews.isLoading) {
+    return <></>;
+  }
   return (
     <div css={Cotainer}>
       <table css={reviewContainer}>

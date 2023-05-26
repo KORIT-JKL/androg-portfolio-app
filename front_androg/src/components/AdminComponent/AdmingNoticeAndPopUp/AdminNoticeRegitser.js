@@ -53,7 +53,6 @@ const inquiryButton = css`
 
 const AdminNoticeRegitser = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
-  const [wrappedContent, setWrappedContent] = useState({ noticeId: 0, subject: "", content: "" });
   const noticeRegister = useMutation(async () => {
     const data = {
       ...notice,
@@ -79,15 +78,25 @@ const AdminNoticeRegitser = () => {
     return response;
   });
 
-  const noticeDelete = useMutation(async (notice) => {
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+  const noticeDelete = useMutation(
+    async (notice) => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.delete(
+        `http://localhost:8080/admin/notice/${notice.noticeId}`,
+        option
+      );
+      return response;
+    },
+    {
+      onSuccess: () => {
+        getNotice.refetch();
       },
-    };
-    const response = await axios.delete(`http://localhost:8080/admin/notice/${notice.noticeId}`, option);
-    return response;
-  });
+    }
+  );
 
   const getNotice = useQuery(
     ["getUserNotice"],
@@ -127,7 +136,12 @@ const AdminNoticeRegitser = () => {
       <div css={inputbox}>
         <SupprotInput type="text" placeholder="제목" name="subject" onChange={onchangeHandle} />
       </div>
-      <textarea css={textArea} placeholder="내용을 입력하세요" name="content" onChange={onchangeHandle}></textarea>
+      <textarea
+        css={textArea}
+        placeholder="내용을 입력하세요"
+        name="content"
+        onChange={onchangeHandle}
+      ></textarea>
       {notice.noticeId !== undefined ? (
         <>
           <button

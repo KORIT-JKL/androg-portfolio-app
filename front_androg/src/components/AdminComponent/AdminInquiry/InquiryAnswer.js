@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { InquiryAnswerState, answerComplete, disabledState } from "../../../atoms/Admin/AdminAtoms";
+import { InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
 import axios from "axios";
-import { useMutation, useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
 
 const answerContainer = css`
   position: fixed;
@@ -59,12 +58,10 @@ const footer = css`
   align-items: center;
 `;
 const InquiryAnswer = ({ inquiryId }) => {
-  const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
+  const [, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [answerContent, setAnswerContent] = useState("");
-  const [disabled, setDisabled] = useRecoilState(disabledState);
 
-  const navigate = useNavigate();
-  console.log(inquiryId);
+  // const navigate = useNavigate();
 
   const inquiryResponse = useMutation(["inquiryResponse"], async () => {
     const data = {

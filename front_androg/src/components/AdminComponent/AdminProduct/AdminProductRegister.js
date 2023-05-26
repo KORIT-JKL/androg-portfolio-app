@@ -1,10 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useState } from "react";
-import CommonAdminHeader from "../../CommonHeader/CommonAdminHeader/CommonAdminHeader";
-import CommonFooter from "../../CommonFooter/CommonFooter";
-import { useRecoilState } from "recoil";
-import { AdminMenuSelect } from "../../../atoms/Admin/AdminAtoms";
 import { useQuery } from "react-query";
 import axios from "axios";
 const container = css`
@@ -85,6 +81,8 @@ const AdminProductRegister = () => {
     productImg: "",
     colorId: 1,
   });
+
+  // eslint-disable-next-line no-unused-vars
   const [register, setRegister] = useState(false);
   const getColor = useQuery(
     ["getAllColor"],
@@ -120,7 +118,7 @@ const AdminProductRegister = () => {
   const productImgUrlInputHandle = (e) => {
     setProductsDetatils({ ...productsDetails, productImg: e.target.value });
   };
-  const registerClickHandle = () => {};
+
   const registerProductsDetails = async () => {
     const option = {
       headers: {
@@ -143,11 +141,26 @@ const AdminProductRegister = () => {
     <div>
       <div css={container}>
         <div css={containerHeader}>
-          <input css={productNameInput} onChange={productNameInputHandle} type="text" placeholder="상품이름" />
-          <input css={productPriceInput} onChange={productPriceInputHandle} type="text" placeholder="상품가격(원)" />
+          <input
+            css={productNameInput}
+            onChange={productNameInputHandle}
+            type="text"
+            placeholder="상품이름"
+          />
+          <input
+            css={productPriceInput}
+            onChange={productPriceInputHandle}
+            type="text"
+            placeholder="상품가격(원)"
+          />
         </div>
         <div css={containerMiddle}>
-          <select css={productCategoryInput} onChange={productCategorySelectHandle} name="Category" id="categoryId">
+          <select
+            css={productCategoryInput}
+            onChange={productCategorySelectHandle}
+            name="Category"
+            id="categoryId"
+          >
             <option value="1">TEES</option>
             <option value="2">SWEATS</option>
             <option value="3">PANTS</option>
@@ -155,7 +168,12 @@ const AdminProductRegister = () => {
             <option value="5">HEADWEAR</option>
             <option value="6">SHOES</option>
           </select>
-          <select css={productColorInput} onChange={productColorSelectHandle} name="Color" id="colorId">
+          <select
+            css={productColorInput}
+            onChange={productColorSelectHandle}
+            name="Color"
+            id="colorId"
+          >
             {colors.map((color) => (
               <option key={color.id} value={color.colorId}>
                 {color.colorName}
@@ -164,14 +182,23 @@ const AdminProductRegister = () => {
           </select>
         </div>
         <div css={containerFooter}>
-          {productsDetails.productImg != "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}
+          {productsDetails.productImg !== "" ? (
+            <img css={img} src={productsDetails.productImg} alt="" />
+          ) : (
+            <></>
+          )}
 
-          <input css={productUrlInput} onChange={productImgUrlInputHandle} type="text" placeholder="이미지URL" />
-          {productsDetails.productName == "" ||
-          productsDetails.productPrice == 0 ||
-          productsDetails.categoryId == 0 ||
-          productsDetails.productImg == "" ||
-          productsDetails.colorId == 0 ? (
+          <input
+            css={productUrlInput}
+            onChange={productImgUrlInputHandle}
+            type="text"
+            placeholder="이미지URL"
+          />
+          {productsDetails.productName === "" ||
+          productsDetails.productPrice === 0 ||
+          productsDetails.categoryId === 0 ||
+          productsDetails.productImg === "" ||
+          productsDetails.colorId === 0 ? (
             <button css={registerButton}>전부 입력시 등록가능</button>
           ) : (
             <button css={registerButton} onClick={() => registerProductsDetails()}>

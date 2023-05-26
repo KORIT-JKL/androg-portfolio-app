@@ -269,6 +269,9 @@ const AdminProductModify = () => {
     setRefresh(true);
     return response;
   };
+  if(searchProducts.isLoading && getColor.isLoading){
+    return <></>;
+  }
   return (
     <div>
       <ul css={categoryIdContainer}>
@@ -358,7 +361,7 @@ const AdminProductModify = () => {
                 </option>
               ))}
             </select>
-            {productsDetails.productImg != "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}
+            {productsDetails.productImg !== "" ? <img css={img} src={productsDetails.productImg} alt="" /> : <></>}
 
             <input
               css={productUrlInput}

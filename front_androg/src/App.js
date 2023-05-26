@@ -1,9 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Global } from "@emotion/react";
 import { Reset } from "./styles/Global/reset";
 import { Route, Routes } from "react-router-dom";
-import CommonHeader from "./components/CommonHeader/CommonHeader";
 import Notice from "./pages/Support/Notice/Notice";
 import CustomerSupport from "./pages/Support/CustomerSupport/CustomerSupport";
 import Shipping from "./pages/Support/Shipping/Shipping";
@@ -20,17 +18,8 @@ import Address from "./pages/Address/Address";
 import Payment from "./pages/Payment/Payment";
 import Review from "./pages/Review/Review";
 import AdminPage from "./pages/Admin/AdminPage";
-import Index from "./pages/Admin/Index";
 import AuthRoute from "./components/Route/AuthRoute/AuthRoute";
-import AdminProductRegister from "./components/AdminComponent/AdminProduct/AdminProductRegister";
-import AdminProductModify from "./components/AdminComponent/AdminProduct/AdminProductModify";
-import AdminProductSoldOut from "./components/AdminComponent/AdminProduct/AdminProductSoldOut";
-import AdminReviewRegister from "./components/AdminComponent/AdminReview/AdminReviewRegister";
-import AdminReviewDelete from "./components/AdminComponent/AdminReview/AdminReviewDelete";
-import AdminReviewReview from "./components/AdminComponent/AdminReview/AdminReviewReview";
-import AdminNoticeRegitser from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminNoticeRegitser";
-import AdminPopUpRegister from "./components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
-import AdminInquiry from "./components/AdminComponent/AdminInquiry/AdminInquiry";
+
 import InquiryResponse from "./pages/Support/CustomerSupport/InquiryResponse";
 
 function App() {
@@ -52,7 +41,10 @@ function App() {
         <Route path="/page/legal" element={<Legal />} />
 
         {/* 마이페이지 Route */}
-        <Route path="/user/mypage" element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />} />
+        <Route
+          path="/user/mypage"
+          element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />}
+        />
         <Route
           path="/user/mypage/address"
           element={<AuthRoute path={"/user/mypage/address"} element={<Address />} />}
@@ -106,7 +98,10 @@ function App() {
           element={<AuthRoute path={"/admin/popUp/register"} element={<AdminPage />} />}
         />
         {/* 문의 접수, 문의 답변 */}
-        <Route path="/admin/inquiry" element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />} />
+        <Route
+          path="/admin/inquiry"
+          element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />}
+        />
       </Routes>
     </>
   );

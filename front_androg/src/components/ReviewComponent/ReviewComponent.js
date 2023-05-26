@@ -70,7 +70,7 @@ const adminReviewText = css`
 const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
+  const [adminReviews] = useRecoilState(SetAdminReviews);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
