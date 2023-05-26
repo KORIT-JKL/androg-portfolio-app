@@ -321,6 +321,7 @@ const ProductDetails = () => {
   const selectColor = (product) => {
     navigate(`/products/${product.productId}/details`);
     setThiRefresh(true);
+    setSearchparams({ ...searchParams, productId: product.productId });
   };
 
   const directBuy = async (product) => {
