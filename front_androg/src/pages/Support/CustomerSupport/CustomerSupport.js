@@ -86,20 +86,20 @@ const CustomerSupport = () => {
       onSuccess: () => {
         setPrincipalState(false);
       },
-      enabled: principalState
-    });
-
+      enabled: principalState,
+    }
+  );
 
   const inquiry = useMutation(["inquiry"], async () => {
     const data = {
       userId: principal.data.data.userId,
       orderId: orderDtlId,
       category: category,
-      inquiryContent: inquiryContent
+      inquiryContent: inquiryContent,
     };
     const option = {
       headers: {
-        "content-type":"application/json",
+        "content-type": "application/json",
         Authorization: `${localStorage.getItem("accessToken")}`,
       },
     };
@@ -107,37 +107,34 @@ const CustomerSupport = () => {
     return response;
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!principalState) {
       setPrincipalState(true);
     }
-  },[])
+  }, []);
 
-  
   const getOrderId = (e) => {
     setOrderDtlId(e.target.value);
-    console.log(e.target.value)
+    console.log(e.target.value);
   };
 
   const getInquiryCategory = (e) => {
     setCategory(e.target.value);
     console.log(e.target.value);
   };
-  
+
   const getContent = (e) => {
     setInquiryContent(e.target.value);
-    console.log(e.target.value)
-  }
+    console.log(e.target.value);
+  };
   const inquirySubmitHandle = () => {
-    if(!!localStorage.getItem("accessToken")) {
+    if (!!localStorage.getItem("accessToken")) {
       inquiry.mutate();
-      alert("문의가 정상적으로 접수되었습니다.")
-      window.location.reload();
+      alert("문의가 정상적으로 접수되었습니다.");
     } else {
       alert("로그인 후 이용해주세요.");
       navigate("/auth/login");
     }
-    
   };
 
   return (
@@ -148,7 +145,7 @@ const CustomerSupport = () => {
           <div css={headerText}>
             <h1>문의하기</h1>
           </div>
-          <SupprotInput type="text" placeholder="orderNumber" onChange={getOrderId}/>
+          <SupprotInput type="text" placeholder="orderNumber" onChange={getOrderId} />
           <select name="" id="" css={select} onClick={getInquiryCategory}>
             <option value="">문의사항을 선택해주세요</option>
             <option value="주문상태">주문상태</option>

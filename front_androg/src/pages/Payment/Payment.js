@@ -308,8 +308,9 @@ const Payment = () => {
       });
       setCartIsOpen(false);
       setOrderList(true);
+      navigate("/user/mypage");
+      return response;
     } catch (error) {}
-    navigate("/user/mypage");
   };
 
   const clickHandle = (e) => {

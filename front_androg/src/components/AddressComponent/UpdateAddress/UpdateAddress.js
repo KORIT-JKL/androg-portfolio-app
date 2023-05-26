@@ -75,7 +75,7 @@ const UpdateAddress = ({ principal, address }) => {
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
         addressId: address.addressId,
-        poneNumber: address.poneNumber,
+        poneNumber: addressInput.ponenumber,
         addressFlag: address.addressFlag,
       };
       const option = {
@@ -170,8 +170,8 @@ const UpdateAddress = ({ principal, address }) => {
         type="text"
         placeholder="전화번호"
         name="ponenumber"
-        value={addressInitState ? address.poneNumber : addressInput.zonecode}
-        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value })}
+        value={addressInitState ? address.poneNumber : addressInput.ponenumber}
+        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value }, setAddressInitState(false))}
       />
       <button
         css={addAddressButton}
