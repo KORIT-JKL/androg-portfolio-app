@@ -15,6 +15,7 @@ public class AddressReigsteReqDto {
 	private String addressSido;
 	private String addressBname;
 	private String addressZonecode;
+	private String poneNumber;
 	private int addressFlag;
 	private int addressId;
 	
@@ -28,6 +29,7 @@ public class AddressReigsteReqDto {
 				.addressSigungu(addressSigungu)
 				.addressBname(addressBname)
 				.addressZonecode(addressZonecode)
+				.poneNumber(poneNumber)
 				.addressFlag(addressFlag)
 				.build();
 	}

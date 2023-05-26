@@ -10,6 +10,7 @@
 		<result property="addressSigungu" column="address_sigungu"/>
 		<result property="addressBname" column="address_bname"/>
 		<result property="addressZonecode" column="address_zonecode"/>
+		<result property="poneNumber" column="ponenumber"/>
 		<result property="addressFlag" column="address_flag"/>
 		<association property="user" resultMap="UserMap"></association>
 	</resultMap>
@@ -22,7 +23,7 @@
 
 	<insert id="addressRegister" parameterType="com.korit.androg.androg.entity.Address">
 	insert into address_tb
-		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode},#{addressFlag})
+		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode},#{poneNumber},#{addressFlag})
 	
 	</insert>
 	
@@ -36,6 +37,7 @@
     	ab.address_zonecode,
 		ab.address_id,
 		ab.address_flag,
+		ab.ponenumber,
 		ab.user_id,
     	ut.name
     
@@ -57,6 +59,7 @@
 			address_sigungu = #{addressSigungu},
 			address_bname = #{addressBname},
 			address_zonecode = #{addressZonecode}
+			ponenubmer = #{poneNumber}
 		where
 			address_id = #{addressId}
 	</update>

@@ -57,11 +57,12 @@ const UpdateAddress = ({ principal, address }) => {
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
   const [addressInput, setAddressInput] = useState({
-    address: "",
-    sigungu: "",
-    sido: "",
-    bname: "",
-    zonecode: "",
+    address: address.address,
+    sigungu: address.addressSigungu,
+    sido: address.addressSido,
+    bname: address.addressBname,
+    zonecode: address.addressZonecode,
+    ponenumber: address.poneNumber,
   });
 
   const addressUpdate = useMutation(
@@ -74,6 +75,7 @@ const UpdateAddress = ({ principal, address }) => {
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
         addressId: address.addressId,
+        poneNumber: address.poneNumber,
         addressFlag: address.addressFlag,
       };
       const option = {
@@ -148,21 +150,28 @@ const UpdateAddress = ({ principal, address }) => {
         placeholder="구/군/시"
         name="sigungu"
         value={addressInitState ? address.addressSigungu : addressInput.sigungu}
-        onChange={(e) => setAddressInput({ sigungu: e.target.value })}
+        onChange={(e) => setAddressInput({ ...addressInput, sigungu: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="시/도"
         name="sido"
         value={addressInitState ? address.addressSido : addressInput.sido}
-        onChange={(e) => setAddressInput({ sido: e.target.value })}
+        onChange={(e) => setAddressInput({ ...addressInput, sido: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="우편번호"
         name="zonecode"
         value={addressInitState ? address.addressZonecode : addressInput.zonecode}
-        onChange={(e) => setAddressInput({ zonecode: e.target.value })}
+        onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+      />
+      <AddressInput
+        type="text"
+        placeholder="전화번호"
+        name="ponenumber"
+        value={addressInitState ? address.poneNumber : addressInput.zonecode}
+        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value })}
       />
       <button
         css={addAddressButton}
