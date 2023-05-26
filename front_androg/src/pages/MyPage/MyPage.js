@@ -16,12 +16,13 @@ import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 
 const mainContainer = css`
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 3fr));
+  gap: 10px;
 `;
 
 const informationContent = css`
   grid-column-start: 2;
-  grid-column: span 4 / span 4;
+  grid-column-end: span 3;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
@@ -74,7 +75,7 @@ const supportLi = css`
 `;
 const orderContent = css`
   grid-column-start: 6;
-  grid-column: span 8 / span 8;
+  grid-column-end: span 7;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
@@ -177,19 +178,6 @@ const MyPage = () => {
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
 
-  const admintest = useMutation(["admin"], async () => {
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.post("http://localhost:8080/admin/test", "", option);
-    return response;
-  });
-  const onclicktest = () => {
-    admintest.mutate();
-  };
-
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();
@@ -213,9 +201,7 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>
-              {principal.data !== undefined ? principal.data.data.email : <></>}
-            </span>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
             <div>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
             <div>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
             <div>
@@ -256,19 +242,12 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return (
-                <OrderProducts
-                  key={orderProduct.orderDetailId}
-                  orderProduct={orderProduct}
-                  isOpen={true}
-                />
-              );
+              return <OrderProducts key={orderProduct.orderDetailId} orderProduct={orderProduct} isOpen={true} />;
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
           )}
         </div>
-        <button onClick={onclicktest}>admintest</button>
       </main>
       <CommonFooter />
     </>
