@@ -220,6 +220,7 @@ const Payment = () => {
     {
       onSuccess: () => {
         setPrincipalState(false);
+        setCartListState(true);
       },
       enabled: principalState,
     }
@@ -306,9 +307,6 @@ const Payment = () => {
     }
     if (!addressListState) {
       setaddressListState(true);
-    }
-    if (!cartListState) {
-      setCartListState(true);
     }
   }, [addressIndex]);
 
