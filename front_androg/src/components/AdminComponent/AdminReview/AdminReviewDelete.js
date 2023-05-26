@@ -110,7 +110,7 @@ const AdminReviewDelete = () => {
           {reviews.map((review) => (
             <div css={reviewContainer}>
               <div css={reviewId}>{review.reviewId}</div>
-              <div css={reviewName}>{review.name}</div>
+              <div css={reviewName}>{review.userName}</div>
               <div css={reviewProductName}>{review.productName}</div>
               <div css={reviewContent}>{review.content}</div>
               <div css={reviewDate}>{review.date}</div>

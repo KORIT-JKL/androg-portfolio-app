@@ -23,7 +23,6 @@ const AuthRoute = ({ path, element }) => {
     {
       onSuccess: (response) => {
         if (response.status === 200) {
-          console.log(response.data);
           if (response.data) {
             setAuthState(true);
           } else {

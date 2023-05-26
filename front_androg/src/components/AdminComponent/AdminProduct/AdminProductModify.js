@@ -40,6 +40,8 @@ const productCardContainer = css`
   height: auto;
   margin: auto;
   width: 1400px;
+  margin-bottom: 100px;
+  margin-top: 20px;
   justify-content: flex-start;
 `;
 const productCard = css`
