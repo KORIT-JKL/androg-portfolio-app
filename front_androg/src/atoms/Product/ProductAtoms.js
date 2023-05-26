@@ -35,3 +35,8 @@ export const SetAdminReviews = atom({
   key: "SetAdminReviews",
   default: [],
 });
+
+export const orderProductsState = atom({
+  key: "orderProductsState",
+  default: false,
+});

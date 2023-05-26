@@ -254,7 +254,7 @@ const Address = () => {
                     <div>{address.addressDetail}</div>
                     <div css={addressText}>
                       {address.addressSigungu}
-                      {address.addressZonecode}{" "}
+                      {address.addressZonecode}
                       <button css={defaultAddress(index)} onClick={() => addressDefault.mutate(address)}>
                         {index === 0 ? "기본 배송지" : "기본 배송지 설정"}
                       </button>

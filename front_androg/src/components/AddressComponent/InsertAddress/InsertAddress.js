@@ -65,6 +65,7 @@ const InsertAddress = ({ principal }) => {
     sido: "",
     bname: "",
     zonecode: "",
+    ponenumber: "",
   });
 
   const addressRegister = useMutation(
@@ -77,6 +78,7 @@ const InsertAddress = ({ principal }) => {
         addressBname: addressInput.bname,
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
+        poneNumber: addressInput.ponenumber,
         addressFlag: 0,
       };
       const option = {
@@ -158,6 +160,13 @@ const InsertAddress = ({ principal }) => {
         name="zonecode"
         value={addressInput.zonecode}
         onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+      />
+      <AddressInput
+        type="text"
+        placeholder="전화번호"
+        name="ponenumber"
+        value={addressInput.ponenumber}
+        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value })}
       />
       <button
         css={addAddressButton}

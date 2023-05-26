@@ -22,6 +22,7 @@ public class Address {
 	private String addressSido;
 	private String addressBname;
 	private String addressZonecode;
+	private String poneNumber;
 	private int addressFlag;
 	
 	
@@ -37,6 +38,7 @@ public class Address {
 				.addressSigungu(addressSigungu)
 				.addressBname(addressBname)
 				.addressZonecode(addressZonecode)
+				.poneNumber(poneNumber)
 				.addressFlag(addressFlag)
 				.build();
 	}

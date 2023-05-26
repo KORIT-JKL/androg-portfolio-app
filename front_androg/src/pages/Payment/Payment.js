@@ -2,10 +2,12 @@
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
+import { orderProductsState } from "../../atoms/Product/ProductAtoms";
+import { useRecoilState } from "recoil";
 
 const container = css`
   font-size: 12px;
@@ -180,6 +182,7 @@ const summaryFooter = css`
 
 // url 변경 => /products/payment
 const Payment = () => {
+  const [orderList, setOrderList] = useRecoilState(orderProductsState);
   const [principalState, setPrincipalState] = useState(false);
   const [addressListState, setaddressListState] = useState(false);
   const [addressIndex, setAddressIndex] = useState(0);
@@ -198,7 +201,7 @@ const Payment = () => {
     addressId: userAddressId,
   });
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const principal = useQuery(
@@ -301,6 +304,7 @@ const Payment = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       });
+      setOrderList(true);
     } catch (error) {}
     navigate("/user/mypage");
   };
@@ -324,7 +328,9 @@ const Payment = () => {
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
-        products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
+        products: [
+          ...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id)),
+        ],
       });
     }
   };
@@ -385,7 +391,12 @@ const Payment = () => {
                 css={input}
                 value={userAddressSido + " " + userAddressSigungu}
               />
-              <input type="text" placeholder="주소" css={input} value={userAddress.split(" ").slice(2).join(" ")} />
+              <input
+                type="text"
+                placeholder="주소"
+                css={input}
+                value={userAddress.split(" ").slice(2).join(" ")}
+              />
 
               <input type="text" placeholder="상세주소" css={input} value={userAddressDetail} />
 

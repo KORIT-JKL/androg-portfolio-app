@@ -38,7 +38,7 @@ public class AddressController {
 	
 	@PutMapping("/user/mypage/address/{addressId}")
 	public ResponseEntity<?> addressUpdate(@PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto){
-		
+		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
 	}
 	

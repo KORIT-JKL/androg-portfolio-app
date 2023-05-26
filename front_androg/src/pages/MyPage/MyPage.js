@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
@@ -10,17 +10,19 @@ import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useRecoilState } from "recoil";
-import { authenticationState, loginState } from "../../atoms/Auth/AuthAtoms";
+import { loginState } from "../../atoms/Auth/AuthAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
+import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 
 const mainContainer = css`
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(12, minmax(0, 3fr));
+  gap: 10px;
 `;
 
 const informationContent = css`
   grid-column-start: 2;
-  grid-column: span 4 / span 4;
+  grid-column-end: span 3;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
@@ -73,7 +75,7 @@ const supportLi = css`
 `;
 const orderContent = css`
   grid-column-start: 6;
-  grid-column: span 8 / span 8;
+  grid-column-end: span 7;
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
@@ -88,6 +90,7 @@ const MyPage = () => {
   const [productsRefresh, setProductsRefresh] = useState(false);
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
+  const [orderList, setOrderList] = useRecoilState(orderProductsState);
 
   let userId = 0;
 
@@ -108,6 +111,7 @@ const MyPage = () => {
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
+        setOrderList(true);
       },
       enabled: infoRefresh,
     }
@@ -152,13 +156,16 @@ const MyPage = () => {
     {
       onSuccess: (response) => {
         setOrderProducts([...response.data]);
-
         setProductsRefresh(false);
       },
-      enabled: !!principal.data, //useQuery를 동기식으로 쓰는 꼼수
+      enabled: !!principal.data && productsRefresh, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
-
+  useEffect(() => {
+    if (!productsRefresh) {
+      setProductsRefresh(true);
+    }
+  }, []);
   const withdrawal = useMutation(async () => {
     const option = {
       params: {
@@ -170,19 +177,6 @@ const MyPage = () => {
     };
     return await axios.delete(`http://localhost:8080/user/${userId}`, option);
   });
-
-  const admintest = useMutation(["admin"], async () => {
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.post("http://localhost:8080/admin/test", "", option);
-    return response;
-  });
-  const onclicktest = () => {
-    admintest.mutate();
-  };
 
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
@@ -254,7 +248,6 @@ const MyPage = () => {
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>
           )}
         </div>
-        <button onClick={onclicktest}>admintest</button>
       </main>
       <CommonFooter />
     </>

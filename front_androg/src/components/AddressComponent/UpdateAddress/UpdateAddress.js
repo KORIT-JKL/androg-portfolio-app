@@ -57,11 +57,12 @@ const UpdateAddress = ({ principal, address }) => {
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
   const [addressInput, setAddressInput] = useState({
-    address: "",
-    sigungu: "",
-    sido: "",
-    bname: "",
-    zonecode: "",
+    address: address.address,
+    sigungu: address.addressSigungu,
+    sido: address.addressSido,
+    bname: address.addressBname,
+    zonecode: address.addressZonecode,
+    ponenumber: address.poneNumber,
   });
 
   const addressUpdate = useMutation(
@@ -73,7 +74,9 @@ const UpdateAddress = ({ principal, address }) => {
         addressBname: addressInput.bname,
         addressZonecode: addressInput.zonecode,
         addressDetail: addressDetailInput.addressDetail,
-        addressFlag: 0,
+        addressId: address.addressId,
+        poneNumber: address.poneNumber,
+        addressFlag: address.addressFlag,
       };
       const option = {
         headers: {
@@ -162,6 +165,13 @@ const UpdateAddress = ({ principal, address }) => {
         name="zonecode"
         value={addressInitState ? address.addressZonecode : addressInput.zonecode}
         onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+      />
+      <AddressInput
+        type="text"
+        placeholder="전화번호"
+        name="ponenumber"
+        value={addressInitState ? address.poneNumber : addressInput.zonecode}
+        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value })}
       />
       <button
         css={addAddressButton}
