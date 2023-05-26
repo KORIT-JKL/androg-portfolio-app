@@ -5,7 +5,7 @@ import FAQItem from "./../../SupportUI/Button/FAQItem";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { AdminInquiries, InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
+import { AdminInquiries, InquiryAnswerState, answerComplete } from "../../../atoms/Admin/AdminAtoms";
 import InquiryAnswer from "./InquiryAnswer";
 
 const mainContainer = css`
@@ -57,38 +57,11 @@ const tableStyle = css`
   }
 `;
 
-const container = css`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 90%;
-  border: 1px solid black;
-`;
-
-const inquiryHeader = css`
-  display: flex;
-  width: 100%;
-  height: 20px;
-  border: 1px solid #dbdbdb;
-`;
-
-const inquiryHeaderSub1 = css`
-  display: flex;
-  justify-content: space-around;
-  width: 40%;
-  text-align: center;
-`;
-
-const inquiryHeaderSub2 = css`
-  display: flex;
-  justify-content: space-between;
-  width: 53%;
-  margin-left: 20px;
-`;
-
 const AdminInquiry = () => {
   const [inquiries, setInquiries] = useRecoilState(AdminInquiries);
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
+  const [selectedInquiryId, setSelectedInquiryId] = useState(0);
+
 
   const getInquiries = useQuery(
     ["getInquiries"],
@@ -110,7 +83,7 @@ const AdminInquiry = () => {
 
   return (
     <>
-      {answerState ? <InquiryAnswer /> : ""}
+      {answerState ? <InquiryAnswer inquiryId={selectedInquiryId}/> : ""}
       <div css={mainContainer}>
         <header css={header}>
           <h2>접수문의</h2>
@@ -142,6 +115,7 @@ const AdminInquiry = () => {
                       <td>
                         <button
                           onClick={() => {
+                            setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
                           }}
                         >
@@ -157,41 +131,6 @@ const AdminInquiry = () => {
             </tbody>
           </table>
         </main>
-
-        {/* <div css={container}>
-        <div css={inquiryHeader}>
-          <div css={inquiryHeaderSub1}>
-            <div>순번</div>
-            <div>회원ID</div>
-            <div>주문번호</div>
-            <div>문의사항</div>
-          </div>
-          <div css={inquiryHeaderSub2}>
-            <div>문의내용</div>
-            <div>접수일시</div>
-          </div>
-        </div>
-        {!!inquiries ? (
-          <>
-            {inquiries.map((inquiry) => (
-              <div css={inquiryHeader}>
-                <div css={inquiryHeaderSub1}>
-                  <div>{inquiry.inquiryId}</div>
-                  <div>{inquiry.email}</div>
-                  <div>{inquiry.orderId}</div>
-                  <div>{inquiry.category}</div>
-                </div>
-                <div css={inquiryHeaderSub2}>
-                  <div>{inquiry.inquiryContent}</div>
-                  <div>{inquiry.date}</div>
-                </div>
-              </div>
-            ))}
-          </>
-        ) : (
-          ""
-        )}
-      </div> */}
       </div>
     </>
   );

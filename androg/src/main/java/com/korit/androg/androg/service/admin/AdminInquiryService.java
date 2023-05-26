@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.korit.androg.androg.dto.admin.InquiryAnswerReqDto;
 import com.korit.androg.androg.dto.admin.InquiryRespDto;
 import com.korit.androg.androg.repository.admin.AdminInquiryRepository;
 
@@ -23,5 +24,9 @@ public class AdminInquiryService {
 		});
 		
 		return inquiryList;
+	}
+	
+	public int submitAnswer(InquiryAnswerReqDto inquiryAnswerReqDto) {
+		return adminInquiryRepository.submitAnswer(inquiryAnswerReqDto);
 	}
 }

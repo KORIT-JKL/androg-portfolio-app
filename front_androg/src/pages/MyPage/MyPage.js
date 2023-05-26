@@ -229,6 +229,9 @@ const MyPage = () => {
               <li css={supportLi} onClick={() => navgate("/page/customer")}>
                 문의하기
               </li>
+              <li css={supportLi} onClick={() => navgate("/page/customer/inquiry")}>
+                문의답변
+              </li>
               <li css={supportLi} onClick={() => navgate("/page/customer")}>
                 자주 묻는 질문
               </li>
