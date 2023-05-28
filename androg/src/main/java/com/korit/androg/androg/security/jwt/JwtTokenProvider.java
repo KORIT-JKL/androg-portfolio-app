@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -117,5 +118,18 @@ public class JwtTokenProvider {
 		
 		authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
 		return authentication;
+	}
+	
+	public String generateOAuth2RegisterToken(Authentication authentication) {
+		Date tokenExpiresDate = new Date(new Date().getTime() + (1000 * 60 * 10));
+		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+		String email = oAuth2User.getAttribute("email"); 
+	
+		return Jwts.builder()
+		.setSubject("OAuth2Register")
+		.claim("email", email)
+		.setExpiration(tokenExpiresDate)
+		.signWith(key, SignatureAlgorithm.HS256)
+		.compact();
 	}
 }
