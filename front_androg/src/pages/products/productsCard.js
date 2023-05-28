@@ -1,9 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import axios from "axios";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { useNavigate } from "react-router-dom";
 
 const productCard = css`
   display: flex;

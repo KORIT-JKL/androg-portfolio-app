@@ -7,11 +7,11 @@ import LoginInput from "../../components/Login/LoginInput/LoginInput";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { refreshState } from "../../atoms/Common/CommonAtoms";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
+import OAuth2Button from "../../components/Login/OAuth2/OAuth2Button";
+import { BsGoogle } from "react-icons/bs";
+import { SiNaver, SiKakaotalk } from "react-icons/si";
 
 const container = css`
   display: flex;
@@ -76,8 +76,6 @@ const footer = css`
 const Login = () => {
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const [errorMessages, setErrorMessages] = useState({ email: "", password: "" });
-  const [refresh, SetRefresh] = useRecoilState(refreshState);
-  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -158,9 +156,9 @@ const Login = () => {
           </button>
         </footer>
         <div>
-          <button>구글</button>
-          <button>네이버</button>
-          <button>카카오</button>
+          <OAuth2Button provider={"google"} children={<BsGoogle />} />
+          <OAuth2Button provider={"naver"} children={<SiNaver />} />
+          <OAuth2Button provider={"kakao"} children={<SiKakaotalk />} />
         </div>
       </div>
       <CommonFooter />
