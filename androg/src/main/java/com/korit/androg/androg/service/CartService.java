@@ -25,7 +25,11 @@ public class CartService {
 		requestMap.put("productId", addCartRequestDto.getProductId());
 		requestMap.put("sizeName", addCartRequestDto.getSizeName());
 		requestMap.put("countNumber", addCartRequestDto.getCountNumber());
-		cartRepository.addCart(requestMap);
+		if(cartRepository.checkSameProductInCart(requestMap) ==  0) {
+			cartRepository.addCart(requestMap);
+		} else {
+			cartRepository.sameProductCountUp(requestMap);
+		}
 		return;
 	}
 	

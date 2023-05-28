@@ -37,6 +37,23 @@
 		insert into cart_tb
 		values(0, #{userId},#{productId},#{sizeName},#{countNumber})
 	</insert>
+	<select id="checkSameProductInCart" resultType="Integer">
+		select
+			count(*)
+		from
+			cart_tb
+		where
+			user_id = #{userId} and product_id = #{productId} and size_name = #{sizeName};
+	</select>
+	<update id="sameProductCountUp">
+		update 
+			cart_tb
+		set 
+			count_number = count_number+1
+		where 
+			user_id = #{userId} and product_id = #{productId} and size_name = #{sizeName};
+	
+	</update>
 	<select id="getCartByuserId" parameterType="Integer" resultMap="cartMap">
 		select
 			ct.cart_id,
