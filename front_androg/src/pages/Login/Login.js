@@ -94,7 +94,11 @@ const Login = () => {
       },
     };
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
+      const response = await axios.post(
+        "http://localhost:8080/auth/login",
+        JSON.stringify(loginUser),
+        option
+      );
       setErrorMessages({ email: "", password: "" });
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;
@@ -127,7 +131,12 @@ const Login = () => {
           </div>
 
           <div css={inputCss}>
-            <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
+            <LoginInput
+              type="password"
+              placeholder="Password"
+              onChange={onChangeHandle}
+              name="password"
+            >
               <RiLockPasswordLine />
             </LoginInput>
             <div css={errorMsg}>{errorMessages.password}</div>
@@ -148,6 +157,11 @@ const Login = () => {
             회원가입
           </button>
         </footer>
+        <div>
+          <button>구글</button>
+          <button>네이버</button>
+          <button>카카오</button>
+        </div>
       </div>
       <CommonFooter />
     </>
