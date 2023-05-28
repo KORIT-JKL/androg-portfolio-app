@@ -57,8 +57,29 @@
 		<if test="categoryId != 7">
         	AND pt.category_id = #{categoryId}
     	</if>
+    	order by
+    	<if test="select == 0">
+    		pt.product_id 
+    	</if>
+    	<if test="select == 1">
+    		pt.product_price desc
+    	</if>
+    	<if test="select == 2">
+    		pt.product_price 
+    	</if>
+    	<if test="select == 3">
+    		clt.color_id
+    	</if>
+    	<if test="select == 4">
+    		pt.product_id desc
+    	</if>
+    	<if test="select == 5">
+    		pt.product_id
+    	</if>
+    		
     	limit
     		#{page}, 20
+    	
 	</select>
 	<select id="getProductByProductId" parameterType="Integer" resultMap = "productsMap" >
 		SELECT

@@ -58,12 +58,27 @@ const soldoutText = css`
   color: red;
   font-size: 140px;
 `;
+const selectContainer = css`
+  display: flex;
+  width: 100%;
+  height: 40px;
+  justify-content: flex-start;
+  margin: 15px 0px;
+  padding-left: 110px;
+`;
+
+const selectBox = css`
+  border-radius: 10px;
+  height: 100%;
+  width: 200px;
+`;
 const Products = () => {
   const { categoryId } = useParams();
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
   const [lastPage, setlastPage] = useState(1);
+  const [selectNum, setSelectNum] = useState(0);
   const lastProductRef = useRef();
 
   useEffect(() => {
@@ -81,6 +96,7 @@ const Products = () => {
   const option = {
     params: {
       page: page,
+      select: selectNum,
     },
   };
   const searchProducts = useQuery(
@@ -106,11 +122,25 @@ const Products = () => {
   const ProductsCardClick = (productId) => {
     navigate(`/products/${productId}/details`);
   };
-
+  const setSelectNumHandle = (e) => {
+    setSelectNum(e);
+    setThisPage(1);
+    setThisProducts([]);
+    setThiRefresh(true);
+  };
   return (
     <div>
       <CommonHeader />
       <div css={container}>
+        <div css={selectContainer}>
+          <select css={selectBox} onChange={(e) => setSelectNumHandle(e.target.value)}>
+            <option value="1">가격이 높은 순</option>
+            <option value="2">가격이 낮은 순</option>
+            <option value="3">색상별</option>
+            <option value="4">등록이 새로운 순</option>
+            <option value="5">등록이 오래된 순</option>
+          </select>
+        </div>
         <ul css={productCardContainer}>
           {products.length > 0
             ? products.map((product) => (

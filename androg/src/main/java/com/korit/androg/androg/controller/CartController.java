@@ -23,7 +23,7 @@ public class CartController {
 	private final CartService cartService;
 	@PostMapping("/cart/addition")
 	public ResponseEntity<?> addCart(@RequestBody CartReqDto addCartRequestDto) {
-		System.out.println(addCartRequestDto);
+//		System.out.println(addCartRequestDto);
 		cartService.addCart(addCartRequestDto);
 		return null;
 	}
