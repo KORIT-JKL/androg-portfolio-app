@@ -78,7 +78,7 @@ const Products = () => {
   const [products, setThisProducts] = useRecoilState(setProducts);
   const [page, setThisPage] = useRecoilState(setPage);
   const [lastPage, setlastPage] = useState(1);
-  const [selectNum, setSelectNum] = useState(0);
+  const [selectNum, setSelectNum] = useState(4);
   const lastProductRef = useRef();
 
   useEffect(() => {
@@ -133,12 +133,10 @@ const Products = () => {
       <CommonHeader />
       <div css={container}>
         <div css={selectContainer}>
-          <select css={selectBox} onChange={(e) => setSelectNumHandle(e.target.value)}>
+          <select css={selectBox} defaultValue={1} onChange={(e) => setSelectNumHandle(e.target.value)}>
             <option value="1">가격이 높은 순</option>
             <option value="2">가격이 낮은 순</option>
             <option value="3">색상별</option>
-            <option value="4">등록이 새로운 순</option>
-            <option value="5">등록이 오래된 순</option>
           </select>
         </div>
         <ul css={productCardContainer}>

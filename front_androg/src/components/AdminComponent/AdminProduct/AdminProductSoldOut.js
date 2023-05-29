@@ -31,8 +31,8 @@ const container = css`
   flex-wrap: wrap;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  margin: auto;
+  justify-content: flex-start;
+  margin: 0px 100px;
   padding-bottom: 150px;
 `;
 const productTable = css`
@@ -56,14 +56,14 @@ const productNameText = css`
 const productImgText = css`
   font-size: 15px;
   height: 100px;
-  width: 100%;
+  object-fit: cover;
 `;
 const soldoutSelect = css`
   height: 30px;
   width: 100%;
 `;
 const AdminProductSoldOut = () => {
-  const [selectCategoryId, setSelectCategoryId] = useState(0);
+  const [selectCategoryId, setSelectCategoryId] = useState(1);
   const [products, setThisProducts] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [colors, setColors] = useState([]);

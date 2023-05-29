@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CommonUserSubHeader from "../CommonUserSubHeader/CommonUserSubHeader";
 import { useRecoilState } from "recoil";
-import impact from "../../../img/impact (1).png";
+import impact from "../../../img/ANDROG 1.png";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
+import { FaHome } from "react-icons/fa";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -50,9 +51,16 @@ const list = css`
 `;
 
 const img = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  width: 70px;
-  height: 50px;
+  width: 100px;
+  height: 40px;
+  padding-left: 50px;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const CommonUserHeader = () => {
@@ -133,7 +141,13 @@ const CommonUserHeader = () => {
   return (
     <>
       <div css={mainHeader}>
-        <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
+        {/* <img src={impact}  */}
+        {/* <FaHome css={img}  */}
+
+        <div css={img} onClick={() => onClickLogo()}>
+          HOME
+        </div>
+
         {authState ? (
           <>
             <ul css={headerList}>

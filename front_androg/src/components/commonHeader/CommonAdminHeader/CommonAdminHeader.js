@@ -27,9 +27,16 @@ const list = css`
 `;
 
 const img = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  width: 70px;
-  height: 50px;
+  width: 60px;
+  height: 40px;
+  padding-left: 40px;
+  &:hover {
+    font-weight: 600;
+  }
 `;
 
 const CommonAdminHeader = () => {
@@ -42,7 +49,9 @@ const CommonAdminHeader = () => {
   return (
     <>
       <div css={mainHeader}>
-        <img src={impact} alt="logo" css={img} onClick={() => onClickLogo()} />
+        <div css={img} onClick={() => onClickLogo()}>
+          HOME
+        </div>
 
         <ul css={headerList}>
           <li css={list} onMouseOver={() => SetSubHeaderIndex(0)}>

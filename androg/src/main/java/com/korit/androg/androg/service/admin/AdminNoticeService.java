@@ -20,9 +20,8 @@ public class AdminNoticeService {
 	public int popUpRegister(String content) {
 		return adminNoticeRepository.popUpRegister(content);
 	}
-	public PopUpRespDto getPopUpList(){
-		PopUp popUp = adminNoticeRepository.getPopUpList();
-		return popUp.toDto();
+	public PopUp getPopUpList(){
+		return  adminNoticeRepository.getPopUpList();
 	}
 
 	public int popUpModify(String content) {

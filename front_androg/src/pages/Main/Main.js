@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import mainPageImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
+import mainPageImg from "../../img/ANDROG 1.png";
 
 const mainPage = css`
   display: flex;
@@ -11,8 +11,9 @@ const mainPage = css`
 
 const img = css`
   width: 800px;
-  margin-top: 110px;
-  margin-bottom: 10px;
+  margin-top: 230px;
+
+  margin-bottom: 230px;
 `;
 
 const Main = () => {

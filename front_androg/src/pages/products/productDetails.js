@@ -38,12 +38,13 @@ const detailsContainer = css`
   height: 100%;
   margin: 100px 20px;
   padding-left: 30px;
-  padding-top: 250px;
+  padding-top: 20px;
 `;
 const sameNameProductsContainer = css`
   display: flex;
   width: 100%;
-  height: 100px;
+  flex-wrap: wrap;
+  height: auto;
   margin-bottom: 20px;
 `;
 const sameNameProductsImg = css`

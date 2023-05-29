@@ -132,7 +132,7 @@ const buttons = css`
   }
 `;
 const AdminProductModify = () => {
-  const [selectCategoryId, setSelectCategoryId] = useState(0);
+  const [selectCategoryId, setSelectCategoryId] = useState(1);
   const [products, setThisProducts] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const [colors, setColors] = useState([]);

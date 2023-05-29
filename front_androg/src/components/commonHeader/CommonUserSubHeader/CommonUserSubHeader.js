@@ -57,12 +57,12 @@ const subHeader = css`
 `;
 const subHeaderList = css`
   display: flex;
-  margin-left: 100px;
+  margin-left: 40px;
   align-items: center;
 `;
 const sublist = css`
   padding-left: 10px;
-  padding-right: 60px;
+  padding-right: 40px;
   font-size: 15px;
   cursor: pointer;
   &:hover {
