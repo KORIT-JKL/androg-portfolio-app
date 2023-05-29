@@ -28,6 +28,7 @@ public class User {
 				.email(email)
 				.password(password)
 				.authorities(authorities)
+				.provider(provider)
 				.build();
 	}
 }

@@ -59,7 +59,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 					return;
 				}
 				response.sendRedirect("http://localhost:3000/auth/oauth2/login"	
-						+ "?accessToken=" + jwtTokenProvider.generateToken(authentication));
+						+ "?accessToken=" +"Bearer " + jwtTokenProvider.generateToken(authentication).getAccessToken());
 			}else {
 				//회원가입은 되어 있지만 provider가 null인 경우
 				System.out.println("provider null");

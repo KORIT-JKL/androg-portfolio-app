@@ -22,9 +22,17 @@ const oauth2Text = css`
   padding-right: 20px;
 `;
 
-const OAuth2Button = ({ provider, onclick, children }) => {
+const OAuth2Button = ({ provider, children }) => {
+  const onClickHandle = (provider) => {
+    if (provider === "google") {
+      window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    } else if (provider === "naver") {
+      window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+    }
+  };
+
   return (
-    <div css={oauth2(provider)} onClick={onclick}>
+    <div css={oauth2(provider)} onClick={() => onClickHandle(provider)}>
       {children}
       <div css={oauth2Text}> Sign in with {provider}</div>
     </div>

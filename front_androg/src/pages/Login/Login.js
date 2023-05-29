@@ -21,7 +21,7 @@ const container = css`
 `;
 
 const header = css`
-  margin-top: 150px;
+  margin-top: 30px;
   font-size: 30px;
   font-weight: 300;
 `;

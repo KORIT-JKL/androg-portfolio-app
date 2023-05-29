@@ -3,11 +3,10 @@ import { css } from "@emotion/react";
 import React, { useState } from "react";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import Input from "./../../components/Input/Input";
 import RegisterInput from "../../components/Register/RegisterInput/RegisterInput";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useMutation } from "react-query";
+import { useSearchParams } from "react-router-dom";
 const container = css`
   display: flex;
   flex-direction: column;
@@ -69,35 +68,60 @@ const registerButton = css`
     background-color: #dbdbdb;
   }
 `;
-
-const Register = () => {
-  const [registerUser, setRegisterUser] = useState({ email: "", passowrd: "", name: "" });
-  const [errorMessages, setErrorMessages] = useState({ email: "", password: "", name: "" });
-  const navigate = useNavigate();
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterUser({ ...registerUser, [name]: value });
-  };
-
-  const registerSubmitHandle = async () => {
-    const data = {
-      ...registerUser,
-    };
-    const option = {
-      headers: {
-        "Content-Type": "application/json",
+const OAuth2Register = () => {
+  const [password, setPassword] = useState({ password: "" });
+  const [errorMessages, setErrorMessages] = useState({ password: "" });
+  const oAuth2Register = useMutation(
+    async (registerData) => {
+      const option = {
+        headers: {
+          "Content-Type": "application/json",
+          registerToken: `Bearer ${registerToken}`,
+        },
+      };
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/auth/oauth2/register",
+          registerData,
+          option
+        );
+        setErrorMessages({ password: "" });
+        return response;
+      } catch (error) {
+        setErrorMessages({ password: "", ...error.response.data.errorData });
+        return error;
+      }
+    },
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("회원가입 완료");
+          window.location.replace("/auth/login");
+        }
       },
-    };
-    try {
-      await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
-
-      setErrorMessages({ email: "", password: "", name: "" });
-      navigate("/auth/login");
-    } catch (error) {
-      setErrorMessages({ email: "", password: "", name: "", ...error.response.data.errorData });
     }
+  );
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const registerToken = searchParams.get("registerToken");
+  const email = searchParams.get("email");
+  const name = searchParams.get("name");
+  const provider = searchParams.get("provider");
+
+  const passwordOnchange = (e) => {
+    const { name, value } = e.target;
+    setPassword({ ...password, [name]: value });
   };
+
+  const registerSubmitHandle = () => {
+    oAuth2Register.mutate({
+      email,
+      name,
+      provider,
+      ...password,
+    });
+  };
+
   return (
     <>
       <CommonHeader />
@@ -112,21 +136,31 @@ const Register = () => {
             디로 이용하실 수 있습니다.
           </p>
           <div css={inputCss}>
-            <RegisterInput type="email" placeholder="이메일" onChange={onChange} name="email" />
-            <div css={errorMsg}>{errorMessages.email}</div>
+            <RegisterInput
+              type="email"
+              placeholder="이메일"
+              name="email"
+              disabled={true}
+              value={email}
+            />
           </div>
           <div css={inputCss}>
             <RegisterInput
               type="password"
               placeholder="비밀번호"
-              onChange={onChange}
+              onChange={passwordOnchange}
               name="password"
             />
-            <div css={errorMsg}>{errorMessages.password}</div>
           </div>
+          <div css={errorMsg}>{errorMessages.password}</div>
           <div css={inputCss}>
-            <RegisterInput type="name" placeholder="이름" onChange={onChange} name="name" />
-            <div css={errorMsg}>{errorMessages.name}</div>
+            <RegisterInput
+              type="name"
+              placeholder="이름"
+              name="name"
+              disabled={true}
+              value={name}
+            />
           </div>
           <div css={privacy}>
             <input type="checkbox" css={privacyBtn} />
@@ -146,4 +180,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default OAuth2Register;
