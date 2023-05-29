@@ -23,6 +23,7 @@ import AuthRoute from "./components/Route/AuthRoute/AuthRoute";
 import InquiryResponse from "./pages/Support/CustomerSupport/InquiryResponse";
 import OAuth2Register from "./pages/Register/OAuth2Register";
 import OAuth2Login from "./pages/Login/OAuth2Login";
+import OAuth2Merge from "./pages/Login/OAuth2Merge";
 
 function App() {
   return (
@@ -32,15 +33,19 @@ function App() {
         {/* 메인 및 로그인 회원가입 페이지 */}
         <Route exact path="/" element={<AuthRoute path="/" element={<Main />} />} />
         <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />} />
+
+        <Route path="/auth/register" element={<Register />} />
+
         <Route
           path="/auth/oauth2/login"
           element={<AuthRoute path={"/auth/oauth2/login"} element={<OAuth2Login />} />}
         />
-        <Route path="/auth/register" element={<Register />} />
         <Route
           path="/auth/oauth2/register"
           element={<AuthRoute path="/auth/oauth2/register" element={<OAuth2Register />} />}
         />
+
+        <Route path="/auth/oauth2/merge" element={<OAuth2Merge />} />
 
         {/* 문의페이지 Route */}
         <Route path="/page/notice" element={<Notice />} />

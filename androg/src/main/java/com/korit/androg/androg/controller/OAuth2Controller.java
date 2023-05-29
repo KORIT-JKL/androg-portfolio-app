@@ -30,7 +30,6 @@ public class OAuth2Controller {
 			return ResponseEntity.badRequest().body("회원가인 요청시간이 초과하였습니다.");
 		}
 		
-		System.out.println(oAuth2RegisterReqDto);
 		
 		return ResponseEntity.ok().body(oAuth2Service.oauth2Register(oAuth2RegisterReqDto));
 	}
