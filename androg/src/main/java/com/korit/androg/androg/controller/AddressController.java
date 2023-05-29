@@ -26,7 +26,7 @@ public class AddressController {
 	
 	@PostMapping("/user/mypage/address")
 	public ResponseEntity<?> addressRegister(@RequestBody AddressReigsteReqDto addressReigsteReqDto){
-		
+		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressRegister(addressReigsteReqDto));
 	}
 	
