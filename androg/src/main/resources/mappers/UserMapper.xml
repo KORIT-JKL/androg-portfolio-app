@@ -8,6 +8,7 @@
 	<result property="password" column="password"/>
 	<result property="name" column="name"/>
 	<result property="provider" column="provider"/>
+	<result property="profileImg" column="profile_img"/>
 	<collection property="authorities" javaType="list" resultMap="authorityMap"></collection>
 </resultMap>
 <resultMap type="com.korit.androg.androg.entity.Role" id="roleMap">
@@ -80,6 +81,7 @@
 		 ut.password,
 		 ut.name,
 		 ut.provider,
+		 ut.profile_img,
  
 		 at.authority_id,
 		 at.user_id,
@@ -99,7 +101,7 @@
 useGeneratedKeys="true"
 keyProperty="userId">
 	insert into user_tb
-	values (0, #{email}, #{password}, #{name}, #{provider})
+	values (0, #{email}, #{password}, #{name}, #{provider}, "default.png")
 </insert>
 
 <insert id="saveAuthority" parameterType="com.korit.androg.androg.entity.Authority">
@@ -135,6 +137,22 @@ where
 	
 		
 </select>
+
+<update id="updateProvider" parameterType="com.korit.androg.androg.entity.User">
+		update user_tb
+		set
+			provider = #{provider}
+		where
+			user_id = #{userId};
+	</update>
+	
+	<update id="updateProfileImg" parameterType="com.korit.androg.androg.entity.User">
+		update user_tb
+		set
+			profile_img = #{profileImg}
+		where
+			user_id = #{userId}
+	</update>
 
 <delete id="deleteUser" parameterType="integer">
 	delete from 

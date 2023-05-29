@@ -1,13 +1,13 @@
 package com.korit.androg.androg.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.aop.annotation.ValidAspect;
+import com.korit.androg.androg.dto.auth.oauth2.OAuth2ProviderMergeReqDto;
 import com.korit.androg.androg.dto.auth.oauth2.OAuth2RegisterReqDto;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
 import com.korit.androg.androg.service.OAuth2Service;
@@ -32,5 +32,10 @@ public class OAuth2Controller {
 		
 		
 		return ResponseEntity.ok().body(oAuth2Service.oauth2Register(oAuth2RegisterReqDto));
+	}
+	
+	@PutMapping("/oauth2/merge")
+	public ResponseEntity<?> providerMerge(@RequestBody OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto){
+		return ResponseEntity.ok().body(oAuth2Service.oAuth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}
 }

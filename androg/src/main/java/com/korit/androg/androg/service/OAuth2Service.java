@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.korit.androg.androg.dto.auth.oauth2.OAuth2ProviderMergeReqDto;
 import com.korit.androg.androg.dto.auth.oauth2.OAuth2RegisterReqDto;
 import com.korit.androg.androg.entity.Authority;
 import com.korit.androg.androg.entity.User;
@@ -54,16 +55,16 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
 		return userRepository.saveAuthority(Authority.builder().userId(userEntity.getUserId()).roleId(2).build());
 	}
 	
-//	public int oAuth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
-//		User userEntity = userRepository.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
-//		
-//		String provider = oAuth2ProviderMergeReqDto.getProvider();
-//		if(StringUtils.hasText(userEntity.getProvider())) {
-//			userEntity.setProvider(userEntity.getProvider() + "," + provider);
-//		}else {
-//			userEntity.setProvider(provider);
-//		}
-//		
-//		return userRepository.updateProvider(userEntity);
-//	}
+	public int oAuth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
+		User userEntity = userRepository.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
+		
+		String provider = oAuth2ProviderMergeReqDto.getProvider();
+		if(StringUtils.hasText(userEntity.getProvider())) {
+			userEntity.setProvider(userEntity.getProvider() + "," + provider);
+		}else {
+			userEntity.setProvider(provider);
+		}
+		
+		return userRepository.updateProvider(userEntity);
+	}
 }

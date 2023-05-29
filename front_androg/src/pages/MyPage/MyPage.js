@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import CommonFooter from "../../components/CommonFooter/CommonFooter";
 import CommonHeader from "../../components/CommonHeader/CommonHeader";
@@ -40,7 +40,32 @@ const Title = css`
   font-weight: 600;
   padding-bottom: 20px;
 `;
+
+const imgBox = css`
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+const img = css`
+  width: 100%;
+`;
+
+const fileInput = css`
+  display: none;
+`;
+
 const subTitle = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 15px;
   font-weight: 600;
   padding-bottom: 20px;
@@ -89,6 +114,9 @@ const MyPage = () => {
   const [, setProductsRefresh] = useState(false);
   const [, setLoginIsState] = useRecoilState(loginState);
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
+  const [imgFile, setImgFile] = useState();
+  const [profileImgUrl, setProFileImgUrl] = useState();
+  const fileRef = useRef();
 
   let userId = 0;
 
@@ -102,6 +130,8 @@ const MyPage = () => {
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
       const response = await axios.get("http://localhost:8080/auth/principal", option);
+      console.log(response.data.profileImg);
+      // setProFileImgUrl("http://localhost:8080/image/profile/" + response.data.profileImg);
       return response;
     },
     {
@@ -109,8 +139,32 @@ const MyPage = () => {
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
+        console.log(response);
       },
       enabled: infoRefresh,
+    }
+  );
+  const profileImgUpdate = useMutation(
+    async () => {
+      const formData = new FormData();
+      formData.append("profileImgFile", imgFile);
+      const option = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:8080/user/mypage/profile/img",
+        formData,
+        option
+      );
+      return response;
+    },
+    {
+      onSuccess: () => {
+        principal.refetch();
+      },
     }
   );
   const addressList = useQuery(
@@ -178,7 +232,19 @@ const MyPage = () => {
       navgate("/");
     }
   };
-
+  const porfileImgChangeHandle = () => {
+    fileRef.current.click();
+  };
+  const profileImgFileChangeHadle = (e) => {
+    setImgFile(e.target.files[0]);
+    const fileReader = new FileReader();
+    fileReader.onload = (event) => {
+      setProFileImgUrl(event.target.result);
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
+    e.target.value = null;
+  };
+  // console.log(profileImgUrl);
   if (principal.isLoading && products.isLoading && addressList.isLoading) {
     return <></>;
   }
@@ -191,6 +257,15 @@ const MyPage = () => {
           <div css={myInfoContent}>
             <h2 css={Title}>내 계정</h2>
             <span css={subTitle}>
+              <div css={imgBox} onClick={porfileImgChangeHandle}>
+                <img css={img} src={profileImgUrl} alt="" />
+                <input
+                  css={fileInput}
+                  type="file"
+                  ref={fileRef}
+                  onChange={profileImgFileChangeHadle}
+                />
+              </div>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
             <span css={subTitle}>
@@ -208,6 +283,9 @@ const MyPage = () => {
             </div>
             <div css={addressContent} onClick={withdrawalSubmit}>
               회원탈퇴
+            </div>
+            <div css={addressContent} onClick={() => profileImgUpdate.mutate()}>
+              프로필 변경
             </div>
           </div>
           <div css={supportContent}>

@@ -51,3 +51,6 @@ mybatis:
 
 jwt:
   secret: ezV2FMXHX7bzV8eEL9lHf0MLSCnB5M6gtjcHmokIxABqjplbHtRypoN8H2vMTxVO
+  
+file:
+  path: C:\aws_project\workspace\androg\androg\upload\
