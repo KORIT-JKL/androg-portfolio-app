@@ -22,4 +22,9 @@ public class ProductRespDto {
 	private int categoryId;
 	private String categoryName;
 	private int soldoutFlag;
+	private String sizeS;
+	private String sizeM;
+	private String sizeL;
+	private String sizeXL;
+	private String sizeXXL;
 }

@@ -16,4 +16,9 @@ public class ModifyProductReqDto {
 	private String categoryId;
 	private String colorId;
 	private String productImg;
+	private String sizeS;
+	private String sizeM;
+	private String sizeL;
+	private String sizeXL;
+	private String sizeXXL;
 }

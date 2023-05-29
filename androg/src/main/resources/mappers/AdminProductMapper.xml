@@ -70,6 +70,8 @@
             left outer join color_tb clt on(clt.color_id = pt.color_id)
 		where
 			 pt.category_id = #{categoryId}
+		order  by
+			pt.product_id desc
 	</select>
 	<update id="productModify" >
 		update 
@@ -79,6 +81,11 @@
 			product_Price = #{productPrice},
 			category_id = #{categoryId},
 			product_img = #{productImg},
+			size_s = #{sizeS},
+			size_m = #{sizeM},
+			size_l = #{sizeL},
+			size_xl = #{sizeXL},
+			size_xxl = #{sizeXXL},
 			color_id = #{colorId}
 		where 
 			product_id= #{productId};

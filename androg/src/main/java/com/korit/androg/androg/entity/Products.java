@@ -56,6 +56,11 @@ public class Products {
 				.colorId(color.getColorId())
 				.colorName(color.getColorName())
 				.soldoutFlag(soldoutFlag)
+				.sizeS(sizeS)
+				.sizeM(sizeM)
+				.sizeL(sizeL)
+				.sizeXL(sizeXL)
+				.sizeXXL(sizeXXL)
 				.build();
 				}
 	public SameProductRespDto toSameProductDto() {

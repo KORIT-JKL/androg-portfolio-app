@@ -38,6 +38,7 @@ public class AdminProductsController {
 	}
 	@PutMapping("admin/products/modify")
 	public ResponseEntity<?> productModify(@RequestBody ModifyProductReqDto modifyProductReqDto) {
+		System.out.println(modifyProductReqDto);
 		adminProductService.productModify(modifyProductReqDto);
 		return null;
 	}

@@ -70,7 +70,7 @@ const modifyCard = css`
   display: flex;
   flex-direction: column;
   position: fixed;
-  height: 480px;
+  height: 500px;
   width: 300px;
   top: 200px;
   right: 150px;
@@ -131,6 +131,24 @@ const buttons = css`
     background-color: #fafafa;
   }
 `;
+const optionList = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const optionTexst = css`
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  width: 100%;
+`;
+const optionSelectContainer = css``;
+const optionInput = css`
+  margin: 10px 5px;
+  width: 40px;
+  height: 25px;
+`;
 const AdminProductModify = () => {
   const [selectCategoryId, setSelectCategoryId] = useState(1);
   const [products, setThisProducts] = useState([]);
@@ -143,6 +161,11 @@ const AdminProductModify = () => {
     categoryId: 0,
     productImg: "",
     colorId: 0,
+    sizeS: "",
+    sizeM: "",
+    sizeL: "",
+    sizeXL: "",
+    sizeXXL: "",
   });
   const productDelteFunction = useMutation(
     async () => {
@@ -179,6 +202,7 @@ const AdminProductModify = () => {
       enabled: selectCategoryId !== 0 && refresh,
       onSuccess: (response) => {
         setThisProducts(response.data);
+        console.log(response.data);
         setRefresh(false);
       },
     }
@@ -210,7 +234,28 @@ const AdminProductModify = () => {
       categoryId: product.categoryId,
       colorId: product.colorId,
       productImg: product.productImg,
+      sizeS: product.sizeS,
+      sizeM: product.sizeM,
+      sizeL: product.sizeL,
+      sizeXL: product.sizeXL,
+      sizeXXL: product.sizeXXL,
     });
+    // if (product.sizeS == null) {
+    //   setProductsDetatils({ ...productsDetails, sizeS: "" });
+    // }
+    // if (product.sizeM == null) {
+    //   setProductsDetatils({ ...productsDetails, sizeM: "" });
+    // }
+    // if (product.sizeL == null) {
+    //   setProductsDetatils({ ...productsDetails, sizeL: "" });
+    // }
+    // if (product.sizeXL == null) {
+    //   setProductsDetatils({ ...productsDetails, sizeXL: "" });
+    // }
+    // if (product.sizeXXL == null) {
+    //   setProductsDetatils({ ...productsDetails, sizeXXL: "" });
+    // }
+
     setRefresh(true);
   };
 
@@ -234,6 +279,21 @@ const AdminProductModify = () => {
   const productImgUrlInputHandle = (e) => {
     setProductsDetatils({ ...productsDetails, productImg: e.target.value });
   };
+  const productSizeSInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, sizeS: e.target.value });
+  };
+  const productSizeMInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, sizeM: e.target.value });
+  };
+  const productSizeLInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, sizeL: e.target.value });
+  };
+  const productSizeXLInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, sizeXL: e.target.value });
+  };
+  const productSizeXXLInputHandle = (e) => {
+    setProductsDetatils({ ...productsDetails, sizeXXL: e.target.value });
+  };
   const modifyCancel = () => {
     setProductsDetatils({
       ...productsDetails,
@@ -242,6 +302,11 @@ const AdminProductModify = () => {
       categoryId: 0,
       productImg: "",
       colorId: 0,
+      sizeS: "",
+      sizeM: "",
+      sizeL: "",
+      sizeXL: "",
+      sizeXXL: "",
     });
   };
   const productDelete = () => {
@@ -269,6 +334,7 @@ const AdminProductModify = () => {
     setRefresh(true);
     return response;
   };
+  console.log(productsDetails);
   return (
     <div>
       <ul css={categoryIdContainer}>
@@ -367,6 +433,36 @@ const AdminProductModify = () => {
               type="text"
               placeholder="이미지URL"
             />
+            <div css={optionList}>
+              <div css={optionTexst}>옵션1 옵션2 옵션3 옵션4 옵션5</div>
+              <div css={optionSelectContainer}>
+                <input
+                  css={optionInput}
+                  value={productsDetails.sizeS == null ? "" : productsDetails.sizeS}
+                  onChange={productSizeSInputHandle}
+                />
+                <input
+                  css={optionInput}
+                  value={productsDetails.sizeM == null ? "" : productsDetails.sizeM}
+                  onChange={productSizeMInputHandle}
+                />
+                <input
+                  css={optionInput}
+                  value={productsDetails.sizeL == null ? "" : productsDetails.sizeL}
+                  onChange={productSizeLInputHandle}
+                />
+                <input
+                  css={optionInput}
+                  value={productsDetails.sizeXL == null ? "" : productsDetails.sizeXL}
+                  onChange={productSizeXLInputHandle}
+                />
+                <input
+                  css={optionInput}
+                  value={productsDetails.sizeXXL == null ? "" : productsDetails.sizeXXL}
+                  onChange={productSizeXXLInputHandle}
+                />
+              </div>
+            </div>
             <div css={buttonList}>
               <button css={buttons} onClick={() => modify()}>
                 수정

@@ -227,7 +227,7 @@ const ProductDetails = () => {
     {
       onSuccess: (response) => {
         setProduct(response.data);
-
+        console.log(response.data);
         setThiRefresh(false);
       },
       enabled: refresh && !!principal,
@@ -367,24 +367,57 @@ const ProductDetails = () => {
           </div>
           <div css={sizeContainer}>
             {/* 카테고리아이디 별로 사이즈 출력 */}
-            {product.category.categoryId <= 4 ? (
-              <>
-                <div css={productSize} onClick={sizeClick}>
-                  S
-                </div>
-                <div css={productSize} onClick={sizeClick}>
-                  M
-                </div>
-                <div css={productSize} onClick={sizeClick}>
-                  L
-                </div>
-                <div css={productSize} onClick={sizeClick}>
-                  XL
-                </div>
-                <div css={productSize} onClick={sizeClick}>
-                  XXL
-                </div>
-              </>
+            {/* {product.category.categoryId <= 4 ? (
+              <> */}
+            {product.sizeS !== null ? (
+              <div css={productSize} onClick={sizeClick}>
+                {product.sizeS}
+              </div>
+            ) : (
+              ""
+            )}
+            {product.sizeM !== null ? (
+              <div css={productSize} onClick={sizeClick}>
+                {product.sizeM}
+              </div>
+            ) : (
+              ""
+            )}
+            {product.sizeL !== null ? (
+              <div css={productSize} onClick={sizeClick}>
+                {product.sizeL}
+              </div>
+            ) : (
+              ""
+            )}
+            {product.sizeXL !== null ? (
+              <div css={productSize} onClick={sizeClick}>
+                {product.sizeXL}
+              </div>
+            ) : (
+              ""
+            )}
+            {product.sizeXXL !== null ? (
+              <div css={productSize} onClick={sizeClick}>
+                {product.sizeXXL}
+              </div>
+            ) : (
+              ""
+            )}
+
+            {/* <div css={productSize} onClick={sizeClick}>
+              {product.sizeM}
+            </div>
+            <div css={productSize} onClick={sizeClick}>
+              {product.sizeL}
+            </div>
+            <div css={productSize} onClick={sizeClick}>
+              {product.sizeXL}
+            </div>
+            <div css={productSize} onClick={sizeClick}>
+              {product.sizeXXL}
+            </div> */}
+            {/* </>
             ) : product.category.categoryId === 6 ? (
               <>
                 <div css={productSize} onClick={sizeClick}>
@@ -408,8 +441,8 @@ const ProductDetails = () => {
                 <div css={productSize} onClick={sizeClick}>
                   oneSize
                 </div>
-              </>
-            )}
+              </> */}
+            {/* )} */}
             <div css={selectSizeContainer}>선택사이즈 {searchParams.sizeName}</div>
           </div>
 
