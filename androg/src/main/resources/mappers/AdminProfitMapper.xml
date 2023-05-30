@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.androg.androg.repository.admin.AdminProfitRepository">
+	<resultMap type="com.korit.androg.androg.entity.OrderDetail" id="orderDetailMap">
+		<id property="orderDetailId" column="order_detail_id" />
+		<result property="countNumber" column="count_number"/>
+		<result property="rank" column="ranking" />
+		<result property="totalcount" column="total_count"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="userTotalCount" column="order_count"/>
+		<result property="userTotalPrice" column="total_money"/>
+		<association property="products" resultMap="productMap"></association>
+		<association property="order" resultMap="orderMap"></association>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Products" id="productMap">
+		<id property="productId" column="product_id"/>
+		<result property="productName" column="product_name"/>
+		<result property="productPrice" column="product_price"/>
+		<association property="color" resultMap="colorMap"></association>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.Color" id="colorMap">
+		<id property="colorId" column="color_id" />
+		<result property="colorName" column="color_name"/>
+	</resultMap>
+	<resultMap type="com.korit.androg.androg.entity.Order" id="orderMap">
+		<id property="orderId" column="order_id" />
+		<result property="userId" column="user_id"/>
+		<result property="addressId" column="address_id"/>
+		<association property="user" resultMap="userMap"></association>
+	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.User" id="userMap">
+		<id property="userId" column="user_id"/>
+		<result property="email" column="email"/>
+		<result property="name" column="name"/>
+	</resultMap>
+	<select id="getCountRank" resultMap="orderDetailMap">
+		SELECT
+			odt.order_detail_id,
+		    pt.product_name,
+			ct.color_name,
+		    sum(odt.count_number) as total_count,
+		    pt.product_price,
+			sum(odt.count_number)*pt.product_price as total_price,
+		    rank() over (order by sum(odt.count_number) desc) as ranking
+		FROM
+			order_detail_tb odt
+		    left outer join order_tb ot on(ot.order_id = odt.order_id)
+		    left outer join product_tb pt on (pt.product_id = odt.product_id)
+		    left outer join user_tb ut on(ut.user_id = ot.user_id)
+		    left outer join color_tb ct on(ct.color_id = pt.color_id)
+		group by
+			   pt.product_id
+		order by
+			total_count desc
+
+	</select>
+	<select id="getProfitRank" resultMap="orderDetailMap">
+		SELECT
+			odt.order_detail_id,
+		    pt.product_name,
+			ct.color_name,
+		    sum(odt.count_number) as total_count,
+		    pt.product_price,
+			sum(odt.count_number)*pt.product_price as total_price,
+		    rank() over (order by sum(odt.count_number)*pt.product_price desc) as ranking
+		FROM
+			order_detail_tb odt
+		    left outer join order_tb ot on(ot.order_id = odt.order_id)
+		    left outer join product_tb pt on (pt.product_id = odt.product_id)
+		    left outer join user_tb ut on(ut.user_id = ot.user_id)
+		    left outer join color_tb ct on(ct.color_id = pt.color_id)
+		group by
+			   pt.product_id
+		order by
+			total_price desc
+
+
+	</select>
+	<select id="getUserRank" resultMap="orderDetailMap">
+		SELECT
+			odt.order_detail_id,
+		    ut.name,
+			ut.email,
+		    sum(odt.count_number) as order_count,
+		    sum(odt.count_number*pt.product_price) as total_money,
+			rank() over (order by  sum(odt.count_number*pt.product_price) desc) as ranking
+		FROM
+			order_detail_tb odt
+		    left outer join order_tb ot on(ot.order_id = odt.order_id)
+		    left outer join product_tb pt on (pt.product_id = odt.product_id)
+		    left outer join user_tb ut on(ut.user_id = ot.user_id)
+		    left outer join color_tb ct on(ct.color_id = pt.color_id)
+		group by 
+			ut.name
+		order by
+			total_money desc
+	</select>
+	
+</mapper>

@@ -12,4 +12,5 @@ public class Order {
 	private int orderId;
 	private int userId;
 	private int addressId;
+	private User user;
 }

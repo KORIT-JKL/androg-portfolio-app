@@ -15,6 +15,7 @@ import AdminReviewRegister from "../../components/AdminComponent/AdminReview/Adm
 import AdminPopUpRegister from "../../components/AdminComponent/AdmingNoticeAndPopUp/AdminPopUpRegister";
 import AdminInquiry from "../../components/AdminComponent/AdminInquiry/AdminInquiry";
 import AdminNoticeRegitser from "../../components/AdminComponent/AdmingNoticeAndPopUp/AdminNoticeRegitser";
+import AdminProfit from "../../components/AdminComponent/AdminProfit/AdminProfit";
 
 const AdmingPage = css`
   display: flex;
@@ -47,7 +48,9 @@ const AdminPage = () => {
           <AdminPopUpRegister />
         ) : AdminMenuSelectIndex === 9 ? (
           <AdminInquiry />
-        ) :  (
+        ) : AdminMenuSelectIndex === 10 ? (
+          <AdminProfit />
+        ):  (
           ""
         )}
       </div>

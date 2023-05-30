@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";

@@ -66,6 +66,9 @@ const CommonAdminHeader = () => {
           <li css={list} onMouseOver={() => SetSubHeaderIndex(3)}>
             문의관리
           </li>
+          <li css={list} onMouseOver={() => SetSubHeaderIndex(4)}>
+            매출관리
+          </li>
         </ul>
       </div>
       <CommonHeaderSubHeader subHeaderIndex={subHeaderIndex} />

@@ -192,7 +192,6 @@ const ProductDetails = () => {
     const [userId, setUserId] = useState(0);
 
     const [sameNameProducts, setSameNameProducts] = useState([]);
-    const [selectImgSuccess, setSelectImgSuccess] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [reviewsIdList, setreviewIdList] = useState([]);
     const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
@@ -335,7 +334,6 @@ const ProductDetails = () => {
         navigate(`/products/payment`);
         setThiRefresh(true);
     };
-    // console.log(getProduct.data.data.sizeS.length);
     return (
         <>
             <CommonHeader />
