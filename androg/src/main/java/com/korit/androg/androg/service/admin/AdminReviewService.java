@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.AdminReviewCheckRespDto;
 import com.korit.androg.androg.dto.admin.UserReviewsRespDto;
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.admin.AdminReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AdminReviewService {
+	private int maxlength = 45;
 	private final AdminReviewRepository adminReivewRepository;
 	public List<UserReviewsRespDto> getReviews() {
 		List<UserReviewsRespDto> userReviewsRespDtos = new ArrayList<>();
@@ -45,5 +47,11 @@ public class AdminReviewService {
 	}
 	public void reviewReviewModify(int reviewId, String content) {
 		adminReivewRepository.reviewReviewModify(reviewId, content);
+	}
+	public void c(String content) {
+		if(content.length() > maxlength) {
+			throw new CustomException("1");
+		}
+		return;
 	}
 }

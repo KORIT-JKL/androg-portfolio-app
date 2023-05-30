@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.dto.address.AddressReigsteReqDto;
+import com.korit.androg.androg.dto.address.AddressUpdateReqDto;
 import com.korit.androg.androg.service.AddressService;
 
 import lombok.RequiredArgsConstructor;
@@ -38,10 +39,10 @@ public class AddressController {
 		return ResponseEntity.ok().body(addressService.getAddress(userId));
 	}
 	
+	@ValidAspect
 	@PutMapping("/user/mypage/address/{addressId}")
-	public ResponseEntity<?> addressUpdate(@Valid @PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto, BindingResult bindingResult){
-		System.out.println(addressReigsteReqDto);
-		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
+	public ResponseEntity<?> addressUpdate(@Valid @RequestBody AddressUpdateReqDto addressUpdateReqDto,BindingResult bindingResult, @PathVariable int addressId){
+		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressUpdateReqDto));
 	}
 	
 	@PutMapping("/user/mypage/address/default")
