@@ -34,7 +34,7 @@ public class OAuth2Controller {
 		return ResponseEntity.ok().body(oAuth2Service.oauth2Register(oAuth2RegisterReqDto));
 	}
 	
-	@PutMapping("/oauth2/merge")
+	@PutMapping("/auth/oauth2/merge")
 	public ResponseEntity<?> providerMerge(@RequestBody OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto){
 		return ResponseEntity.ok().body(oAuth2Service.oAuth2ProviderMerge(oAuth2ProviderMergeReqDto));
 	}

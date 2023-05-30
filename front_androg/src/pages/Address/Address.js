@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useEffect, useState } from "react";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import { useMutation, useQuery } from "react-query";
-import axios from "axios";
-import InsertAddress from "../../components/AddressComponent/InsertAddress/InsertAddress";
-import UpdateAddress from "../../components/AddressComponent/UpdateAddress/UpdateAddress";
-import { useRecoilState } from "recoil";
+import { css } from '@emotion/react';
+import React, { useEffect, useState } from 'react';
+import CommonHeader from '../../components/CommonHeader/CommonHeader';
+import CommonFooter from '../../components/CommonFooter/CommonFooter';
+import { useMutation, useQuery } from 'react-query';
+import axios from 'axios';
+import InsertAddress from '../../components/AddressComponent/InsertAddress/InsertAddress';
+import UpdateAddress from '../../components/AddressComponent/UpdateAddress/UpdateAddress';
+import { useRecoilState } from 'recoil';
 import {
   AddressInsertStateRecoil,
   AddressListStateRecoil,
   AddressUpdateStateRecoil,
   getAddressListRecoil,
   getAddressRecoil,
-} from "../../atoms/AddressAtoms/AddressAtoms";
+} from '../../atoms/AddressAtoms/AddressAtoms';
 
 const mainContainer = css`
   display: grid;
@@ -93,8 +93,8 @@ const defaultAddress = (index) => css`
   padding: 3px;
   background-color: white;
 
-  ${index === 0 ? "" : "cursor: pointer"};
-  ${index === 0 ? "" : "&:hover {font-weight: 600}"};
+  ${index === 0 ? '' : 'cursor: pointer'};
+  ${index === 0 ? '' : '&:hover {font-weight: 600}'};
 `;
 
 //CommonHeader 문제가 많다 뭐가 문제인지 모를정도로 빠른 시일내에 해결을 해야함.
@@ -116,15 +116,15 @@ const Address = () => {
   const [addressRecoil, setAddressRecoil] = useRecoilState(getAddressRecoil);
 
   const principal = useQuery(
-    ["principal"],
+    ['principal'],
     async () => {
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get('http://localhost:8080/auth/principal', option);
       return response;
     },
     {
@@ -140,13 +140,10 @@ const Address = () => {
     async (address) => {
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
-      const response = await axios.delete(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
-        option
-      );
+      const response = await axios.delete(`http://localhost:8080/user/mypage/address/${address.addressId}`, option);
       return response;
     },
     {
@@ -159,18 +156,18 @@ const Address = () => {
 
   // 해당 유저 주소지 리스트 조회 요청
   const addressList = useQuery(
-    ["addressList"],
+    ['addressList'],
     async () => {
       const option = {
         params: {
           userId: principal.data.data.userId,
         },
         headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get('http://localhost:8080/user/mypage/address', option);
       return response;
     },
     {
@@ -189,14 +186,10 @@ const Address = () => {
       };
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/user/mypage/address/default",
-        data,
-        option
-      );
+      const response = await axios.put('http://localhost:8080/user/mypage/address/default', data, option);
       return response;
     },
     {
@@ -231,7 +224,7 @@ const Address = () => {
                 return (
                   <div css={submitAddresBox} key={address.addressId}>
                     <div css={userUpdateBox}>
-                      {principal.data !== undefined ? principal.data.data.name : ""}
+                      {principal.data !== undefined ? principal.data.data.name : ''}
                       <div css={userUpdateBox}>
                         <button
                           css={addressUpdateButton}
@@ -261,24 +254,19 @@ const Address = () => {
                     <div css={addressText}>
                       {address.addressSigungu}
                       {address.addressZonecode}
-                      <button
-                        css={defaultAddress(index)}
-                        onClick={() => addressDefault.mutate(address)}
-                      >
-                        {index === 0 ? "기본 배송지" : "기본 배송지 설정"}
+                      <button css={defaultAddress(index)} onClick={() => addressDefault.mutate(address)}>
+                        {index === 0 ? '기본 배송지' : '기본 배송지 설정'}
                       </button>
                     </div>
                   </div>
                 );
               })
-            : ""}
+            : ''}
           <button
             css={addAddressButton}
             onClick={() => {
               if (!addressOpen) {
                 setAddressOpen(true);
-              } else {
-                setAddressOpen(false);
               }
               setUpdateOpen(false);
             }}
@@ -286,8 +274,8 @@ const Address = () => {
             주소 추가하기
           </button>
         </div>
-        {addressOpen ? <InsertAddress principal={principal} /> : ""}
-        {updateOpen ? <UpdateAddress principal={principal} address={addressRecoil} /> : ""}
+        {addressOpen ? <InsertAddress principal={principal} /> : ''}
+        {updateOpen ? <UpdateAddress principal={principal} address={addressRecoil} /> : ''}
       </main>
       <CommonFooter />
     </>

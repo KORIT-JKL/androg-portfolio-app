@@ -1,6 +1,9 @@
 package com.korit.androg.androg.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.dto.address.AddressReigsteReqDto;
 import com.korit.androg.androg.service.AddressService;
@@ -21,10 +25,10 @@ public class AddressController {
 	
 	private final AddressService addressService;
 	
-	
+	@ValidAspect
 	@PostMapping("/user/mypage/address")
-	public ResponseEntity<?> addressRegister(@RequestBody AddressReigsteReqDto addressReigsteReqDto){
-		
+	public ResponseEntity<?> addressRegister(@Valid @RequestBody AddressReigsteReqDto addressReigsteReqDto, BindingResult bindingResult){
+		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressRegister(addressReigsteReqDto));
 	}
 	
@@ -35,7 +39,7 @@ public class AddressController {
 	}
 	
 	@PutMapping("/user/mypage/address/{addressId}")
-	public ResponseEntity<?> addressUpdate(@PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto){
+	public ResponseEntity<?> addressUpdate(@Valid @PathVariable int addressId, @RequestBody AddressReigsteReqDto addressReigsteReqDto, BindingResult bindingResult){
 		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressUpdate(addressId, addressReigsteReqDto));
 	}

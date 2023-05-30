@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React from "react";
+import { css } from '@emotion/react';
+import React from 'react';
 
 const oauth2 = (provider) => css`
   display: flex;
@@ -24,10 +24,12 @@ const oauth2Text = css`
 
 const OAuth2Button = ({ provider, children }) => {
   const onClickHandle = (provider) => {
-    if (provider === "google") {
-      window.location.href = "http://localhost:8080/oauth2/authorization/google";
-    } else if (provider === "naver") {
-      window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+    if (provider === 'google') {
+      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    } else if (provider === 'naver') {
+      window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+    } else if (provider === 'kakao') {
+      window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
     }
   };
 

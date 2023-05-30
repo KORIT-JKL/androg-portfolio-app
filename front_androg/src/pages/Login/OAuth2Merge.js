@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import axios from "axios";
-import React, { useState } from "react";
-import { useMutation } from "react-query";
-import { useSearchParams } from "react-router-dom";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import LoginInput from "../../components/Login/LoginInput/LoginInput";
+import { css } from '@emotion/react';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useMutation } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
+import CommonHeader from '../../components/CommonHeader/CommonHeader';
+import CommonFooter from '../../components/CommonFooter/CommonFooter';
+import LoginInput from '../../components/Login/LoginInput/LoginInput';
 
 const container = css`
   display: flex;
@@ -51,31 +51,37 @@ const agreeButton = css`
   }
 `;
 
+const errorMsg = css`
+  position: relative;
+  font-size: 12px;
+  color: red;
+`;
+
 const OAuth2Merge = () => {
   const providerMerge = useMutation(
     async (mergeData) => {
       try {
-        const response = await axios.put("http://localhost:8080/auth/oauth2/merge", mergeData);
+        const response = await axios.put('http://localhost:8080/auth/oauth2/merge', mergeData);
         return response;
       } catch (error) {
-        setErrorMsg(error.response.data);
+        setErrorMsg(error.response.data.message);
         return error;
       }
     },
     {
       onSuccess: (response) => {
         if (response.status === 200) {
-          window.location.replace("/auth/login");
+          window.location.replace('/auth/login');
         }
       },
     }
   );
   const [password, setPassword] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMessage, setErrorMsg] = useState('');
 
-  const email = searchParams.get("email");
-  const provider = searchParams.get("provider");
+  const email = searchParams.get('email');
+  const provider = searchParams.get('provider');
 
   const passwordChangeHandle = (e) => {
     setPassword(e.target.value);
@@ -108,6 +114,7 @@ const OAuth2Merge = () => {
               onChange={passwordChangeHandle}
               name="password"
             />
+            <div css={errorMsg}>{errorMessage}</div>
           </div>
         </main>
         <footer css={footer}>

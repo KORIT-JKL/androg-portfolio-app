@@ -18,6 +18,7 @@ import com.korit.androg.androg.dto.auth.oauth2.OAuth2ProviderMergeReqDto;
 import com.korit.androg.androg.dto.auth.oauth2.OAuth2RegisterReqDto;
 import com.korit.androg.androg.entity.Authority;
 import com.korit.androg.androg.entity.User;
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.UserRepository;
 import com.korit.androg.androg.security.oauth2.OAuth2Attribute;
 
@@ -57,6 +58,11 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
 	
 	public int oAuth2ProviderMerge(OAuth2ProviderMergeReqDto oAuth2ProviderMergeReqDto) {
 		User userEntity = userRepository.findUserByEmail(oAuth2ProviderMergeReqDto.getEmail());
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if(!passwordEncoder.matches(oAuth2ProviderMergeReqDto.getPassword(), userEntity.getPassword())) {
+			throw new CustomException("사용자 정보를 확인하세요.");
+		}
 		
 		String provider = oAuth2ProviderMergeReqDto.getProvider();
 		if(StringUtils.hasText(userEntity.getProvider())) {

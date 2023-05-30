@@ -134,10 +134,10 @@ const MyPage = () => {
     },
     {
       onSuccess: (response) => {
+        setProFileImgUrl('http://localhost:8080/image/profile/' + response.data.profileImg);
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
-        setProFileImgUrl('http://localhost:8080/image/profile/' + response.data.profileImg);
       },
       enabled: infoRefresh,
     }
@@ -179,6 +179,7 @@ const MyPage = () => {
     {
       onSuccess: (response) => {
         setUserAddressList([...response.data]);
+        principal.refetch();
       },
       enabled: !!principal.data,
     }

@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import ReviewComponent from "../../components/ReviewComponent/ReviewComponent";
-import { setRefresh } from "../../atoms/Common/CommonAtoms";
-import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import CommonHeader from '../../components/CommonHeader/CommonHeader';
+import CommonFooter from '../../components/CommonFooter/CommonFooter';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import ReviewComponent from '../../components/ReviewComponent/ReviewComponent';
+import { setRefresh } from '../../atoms/Common/CommonAtoms';
+import { SetAdminReviews } from '../../atoms/Product/ProductAtoms';
+import QueryString from 'qs';
 const container = css`
   display: flex;
   justify-content: center;
@@ -183,32 +184,30 @@ const ProductDetails = () => {
   const [searchParams, setSearchparams] = useState({
     userId: 0,
     productId: productId,
-    sizeName: "",
+    sizeName: '',
     countNumber: 1,
   });
   const [selectSize, setSelectSize] = useState(false);
   const [, setUserId] = useState(0);
 
-  // eslint-disable-next-line no-unused-vars
   const [sameNameProducts, setSameNameProducts] = useState([]);
 
-  // eslint-disable-next-line no-unused-vars
   const [selectImgSuccess, setSelectImgSuccess] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const [, setreviewIdList] = useState([]);
+  const [reviewsIdList, setreviewIdList] = useState([]);
 
   // eslint-disable-next-line no-unused-vars
   const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
   const navigate = useNavigate();
   const principal = useQuery(
-    ["principal"],
+    ['principal'],
     async () => {
       const option = {
         headers: {
-          Authorization: localStorage.getItem("accessToken"),
+          Authorization: localStorage.getItem('accessToken'),
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get('http://localhost:8080/auth/principal', option);
       return response;
     },
     {
@@ -220,9 +219,21 @@ const ProductDetails = () => {
       enabled: refresh,
     }
   );
-
+  const getSameNameProducts = useQuery(
+    ['getSameNameProducts'],
+    async () => {
+      const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`);
+      return response;
+    },
+    {
+      enabled: !!productId,
+      onSuccess: (response) => {
+        setSameNameProducts(response.data);
+      },
+    }
+  );
   const getProduct = useQuery(
-    ["getProduct"],
+    ['getProduct'],
     async () => {
       const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
       return reponse;
@@ -240,23 +251,19 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      const response = axios.post(
-        "http://localhost:8080/cart/addition",
-        JSON.stringify(searchParams),
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("accessToken"),
-          },
-        }
-      );
-      alert("상품을 장바구니에 등록 성공");
+      const response = axios.post('http://localhost:8080/cart/addition', JSON.stringify(searchParams), {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('accessToken'),
+        },
+      });
+      alert('상품을 장바구니에 등록 성공');
       return response;
     } catch {}
   };
 
   const getReviews = useQuery(
-    ["getReviews"],
+    ['getReviews'],
     async () => {
       const response = await axios.get(`http://localhost:8080/products/review/${productId}`);
       return response;
@@ -274,6 +281,31 @@ const ProductDetails = () => {
       enabled: refresh && !!getProduct,
     }
   );
+
+  const getAdminReview = useQuery(
+    ['getAdminReview'],
+    async () => {
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem('accessToken')}`,
+        },
+        params: {
+          reviewsIdList,
+        },
+
+        paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: 'repeat' }),
+      };
+      const response = await axios.get('http://localhost:8080/products/adminReview', option);
+      return response;
+    },
+    {
+      enabled: !!getReviews && reviewsIdList.length > 0,
+      onSuccess: (response) => {
+        setThisAdminReviews(response.data);
+      },
+    }
+  );
+
   if (!product) {
     return setThiRefresh(true);
   }
@@ -295,7 +327,6 @@ const ProductDetails = () => {
     setThiRefresh(true);
     setSearchparams({ ...searchParams, productId: product.productId });
   };
-
   const directBuy = async () => {
     navigate(`/products/payment`);
     setThiRefresh(true);
@@ -309,7 +340,7 @@ const ProductDetails = () => {
           <img css={img} src={product.productImg} alt="productImg" />
           {getReviews.data !== undefined
             ? reviews.map((review) => <ReviewComponent review={review} />)
-            : "리뷰가 없습니다."}
+            : '리뷰가 없습니다.'}
         </div>
         <div css={detailsContainer}>
           <div css={sameNameProductsContainer}>
@@ -383,14 +414,14 @@ const ProductDetails = () => {
           </div>
           <div css={shippingContainer}>
             <div onClick={shippingClickHandle} css={shippingText}>
-              택배회사{" "}
+              택배회사{' '}
             </div>
             {shippingIsOpen ? (
               <>
                 <div css={shippingSubText}>&#62;ㅁㅁ택배 (1234-5678) </div>
               </>
             ) : (
-              ""
+              ''
             )}
           </div>
         </div>
