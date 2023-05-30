@@ -34,7 +34,6 @@ public class ReviewController {
 		requestMap.put("userId", userId);
 		requestMap.put("productId", productId);
 		requestMap.put("orderDetailId",orderDetailId);
-//		System.out.println(requestMap);
 		return ResponseEntity.ok().body(reviewService.getProduct(requestMap));
 	}
 	
@@ -50,7 +49,6 @@ public class ReviewController {
 	
 	@PutMapping("/product/review/reviewflag")
 	public ResponseEntity<?> reviewFlag(@RequestBody Map<String, Object> requestMap){
-//		System.out.println(requestMap);
 		return ResponseEntity.ok().body(reviewService.reviewFlag(requestMap));
 	}
 	@PutMapping("/product/review/modify")

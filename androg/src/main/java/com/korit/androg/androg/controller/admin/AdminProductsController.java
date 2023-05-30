@@ -38,7 +38,6 @@ public class AdminProductsController {
 	}
 	@PutMapping("admin/products/modify")
 	public ResponseEntity<?> productModify(@RequestBody ModifyProductReqDto modifyProductReqDto) {
-		System.out.println(modifyProductReqDto);
 		adminProductService.productModify(modifyProductReqDto);
 		return null;
 	}
@@ -53,10 +52,6 @@ public class AdminProductsController {
 		adminProductService.modifySoldOut(reqeustMap);
 		return null;
 	}
-// popup
-	
-// notice
-	
-//	리뷰
+
 	
 }

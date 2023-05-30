@@ -38,13 +38,11 @@ public class AdminNoticeController {
 	}
 	@DeleteMapping("/admin/pop-up")
 	public ResponseEntity<?> popUpDelete(int popUpId){
-		System.out.println(popUpId);
 		return ResponseEntity.ok().body(adminNoticeService.popUpDelete(popUpId));
 	}
 	//notice
 	@PostMapping("/admin/notice/register")
 	public ResponseEntity<?> noticeRegister(@RequestBody AdminNoticeReqDto adminNoticeReqDto){
-//		System.out.println(requestMap);
 		return ResponseEntity.ok().body(adminNoticeService.noticeRegister(adminNoticeReqDto));
 	}
 	@GetMapping("/auth/notice")
@@ -57,7 +55,6 @@ public class AdminNoticeController {
 	}
 	@DeleteMapping("/admin/notice/{noticeId}")
 	public ResponseEntity<?> noticeDelete(@PathVariable int noticeId){
-		System.out.println(noticeId);
 		return ResponseEntity.ok(null);
 	}
 }

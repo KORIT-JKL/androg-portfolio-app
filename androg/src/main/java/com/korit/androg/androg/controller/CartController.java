@@ -23,7 +23,6 @@ public class CartController {
 	private final CartService cartService;
 	@PostMapping("/cart/addition")
 	public ResponseEntity<?> addCart(@RequestBody CartReqDto addCartRequestDto) {
-//		System.out.println(addCartRequestDto);
 		cartService.addCart(addCartRequestDto);
 		return null;
 	}
@@ -35,15 +34,12 @@ public class CartController {
 
 	@DeleteMapping("/cart/delete")
 	public ResponseEntity<?> deleteCartByProductId(@RequestParam int cartId) {
-
 		cartService.deleteCartByCartId(cartId);
 		return 	null;
 	}
 	
 	@PutMapping("/cart/update/countUp")
-	public ResponseEntity<?> countUp(@RequestBody CartRespDto cartResponseDto) {
-		
-		
+	public ResponseEntity<?> countUp(@RequestBody CartRespDto cartResponseDto) {	
 		cartService.plusCountByCartId(cartResponseDto.getCartId());
 		return null;
 	}
