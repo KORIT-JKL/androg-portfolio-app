@@ -365,40 +365,40 @@ const ProductDetails = () => {
                     </div>
                     <div css={sizeContainer}>
                         {/* 카테고리아이디 별로 사이즈 출력 */}
-                        {product.sizeS.length !== 0 ? (
+                        {product.sizeS !== null && product.sizeS !== "" ? (
                             <div css={productSize} onClick={sizeClick}>
                                 {product.sizeS}
                             </div>
                         ) : (
-                            <></>
+                            ""
                         )}
-                        {product.sizeM.length !== 0 ? (
+                        {product.sizeM !== null && product.sizeM !== "" ? (
                             <div css={productSize} onClick={sizeClick}>
                                 {product.sizeM}
                             </div>
                         ) : (
                             ""
                         )}
-                        {product.sizeL.length !== 0 ? (
+                        {product.sizeL !== null && product.sizeL !== "" ? (
                             <div css={productSize} onClick={sizeClick}>
                                 {product.sizeL}
                             </div>
                         ) : (
                             ""
                         )}
-                        {product.sizeXL.length !== 0 ? (
+                        {product.sizeXL !== null && product.sizeXL !== "" ? (
                             <div css={productSize} onClick={sizeClick}>
                                 {product.sizeXL}
                             </div>
                         ) : (
                             ""
                         )}
-                        {product.sizeXXL.length !== 0 ? (
+                        {product.sizeXXL !== null && product.sizeXXL !== "" ? (
                             <div css={productSize} onClick={sizeClick}>
                                 {product.sizeXXL}
                             </div>
                         ) : (
-                            <></>
+                            ""
                         )}
                         <div css={selectSizeContainer}>선택사이즈 {searchParams.sizeName}</div>
                     </div>

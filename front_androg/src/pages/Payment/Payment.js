@@ -221,6 +221,7 @@ const Payment = () => {
         },
         {
             onSuccess: () => {
+                cartList.refetch();
                 setPrincipalState(false);
             },
             enabled: principalState,
