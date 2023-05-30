@@ -11,6 +11,7 @@ import com.korit.androg.androg.dto.address.AddressRespDto;
 import com.korit.androg.androg.dto.order.OrderCompleteReqDto;
 import com.korit.androg.androg.entity.Address;
 import com.korit.androg.androg.entity.Order;
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.AddressRepository;
 import com.korit.androg.androg.repository.OrderRepository;
 
@@ -23,6 +24,9 @@ public class OrderService {
 	private final AddressRepository addressRepository;
 	
 	public int completeOrder(OrderCompleteReqDto orderCompleteReqDto) {
+		if(orderCompleteReqDto.getProducts().size() == 0) {
+			throw new CustomException("상품을 선택해주세요.");
+		}
 		if(orderCompleteReqDto.getAddressId() == 0) { 
 			Address newAddress = Address
 					.builder()
