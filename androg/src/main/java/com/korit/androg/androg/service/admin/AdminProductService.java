@@ -11,6 +11,7 @@ import com.korit.androg.androg.dto.admin.ProductRespDto;
 import com.korit.androg.androg.dto.admin.ModifyProductReqDto;
 import com.korit.androg.androg.dto.admin.RegisterProductReqDto;
 import com.korit.androg.androg.entity.Color;
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.admin.AdminProductRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class AdminProductService {
 		return colorRespDtos;
 	}
 	public void registerProductDetails(RegisterProductReqDto productReqDto) {
+		if(productReqDto.getProductName().isBlank()) {
+			throw new CustomException("상품이름은 빈값일 수 없습니다.");
+		} else if(productReqDto.getProductImg().isBlank()) {
+			throw new CustomException("상품이미지 빈값일 수 없습니다.");
+		} 
 		adminProductRepository.registerProductDetail(productReqDto);
 		return ;
 	}
@@ -37,6 +43,11 @@ public class AdminProductService {
 		return resultList; 
 	}
 	public void productModify(ModifyProductReqDto modifyProductReqDto) {
+		if(modifyProductReqDto.getProductName().isBlank()) {
+			throw new CustomException("상품이름은 빈값일 수 없습니다.");
+		} else if(modifyProductReqDto.getProductImg().isBlank()) {
+			throw new CustomException("상품이미지 빈값일 수 없습니다.");
+		} 
 		adminProductRepository.productModify(modifyProductReqDto);
 		return ;
 	}
@@ -50,5 +61,4 @@ public class AdminProductService {
 		adminProductRepository.modifySodlout(productId,soldoutFlag);
 		return ;
 	}
-	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.AdminReviewCheckRespDto;
 import com.korit.androg.androg.dto.admin.UserReviewsRespDto;
+import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.admin.AdminReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -40,10 +41,25 @@ public class AdminReviewService {
 		return dtos;
 	}
 	public void reviewReviewRegister(int reviewId, String content) {
+		if(content == null) {
+			throw new CustomException("내용은 빈값은 안됩니다.");
+		} else if(content.isBlank() || content.isEmpty() ) {
+			throw new CustomException("내용은 빈값은 안됩니다.");
+		} else if(content.length()>45) {
+			throw new CustomException("45자 이상은 안됩니다~");
+		}
 		adminReivewRepository.reviewReviewRegister(reviewId, content);
 		return ;
 	}
 	public void reviewReviewModify(int reviewId, String content) {
+		if(content == null) {
+			throw new CustomException("내용은 빈값은 안됩니다.");
+		} else if(content.isBlank() || content.isEmpty()) {
+			throw new CustomException("내용은 빈값은 안됩니다.");
+		} else if(content.length()>45) {
+			throw new CustomException("45자 이상은 안됩니다~");
+		}
 		adminReivewRepository.reviewReviewModify(reviewId, content);
 	}
+
 }
