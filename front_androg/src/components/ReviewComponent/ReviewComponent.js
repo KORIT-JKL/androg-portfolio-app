@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import ReviewUpdateModal from "./ReviewUpdateModal";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import ReviewUpdateModal from './ReviewUpdateModal';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { SetAdminReviews } from '../../atoms/Product/ProductAtoms';
 
 const reviewContainer = css`
   margin: 10px 0px 10px 0px;
@@ -24,7 +24,10 @@ const reviewTitle = css`
   margin-top: 5px;
 `;
 const reviewUser = css`
+  display: flex;
+  align-items: center;
   font-size: 15px;
+  width: 20%;
   padding: 5px;
   padding-top: 15px;
 `;
@@ -67,29 +70,46 @@ const adminReviewText = css`
   padding: 10px 20px;
 `;
 
+const imgBox = css`
+  margin: 0px 5px 0px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+`;
+const img = css`
+  width: 100%;
+  object-fit: cover;
+`;
+
 const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  // const [reviewProfileImg, setReviewProfileImg] = useState();
   const [adminReviews] = useRecoilState(SetAdminReviews);
+  // setReviewProfileImg('http://localhost:8080/image/profile/' + review.profileImg);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
   const principal = useQuery(
-    ["principal"],
+    ['principal'],
     async () => {
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get('http://localhost:8080/auth/principal', option);
       return response;
     },
     {
       onSuccess: (response) => {},
-      enabled: !!localStorage.getItem("accessToken"),
+      enabled: !!localStorage.getItem('accessToken'),
     }
   );
 
@@ -99,7 +119,13 @@ const ReviewComponent = ({ review }) => {
   return (
     <div css={reviewContainer}>
       <div css={reviewTitle}>
-        <div css={reviewUser}>작성자 : {review.userName} </div>
+        <div css={reviewUser}>
+          작성자 :
+          <div css={imgBox}>
+            <img css={img} src={'http://localhost:8080/image/profile/' + review.profileImg} alt="" />
+          </div>
+          {review.userName}
+        </div>
         <div css={reviewDate}> 등록일 : {review.reviewDate}</div>
       </div>
       <div css={reviewContent}>내용 : {review.content}</div>
@@ -109,7 +135,7 @@ const ReviewComponent = ({ review }) => {
             리뷰 수정
           </button>
         ) : (
-          ""
+          ''
         )}
 
         {isModalOpen && <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />}
@@ -120,7 +146,7 @@ const ReviewComponent = ({ review }) => {
           adminReview.reviewId === review.reviewId ? (
             <div css={adminReviewText}> ↪관리자 : {adminReview.reviewContent}</div>
           ) : (
-            ""
+            ''
           )
         )}
       </div>

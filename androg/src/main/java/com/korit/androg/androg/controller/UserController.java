@@ -31,7 +31,6 @@ public class UserController {
 	}
 	@PostMapping("/user/mypage/profile/img")
 	public ResponseEntity<?> updateProfile(@RequestPart MultipartFile profileImgFile){
-		System.out.println(profileImgFile);
 		return ResponseEntity.ok(userService.updateProfile(profileImgFile));
 	}
 }
