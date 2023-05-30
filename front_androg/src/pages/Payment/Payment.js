@@ -102,7 +102,6 @@ const addressSearchBtn = css`
   }
 `;
 
-
 const continueBtn = css`
   width: 600px;
   margin-top: 30px;
@@ -182,6 +181,7 @@ const Payment = () => {
   const [principalState, setPrincipalState] = useState(false);
   const [addressListState, setaddressListState] = useState(false);
   const [addressIndex, setAddressIndex] = useState(0);
+  const [selectedAddress, setSelectedAddress] = useState(0);
   const [userAddressList, setUserAddressList] = useState([]);
   const [userAddressSigungu, setUserAddressSigungu] = useState();
   const [userAddressSido, setUserAddressSido] = useState();
@@ -196,18 +196,15 @@ const Payment = () => {
   const [orderParams, setOrderParams] = useState({
     userId: 0,
     products: [],
-    addressId: userAddressId,
-  });
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [newAddress, setNewAddress] = useState({
-    userId: 0,
+    addressId: 0,
     address: "",
     addressSigungu: "",
-    addressSido:"",
+    addressSido: "",
     addressZonecode: "",
     addressDetail: "",
     poneNumber: "",
   });
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const open = useDaumPostcodePopup(postcodeScriptUrl);
   const queryClient = useQueryClient();
@@ -248,42 +245,25 @@ const Payment = () => {
     },
     {
       onSuccess: (response) => {
-        console.log(response)
-          if(response.data.length !== 0) {
-            setUserAddressId(response.data[addressIndex].addressId);
-            setUserAddressDetail(response.data[addressIndex].addressDetail);
-            setUserAddressSido(response.data[addressIndex].addressSido);
-            setUserAddressSigungu(response.data[addressIndex].addressSigungu);
-            setUserAddressZonecode(response.data[addressIndex].addressZonecode);
-            setUserAddress(response.data[addressIndex].address);
-            setUserPhone(response.data[addressIndex].poneNumber);
-            setUserAddressList([...response.data]);
-          }
-          setaddressListState(false);
+        console.log(response);
+
+        if (response.data.length !== 0) {
+          setUserAddressList([...response.data]);
+          setAddressIndex(selectedAddress);
+          setUserAddressId(response.data[selectedAddress].addressId);
+          setUserAddressDetail(response.data[selectedAddress].addressDetail);
+          setUserAddressSido(response.data[selectedAddress].addressSido);
+          setUserAddressSigungu(response.data[selectedAddress].addressSigungu);
+          setUserAddressZonecode(response.data[selectedAddress].addressZonecode);
+          setUserAddress(response.data[selectedAddress].address);
+          setUserPhone(response.data[selectedAddress].poneNumber);
+        }
+
+        setaddressListState(false);
       },
       enabled: !!principal.data && addressListState,
     }
   );
-
-  const addAddress = useMutation( async () => {
-  
-    const option = {
-      headers: {
-        Authorization: localStorage.getItem("accessToken"),
-      },
-    };
-    const response = await axios.post("http://localhost:8080/user/mypage/address", 
-    newAddress,
-    option);
-    return response;
-  },
-  {
-    onSuccess: () => {
-      setaddressListState(true);
-      queryClient.fetchQuery("addressList");
-    }
-  });
-
 
   const cartList = useQuery(
     ["cartList"],
@@ -312,7 +292,18 @@ const Payment = () => {
 
   const orderBuy = useMutation(
     async () => {
-      const response = axios.post("http://localhost:8080/products/order", orderParams, {
+      const data = {
+        ...orderParams,
+        userId: principal.data.data.userId,
+        address: userAddress,
+        addressSigungu: userAddressSigungu,
+        addressSido: userAddressSido,
+        addressZonecode: userAddressZonecode,
+        addressDetail: userAddressDetail,
+        poneNumber: userPhone,
+      };
+      console.log(data);
+      const response = axios.post("http://localhost:8080/products/order", data, {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
@@ -332,26 +323,16 @@ const Payment = () => {
 
   const handleComplete = (data) => {
     console.log(data.sido);
-    setNewAddress((prevState) => ({...prevState,
-                  userId: principal.data.data.userId,
-                  address: data.address,
-                  addressSigungu: data.sigungu,
-                  addressSido: data.sido,
-                  addressZonecode: data.zonecode,
-                  addressDetail: "",
-                  poneNumber:""}));
+    setUserAddress(data.address);
+    setUserAddressDetail("");
+    setUserAddressSido(data.sido);
+    setUserAddressSigungu(data.sigungu);
+    setUserAddressZonecode(data.zonecode);
+    setUserPhone("");
   };
-  
-  const handleClose = (state) => {
-    if(state === 'FORCE_CLOSE') {
-      console.log(newAddress);
-    } else if (state === 'COMPLETE_CLOSE') {
-      addAddress.mutate();
-    }
-  };
-  
+
   const handleClick = () => {
-    open({onComplete: handleComplete, onClose:handleClose});
+    open({ onComplete: handleComplete });
   };
 
   useEffect(() => {
@@ -379,7 +360,25 @@ const Payment = () => {
   };
 
   const clickHandle = (e) => {
-    setAddressIndex(e.target.value);
+    setSelectedAddress(e.target.value);
+    if (parseInt(e.target.value) !== userAddressList.length) {
+      // setAddressIndex(e.target.value);
+      setUserAddressId(userAddressList[e.target.value].addressId);
+      setUserAddressDetail(userAddressList[e.target.value].addressDetail);
+      setUserAddressSido(userAddressList[e.target.value].addressSido);
+      setUserAddressSigungu(userAddressList[e.target.value].addressSigungu);
+      setUserAddressZonecode(userAddressList[e.target.value].addressZonecode);
+      setUserAddress(userAddressList[e.target.value].address);
+      setUserPhone(userAddressList[e.target.value].poneNumber);
+    } else {
+      setUserAddressId(0);
+      setUserAddress("");
+      setUserAddressDetail("");
+      setUserAddressSido("");
+      setUserAddressSigungu("");
+      setUserAddressZonecode("");
+      setUserPhone("");
+    }
   };
 
   const getCheckBoxState = (e) => {
@@ -402,8 +401,6 @@ const Payment = () => {
     }
   };
 
-
-
   if (principal.isLoading && addressList.isLoading) {
     return <>로딩중...</>;
   }
@@ -425,54 +422,51 @@ const Payment = () => {
             <div css={shipping}>
               <h2 css={shippingAddress}>배송주소</h2>
 
-              <select css={select} onChange={clickHandle}>
-              
-                {userAddressList.map((address, index) => (
-                        <>
-                          <option value={index}>{address.address}</option>
-                        </>
-                      )
-                    )}
+              <select css={select} onChange={clickHandle} value={selectedAddress}>
+                {userAddressList.length > 0 ? (
+                  userAddressList.map((address, index) => (
+                    <>
+                      <option value={index}>{address.address}</option>
+                    </>
+                  ))
+                ) : (
+                  <option value="">새주소</option>
+                )}
+                <option value={userAddressList.length}>새주소</option>
               </select>
+
               <select css={select}>
                 <option>대한민국</option>
               </select>
-              <input
-                type="text"
-                css={input}
-                value={principal.data !== undefined ? principal.data.data.name : ""}
-              />
+              <input type="text" css={input} value={principal.data !== undefined ? principal.data.data.name : ""} />
               <div>
-                <input type="text" css={postNumInput} value={userAddressZonecode} placeholder="우편번호"/>
-                <button 
-                  css={addressSearchBtn} 
-                  onClick={handleClick}
-                >
+                <input type="text" css={postNumInput} value={userAddressZonecode} placeholder="우편번호" />
+                <button css={addressSearchBtn} onClick={handleClick}>
                   주소찾기
-              </button>
+                </button>
               </div>
-             <Select css={select} sido={userAddressSido}/>       
-             <input
-                type="text"
-                placeholder="구/군/시"
-                css={input}
-                value={userAddressSigungu}
-                />
-              {/* <input
-              type="text"
-                placeholder="시/도"
-                css={input}
-                value={userAddressSido}
-              />  */}
+              <Select css={select} sido={userAddressSido} />
+              <input type="text" placeholder="구/군/시" css={input} value={userAddressSigungu} />
+              <input type="text" placeholder="주소" css={input} value={userAddress} />
               <input
                 type="text"
-                placeholder="주소"
+                placeholder="상세주소"
                 css={input}
-                value={userAddress}
+                value={userAddressDetail}
+                onChange={(e) => {
+                  setUserAddressDetail(e.target.value);
+                }}
               />
-              <input type="text" placeholder="상세주소" css={input} value={userAddressDetail} onChange={(e)=>{setUserAddressDetail(e.target.value)}}/>
-             
-              <input type="text" placeholder="전화번호" css={input} value={userPhone} onChange={(e)=>{setUserPhone(e.target.value)}}/>
+
+              <input
+                type="text"
+                placeholder="전화번호"
+                css={input}
+                value={userPhone}
+                onChange={(e) => {
+                  setUserPhone(e.target.value);
+                }}
+              />
               <button css={continueBtn} onClick={orderSubmitHandle}>
                 주문하기
               </button>
