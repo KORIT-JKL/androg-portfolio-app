@@ -12,4 +12,10 @@ public class OrderCompleteReqDto {
 	private int userId;
 	private List<Map<String, Object>> products;
 	private int addressId;
+	private String address;
+	private String addressSigungu;
+	private String addressSido;
+	private String addressZonecode;
+	private String addressDetail;
+	private String poneNumber;
 }
