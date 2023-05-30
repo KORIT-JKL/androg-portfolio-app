@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, { useRef, useState } from "react";
-import FAQItem from "./../../SupportUI/Button/FAQItem";
+import React, {  useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { AdminInquiries, InquiryAnswerState, answerComplete, disabledState } from "../../../atoms/Admin/AdminAtoms";
+import { AdminInquiries, InquiryAnswerState, disabledState } from "../../../atoms/Admin/AdminAtoms";
 import InquiryAnswer from "./InquiryAnswer";
 
 const mainContainer = css`
@@ -80,6 +79,10 @@ const AdminInquiry = () => {
       },
     }
   );
+
+  if(getInquiries.isLoading){
+    return <></>;
+  }
 
   return (
     <>

@@ -79,6 +79,7 @@ public class AuthenticationService implements UserDetailsService {
 				.email(userEntity.getEmail())
 				.name(userEntity.getName())
 				.authorities((String) claims.get("auth"))
+				.profileImg(userEntity.getProfileImg())
 				.build();
 		
 	}

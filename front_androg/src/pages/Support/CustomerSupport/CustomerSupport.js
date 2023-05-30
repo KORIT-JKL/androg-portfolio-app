@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 const main = css`
   display: grid;
   grid-template-columns: repeat(12);
+  padding-top: 20px;
 `;
 
 const mainContainer = css`
@@ -155,7 +156,11 @@ const CustomerSupport = () => {
             <option value="오류문의">오류문의</option>
             <option value="기타">기타</option>
           </select>
-          <textarea css={textArea} placeholder="내용을 입력하세요.200자" onChange={getContent}></textarea>
+          <textarea
+            css={textArea}
+            placeholder="내용을 입력하세요.200자"
+            onChange={getContent}
+          ></textarea>
           <button css={inquiryButton} onClick={inquirySubmitHandle}>
             확인
           </button>

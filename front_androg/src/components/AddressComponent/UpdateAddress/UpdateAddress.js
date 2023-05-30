@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import DaumPostcodeEmbed from "react-daum-postcode";
-import AddressInput from "../../Input/AddressInput";
-import { useMutation, useQueryClient } from "react-query";
-import axios from "axios";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import DaumPostcodeEmbed from 'react-daum-postcode';
+import AddressInput from '../../Input/AddressInput';
+import { useMutation, useQueryClient } from 'react-query';
+import axios from 'axios';
 import {
   AddressListStateRecoil,
   AddressUpdateStateRecoil,
   getAddressRecoil,
-} from "../../../atoms/AddressAtoms/AddressAtoms";
-import { useRecoilState } from "recoil";
+} from '../../../atoms/AddressAtoms/AddressAtoms';
+import { useRecoilState } from 'recoil';
 
 const Title = css`
   margin-top: 5px;
@@ -56,32 +56,39 @@ const nameBox = css`
 const UpdateAddress = ({ principal, address }) => {
   const [openPostCode, setOpenPostCode] = useState(false);
   const queryClient = useQueryClient();
-  const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: "" });
-  const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
+  const [addressDetailInput, setAddressDetailInput] = useState({ addressDetail: '' });
+  const [, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
   const [addressInput, setAddressInput] = useRecoilState(getAddressRecoil);
-  console.log(addressInput.address);
-  console.log(address);
+  const [errorMessage, setErrorMessage] = useState({
+    address: '',
+    addressBname: '',
+    addressDetail: '',
+    addressSido: '',
+    addressSigungu: '',
+    addressZonecode: '',
+    poneNumber: '',
+  });
 
   const addressUpdate = useMutation(
     async (address) => {
       const data = {
         address: addressInput.address,
-        addressSigungu: addressInput.sigungu,
-        addressSido: addressInput.sido,
-        addressBname: addressInput.bname,
-        addressZonecode: addressInput.zonecode,
+        addressSigungu: addressInput.addressSigungu,
+        addressSido: addressInput.addressSido,
+        addressBname: addressInput.addressBname,
+        addressZonecode: addressInput.addressZonecode,
         addressDetail: addressDetailInput.addressDetail,
         addressId: address.addressId,
-        poneNumber: addressInput.ponenumber,
+        poneNumber: addressInput.poneNumber,
         addressFlag: address.addressFlag,
       };
       console.log(data);
       const option = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `${localStorage.getItem("accessToken")}`,
+          'Content-Type': 'application/json',
+          Authorization: `${localStorage.getItem('accessToken')}`,
         },
       };
       //주소지 put url
@@ -93,9 +100,16 @@ const UpdateAddress = ({ principal, address }) => {
       return response;
     },
     {
-      onSuccess: () => {
-        setAddressListState(true);
-        queryClient.fetchQuery("addressList");
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          setAddressListState(true);
+          setUpdateOpen(false);
+          queryClient.fetchQuery('addressList');
+        }
+      },
+      onError: (error) => {
+        setUpdateOpen(true);
+        setErrorMessage({ ...errorMessage, ...error.response.data.errorData });
       },
     }
   );
@@ -104,10 +118,10 @@ const UpdateAddress = ({ principal, address }) => {
     setAddressInput((prevState) => ({
       ...prevState,
       address: data.address,
-      sigungu: data.sigungu,
-      sido: data.sido,
-      bname: data.bname,
-      zonecode: data.zonecode,
+      addressSigungu: data.sigungu,
+      addressSido: data.sido,
+      addressBname: data.bname,
+      addressZonecode: data.zonecode,
     }));
     setAddressInitState(false);
     setOpenPostCode(false);
@@ -125,11 +139,11 @@ const UpdateAddress = ({ principal, address }) => {
   return (
     <div css={addressContent}>
       <h2 css={Title}>주소 수정 하기</h2>
-      <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
+      <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ''}</div>
       <div css={nameBox}>
         {addressInitState
-          ? address.address + "(" + address.addressBname + ")"
-          : addressInput.address + "(" + addressInput.bname + ")"}
+          ? address.address + '(' + address.addressBname + ')'
+          : addressInput.address + '(' + addressInput.addressBname + ')'}
       </div>
       <button
         css={addAddressButton}
@@ -143,40 +157,38 @@ const UpdateAddress = ({ principal, address }) => {
       >
         주소찾기
       </button>
-      {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
+      {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ''}
       <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
       <AddressInput
         type="text"
         placeholder="구/군/시"
         name="sigungu"
-        value={addressInitState ? address.addressSigungu : addressInput.sigungu}
-        onChange={(e) => setAddressInput({ ...addressInput, sigungu: e.target.value })}
+        value={addressInitState ? address.addressSigungu : addressInput.addressSigungu}
+        onChange={(e) => setAddressInput({ ...addressInput, addressSigungu: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="시/도"
         name="sido"
-        value={addressInitState ? address.addressSido : addressInput.sido}
-        onChange={(e) => setAddressInput({ ...addressInput, sido: e.target.value })}
+        value={addressInitState ? address.addressSido : addressInput.addressSido}
+        onChange={(e) => setAddressInput({ ...addressInput, addressSido: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="우편번호"
         name="zonecode"
-        value={addressInitState ? address.addressZonecode : addressInput.zonecode}
-        onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
+        value={addressInitState ? address.addressZonecode : addressInput.addressZonecode}
+        onChange={(e) => setAddressInput({ ...addressInput, addressZonecode: e.target.value })}
       />
       <AddressInput
         type="text"
         placeholder="전화번호"
         name="ponenumber"
-        value={addressInitState ? address.poneNumber : addressInput.ponenumber}
-        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value }, setAddressInitState(false))}
+        onChange={(e) => setAddressInput({ ...addressInput, ponenumber: e.target.value })}
       />
       <button
         css={addAddressButton}
         onClick={() => {
-          setUpdateOpen(false);
           addressUpdate.mutate(address);
         }}
       >

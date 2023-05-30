@@ -9,16 +9,16 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const header = css`
-  padding-left: 50px;
-  font-size: 20px;
+  padding: 30px;
+  font-size: 30px;
   font-weight: 600;
 `;
 
 const main = css`
-  padding-left: 50px;
-  margin: 10px;
-  width: 500px;
-  height: 700px;
+  padding: 5px;
+  margin: 5px;
+  width: 100%;
+  height: 100%;
 `;
 
 const mainContainer = css`
@@ -26,10 +26,11 @@ const mainContainer = css`
   white-space: pre-line;
   padding: 10px;
   margin: 10px;
-  width: 300px;
-  height: 350px;
+  width: 100%;
+  height: 100%;
 `;
 
+/*
 const p = css`
   font-size: 13px;
   padding-bottom: 10px;
@@ -40,7 +41,7 @@ const span = css`
   margin-bottom: 10px;
   font-size: 14px;
   font-weight: 600;
-`;
+`;*/
 
 const Notice = () => {
   const [notice, setNotice] = useRecoilState(AdminNotice);
@@ -72,7 +73,7 @@ const Notice = () => {
       </header>
       <main css={main}>
         <div css={mainContainer}>
-          {getNotice.data !== undefined ? (
+          {notice.content !== undefined ? (
             <div dangerouslySetInnerHTML={{ __html: notice.content.replaceAll(/\n/g, "<br>") }} />
           ) : (
             ""

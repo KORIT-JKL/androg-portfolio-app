@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { adminAuthenticationState, authenticationState } from "../../../atoms/Auth/AuthAtoms";
 import { useQuery } from "react-query";
@@ -70,7 +70,10 @@ const AuthRoute = ({ path, element }) => {
   if (authState && path.startsWith(authPath)) {
     navigate("/");
   }
-  if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
+  if (
+    !authState &&
+    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
+  ) {
     navigate("/auth/login");
   }
 

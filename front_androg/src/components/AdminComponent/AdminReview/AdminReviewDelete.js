@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import { async } from "q";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 const Cotainer = css`

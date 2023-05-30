@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
-import { orderProductsState } from "../../atoms/Product/ProductAtoms";
 import { useRecoilState } from "recoil";
 import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
@@ -207,7 +206,6 @@ const Payment = () => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
-    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const principal = useQuery(

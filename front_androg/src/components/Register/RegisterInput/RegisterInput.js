@@ -8,10 +8,17 @@ const registerInput = css`
   margin-bottom: 40px;
 `;
 
-const RegisterInput = ({ type, placeholder, onChange, name }) => {
+const RegisterInput = ({ type, placeholder, onChange, name, disabled, value }) => {
   return (
     <div css={registerInput}>
-      <Input type={type} placeholder={placeholder} onChange={onChange} name={name} />
+      <Input
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+        name={name}
+        disabled={disabled}
+      />
     </div>
   );
 };

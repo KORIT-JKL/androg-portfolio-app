@@ -12,6 +12,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.korit.androg.androg.security.JwtAuthenticationEntryPoint;
 import com.korit.androg.androg.security.JwtAuthenticationFilter;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
+import com.korit.androg.androg.security.oauth2.OAuth2SuccessHandler;
+import com.korit.androg.androg.service.OAuth2Service;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final JwtTokenProvider jwtTokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	private final OAuth2SuccessHandler auth2SuccessHandler;
+	private final OAuth2Service oAuth2Service;
 	
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -37,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.authorizeRequests()
-			.antMatchers("/auth/**","/products/**")
+			.antMatchers("/auth/**","/products/**","/image/**")
 			.permitAll()
 			.antMatchers("/admin/**")
 			.hasRole("ADMIN")
@@ -46,8 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling()
-			.authenticationEntryPoint(jwtAuthenticationEntryPoint);
-		
+			.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+			.and()
+			.oauth2Login()
+			.loginPage("http://localhost:3000/auth/login")
+			.successHandler(auth2SuccessHandler)
+			.userInfoEndpoint()
+			.userService(oAuth2Service);
 	}
 	
 	

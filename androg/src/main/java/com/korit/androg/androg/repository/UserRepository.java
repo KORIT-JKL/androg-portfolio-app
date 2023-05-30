@@ -11,10 +11,17 @@ import com.korit.androg.androg.entity.User;
 @Mapper
 public interface UserRepository {
 	public User findUserByEmail(String email);
+
 	public int saveUser(User user);
+
 	public int saveAuthority(Authority authority);
-	
-	public List<OrderDetail>getOrderProducts(int userId);
-	
+
+	public int updateProvider(User user);
+
+	public int updateProfileImg(User user);
+
+	public List<OrderDetail> getOrderProducts(int userId);
+
 	public int deleteUser(int userId);
+
 }

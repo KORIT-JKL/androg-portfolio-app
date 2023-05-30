@@ -34,6 +34,7 @@ public class Review {
 							.productId(products.getProductId())
 							.userId(user.getUserId())
 							.userName(user.getName())
+							.profileImg(user.getProfileImg())
 							.build();
 	}
 

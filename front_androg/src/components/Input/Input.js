@@ -12,10 +12,18 @@ const input = css`
   text-align: left;
 `;
 
-const Input = ({ type, placeholder, onChange, name }) => {
+const Input = ({ type, placeholder, onChange, name, disabled, value }) => {
   return (
     <>
-      <input css={input} type={type} placeholder={placeholder} onChange={onChange} name={name} />
+      <input
+        css={input}
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        name={name}
+        disabled={disabled}
+        value={value}
+      />
     </>
   );
 };

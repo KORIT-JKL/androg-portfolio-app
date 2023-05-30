@@ -13,207 +13,221 @@ import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
 import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
 import { FaHome } from "react-icons/fa";
 const header = css`
-  position: fixed;
-  flex-direction: column;
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #dbdbdb;
+    position: fixed;
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #dbdbdb;
 `;
 
 const mainHeader = css`
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #dbdbdb;
-  background-color: white;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #dbdbdb;
+    background-color: white;
 `;
 
 const headerList = css`
-  display: flex;
-  align-items: center;
-  width: 1400px;
-  margin-left: 30px;
+    display: flex;
+    align-items: center;
+    width: 1400px;
+    margin-left: 30px;
 `;
 
 const headerList2 = css`
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-  margin-right: 50px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 50px;
 `;
 
 const list = css`
-  width: 80px;
-  padding: 0px 10px;
-  cursor: pointer;
-  &:hover {
-    font-weight: 600;
-  }
+    width: 80px;
+    padding: 0px 10px;
+    cursor: pointer;
+    &:hover {
+        font-weight: 600;
+    }
 `;
 
 const img = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 100px;
-  height: 40px;
-  padding-left: 50px;
-  &:hover {
-    font-weight: 600;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+    padding-left: 50px;
+    &:hover {
+        font-weight: 600;
+    }
 `;
 
 const CommonUserHeader = () => {
-  const [inputIsOpen, setInputIsOpen] = useState(false);
-  const [searchInput, thisSetSearchInput] = useRecoilState(SetSearchInput);
-  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
-  const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
-  const [authState, setAuthState] = useRecoilState(authenticationState);
-  const [sbheader, setThissbheader] = useRecoilState(setsbheader);
-  const [refresh, setThiRefresh] = useRecoilState(setRefresh);
-  const [CartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
-  const [products, setThisProducts] = useRecoilState(setProducts);
-  const [page, setThisPage] = useRecoilState(setPage);
-  const [searchParams, setThisSearchParams] = useRecoilState(setSearchParams);
-  const [userAuthority, setUserAuthority] = useState("");
-  const [getauthority, Setgetauthority] = useState(true);
+    const [inputIsOpen, setInputIsOpen] = useState(false);
+    const [, thisSetSearchInput] = useRecoilState(SetSearchInput);
+    const [loginIsState, setLoginIsState] = useRecoilState(loginState);
+    const [, setAdminState] = useRecoilState(adminAuthenticationState);
+    const [authState] = useRecoilState(authenticationState);
+    const [sbheader, setThissbheader] = useRecoilState(setsbheader);
+    const [, setThiRefresh] = useRecoilState(setRefresh);
+    const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
+    const [, setThisProducts] = useRecoilState(setProducts);
+    const [, setThisSearchParams] = useRecoilState(setSearchParams);
+    const [userAuthority, setUserAuthority] = useState("");
+    const [getauthority, Setgetauthority] = useState(true);
 
-  const navigate = useNavigate();
-  const onClickLogo = () => {
-    navigate("/");
-  };
-  const authority = useQuery(
-    ["authority"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+    const navigate = useNavigate();
+    const onClickLogo = () => {
+        navigate("/");
+    };
+    const authority = useQuery(
+        ["authority"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: `${localStorage.getItem("accessToken")}`,
+                },
+            };
+            const response = await axios.get("http://localhost:8080/auth/principal", option);
+            return response;
         },
-      };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        setUserAuthority(response.data.authorities);
-        if (!!userAuthority) {
-          Setgetauthority(false);
+        {
+            onSuccess: (response) => {
+                setUserAuthority(response.data.authorities);
+                if (!!userAuthority) {
+                    Setgetauthority(false);
+                }
+            },
+            enabled: getauthority && !!localStorage.getItem("accessToken"),
         }
-      },
-      enabled: getauthority && !!localStorage.getItem("accessToken"),
+    );
+
+    const EnterKeyDown = (e) => {
+        if (e.key === "Enter") {
+            setThisSearchParams({
+                setSearchPage: 1,
+                setSearchInput: e.target.value,
+            });
+            setThisProducts([]);
+            setThiRefresh(true);
+            navigate("/products/search");
+        }
+    };
+    const searchClick = (inputIsOpen) => {
+        thisSetSearchInput("");
+        setInputIsOpen(!inputIsOpen);
+    };
+    const cartOpen = () => {
+        setCartIsOpen(true);
+        setThiRefresh(true);
+    };
+
+    const logoutClickHandle = () => {
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            localStorage.removeItem("accessToken");
+            setLoginIsState(false);
+            setAdminState(false);
+            navigate("/");
+        }
+    };
+
+    useEffect(() => {
+        if (!!localStorage.getItem("accessToken")) {
+            setLoginIsState(true);
+        }
+    }, [loginIsState]);
+
+    if (authority.isLoading) {
+        return <></>;
     }
-  );
 
-  const EnterKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setThisSearchParams({
-        setSearchPage: 1,
-        setSearchInput: e.target.value,
-      });
-      setThisProducts([]);
-      setThiRefresh(true);
-      navigate("/products/search");
-    }
-  };
-  const searchClick = (inputIsOpen) => {
-    thisSetSearchInput("");
-    setInputIsOpen(!inputIsOpen);
-  };
-  const cartOpen = () => {
-    setCartIsOpen(true);
-    setThiRefresh(true);
-  };
+    return (
+        <>
+            <div css={mainHeader}>
+                {/* <img src={impact}  */}
+                {/* <FaHome css={img}  */}
 
-  const logoutClickHandle = () => {
-    if (window.confirm("로그아웃 하시겠습니까?")) {
-      localStorage.removeItem("accessToken");
-      setLoginIsState(false);
-      setAdminState(false);
-      navigate("/");
-    }
-  };
+                <div css={img} onClick={() => onClickLogo()}>
+                    HOME
+                </div>
 
-  useEffect(() => {
-    if (!!localStorage.getItem("accessToken")) {
-      setLoginIsState(true);
-    }
-  }, [loginIsState]);
-  return (
-    <>
-      <div css={mainHeader}>
-        {/* <img src={impact}  */}
-        {/* <FaHome css={img}  */}
-
-        <div css={img} onClick={() => onClickLogo()}>
-          HOME
-        </div>
-
-        {authState ? (
-          <>
-            <ul css={headerList}>
-              <li css={list} onMouseOver={() => setThissbheader(1)}>
-                SHOP
-              </li>
-              <li css={list} onMouseOver={() => setThissbheader(0)}>
-                SUPPORT
-              </li>
-            </ul>
-            <ul css={headerList2}>
-              {userAuthority === "ROLE_ADMIN" ? (
-                <li css={list} onClick={() => navigate("/admin")}>
-                  관리자
-                </li>
-              ) : (
-                ""
-              )}
-              {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
-              ) : (
-                ""
-              )}
-              <li css={list} onClick={() => searchClick(inputIsOpen)}>
-                SEARCH
-              </li>
-              <li css={list} onClick={logoutClickHandle}>
-                LOGOUT
-              </li>
-              <li css={list} onClick={() => navigate("/user/mypage")}>
-                MYPAGE
-              </li>
-              <li css={list} onClick={cartOpen}>
-                BAG
-              </li>
-            </ul>
-          </>
-        ) : (
-          <>
-            <ul css={headerList}>
-              <li css={list} onMouseOver={() => setThissbheader(1)}>
-                SHOP
-              </li>
-              <li css={list} onMouseOver={() => setThissbheader(0)}>
-                SUPPORT
-              </li>
-            </ul>
-            <ul css={headerList2}>
-              {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
-              ) : (
-                ""
-              )}
-              <li css={list} onClick={() => searchClick(inputIsOpen)}>
-                SEARCH
-              </li>
-              <li css={list}>
-                <Link to="/auth/login">LOGIN</Link>
-              </li>
-            </ul>
-          </>
-        )}
-      </div>
-      <CommonUserSubHeader sbheader={sbheader} />
-    </>
-  );
+                {authState ? (
+                    <>
+                        <ul css={headerList}>
+                            <li css={list} onMouseOver={() => setThissbheader(1)}>
+                                SHOP
+                            </li>
+                            <li css={list} onMouseOver={() => setThissbheader(0)}>
+                                SUPPORT
+                            </li>
+                        </ul>
+                        <ul css={headerList2}>
+                            {userAuthority === "ROLE_ADMIN" ? (
+                                <li css={list} onClick={() => navigate("/admin")}>
+                                    관리자
+                                </li>
+                            ) : (
+                                ""
+                            )}
+                            {inputIsOpen ? (
+                                <input
+                                    placeholder="대문자로 입력해주세요"
+                                    type="text"
+                                    id="searchInputText"
+                                    onKeyDown={EnterKeyDown}
+                                />
+                            ) : (
+                                ""
+                            )}
+                            <li css={list} onClick={() => searchClick(inputIsOpen)}>
+                                SEARCH
+                            </li>
+                            <li css={list} onClick={logoutClickHandle}>
+                                LOGOUT
+                            </li>
+                            <li css={list} onClick={() => navigate("/user/mypage")}>
+                                MYPAGE
+                            </li>
+                            <li css={list} onClick={cartOpen}>
+                                BAG
+                            </li>
+                        </ul>
+                    </>
+                ) : (
+                    <>
+                        <ul css={headerList}>
+                            <li css={list} onMouseOver={() => setThissbheader(1)}>
+                                SHOP
+                            </li>
+                            <li css={list} onMouseOver={() => setThissbheader(0)}>
+                                SUPPORT
+                            </li>
+                        </ul>
+                        <ul css={headerList2}>
+                            {inputIsOpen ? (
+                                <input
+                                    placeholder="대문자로 입력해주세요"
+                                    type="text"
+                                    id="searchInputText"
+                                    onKeyDown={EnterKeyDown}
+                                />
+                            ) : (
+                                ""
+                            )}
+                            <li css={list} onClick={() => searchClick(inputIsOpen)}>
+                                SEARCH
+                            </li>
+                            <li css={list}>
+                                <Link to="/auth/login">LOGIN</Link>
+                            </li>
+                        </ul>
+                    </>
+                )}
+            </div>
+            <CommonUserSubHeader sbheader={sbheader} />
+        </>
+    );
 };
 
 export default CommonUserHeader;

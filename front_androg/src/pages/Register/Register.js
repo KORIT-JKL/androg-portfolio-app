@@ -116,7 +116,12 @@ const Register = () => {
             <div css={errorMsg}>{errorMessages.email}</div>
           </div>
           <div css={inputCss}>
-            <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
+            <RegisterInput
+              type="password"
+              placeholder="비밀번호"
+              onChange={onChange}
+              name="password"
+            />
             <div css={errorMsg}>{errorMessages.password}</div>
           </div>
           <div css={inputCss}>
@@ -126,7 +131,7 @@ const Register = () => {
           <div css={privacy}>
             <input type="checkbox" css={privacyBtn} />
             <label css={text}>
-              <a href="">개인정보 보호정책</a> 및 <a href="">이용약관</a> 동의
+              <a href="/page/legal">개인정보 보호정책</a> 및 <a href="/page/legal">이용약관</a> 동의
             </label>
           </div>
         </main>

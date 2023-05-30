@@ -7,11 +7,11 @@ import LoginInput from "../../components/Login/LoginInput/LoginInput";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { refreshState } from "../../atoms/Common/CommonAtoms";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
+import OAuth2Button from "../../components/Login/OAuth2/OAuth2Button";
+import { BsGoogle } from "react-icons/bs";
+import { SiNaver, SiKakaotalk } from "react-icons/si";
 
 const container = css`
   display: flex;
@@ -21,7 +21,7 @@ const container = css`
 `;
 
 const header = css`
-  margin-top: 150px;
+  margin-top: 30px;
   font-size: 30px;
   font-weight: 300;
 `;
@@ -76,8 +76,6 @@ const footer = css`
 const Login = () => {
   const [loginUser, setLoginUser] = useState({ email: "", password: "" });
   const [errorMessages, setErrorMessages] = useState({ email: "", password: "" });
-  const [refresh, SetRefresh] = useRecoilState(refreshState);
-  const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -94,7 +92,11 @@ const Login = () => {
       },
     };
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
+      const response = await axios.post(
+        "http://localhost:8080/auth/login",
+        JSON.stringify(loginUser),
+        option
+      );
       setErrorMessages({ email: "", password: "" });
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;
@@ -127,7 +129,12 @@ const Login = () => {
           </div>
 
           <div css={inputCss}>
-            <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
+            <LoginInput
+              type="password"
+              placeholder="Password"
+              onChange={onChangeHandle}
+              name="password"
+            >
               <RiLockPasswordLine />
             </LoginInput>
             <div css={errorMsg}>{errorMessages.password}</div>
@@ -148,6 +155,11 @@ const Login = () => {
             회원가입
           </button>
         </footer>
+        <div>
+          <OAuth2Button provider={"google"} children={<BsGoogle />} />
+          <OAuth2Button provider={"naver"} children={<SiNaver />} />
+          <OAuth2Button provider={"kakao"} children={<SiKakaotalk />} />
+        </div>
       </div>
       <CommonFooter />
     </>

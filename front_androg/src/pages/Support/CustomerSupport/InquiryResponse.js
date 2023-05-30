@@ -106,7 +106,9 @@ const InquiryResponse = () => {
       },
     }
   );
-
+  if (getResponse.isLoading) {
+    return <></>;
+  }
   return (
     <>
       <CommonHeader />

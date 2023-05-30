@@ -193,10 +193,12 @@ const payButton = css`
   cursor: pointer;
 `;
 const Cart = () => {
+  
+  // eslint-disable-next-line no-unused-vars
   const [count, setCount] = useState(0);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
   const [userId, setUserId] = useState(0);
-  const [cartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
+  const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [getproducts, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [deleteSuccess, setDeleteSuccess] = useState(true);
@@ -325,6 +327,9 @@ const Cart = () => {
       setThiRefresh(true);
     }
   };
+  if(principal.isLoading && getCart.isLoading){
+    return <></>
+  }
   return (
     <div css={cartContainer}>
       <div css={mainCartContainer}>

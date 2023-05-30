@@ -13,4 +13,5 @@ public class ReviewRespDto {
 	private String userName;
 	private String content;
 	private String reviewDate;
+	private String profileImg;
 }
