@@ -25,98 +25,107 @@ import OAuth2Login from "./pages/Login/OAuth2Login";
 import OAuth2Merge from "./pages/Login/OAuth2Merge";
 
 function App() {
-    return (
-        <>
-            <Global styles={Reset}></Global>
-            <Routes>
-                {/* 메인 및 로그인 회원가입 페이지 */}
-                <Route exact path="/" element={<AuthRoute path="/" element={<Main />} />} />
-                <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />} />
+  return (
+    <>
+      <Global styles={Reset}></Global>
+      <Routes>
+        {/* 메인 및 로그인 회원가입 페이지 */}
+        <Route exact path="/" element={<AuthRoute path="/" element={<Main />} />} />
+        <Route path="/auth/login" element={<AuthRoute path="/auth/login" element={<Login />} />} />
 
-                <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/register" element={<Register />} />
 
-                <Route
-                    path="/auth/oauth2/login"
-                    element={<AuthRoute path={"/auth/oauth2/login"} element={<OAuth2Login />} />}
-                />
-                <Route
-                    path="/auth/oauth2/register"
-                    element={<AuthRoute path="/auth/oauth2/register" element={<OAuth2Register />} />}
-                />
+        <Route
+          path="/auth/oauth2/login"
+          element={<AuthRoute path={"/auth/oauth2/login"} element={<OAuth2Login />} />}
+        />
+        <Route
+          path="/auth/oauth2/register"
+          element={<AuthRoute path="/auth/oauth2/register" element={<OAuth2Register />} />}
+        />
 
-                <Route path="/auth/oauth2/merge" element={<OAuth2Merge />} />
+        <Route path="/auth/oauth2/merge" element={<OAuth2Merge />} />
 
-                {/* 문의페이지 Route */}
-                <Route path="/page/notice" element={<Notice />} />
-                <Route path="/page/customer" element={<CustomerSupport />} />
-                <Route path="/page/customer/inquiry" element={<InquiryResponse />} />
-                <Route path="/page/shipping" element={<Shipping />} />
-                <Route path="/page/sizeguide" element={<SizeGuide />} />
-                <Route path="/page/legal" element={<Legal />} />
+        {/* 문의페이지 Route */}
+        <Route path="/page/notice" element={<Notice />} />
+        <Route path="/page/customer" element={<CustomerSupport />} />
+        <Route path="/page/customer/inquiry" element={<InquiryResponse />} />
+        <Route path="/page/shipping" element={<Shipping />} />
+        <Route path="/page/sizeguide" element={<SizeGuide />} />
+        <Route path="/page/legal" element={<Legal />} />
 
-                {/* 마이페이지 Route */}
-                <Route path="/user/mypage" element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />} />
-                <Route
-                    path="/user/mypage/address"
-                    element={<AuthRoute path={"/user/mypage/address"} element={<Address />} />}
-                ></Route>
+        {/* 마이페이지 Route */}
+        <Route
+          path="/user/mypage"
+          element={<AuthRoute path={"/user/mypage"} element={<MyPage />} />}
+        />
+        <Route
+          path="/user/mypage/address"
+          element={<AuthRoute path={"/user/mypage/address"} element={<Address />} />}
+        ></Route>
 
-                {/* 상품페이지 */}
-                <Route path="/category/:categoryId" element={<Products />} />
-                <Route path="products/:productId/details" element={<ProductDetails />}></Route>
-                <Route path="/products/search" element={<SearchProducts />}></Route>
-                <Route path="/products/payment" element={<Payment />} />
+        {/* 상품페이지 */}
+        <Route path="/category/:categoryId" element={<Products />} />
+        <Route path="products/:productId/details" element={<ProductDetails />}></Route>
+        <Route path="/products/search" element={<SearchProducts />}></Route>
+        <Route path="/products/payment" element={<Payment />} />
 
-                {/* 리뷰 페이지 */}
-                <Route path="/product/:orderDetailId/review" element={<Review />} />
+        {/* 리뷰 페이지 */}
+        <Route path="/product/:orderDetailId/review" element={<Review />} />
 
-                {/* 관리자페이지 */}
-                <Route path="/admin" element={<AuthRoute path={"/admin"} element={<AdminPage />} />} />
-                {/* 상품 등록, 수정, 품절 */}
-                <Route
-                    path="/admin/product/register"
-                    element={<AuthRoute path={"/admin/product/register"} element={<AdminPage />} />}
-                />
-                {/* 수정 카테고리별 params 사용 */}
-                <Route
-                    path="/admin/product/modify/:categoryId"
-                    element={<AuthRoute path={"/admin/product/modify/:categoryId"} element={<AdminPage />} />}
-                />
-                <Route
-                    path="/admin/product/soldout"
-                    element={<AuthRoute path={"/admin/product/soldout"} element={<AdminPage />} />}
-                />
-                {/* 리뷰 등록, 제거 , 리뷰 */}
-                <Route
-                    path="/admin/review/register"
-                    element={<AuthRoute path={"/admin/review/register"} element={<AdminPage />} />}
-                />
-                <Route
-                    path="/admin/review/delete"
-                    element={<AuthRoute path={"/admin/review/delete"} element={<AdminPage />} />}
-                />
-                <Route
-                    path="/admin/review/review"
-                    element={<AuthRoute path={"/admin/review/review"} element={<AdminPage />} />}
-                />
-                {/* 공지등록, 팝업 등록 */}
-                <Route
-                    path="/admin/notice/register"
-                    element={<AuthRoute path={"/admin/notice/register"} element={<AdminPage />} />}
-                />
-                <Route
-                    path="/admin/popUp/register"
-                    element={<AuthRoute path={"/admin/popUp/register"} element={<AdminPage />} />}
-                />
+        {/* 관리자페이지 */}
+        <Route path="/admin" element={<AuthRoute path={"/admin"} element={<AdminPage />} />} />
+        {/* 상품 등록, 수정, 품절 */}
+        <Route
+          path="/admin/product/register"
+          element={<AuthRoute path={"/admin/product/register"} element={<AdminPage />} />}
+        />
+        {/* 수정 카테고리별 params 사용 */}
+        <Route
+          path="/admin/product/modify/:categoryId"
+          element={<AuthRoute path={"/admin/product/modify/:categoryId"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/product/soldout"
+          element={<AuthRoute path={"/admin/product/soldout"} element={<AdminPage />} />}
+        />
+        {/* 리뷰 등록, 제거 , 리뷰 */}
+        <Route
+          path="/admin/review/register"
+          element={<AuthRoute path={"/admin/review/register"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/review/delete"
+          element={<AuthRoute path={"/admin/review/delete"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/review/review"
+          element={<AuthRoute path={"/admin/review/review"} element={<AdminPage />} />}
+        />
+        {/* 공지등록, 팝업 등록 */}
+        <Route
+          path="/admin/notice/register"
+          element={<AuthRoute path={"/admin/notice/register"} element={<AdminPage />} />}
+        />
+        <Route
+          path="/admin/popUp/register"
+          element={<AuthRoute path={"/admin/popUp/register"} element={<AdminPage />} />}
+        />
 
-                {/* 매출관리 */}
-                <Route path="/admin/profit" element={<AuthRoute path={"/admin/profit"} element={<AdminPage />} />} />
-                {/* 문의 접수, 문의 답변 */}
+        {/* 매출관리 */}
+        <Route
+          path="/admin/profit"
+          element={<AuthRoute path={"/admin/profit"} element={<AdminPage />} />}
+        />
+        {/* 문의 접수, 문의 답변 */}
 
-                <Route path="/admin/inquiry" element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />} />
-            </Routes>
-        </>
-    );
+        <Route
+          path="/admin/inquiry"
+          element={<AuthRoute path={"/admin/inquiry"} element={<AdminPage />} />}
+        />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
