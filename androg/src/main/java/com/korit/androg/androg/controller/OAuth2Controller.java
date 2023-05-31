@@ -1,12 +1,16 @@
 package com.korit.androg.androg.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.dto.auth.oauth2.OAuth2ProviderMergeReqDto;
 import com.korit.androg.androg.dto.auth.oauth2.OAuth2RegisterReqDto;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
@@ -21,9 +25,11 @@ public class OAuth2Controller {
 	private final OAuth2Service oAuth2Service;
 	private final JwtTokenProvider jwtTokenProvider;
 	
+	
+	@ValidAspect
 	@PostMapping("/auth/oauth2/register")
 	public ResponseEntity<?> oauth2Register(@RequestHeader(value="registerToken") String registerToken
-											,@RequestBody OAuth2RegisterReqDto oAuth2RegisterReqDto){
+											,@Valid @RequestBody OAuth2RegisterReqDto oAuth2RegisterReqDto,BindingResult bindingResult){
 		boolean validated = jwtTokenProvider.validateToken(jwtTokenProvider.getToken(registerToken));
 		
 		if(!validated) {

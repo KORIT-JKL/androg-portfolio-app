@@ -5,7 +5,7 @@ import Input from "../../Input/Input";
 
 const registerInput = css`
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const RegisterInput = ({ type, placeholder, onChange, name, disabled, value }) => {

@@ -28,4 +28,10 @@ public class ErrorService {
 			throw new CustomException("가격은 빈값은 안됩니다.");
 		} 
 	}
+	
+	public void minMaxLengthCheck(String content, int min, int max) {
+		if(content.length() < min || content.length() > max) {
+			throw new CustomException("리뷰작성은 최소5자이상 최대 20자 이하로 작성하세요");
+		}
+	}
 }

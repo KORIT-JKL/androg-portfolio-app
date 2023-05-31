@@ -26,10 +26,10 @@ const reviewTitle = css`
 `;
 const reviewUser = css`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   font-size: 15px;
-  width: 14%;
+  width: 30%;
 `;
 const reviewDate = css`
   padding: 20px;
@@ -39,6 +39,7 @@ const reviewContent = css`
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 5px;
   font-size: 17px;
   background-color: #dbdbdb;
@@ -62,8 +63,13 @@ const reviewBtnBox = css`
   display: flex;
   justify-content: flex-end;
 `;
+const adminReviewContainer = css`
+  display: flex;
+  align-items: center;
+`;
 const adminReviewText = css`
   border-radius: 5px;
+  margin: 5px 0px 10px 20px;
   width: 100%;
   background-color: #dbdbdb;
 `;
@@ -72,7 +78,7 @@ const imgBox = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  margin-right: 5px;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -133,28 +139,35 @@ const ReviewComponent = ({ review }) => {
         </div>
         <div css={reviewDate}>{review.reviewDate}</div>
       </div>
-      <div css={reviewContent}>{review.content}</div>
-      <div css={reviewBtnBox}>
-        {userId === review.userId && authState ? (
-          <button css={reviewUpdateButton} onClick={handleOpenModal}>
-            리뷰 수정
-          </button>
-        ) : (
-          ""
-        )}
+      <div css={reviewContent}>
+        {review.content}
+        <div css={reviewBtnBox}>
+          {userId === review.userId && authState ? (
+            <button css={reviewUpdateButton} onClick={handleOpenModal}>
+              리뷰 수정
+            </button>
+          ) : (
+            ""
+          )}
 
-        {isModalOpen && <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />}
+          {isModalOpen && (
+            <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />
+          )}
+        </div>
       </div>
-      {adminReviews.map((adminReview) =>
-        adminReview.reviewId === review.reviewId ? (
-          <div css={adminReviewText}>
-            {" "}
-            <FiCornerDownRight /> 관리자 : {adminReview.reviewContent}
-          </div>
-        ) : (
-          ""
-        )
-      )}
+
+      <div css={adminReviewContainer}>
+        {adminReviews.map((adminReview) =>
+          adminReview.reviewId === review.reviewId ? (
+            <div css={adminReviewText}>
+              {" "}
+              <FiCornerDownRight /> 관리자 : {adminReview.reviewContent}
+            </div>
+          ) : (
+            ""
+          )
+        )}
+      </div>
     </div>
   );
 };

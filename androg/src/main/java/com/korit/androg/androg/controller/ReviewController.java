@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
+import com.korit.androg.androg.service.ErrorService;
 import com.korit.androg.androg.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewController {
 	private final ReviewService reviewService;
-	
+	private final ErrorService errorService;
+	private int minReviewLength = 5;
+	private int maxReviewLength = 20;
 	@GetMapping("/products/review/{productId}")
 	public ResponseEntity<?> getReviews(@PathVariable int productId){
 		return ResponseEntity.ok().body(reviewService.getReviews(productId));
@@ -39,6 +42,7 @@ public class ReviewController {
 	
 	@PostMapping("/product/review/register")
 	public ResponseEntity<?> reviewRegiset(@RequestBody ReviewRegisterReqDto reviewRegisterReqDto){
+		errorService.minMaxLengthCheck(reviewRegisterReqDto.getContent(), minReviewLength, maxReviewLength);
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
 	}
 	
@@ -53,6 +57,7 @@ public class ReviewController {
 	}
 	@PutMapping("/product/review/modify")
 	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
+		errorService.minMaxLengthCheck(modifyReqDto.getContent(), minReviewLength, maxReviewLength);
 		return ResponseEntity.ok().body(reviewService.reviewModify(modifyReqDto));
 	}
 }

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
@@ -111,7 +111,10 @@ const Review = () => {
         },
       };
 
-      const response = await axios.get(`http://localhost:8080/product/${orderDetailId}/reviewproduct`, data);
+      const response = await axios.get(
+        `http://localhost:8080/product/${orderDetailId}/reviewproduct`,
+        data
+      );
       return response;
     },
     {
@@ -134,12 +137,22 @@ const Review = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://localhost:8080/product/review/register", data, option);
+      const response = await axios.post(
+        "http://localhost:8080/product/review/register",
+        data,
+        option
+      );
       return response;
     },
     {
       onSuccess: (response) => {
-        // reviewFlagUpdate.mutate();
+        if (response.status === 200) {
+          alert("리뷰를 작성하였습니다.");
+          navigate("/");
+        }
+      },
+      onError: (error) => {
+        alert(error.response.data.message);
       },
     }
   );
@@ -158,21 +171,29 @@ const Review = () => {
         <h2 css={Title}>상품 후기 작성</h2>
         <div css={userInfo}>작성자</div>
         <div css={userInfo}>
-          {principal.data !== undefined ? principal.data.data.name + "(" + principal.data.data.email + ")" : ""}
+          {principal.data !== undefined
+            ? principal.data.data.name + "(" + principal.data.data.email + ")"
+            : ""}
         </div>
       </header>
       <main>
         <div css={productBox}>
-          <OrderProducts orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""} isOpen={false} />
+          <OrderProducts
+            orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""}
+            isOpen={false}
+          />
         </div>
-        <textarea css={textArea} placeholder="내용을 입력하세요" onChange={onChangeHandle}></textarea>
+        <textarea
+          css={textArea}
+          placeholder="내용을 입력하세요(최소5자이상 20자이하)"
+          onChange={onChangeHandle}
+        ></textarea>
       </main>
       <footer css={footer}>
         <button
           css={reviewButton}
           onClick={() => {
             reviewRegister.mutate();
-            navigate("/");
           }}
         >
           리뷰등록
