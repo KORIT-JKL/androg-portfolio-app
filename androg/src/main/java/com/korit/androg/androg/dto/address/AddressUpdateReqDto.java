@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class AddressReigsteReqDto {
+public class AddressUpdateReqDto {
 	private int userId;
 	
 	@NotBlank

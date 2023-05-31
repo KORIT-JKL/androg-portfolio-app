@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AdminReviewService {
+	private int maxlength = 45;
 	private final AdminReviewRepository adminReivewRepository;
 	public List<UserReviewsRespDto> getReviews() {
 		List<UserReviewsRespDto> userReviewsRespDtos = new ArrayList<>();
@@ -61,5 +62,4 @@ public class AdminReviewService {
 		}
 		adminReivewRepository.reviewReviewModify(reviewId, content);
 	}
-
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.korit.androg.androg.dto.address.AddressDefaultReqDto;
 import com.korit.androg.androg.dto.address.AddressReigsteReqDto;
 import com.korit.androg.androg.dto.address.AddressRespDto;
+import com.korit.androg.androg.dto.address.AddressUpdateReqDto;
 import com.korit.androg.androg.entity.Address;
 import com.korit.androg.androg.repository.AddressRepository;
 
@@ -35,8 +36,8 @@ public class AddressService {
 		return addressList;
 	}
 	
-	public int addressUpdate(int addressId, AddressReigsteReqDto addressReigsteReqDto) {
-		Address address = addressReigsteReqDto.toEntity();
+	public int addressUpdate(int addressId, AddressUpdateReqDto addressUpdateReqDto) {
+		Address address = addressUpdateReqDto.toEntity();
 		return addressRepository.addressUpdate(address);
 	}
 	
