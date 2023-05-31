@@ -115,7 +115,7 @@ const AdminInquiry = () => {
                       <td>{inquiry.date}</td>
                       <td>
                         <button id={selectedInquiryId}
-                          onClick={(e) => {
+                          onClick={() => {
                             setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
                           }}

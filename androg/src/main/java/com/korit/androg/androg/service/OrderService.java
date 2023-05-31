@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderService {
 	private final OrderRepository orderRepository;
 	private final AddressRepository addressRepository;
+
 	
 	public int completeOrder(OrderCompleteReqDto orderCompleteReqDto) {
 		if(orderCompleteReqDto.getProducts().size() == 0) {

@@ -11,6 +11,7 @@ import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { postcodeScriptUrl } from "react-daum-postcode/lib/loadPostcode";
 import Select from "../../components/Payment/select/Select";
+import ErrorMessage from "../../components/Error/ErrorMessage";
 
 const container = css`
     font-size: 12px;
@@ -215,6 +216,10 @@ const Payment = () => {
         addressDetail: "",
         poneNumber: "",
     });
+    const [errorMessage, setErrorMessage] = useState({
+        addressDetail: '',
+        poneNumber: '',
+      });
     useEffect(() => {
         let sum = 0;
         orderParams.products.forEach((product) => {
@@ -344,6 +349,17 @@ const Payment = () => {
                 }
             },
             onError: (error) => {
+                setErrorMessage({
+                    address: '',
+                    addressBname: '',
+                    addressDetail: '',
+                    addressSido: '',
+                    addressSigungu: '',
+                    addressZonecode: '',
+                    poneNumber: '',
+                    ...error.response.data.errorData,
+                  });
+          
                 alert(error.response.data.message);
             },
         }
@@ -519,7 +535,7 @@ const Payment = () => {
                                     setUserAddressDetail(e.target.value);
                                 }}
                             />
-
+                            <ErrorMessage children={errorMessage.addressDetail !== '' ? errorMessage.addressDetail : ''}/>
                             <input
                                 type="text"
                                 placeholder="전화번호"
@@ -529,6 +545,7 @@ const Payment = () => {
                                     setUserPhone(e.target.value);
                                 }}
                             />
+                            <ErrorMessage children={errorMessage.poneNumber !== '' ? errorMessage.poneNumber : ''} />
                             {orderParams.products.length > 0 ? (
                                 <button css={continueBtn} onClick={onClickPayment}>
                                     주문하기

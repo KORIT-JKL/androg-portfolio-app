@@ -320,7 +320,7 @@ const Cart = () => {
 
   const payment = () => {
     if (chekcked1 && chekcked2) {
-      navigate(`/products/payment`);
+      navigate(`/product/payment`);
       setThiRefresh(true);
     } else {
       alert("이용 약관 동의를 체크해주세요");
