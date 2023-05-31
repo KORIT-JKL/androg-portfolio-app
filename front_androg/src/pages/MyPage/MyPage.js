@@ -105,6 +105,10 @@ const orderContent = css`
   margin-bottom: 10px;
   max-height: 100%;
 `;
+const textBox = css`
+  margin: 10px 0px 10px 0px;
+  font-size: 14px;
+`;
 // react useQuery, rendering, State 이슈
 const MyPage = () => {
   const navgate = useNavigate();
@@ -270,10 +274,14 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.email : <></>}
             </span>
-            <div>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
-            <div>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
-            <div>
-              {userAddressList[0] !== undefined ? userAddressList[0].addressSigungu : ""}
+            <div css={textBox}>
+              {userAddressList[0] !== undefined ? userAddressList[0].address : ""}
+            </div>
+            <div css={textBox}>
+              {userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}
+            </div>
+            <div css={textBox}>
+              {userAddressList[0] !== undefined ? userAddressList[0].addressSigungu : ""}, 우편번호:
               {userAddressList[0] !== undefined ? userAddressList[0].addressZonecode : ""}
             </div>
 

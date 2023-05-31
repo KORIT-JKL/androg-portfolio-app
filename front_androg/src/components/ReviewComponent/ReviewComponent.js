@@ -1,19 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useState } from 'react';
-import ReviewUpdateModal from './ReviewUpdateModal';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { SetAdminReviews } from '../../atoms/Product/ProductAtoms';
+import { css } from "@emotion/react";
+import React, { useState } from "react";
+import ReviewUpdateModal from "./ReviewUpdateModal";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { SetAdminReviews } from "../../atoms/Product/ProductAtoms";
+import { authenticationState } from "../../atoms/Auth/AuthAtoms";
+import { FiCornerDownRight } from "react-icons/fi";
 
 const reviewContainer = css`
   margin: 10px 0px 10px 0px;
-  border: 1px solid black;
-  padding-bottom: 10px;
+  padding: 0px 10px 0px 10px;
   width: 100%;
   height: 100%;
-  padding-left: 10px;
+  background-color: #aaa;
 `;
 const reviewTitle = css`
   display: flex;
@@ -25,21 +26,22 @@ const reviewTitle = css`
 `;
 const reviewUser = css`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-size: 15px;
-  width: 20%;
-  padding: 5px;
-  padding-top: 15px;
+  width: 14%;
 `;
 const reviewDate = css`
   padding: 20px;
 `;
 
 const reviewContent = css`
+  border-radius: 5px;
   display: flex;
   justify-content: space-between;
   padding: 10px 5px;
   font-size: 17px;
+  background-color: #dbdbdb;
 `;
 
 const reviewUpdateButton = css`
@@ -60,18 +62,13 @@ const reviewBtnBox = css`
   display: flex;
   justify-content: flex-end;
 `;
-const adminReviewContainer = css`
-  border-top: 1px solid #dbdbdb;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-`;
 const adminReviewText = css`
-  padding: 10px 20px;
+  border-radius: 5px;
+  width: 100%;
+  background-color: #dbdbdb;
 `;
 
 const imgBox = css`
-  margin: 0px 5px 0px 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,29 +87,34 @@ const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [reviewProfileImg, setReviewProfileImg] = useState();
   const [adminReviews] = useRecoilState(SetAdminReviews);
+  const [authState] = useRecoilState(authenticationState);
+  const [userId, setUserId] = useState(0);
   // setReviewProfileImg('http://localhost:8080/image/profile/' + review.profileImg);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-
   const principal = useQuery(
-    ['principal'],
+    ["principal"],
     async () => {
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get('http://localhost:8080/auth/principal', option);
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
-      onSuccess: (response) => {},
-      enabled: !!localStorage.getItem('accessToken'),
+      onSuccess: (response) => {
+        setUserId(response.data.userId);
+      },
+      onError: () => {
+        setUserId(0);
+      },
+      enabled: !!localStorage.getItem("accessToken"),
     }
   );
-
   if (principal.isLoading) {
     return <></>;
   }
@@ -120,36 +122,39 @@ const ReviewComponent = ({ review }) => {
     <div css={reviewContainer}>
       <div css={reviewTitle}>
         <div css={reviewUser}>
-          작성자 :
           <div css={imgBox}>
-            <img css={img} src={'http://localhost:8080/image/profile/' + review.profileImg} alt="" />
+            <img
+              css={img}
+              src={"http://localhost:8080/image/profile/" + review.profileImg}
+              alt=""
+            />
           </div>
           {review.userName}
         </div>
-        <div css={reviewDate}> 등록일 : {review.reviewDate}</div>
+        <div css={reviewDate}>{review.reviewDate}</div>
       </div>
-      <div css={reviewContent}>내용 : {review.content}</div>
+      <div css={reviewContent}>{review.content}</div>
       <div css={reviewBtnBox}>
-        {principal.data.data.userId === review.userId ? (
+        {userId === review.userId && authState ? (
           <button css={reviewUpdateButton} onClick={handleOpenModal}>
             리뷰 수정
           </button>
         ) : (
-          ''
+          ""
         )}
 
         {isModalOpen && <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />}
       </div>
-
-      <div css={adminReviewContainer}>
-        {adminReviews.map((adminReview) =>
-          adminReview.reviewId === review.reviewId ? (
-            <div css={adminReviewText}> ↪관리자 : {adminReview.reviewContent}</div>
-          ) : (
-            ''
-          )
-        )}
-      </div>
+      {adminReviews.map((adminReview) =>
+        adminReview.reviewId === review.reviewId ? (
+          <div css={adminReviewText}>
+            {" "}
+            <FiCornerDownRight /> 관리자 : {adminReview.reviewContent}
+          </div>
+        ) : (
+          ""
+        )
+      )}
     </div>
   );
 };
