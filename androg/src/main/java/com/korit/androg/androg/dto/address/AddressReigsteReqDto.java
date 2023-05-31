@@ -15,36 +15,30 @@ import lombok.Data;
 public class AddressReigsteReqDto {
 	private int userId;
 	
-	@NotBlank
-	@NotNull
+
 	@NotEmpty
 	private String address;
 	
 	@Pattern(regexp = "^[A-Za-z0-9가-힣,!\\- ]+$", message="특수문자는 - 만 사용 가능합니다.")
 	private String addressDetail;
 	
-	@NotNull
-	@NotEmpty
+
 	@NotBlank
 	private String addressSigungu;
 	
-	@NotNull
+
 	@NotBlank
-	@NotEmpty
 	private String addressSido;
 	
-	@NotNull
-	@NotEmpty
+
 	@NotBlank
 	private String addressBname;
 	
-	@NotNull
-	@NotEmpty
+
 	@NotBlank
 	private String addressZonecode;
 	
-	@NotNull
-	@NotEmpty
+
 	@NotBlank
 	@Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$",message = "휴대전화번호 입력 양식은 000-0000-0000 입니다.")
 	private String poneNumber;
