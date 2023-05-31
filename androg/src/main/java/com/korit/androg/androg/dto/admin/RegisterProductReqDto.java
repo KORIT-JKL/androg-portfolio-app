@@ -15,23 +15,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterProductReqDto {
-	@NotNull
-	@NotBlank(message = "빈값은 안되요 바보탱아")
-	@NotEmpty
+	@NotBlank(message = "상품이름은 빈값이 안됩니다.")
+	@NotEmpty(message = "상품이름은 빈값이 안됩니다.")
 	private String productName;
-
 //	@Pattern(regexp = "\\d+" ,message = "가격은 숫자만 입력이 가능합니다.")
 	private int productPrice;
-	@NotNull
 	@NotBlank
-	@NotEmpty
 	private String categoryId;
-	@NotNull
 	@NotBlank
-	@NotEmpty
 	private String colorId;
-	@NotNull
-	@NotBlank
-	@NotEmpty
+	@NotBlank(message = "상품url은 빈값이 안됩니다.")
+	@NotEmpty(message = "상품url은 빈값이 안됩니다.")
 	private String productImg;
 }

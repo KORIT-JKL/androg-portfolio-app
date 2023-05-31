@@ -133,8 +133,12 @@ const AdminProductRegister = () => {
             return response;
         } catch (error) {
             console.log(error);
-            alert("상품이름은 " + error.response.data.errorData.productName);
-            alert("상품Url은 " + error.response.data.errorData.productImg);
+            if (error.response.data.errorData.productName != null) {
+                alert(error.response.data.errorData.productName);
+            }
+            if (error.response.data.errorData.productImg) {
+                alert(error.response.data.errorData.productImg);
+            }
         }
     };
     if (getColor.isLoading) {
