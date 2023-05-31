@@ -178,139 +178,115 @@ const shippingSubText = css`
   transition: 1s;
 `;
 const ProductDetails = () => {
-  const [refresh, setThiRefresh] = useRecoilState(setRefresh);
-  const [product, setProduct] = useState();
-  const [shippingIsOpen, setShippingIsOpen] = useState(false);
-  const { productId } = useParams();
-  const [searchParams, setSearchparams] = useState({
-    userId: 0,
-    productId: productId,
-    sizeName: '',
-    countNumber: 1,
-  });
-  const [selectSize, setSelectSize] = useState(false);
-  const [userId, setUserId] = useState(0);
+    const [refresh, setThiRefresh] = useRecoilState(setRefresh);
+    const [product, setProduct] = useState();
+    const [shippingIsOpen, setShippingIsOpen] = useState(false);
+    const { productId } = useParams();
+    const [searchParams, setSearchparams] = useState({
+        userId: 0,
+        productId: productId,
+        sizeName: "",
+        countNumber: 1,
+    });
+    const [selectSize, setSelectSize] = useState(false);
 
-  const [sameNameProducts, setSameNameProducts] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [reviewsIdList, setreviewIdList] = useState([]);
-  const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
-  const navigate = useNavigate();
-  // const principal = useQuery(
-  //     ["principal"],
-  //     async () => {
-  //         const option = {
-  //             headers: {
-  //                 Authorization: localStorage.getItem("accessToken"),
-  //             },
-  //         };
-  //         const response = await axios.get("http://localhost:8080/auth/principal", option);
-  //         return response;
-  //     },
-  //     {
-  //         onSuccess: (response) => {
-  //             setUserId(response.data.userId);
-  //             setSearchparams({ ...searchParams, userId: response.data.userId });
-  //             setThiRefresh(false);
-  //         },
-  //         enabled: refresh,
-  //     }
-  // );
-
-  const getProduct = useQuery(
-    ['getProduct'],
-    async () => {
-      const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
-      return reponse;
-    },
-    {
-      onSuccess: (response) => {
-        setProduct(response.data);
-        // console.log(response.data);
-        setThiRefresh(false);
-      },
-      enabled: refresh,
-    }
-  );
-  const getSameNameProducts = useQuery(
-    ['getSameNameProducts'],
-    async () => {
-      const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`);
-      return response;
-    },
-    {
-      enabled: !!productId,
-      onSuccess: (response) => {
-        setSameNameProducts(response.data);
-      },
-    }
-  );
-
-  const addCartSubmitHandle = async () => {
-    setThiRefresh(true);
-    try {
-      const response = await axios.post(
-        'http://localhost:8080/cart/addition',
-        JSON.stringify(searchParams),
+    const [sameNameProducts, setSameNameProducts] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [reviewsIdList, setreviewIdList] = useState([]);
+    const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
+    const navigate = useNavigate();
+    const getProduct = useQuery(
+        ["getProduct"],
+        async () => {
+            const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
+            return reponse;
+        },
         {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('accessToken'),
-          },
+            onSuccess: (response) => {
+                setProduct(response.data);
+                console.log(response.data);
+                setThiRefresh(false);
+            },
+            enabled: refresh,
         }
-      );
-      //   alert('상품을 장바구니에 등록 성공');
-      console.log(response);
-      return response;
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert('로그인후 이용해주세요');
-      }
-    }
-  };
-
-  const getReviews = useQuery(
-    ['getReviews'],
-    async () => {
-      const response = await axios.get(`http://localhost:8080/products/review/${productId}`);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        setReviews([...response.data]);
-        const IdList = [];
-        response.data.forEach((review) => {
-          IdList.push(review.reviewId);
-        });
-        const result1 = [...new Set(IdList)];
-        setreviewIdList(result1);
-      },
-      enabled: refresh && !!getProduct,
-    }
-  );
-  const getAdminReview = useQuery(
-    ['getAdminReview'],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
+    );
+    const getSameNameProducts = useQuery(
+        ["getSameNameProducts"],
+        async () => {
+            const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`);
+            return response;
         },
-        params: {
-          reviewsIdList,
-        },
+        {
+            enabled: !!productId,
+            onSuccess: (response) => {
+                setSameNameProducts(response.data);
+            },
+        }
+    );
 
-        paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: 'repeat' }),
-      };
-      const response = await axios.get('http://localhost:8080/products/adminReview', option);
-      return response;
-    },
-    {
-      enabled: !!getReviews && reviewsIdList.length > 0,
-      onSuccess: (response) => {
-        setThisAdminReviews(response.data);
-      },
+    const addCartSubmitHandle = async () => {
+        setThiRefresh(true);
+        try {
+            const response = await axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: localStorage.getItem("accessToken"),
+                },
+            });
+            alert("상품을 장바구니에 등록 성공");
+            return response;
+        } catch {}
+    };
+
+    const getReviews = useQuery(
+        ["getReviews"],
+        async () => {
+            const response = await axios.get(`http://localhost:8080/products/review/${productId}`);
+            return response;
+        },
+        {
+            onSuccess: (response) => {
+                setReviews([...response.data]);
+                const IdList = [];
+                response.data.forEach((review) => {
+                    IdList.push(review.reviewId);
+                });
+                const result1 = [...new Set(IdList)];
+                setreviewIdList(result1);
+            },
+            enabled: refresh && !!getProduct,
+        }
+    );
+    const getAdminReview = useQuery(
+        ["getAdminReview"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: `${localStorage.getItem("accessToken")}`,
+                },
+                params: {
+                    reviewsIdList,
+                },
+
+                paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
+            };
+            const response = await axios.get("http://localhost:8080/products/adminReview", option);
+            return response;
+        },
+        {
+            enabled: !!getReviews && reviewsIdList.length > 0,
+            onSuccess: (response) => {
+                setThisAdminReviews(response.data);
+            },
+        }
+    );
+    if (!product) {
+        return setThiRefresh(true);
     }
-  );
+  
+
+
+  
   if (!product) {
     return setThiRefresh(true);
   }

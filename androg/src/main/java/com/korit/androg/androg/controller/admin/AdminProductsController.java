@@ -42,7 +42,7 @@ public class AdminProductsController {
 		return ResponseEntity.ok().body(adminProductService.getProducts(categoryId));
 	}
 	@PutMapping("admin/products/modify")
-	public ResponseEntity<?> productModify(@RequestBody ModifyProductReqDto modifyProductReqDto) {
+	public ResponseEntity<?> productModify(@Valid @RequestBody ModifyProductReqDto modifyProductReqDto, BindingResult bindingResult) {
 		adminProductService.productModify(modifyProductReqDto);
 		return null;
 	}

@@ -13,11 +13,15 @@ import com.korit.androg.androg.dto.admin.RegisterProductReqDto;
 import com.korit.androg.androg.entity.Color;
 import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.admin.AdminProductRepository;
+import com.korit.androg.androg.service.ErrorService;
 
 import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AdminProductService {
+	private int maxLengh = 45;
+	private int maxUrlLengh = 900;
+	public final ErrorService errorService;
 	public final AdminProductRepository adminProductRepository;
 	public List<ColorRespDto> getColors() {
 		List<ColorRespDto> colorRespDtos = new ArrayList<>();
@@ -38,11 +42,9 @@ public class AdminProductService {
 		return resultList; 
 	}
 	public void productModify(ModifyProductReqDto modifyProductReqDto) {
-		if(modifyProductReqDto.getProductName().isBlank()) {
-			throw new CustomException("상품이름은 빈값일 수 없습니다.");
-		} else if(modifyProductReqDto.getProductImg().isBlank()) {
-			throw new CustomException("상품이미지 빈값일 수 없습니다.");
-		} 
+		errorService.blankCheck(modifyProductReqDto.getProductName(), maxLengh);
+		errorService.blankCheck(modifyProductReqDto.getProductImg(), maxUrlLengh);
+//		errorService.productPriceBlankCheck(modifyProductReqDto.getProductPrice());
 		adminProductRepository.productModify(modifyProductReqDto);
 		return ;
 	}

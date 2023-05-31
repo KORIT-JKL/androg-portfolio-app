@@ -81,7 +81,6 @@ const AdminProductRegister = () => {
         productImg: "",
         colorId: 1,
     });
-    const [register, setRegister] = useState(false);
     const getColor = useQuery(
         ["getAllColor"],
         async () => {
@@ -91,7 +90,7 @@ const AdminProductRegister = () => {
                 },
             };
             // 전체 색상 들고오기
-            const response = axios.get("http://localhost:8080/admin/products/colors", option);
+            const response = await axios.get("http://localhost:8080/admin/products/colors", option);
             return response;
         },
         {
@@ -136,7 +135,7 @@ const AdminProductRegister = () => {
             if (error.response.data.errorData.productName != null) {
                 alert(error.response.data.errorData.productName);
             }
-            if (error.response.data.errorData.productImg) {
+            if (error.response.data.errorData.productImg != null) {
                 alert(error.response.data.errorData.productImg);
             }
         }
@@ -157,7 +156,7 @@ const AdminProductRegister = () => {
                     <input
                         css={productPriceInput}
                         onChange={productPriceInputHandle}
-                        type="text"
+                        type="number"
                         placeholder="상품가격(원)"
                     />
                 </div>
@@ -196,7 +195,7 @@ const AdminProductRegister = () => {
                     </select>
                 </div>
                 <div css={containerFooter}>
-                    {productsDetails.productImg != "" ? (
+                    {productsDetails.productImg !== "" ? (
                         <img css={img} src={productsDetails.productImg} alt="" />
                     ) : (
                         <></>
@@ -208,11 +207,11 @@ const AdminProductRegister = () => {
                         type="text"
                         placeholder="이미지URL"
                     />
-                    {productsDetails.productName == "" ||
-                    productsDetails.productPrice == 0 ||
-                    productsDetails.categoryId == 0 ||
-                    productsDetails.productImg == "" ||
-                    productsDetails.colorId == 0 ? (
+                    {productsDetails.productName === "" ||
+                    productsDetails.productPrice === 0 ||
+                    productsDetails.categoryId === 0 ||
+                    productsDetails.productImg === "" ||
+                    productsDetails.colorId === 0 ? (
                         <button css={registerButton}>전부 입력시 등록가능</button>
                     ) : (
                         <button css={registerButton} onClick={() => registerProductsDetails()}>
