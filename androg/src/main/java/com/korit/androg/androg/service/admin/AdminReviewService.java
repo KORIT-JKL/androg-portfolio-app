@@ -50,13 +50,7 @@ public class AdminReviewService {
 		return ;
 	}
 	public void reviewReviewModify(int reviewId, String content) {
-		if(content == null) {
-			throw new CustomException("내용은 빈값은 안됩니다.");
-		} else if(content.isBlank() || content.isEmpty()) {
-			throw new CustomException("내용은 빈값은 안됩니다.");
-		} else if(content.length()>45) {
-			throw new CustomException("45자 이상은 안됩니다~");
-		}
+		errorService.blankCheck(content, maxlength);
 		adminReivewRepository.reviewReviewModify(reviewId, content);
 	}
 }
