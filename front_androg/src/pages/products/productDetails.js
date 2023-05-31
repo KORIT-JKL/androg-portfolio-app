@@ -331,8 +331,8 @@ const ProductDetails = () => {
                 Authorization: localStorage.getItem("accessToken"),
             },
         });
-        navigate(`/products/payment`);
         setThiRefresh(true);
+        navigate(`/products/payment`);
     };
     return (
         <>

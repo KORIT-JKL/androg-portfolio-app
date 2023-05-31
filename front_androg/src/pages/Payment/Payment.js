@@ -118,6 +118,18 @@ const continueBtn = css`
     }
 `;
 
+const continueBtn2 = css`
+    width: 600px;
+    margin-top: 30px;
+    padding: 10px 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    border-radius: 0%;
+    border-style: none;
+    background-color: #dbdbdb;
+`;
+
 const mainFooter = css`
     border-top: 1px solid #dbdbdb;
     padding: 14px 0;
@@ -517,9 +529,15 @@ const Payment = () => {
                                     setUserPhone(e.target.value);
                                 }}
                             />
-                            <button css={continueBtn} onClick={onClickPayment}>
-                                주문하기
-                            </button>
+                            {orderParams.products.length > 0 ? (
+                                <button css={continueBtn} onClick={onClickPayment}>
+                                    주문하기
+                                </button>
+                            ) : (
+                                <button css={continueBtn2} disabled={true}>
+                                    주문하기
+                                </button>
+                            )}
                         </div>
                     </div>
 
