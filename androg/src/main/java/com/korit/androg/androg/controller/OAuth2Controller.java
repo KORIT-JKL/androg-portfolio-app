@@ -27,7 +27,7 @@ public class OAuth2Controller {
 		boolean validated = jwtTokenProvider.validateToken(jwtTokenProvider.getToken(registerToken));
 		
 		if(!validated) {
-			return ResponseEntity.badRequest().body("회원가인 요청시간이 초과하였습니다.");
+			return ResponseEntity.badRequest().body("회원가입 요청시간이 초과하였습니다.");
 		}
 		
 		
