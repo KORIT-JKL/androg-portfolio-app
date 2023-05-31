@@ -317,6 +317,9 @@ const Payment = () => {
                     navigate("/user/mypage");
                 }
             },
+            onError: (error) => {
+                alert(error.response.data.message);
+            }
         }
     );
 
@@ -361,7 +364,7 @@ const Payment = () => {
     const clickHandle = (e) => {
         setSelectedAddress(e.target.value);
         if (parseInt(e.target.value) !== userAddressList.length) {
-            // setAddressIndex(e.target.value);
+            setAddressIndex(e.target.value);
             setUserAddressId(userAddressList[e.target.value].addressId);
             setUserAddressDetail(userAddressList[e.target.value].addressDetail);
             setUserAddressSido(userAddressList[e.target.value].addressSido);
@@ -431,7 +434,7 @@ const Payment = () => {
                                 ) : (
                                     <option value="">새주소</option>
                                 )}
-                                <option value={userAddressList.length}>새주소</option>
+                                {userAddressList.length > 0 ? <option value={userAddressList.length}>새주소</option> : ""}
                             </select>
 
                             <select css={select}>

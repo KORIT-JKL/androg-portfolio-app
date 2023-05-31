@@ -92,20 +92,24 @@ const CustomerSupport = () => {
   );
 
   const inquiry = useMutation(["inquiry"], async () => {
-    const data = {
-      userId: principal.data.data.userId,
-      orderId: orderDtlId,
-      category: category,
-      inquiryContent: inquiryContent,
-    };
-    const option = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `${localStorage.getItem("accessToken")}`,
-      },
-    };
-    const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
-    return response;
+    try {
+      const data = {
+        userId: principal.data.data.userId,
+        orderId: orderDtlId,
+        category: category,
+        inquiryContent: inquiryContent,
+      };
+      const option = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
+      return response;
+    } catch(error) {
+      alert(error.response.data.message);
+    }
   });
 
   useEffect(() => {
