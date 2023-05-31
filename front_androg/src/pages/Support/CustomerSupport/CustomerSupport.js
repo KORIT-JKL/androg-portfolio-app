@@ -72,30 +72,11 @@ const CustomerSupport = () => {
   const [inquiryContent, setInquiryContent] = useState("");
   const navigate = useNavigate();
 
-  const principal = useQuery(
-    ["principal"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-      };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
-      return response;
-    },
-    {
-      onSuccess: () => {
-        setPrincipalState(false);
-      },
-      enabled: principalState,
-    }
-  );
-
   const inquiry = useMutation(
     ["inquiry"],
     async () => {
       const data = {
-        userId: principal.data.data.userId,
+        userId: 0,
         orderId: orderDtlId,
         category: category,
         inquiryContent: inquiryContent,

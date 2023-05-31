@@ -55,7 +55,7 @@ public class ProductsController {
 		return ResponseEntity.ok().body(productsService.getSameNameProductsByProductId(productId));
 	}
 	
-	@PostMapping("/products/directBuy")
+	@PostMapping("/product/directBuy")
 	public ResponseEntity<?> productsDirectBuy(@RequestBody CartReqDto addCartRequestDto){
 		cartService.addCart(addCartRequestDto);
 		return null;
