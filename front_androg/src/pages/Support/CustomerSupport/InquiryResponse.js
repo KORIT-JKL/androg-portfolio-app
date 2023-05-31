@@ -123,6 +123,7 @@ const InquiryResponse = () => {
                 <tr>
                   <th css={inquiryResponseId}>순번</th>
                   <th css={orderId}>주문번호</th>
+                  <th>문의내용</th>
                   <th>답변내용</th>
                 </tr>
               </thead>
@@ -134,6 +135,7 @@ const InquiryResponse = () => {
                         <tr>
                           <td>{response.inquiryRespId}</td>
                           <td>{response.inquiryId}</td>
+                          <td>{response.inquiryContent}</td>
                           <td>{response.answer}</td>
                         </tr>
                       </>

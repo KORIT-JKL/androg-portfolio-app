@@ -31,10 +31,7 @@ export const InquiryAnswerState = atom({
   default: false,
 });
 
-export const disabledState = atom({
-  key: "disabledState",
-  default: {
-    disabled: false,
-    id: 0,
-  },
-});
+export const SuccessState = atom({
+  key: "SuccessState",
+  default: false,
+})

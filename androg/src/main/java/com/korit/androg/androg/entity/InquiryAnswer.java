@@ -16,6 +16,7 @@ public class InquiryAnswer {
 		return InquiryAnswerRespDto.builder()
 				.inquiryRespId(inquiryRespId)
 				.inquiryId(inquiry.getInquiryId())
+				.inquiryContent(inquiry.getInquiryContent())
 				.answer(answer)
 				.build();
 	}

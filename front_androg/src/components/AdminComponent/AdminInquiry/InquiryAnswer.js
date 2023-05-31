@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
+import { InquiryAnswerState, SuccessState } from "../../../atoms/Admin/AdminAtoms";
 import axios from "axios";
 import { useMutation } from "react-query";
 
@@ -58,25 +58,38 @@ const footer = css`
   align-items: center;
 `;
 const InquiryAnswer = ({ inquiryId }) => {
-  const [, setAnswerState] = useRecoilState(InquiryAnswerState);
+  const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [answerContent, setAnswerContent] = useState("");
-
+  const [success, setSuccess] = useRecoilState(SuccessState);
   // const navigate = useNavigate();
 
-  const inquiryResponse = useMutation(["inquiryResponse"], async () => {
-    const data = {
-      inquiryId: inquiryId,
-      answer: answerContent,
-    };
-    const option = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: `${localStorage.getItem("accessToken")}`,
+  const inquiryResponse = useMutation(
+    ["inquiryResponse"],
+    async () => {
+      const data = {
+        inquiryId: inquiryId,
+        answer: answerContent,
+      };
+      const option = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.post("http://localhost:8080/admin/inquiries/answer", data, option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("문의답변 완료");
+        }
       },
-    };
-    const response = await axios.post("http://localhost:8080/admin/inquiries/answer", data, option);
-    return response;
-  });
+      onError: (error) => {
+        alert(error.response.data.message);
+      },
+    }
+  );
 
   const getAnswer = (e) => {
     setAnswerContent(e.target.value);
@@ -84,12 +97,6 @@ const InquiryAnswer = ({ inquiryId }) => {
 
   const submitAnswer = () => {
     inquiryResponse.mutate();
-    alert("답변완료!");
-    if (!!inquiryResponse) {
-      // if(id===inquiryId) {
-      //   setDisabled({ ...disabled, disabled: true });
-      // }
-    }
     setAnswerState(false);
   };
 
@@ -99,7 +106,7 @@ const InquiryAnswer = ({ inquiryId }) => {
         <div css={answerBox}>
           <header css={header}>문의 답변</header>
           <main css={main}>
-            <textarea css={text} placeholder="답변을 입력해주세요..." onChange={getAnswer} />
+            <textarea css={text} placeholder="답변을 입력해주세요...200자" onChange={getAnswer} />
           </main>
           <footer css={footer}>
             <button onClick={submitAnswer}>보내기</button>

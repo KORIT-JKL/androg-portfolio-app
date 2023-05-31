@@ -60,8 +60,6 @@ const AdminInquiry = () => {
   const [inquiries, setInquiries] = useRecoilState(AdminInquiries);
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [selectedInquiryId, setSelectedInquiryId] = useState(0);
-  const [disabled1, setDisabled] = useRecoilState(disabledState);
-
   const getInquiries = useQuery(
     ["getInquiries"],
     async () => {
@@ -116,17 +114,15 @@ const AdminInquiry = () => {
                       <td>{inquiry.inquiryContent}</td>
                       <td>{inquiry.date}</td>
                       <td>
-                        <button
-                          onClick={() => {
+                        <button id={selectedInquiryId}
+                          onClick={(e) => {
                             setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
-                            setDisabled({ ...disabled1, id: inquiry.inquiryId });
                           }}
-                          disabled={inquiry.inquiryId === disabled1.id ? true : false}
                         >
                           답변하기
                         </button>
-                        <button disabled>삭제</button>
+
                       </td>
                     </tr>
                   ))}

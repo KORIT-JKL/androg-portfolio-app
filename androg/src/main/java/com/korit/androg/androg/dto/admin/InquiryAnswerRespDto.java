@@ -8,5 +8,6 @@ import lombok.Data;
 public class InquiryAnswerRespDto {
 	private int inquiryRespId;
 	private int inquiryId;
+	private String inquiryContent;
 	private String answer;
 }
