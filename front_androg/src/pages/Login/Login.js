@@ -92,11 +92,7 @@ const Login = () => {
       },
     };
     try {
-      const response = await axios.post(
-        "http://localhost:8080/auth/login",
-        JSON.stringify(loginUser),
-        option
-      );
+      const response = await axios.post("http://localhost:8080/auth/login", JSON.stringify(loginUser), option);
       setErrorMessages({ email: "", password: "" });
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;
@@ -129,12 +125,7 @@ const Login = () => {
           </div>
 
           <div css={inputCss}>
-            <LoginInput
-              type="password"
-              placeholder="Password"
-              onChange={onChangeHandle}
-              name="password"
-            >
+            <LoginInput type="password" placeholder="Password" onChange={onChangeHandle} name="password">
               <RiLockPasswordLine />
             </LoginInput>
             <div css={errorMsg}>{errorMessages.password}</div>

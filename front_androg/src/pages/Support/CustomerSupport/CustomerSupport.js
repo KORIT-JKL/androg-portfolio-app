@@ -106,8 +106,9 @@ const CustomerSupport = () => {
         },
       };
       const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
+      alert("문의가 정상적을 접수되었습니다.");
       return response;
-    } catch(error) {
+    } catch (error) {
       alert(error.response.data.message);
     }
   });
@@ -130,12 +131,10 @@ const CustomerSupport = () => {
 
   const getContent = (e) => {
     setInquiryContent(e.target.value);
-    console.log(e.target.value);
   };
   const inquirySubmitHandle = () => {
     if (!!localStorage.getItem("accessToken")) {
       inquiry.mutate();
-      alert("문의가 정상적으로 접수되었습니다.");
     } else {
       alert("로그인 후 이용해주세요.");
       navigate("/auth/login");
@@ -160,11 +159,7 @@ const CustomerSupport = () => {
             <option value="오류문의">오류문의</option>
             <option value="기타">기타</option>
           </select>
-          <textarea
-            css={textArea}
-            placeholder="내용을 입력하세요.200자"
-            onChange={getContent}
-          ></textarea>
+          <textarea css={textArea} placeholder="내용을 입력하세요.200자" onChange={getContent}></textarea>
           <button css={inquiryButton} onClick={inquirySubmitHandle}>
             확인
           </button>

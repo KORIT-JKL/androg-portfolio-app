@@ -1,9 +1,12 @@
 package com.korit.androg.androg.service;
 
+import org.springframework.stereotype.Service;
+
 import com.korit.androg.androg.exception.CustomException;
 
+@Service
 public class ErrorService {
-	public static void blankCheck(String content, int maxLengh) {
+	public void blankCheck(String content, int maxLengh) {
 		if(content == null) {
 			throw new CustomException("내용은 빈값은 안됩니다.");
 		} else if(content.isBlank() || content.isEmpty()) {
@@ -11,5 +14,13 @@ public class ErrorService {
 		} else if(content.length()>maxLengh) {
 			throw new CustomException(maxLengh +"자 이상은 안됩니다~");
 		} return ;
+	}
+	
+	public void idCategoryCheck(Integer id, String category) {
+		if( id == null || id == 0) {
+			throw new CustomException("유효한 상품번호를 입력해주세요");
+		} else if(category.isBlank()) {
+			throw new CustomException("문의사항을 선택해주세요.");
+		}
 	}
 }

@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminReviewService {
 	private int maxlength = 45;
 	private final AdminReviewRepository adminReivewRepository;
+	private final ErrorService errorService;
 	public List<UserReviewsRespDto> getReviews() {
 		List<UserReviewsRespDto> userReviewsRespDtos = new ArrayList<>();
 		adminReivewRepository.getReviews().forEach(userReview->{
@@ -44,7 +45,7 @@ public class AdminReviewService {
 	}
 	public void reviewReviewRegister(int reviewId, String content) {
 
-		ErrorService.blankCheck(content, maxlength);
+		errorService.blankCheck(content, maxlength);
 		adminReivewRepository.reviewReviewRegister(reviewId, content);
 		return ;
 	}
