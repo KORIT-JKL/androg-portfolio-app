@@ -109,7 +109,6 @@ const Products = () => {
         {
             enabled: refresh && (option.params.page < lastPage + 1 || lastPage === 0),
             onSuccess: (response) => {
-                // 여기 어딘가 아주 문제 product리스트가 초기화도 안되고 추가만 됨
                 setThiRefresh(false);
                 const totalCount = response.data.productTotalCount;
                 setThisProducts([...products, ...response.data.productList]);

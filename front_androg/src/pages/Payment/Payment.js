@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import paymentLogoImg from "../../img/Black And White Minimalist Aesthetic Modern Simple Neon Typography Fog Store Logo.png";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import Checkbox from "../../components/Payment/CheckBox/Checkbox";
 import { useNavigate } from "react-router-dom";
@@ -328,7 +328,7 @@ const Payment = () => {
                 poneNumber: userPhone,
             };
             console.log(data);
-            const response = axios.post("http://localhost:8080/products/order", data, {
+            const response = await axios.post("http://localhost:8080/products/order", data, {
                 headers: {
                     Authorization: localStorage.getItem("accessToken"),
                 },

@@ -23,4 +23,9 @@ public class ErrorService {
 			throw new CustomException("문의사항을 선택해주세요.");
 		}
 	}
+	public void productPriceBlankCheck(Integer price) {
+		if(price == null ) {
+			throw new CustomException("가격은 빈값은 안됩니다.");
+		} 
+	}
 }

@@ -189,34 +189,12 @@ const ProductDetails = () => {
         countNumber: 1,
     });
     const [selectSize, setSelectSize] = useState(false);
-    const [userId, setUserId] = useState(0);
 
     const [sameNameProducts, setSameNameProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [reviewsIdList, setreviewIdList] = useState([]);
     const [adminReviews, setThisAdminReviews] = useRecoilState(SetAdminReviews);
     const navigate = useNavigate();
-    const principal = useQuery(
-        ["principal"],
-        async () => {
-            const option = {
-                headers: {
-                    Authorization: localStorage.getItem("accessToken"),
-                },
-            };
-            const response = await axios.get("http://localhost:8080/auth/principal", option);
-            return response;
-        },
-        {
-            onSuccess: (response) => {
-                setUserId(response.data.userId);
-                setSearchparams({ ...searchParams, userId: response.data.userId });
-                setThiRefresh(false);
-            },
-            enabled: refresh,
-        }
-    );
-
     const getProduct = useQuery(
         ["getProduct"],
         async () => {
@@ -229,7 +207,7 @@ const ProductDetails = () => {
                 console.log(response.data);
                 setThiRefresh(false);
             },
-            enabled: refresh && !!principal,
+            enabled: refresh,
         }
     );
     const getSameNameProducts = useQuery(
@@ -249,7 +227,7 @@ const ProductDetails = () => {
     const addCartSubmitHandle = async () => {
         setThiRefresh(true);
         try {
-            const response = axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
+            const response = await axios.post("http://localhost:8080/cart/addition", JSON.stringify(searchParams), {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: localStorage.getItem("accessToken"),
@@ -325,7 +303,7 @@ const ProductDetails = () => {
     };
 
     const directBuy = async (product) => {
-        const response = axios.post("http://localhost:8080/products/directBuy", JSON.stringify(searchParams), {
+        const response = await axios.post("http://localhost:8080/products/directBuy", JSON.stringify(searchParams), {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: localStorage.getItem("accessToken"),
