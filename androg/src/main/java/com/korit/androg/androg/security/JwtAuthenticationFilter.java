@@ -7,10 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.korit.androg.androg.exception.CustomException;
@@ -28,16 +30,23 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 //		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		
+
 		String accessToken = jwtTokenProvider.getToken(httpServletRequest.getHeader("Authorization"));
 		boolean validatedFlag = jwtTokenProvider.validateToken(accessToken);
 		if (validatedFlag) {
 			Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
+//		if (!httpServletRequest.getRequestURI().startsWith("/auth")
+//				&& !httpServletRequest.getRequestURI().startsWith("/products")
+//				&& !httpServletRequest.getRequestURI().startsWith("/image")) {
+//			throw new UsernameNotFoundException("로그인!!!!");
+//		}
 //		System.out.println(httpServletRequest.getRequestURI());
 		chain.doFilter(request, response);
 //		System.out.println(httpServletRequest.getRequestURI());
 //		System.out.println(httpServletResponse.getStatus());
+	
 	}
+	
 }

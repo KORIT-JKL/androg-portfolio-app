@@ -44,12 +44,18 @@ function App() {
           element={<AuthRoute path="/auth/oauth2/register" element={<OAuth2Register />} />}
         />
 
-        <Route path="/auth/oauth2/merge" element={<OAuth2Merge />} />
+        <Route
+          path="/auth/oauth2/merge"
+          element={<AuthRoute path="/auth/oauth2/merge" element={<OAuth2Merge />} />}
+        />
 
         {/* 문의페이지 Route */}
         <Route path="/page/notice" element={<Notice />} />
         <Route path="/page/customer" element={<CustomerSupport />} />
+
+        {/* url 수정필요 */}
         <Route path="/page/customer/inquiry" element={<InquiryResponse />} />
+
         <Route path="/page/shipping" element={<Shipping />} />
         <Route path="/page/sizeguide" element={<SizeGuide />} />
         <Route path="/page/legal" element={<Legal />} />
@@ -66,18 +72,28 @@ function App() {
 
         {/* 상품페이지 */}
         <Route
-          path="/category/:categoryId"
-          element={<AuthRoute path="/category/:categoryId" element={<Products />} />}
+          path="/auth/category/:categoryId"
+          element={<AuthRoute path="/auth/category/:categoryId" element={<Products />} />}
         />
         <Route
-          path="products/:productId/details"
-          element={<AuthRoute path="products/:productId/details" element={<ProductDetails />} />}
+          path="/auth/products/:productId/details"
+          element={
+            <AuthRoute path="/auth/products/:productId/details" element={<ProductDetails />} />
+          }
         ></Route>
-        <Route path="/products/search" element={<SearchProducts />}></Route>
+        <Route
+          path="/auth/products/search"
+          element={<AuthRoute path="/auth/products/search" element={<SearchProducts />} />}
+        ></Route>
+
+        {/* url 수정필요 */}
         <Route path="/products/payment" element={<Payment />} />
 
         {/* 리뷰 페이지 */}
-        <Route path="/product/:orderDetailId/review" element={<Review />} />
+        <Route
+          path="/product/:orderDetailId/review"
+          element={<AuthRoute path="/product/:orderDetailId/review" element={<Review />} />}
+        />
 
         {/* 관리자페이지 */}
         <Route path="/admin" element={<AuthRoute path={'/admin'} element={<AdminPage />} />} />

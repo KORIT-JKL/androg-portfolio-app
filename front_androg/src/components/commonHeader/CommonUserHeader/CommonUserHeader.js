@@ -120,7 +120,7 @@ const CommonUserHeader = () => {
       });
       setThisProducts([]);
       setThiRefresh(true);
-      navigate('/products/search');
+      navigate('/auth/products/search');
     }
   };
   const searchClick = (inputIsOpen) => {
