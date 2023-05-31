@@ -91,8 +91,9 @@ const CustomerSupport = () => {
     }
   );
 
-  const inquiry = useMutation(["inquiry"], async () => {
-    try {
+  const inquiry = useMutation(
+    ["inquiry"],
+    async () => {
       const data = {
         userId: principal.data.data.userId,
         orderId: orderDtlId,
@@ -106,12 +107,20 @@ const CustomerSupport = () => {
         },
       };
       const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
-      alert("문의가 정상적을 접수되었습니다.");
+
       return response;
-    } catch (error) {
-      alert(error.response.data.message);
+    },
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("문의가 정상적으로 접수되었습니다.");
+        }
+      },
+      onError: (error) => {
+        alert(error.response.data.message);
+      },
     }
-  });
+  );
 
   useEffect(() => {
     if (!principalState) {

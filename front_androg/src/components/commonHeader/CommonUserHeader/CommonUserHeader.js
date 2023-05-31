@@ -1,26 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import CommonUserSubHeader from '../CommonUserSubHeader/CommonUserSubHeader';
-import { useRecoilState } from 'recoil';
-import impact from '../../../img/ANDROG 1.png';
-import { useQuery } from 'react-query';
-import axios from 'axios';
-import {
-  adminAuthenticationState,
-  authenticationState,
-  loginState,
-} from '../../../atoms/Auth/AuthAtoms';
-import { setRefresh, setsbheader } from '../../../atoms/Common/CommonAtoms';
-import { cartIsOpenState } from '../../../atoms/Cart/CartAtoms';
-import {
-  SetSearchInput,
-  setPage,
-  setProducts,
-  setSearchParams,
-} from '../../../atoms/Product/ProductAtoms';
-import { FaHome } from 'react-icons/fa';
+import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import CommonUserSubHeader from "../CommonUserSubHeader/CommonUserSubHeader";
+import { useRecoilState } from "recoil";
+import impact from "../../../img/ANDROG 1.png";
+import { useQuery } from "react-query";
+import axios from "axios";
+import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
+import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
+import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
+import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
+import { FaHome } from "react-icons/fa";
 const header = css`
   position: fixed;
   flex-direction: column;
@@ -59,6 +50,10 @@ const list = css`
   }
 `;
 
+const listLogin = css`
+  text-decoration-line: none;
+`;
+
 const img = css`
   display: flex;
   align-items: center;
@@ -83,22 +78,22 @@ const CommonUserHeader = () => {
   const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [, setThisProducts] = useRecoilState(setProducts);
   const [, setThisSearchParams] = useRecoilState(setSearchParams);
-  const [userAuthority, setUserAuthority] = useState('');
+  const [userAuthority, setUserAuthority] = useState("");
   const [getauthority, Setgetauthority] = useState(true);
 
   const navigate = useNavigate();
   const onClickLogo = () => {
-    navigate('/');
+    navigate("/");
   };
   const authority = useQuery(
-    ['authority'],
+    ["authority"],
     async () => {
       const option = {
         headers: {
-          Authorization: `${localStorage.getItem('accessToken')}`,
+          Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get('http://localhost:8080/auth/principal', option);
+      const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },
     {
@@ -108,23 +103,23 @@ const CommonUserHeader = () => {
           Setgetauthority(false);
         }
       },
-      enabled: getauthority && !!localStorage.getItem('accessToken'),
+      enabled: getauthority && !!localStorage.getItem("accessToken"),
     }
   );
 
   const EnterKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       setThisSearchParams({
         setSearchPage: 1,
         setSearchInput: e.target.value,
       });
       setThisProducts([]);
       setThiRefresh(true);
-      navigate('/products/search');
+      navigate("/products/search");
     }
   };
   const searchClick = (inputIsOpen) => {
-    thisSetSearchInput('');
+    thisSetSearchInput("");
     setInputIsOpen(!inputIsOpen);
   };
   const cartOpen = () => {
@@ -133,16 +128,16 @@ const CommonUserHeader = () => {
   };
 
   const logoutClickHandle = () => {
-    if (window.confirm('로그아웃 하시겠습니까?')) {
-      localStorage.removeItem('accessToken');
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.removeItem("accessToken");
       setLoginIsState(false);
       setAdminState(false);
-      navigate('/');
+      navigate("/");
     }
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem('accessToken')) {
+    if (!!localStorage.getItem("accessToken")) {
       setLoginIsState(true);
     }
   }, [loginIsState]);
@@ -173,22 +168,17 @@ const CommonUserHeader = () => {
               </li>
             </ul>
             <ul css={headerList2}>
-              {userAuthority === 'ROLE_ADMIN' ? (
-                <li css={list} onClick={() => navigate('/admin')}>
+              {userAuthority === "ROLE_ADMIN" ? (
+                <li css={list} onClick={() => navigate("/admin")}>
                   관리자
                 </li>
               ) : (
-                ''
+                ""
               )}
               {inputIsOpen ? (
-                <input
-                  placeholder="대문자로 입력해주세요"
-                  type="text"
-                  id="searchInputText"
-                  onKeyDown={EnterKeyDown}
-                />
+                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
               ) : (
-                ''
+                ""
               )}
               <li css={list} onClick={() => searchClick(inputIsOpen)}>
                 SEARCH
@@ -196,7 +186,7 @@ const CommonUserHeader = () => {
               <li css={list} onClick={logoutClickHandle}>
                 LOGOUT
               </li>
-              <li css={list} onClick={() => navigate('/user/mypage')}>
+              <li css={list} onClick={() => navigate("/user/mypage")}>
                 MYPAGE
               </li>
               <li css={list} onClick={cartOpen}>
@@ -216,20 +206,17 @@ const CommonUserHeader = () => {
             </ul>
             <ul css={headerList2}>
               {inputIsOpen ? (
-                <input
-                  placeholder="대문자로 입력해주세요"
-                  type="text"
-                  id="searchInputText"
-                  onKeyDown={EnterKeyDown}
-                />
+                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
               ) : (
-                ''
+                ""
               )}
               <li css={list} onClick={() => searchClick(inputIsOpen)}>
                 SEARCH
               </li>
               <li css={list}>
-                <Link to="/auth/login">LOGIN</Link>
+                <Link to="/auth/login" css={listLogin}>
+                  LOGIN
+                </Link>
               </li>
             </ul>
           </>

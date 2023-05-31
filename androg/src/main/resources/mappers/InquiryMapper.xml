@@ -31,6 +31,7 @@
 		select 
 			irt.inquiry_resp_id,
 			it.inquiry_id,
+			it.inquiry_content,
 			irt.answer
 		from
 			inquiry_resp_tb irt
