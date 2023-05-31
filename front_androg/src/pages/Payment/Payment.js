@@ -203,6 +203,20 @@ const Payment = () => {
         addressDetail: "",
         poneNumber: "",
     });
+    useEffect(() => {
+        let sum = 0;
+        orderParams.products.forEach((product) => {
+            sum += product.productPrice * product.countNumber;
+        });
+        setTotalPrice(sum);
+
+        const iamport = document.createElement("script");
+        iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
+        document.head.appendChild(iamport);
+        return () => {
+            document.head.removeChild(iamport);
+        };
+    }, [orderParams]);
     const [totalPrice, setTotalPrice] = useState(0);
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
@@ -319,7 +333,7 @@ const Payment = () => {
             },
             onError: (error) => {
                 alert(error.response.data.message);
-            }
+            },
         }
     );
 
@@ -349,18 +363,39 @@ const Payment = () => {
         }
     }, [addressIndex]);
 
-    useEffect(() => {
-        let sum = 0;
-        orderParams.products.forEach((product) => {
-            sum += product.productPrice * product.countNumber;
+    const onClickPayment = () => {
+        if (!window.IMP) return;
+        /* 1. 가맹점 식별하기 */
+        const { IMP } = window;
+        IMP.init("imp55461401"); // 가맹점 식별코드
+
+        /* 2. 결제 데이터 정의하기 */
+        const data = {
+            pg: "tosspay", // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
+            pay_method: "tosspay", // 결제수단
+            merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
+            amount: 2500 + totalPrice, // 결제금액
+            name:
+                orderParams.products[0].productName +
+                (orderParams.products.length > 1 ? "외" + (orderParams.products.length - 1) + "건" : ""), // 주문명
+            buyer_name: principal.data.data.name, // 구매자 이름
+            buyer_tel: userPhone, // 구매자 전화번호
+            buyer_email: principal.data.data.email, // 구매자 이메일
+            buyer_addr: userAddress, // 구매자 주소
+        };
+
+        /* 4. 결제 창 호출하기 */
+        IMP.request_pay(data, (response) => {
+            const { success, error_msg } = response;
+
+            if (success) {
+                orderBuy.mutate();
+                alert("결제 성공");
+            } else {
+                alert(`결제 실패: ${error_msg}`);
+            }
         });
-        setTotalPrice(sum);
-    }, [orderParams]);
-
-    const orderSubmitHandle = () => {
-        orderBuy.mutate();
     };
-
     const clickHandle = (e) => {
         setSelectedAddress(e.target.value);
         if (parseInt(e.target.value) !== userAddressList.length) {
@@ -402,7 +437,7 @@ const Payment = () => {
             });
         }
     };
-
+    console.log(orderParams);
     if (principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>;
     }
@@ -434,7 +469,11 @@ const Payment = () => {
                                 ) : (
                                     <option value="">새주소</option>
                                 )}
-                                {userAddressList.length > 0 ? <option value={userAddressList.length}>새주소</option> : ""}
+                                {userAddressList.length > 0 ? (
+                                    <option value={userAddressList.length}>새주소</option>
+                                ) : (
+                                    ""
+                                )}
                             </select>
 
                             <select css={select}>
@@ -478,7 +517,7 @@ const Payment = () => {
                                     setUserPhone(e.target.value);
                                 }}
                             />
-                            <button css={continueBtn} onClick={orderSubmitHandle}>
+                            <button css={continueBtn} onClick={onClickPayment}>
                                 주문하기
                             </button>
                         </div>
