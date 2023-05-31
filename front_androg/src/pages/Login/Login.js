@@ -108,7 +108,9 @@ const Login = () => {
       loginSubmitHandle();
     }
   };
-
+  const passwordFind = () => {
+    navigate("/auth/forgot");
+  };
   return (
     <>
       <CommonHeader />
@@ -136,7 +138,9 @@ const Login = () => {
           <button css={loginButton} onClick={loginSubmitHandle} onKeyUp={onKeyPress}>
             로그인
           </button>
-          <button css={passwordFindButton}>비밀번호 찾기</button>
+          <button css={passwordFindButton} onClick={() => passwordFind()}>
+            비밀번호 찾기
+          </button>
           <button
             css={registerButton}
             onClick={() => {

@@ -1,5 +1,14 @@
 package com.korit.androg.androg.service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -29,7 +38,7 @@ public class AuthenticationService implements UserDetailsService {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final UserRepository userRepository;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
-	
+	private final JavaMailSender javaMailSender;
 	public void checkDuplicatedEmail(String email) {
 		if(userRepository.findUserByEmail(email) != null) {
 			throw new CustomException("Duplicated Email",
@@ -82,6 +91,37 @@ public class AuthenticationService implements UserDetailsService {
 				.profileImg(userEntity.getProfileImg())
 				.build();
 		
+	}
+	
+	public Map<String, Object> forgotPassword(String email) {
+//		User userEntity = userRepository.findUserByEmail(email);
+//		if(userEntity == null) {
+//			return 2;
+//		}
+		System.out.println(email);
+		MimeMessage message = javaMailSender.createMimeMessage();
+		Map<String, Object> responseMap = new HashMap<>();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+			helper.setSubject("ANDROG 비밀번호 찾기");
+			helper.setFrom("ANDROG@naver.com");
+			helper.setTo(email);
+			String token = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);
+			message.setText(
+					"<div>"
+					+ "<h1>비밀번호 찾기</h1>"
+					+ "<p>아래의 코드를 웹페이지에서 입력해주세요</p>"
+					+ "<h1>" + token +"</h1>"
+					+ "</div>", "utf-8", "html");
+			javaMailSender.send(message);
+			responseMap.put("token", token);
+			responseMap.put("result", 1);
+			return responseMap;
+		}catch (Exception e) {
+			responseMap.put("result", 2);
+			return responseMap;
+		}
+
 	}
 	
 }

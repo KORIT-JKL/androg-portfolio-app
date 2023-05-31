@@ -1,6 +1,8 @@
 package com.korit.androg.androg.controller;
 
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -54,4 +56,10 @@ public class AuthenticationController {
 //		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}	
+	
+	@PostMapping("/forgot")
+	public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestMap) {
+		System.out.println(requestMap);
+		return ResponseEntity.ok().body(authenticationService.forgotPassword(requestMap.get("email")));
+	}
 }
