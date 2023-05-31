@@ -2,7 +2,10 @@ package com.korit.androg.androg.controller.admin;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.dto.admin.ModifyProductReqDto;
 import com.korit.androg.androg.dto.admin.RegisterProductReqDto;
 import com.korit.androg.androg.service.admin.AdminProductService;
@@ -26,8 +30,9 @@ public class AdminProductsController {
 	public ResponseEntity<?> getColors() {
 		return ResponseEntity.ok().body(adminProductService.getColors()) ;
 	}
+	@ValidAspect
 	@PostMapping("admin/product/register")
-	public ResponseEntity<?> registerProduct(@RequestBody RegisterProductReqDto productReqDto) {
+	public ResponseEntity<?> registerProduct(@Valid @RequestBody RegisterProductReqDto productReqDto, BindingResult bindingResult) {
 		adminProductService.registerProductDetails(productReqDto);
 		return null;
 	}
