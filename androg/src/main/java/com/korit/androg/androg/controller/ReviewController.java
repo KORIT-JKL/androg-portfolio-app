@@ -23,9 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewController {
 	private final ReviewService reviewService;
-	private final ErrorService errorService;
-	private int minReviewLength = 5;
-	private int maxReviewLength = 20;
+	
 	@GetMapping("/products/review/{productId}")
 	public ResponseEntity<?> getReviews(@PathVariable int productId){
 		return ResponseEntity.ok().body(reviewService.getReviews(productId));
@@ -42,7 +40,6 @@ public class ReviewController {
 	
 	@PostMapping("/product/review/register")
 	public ResponseEntity<?> reviewRegiset(@RequestBody ReviewRegisterReqDto reviewRegisterReqDto){
-		errorService.minMaxLengthCheck(reviewRegisterReqDto.getContent(), minReviewLength, maxReviewLength);
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
 	}
 	

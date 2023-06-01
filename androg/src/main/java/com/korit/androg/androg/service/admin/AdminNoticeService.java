@@ -1,23 +1,25 @@
 package com.korit.androg.androg.service.admin;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.AdminNoticeReqDto;
-import com.korit.androg.androg.dto.admin.PopUpRespDto;
 import com.korit.androg.androg.entity.Notice;
 import com.korit.androg.androg.entity.PopUp;
 import com.korit.androg.androg.repository.admin.AdminNoticeRepository;
+import com.korit.androg.androg.service.ErrorService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AdminNoticeService {
-	public final AdminNoticeRepository adminNoticeRepository;
+	private final AdminNoticeRepository adminNoticeRepository;
+	private final ErrorService errorService;
+	private int minSubjectLength = 4;
+	private int maxSubjectLength = 15;
 
 	public int popUpRegister(String content) {
+		errorService.blankCheck(content);
 		return adminNoticeRepository.popUpRegister(content);
 	}
 	public PopUp getPopUpList(){
@@ -25,6 +27,7 @@ public class AdminNoticeService {
 	}
 
 	public int popUpModify(String content) {
+		errorService.blankCheck(content);
 		return adminNoticeRepository.popUpModify(content);
 	}
 
@@ -34,6 +37,9 @@ public class AdminNoticeService {
 
 	// notice
 	public int noticeRegister(AdminNoticeReqDto adminNoticeReqDto) {
+		errorService.blankCheck(adminNoticeReqDto.getSubject());
+		errorService.minMaxLengthCheck("제목", adminNoticeReqDto.getSubject(), minSubjectLength, maxSubjectLength);
+		errorService.blankCheck(adminNoticeReqDto.getContent());
 		return adminNoticeRepository.noticeRegister(adminNoticeReqDto);
 	}
 
