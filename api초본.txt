@@ -1,0 +1,91 @@
+메인페이지
+get /auth/pop-up 팝업조회
+get /auth/notice 공지조회
+
+상품페이지
+카트
+post /cart/addition 상품 장바구니 등록
+get /cart 장바구니 조회
+delete /cart/delete 장바구니 삭제
+put /cart/update/counUp 장바구니 목록 개수증가
+put /cart/update/counDown 장바구니 목록 개수감소
+상품
+get /products/category/{categoryId} 상품페이지 카테고리별 조회
+get /products/{productId}/details 상품상세정보 조회
+get /products/search 상품검색
+get /products/{productId}/sameName 같은이름 상품 조회
+post /products/directBuy 바로구매
+get /products/adminReview 상품페이지 관리자리뷰 조회
+get /products/review/{productId} 상품페이지 유저리뷰 조회
+get /products/{orderDetailId}/reviewProduct ?리뷰작성 가능한 상품 조회
+post /products/review/register 상품리뷰등록
+?admin/test
+put /product/review/reviewflag 리뷰 등록한 제품 등록
+put /product/review/modify 리뷰 수정
+
+
+결제페이지
+post /products/order 주문완료
+post /products/order/address/{addressId} 주문 배송지등록
+
+로그인페이지
+post /auth/login 로그인
+post /auth/signup 회원가입
+get /auth/authenticated ?
+get /auth/principal ?
+post /auth/forgot 비밀번호찾기시 이메일 확인
+post /auth/forgot/modify 비밀번호수정
+post /auth/email 회원가입시 이메일 확인
+oauth2
+post /auth/oauth2/register oauth2계정 등록
+put /auth/oauth2/merge oauth2계정 같은이메일 통합
+
+유저페이지
+post /user/mypage/address 유저 주소등록
+get /user/mypage/address 유저 주소 조회
+put /user/mypage/address/{addressId} 유저 주소 수정
+put /user/mypage/address/default 유저 기본배송지 수정
+delete /user/mypage/address/{addressId} 유저 주소 삭제
+
+post /user/inquiry 문의하기
+get /user/inquiry/answer/{userId} 문의답변 조회
+
+get /user/mypage/purchases 주문한 상품조회
+delete /user/delete 회원탈퇴
+post /user/mypage/profile/img 유저프로필 이미지 등록
+
+
+관리자페이지
+
+문의
+get /admin/inquiries 문의조회
+post /admin/inquiries/answer 문의답변
+
+팝업,공지
+post /admin/pop-up/register 팝업등록
+put /admin/pop-up/modify 팝업수정
+delete /admin/pop-up 팝업제거
+post /admin/notice/register 공지등록
+put /admin/notice/modify 공지수정
+delete /admin/notice/{noticeId} 공지제거
+
+상품
+get /admin/products/colors 관리자색상조회
+post /admin/product/register 상품등록
+get /admin/products/{categoryId} 카테고리별상품조회
+put /admin/products/modify 상품수정
+delete /admin/products/delete 상품제거
+put /admin/products/soldout 상품품절
+
+매출관리
+get /admin/rank/count 상품판매량 순위 조회
+get /admin/rank/profit 상품매출액 순위 조회
+get /admin/rank/user 유저 순위 조회
+
+리뷰
+get /admin/reviews 모든리뷰조회
+delete /admin/reviews/delete 리뷰삭제
+get /admin/reviews/review 관리자리뷰조회
+post /admin/reviews/review/register 관리자리뷰등록
+put /admin/reviews/review/modify 관리자리뷰 수정
+
