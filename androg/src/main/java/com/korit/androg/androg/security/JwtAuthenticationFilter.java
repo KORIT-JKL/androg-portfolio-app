@@ -8,21 +8,20 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.security.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends GenericFilterBean {
 	private final JwtTokenProvider jwtTokenProvider;
+	
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -30,22 +29,17 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 //		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+		
 		String accessToken = jwtTokenProvider.getToken(httpServletRequest.getHeader("Authorization"));
-//		System.out.println(accessToken + httpServletRequest.getRequestURI());
+//		System.out.println(accessToken);
 		boolean validatedFlag = jwtTokenProvider.validateToken(accessToken);
 		if (validatedFlag) {
 			Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+		}else {
+			log.info("토큰확인필요");
 		}
-//		if (!httpServletRequest.getRequestURI().startsWith("/auth")
-//				&& !httpServletRequest.getRequestURI().startsWith("/products")
-//				&& !httpServletRequest.getRequestURI().startsWith("/image")) {
-//			throw new UsernameNotFoundException("로그인!!!!");
-//		}
-//		System.out.println(httpServletRequest.getRequestURI());
 		chain.doFilter(request, response);
-//		System.out.println(httpServletRequest.getRequestURI());
-//		System.out.println(httpServletResponse.getStatus());
 	
 	}
 	

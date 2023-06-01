@@ -23,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		
-		System.out.println(authException.getMessage()); 
+		System.out.println(authException.getMessage());
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		ErrorResponseDto<?> errorResponseDto = new ErrorResponseDto<AuthenticationException>("인증 실패했다.", authException);

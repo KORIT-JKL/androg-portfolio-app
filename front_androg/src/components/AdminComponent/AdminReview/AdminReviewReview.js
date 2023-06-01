@@ -104,6 +104,10 @@ const modalreviewContent = css`
   display: flex;
   flex-wrap: wrap;
   border: none;
+  resize: none;
+  &:focus {
+    outline: none;
+  }
 `;
 const modalFooter = css`
   display: flex;
@@ -117,11 +121,13 @@ const reviewbutton = css`
   margin: 10px 20px;
   height: 100px;
   width: 200px;
-  background-color: white;
+  background-color: black;
+  color: white;
   cursor: pointer;
   font-size: 25px;
+  transition: 0.3s;
   &:hover {
-    background-color: #dbdbdb;
+    background-color: #aaa;
   }
   &:active {
     background-color: #fafafa;
@@ -327,11 +333,11 @@ const AdminReviewReview = () => {
               <div css={modalContent}>답변 내용 :{selectModifyReview.reviewContent} </div>
             </div>
             <div css={modalbody}>
-              <input
+              <textarea
                 css={modalreviewContent}
                 onChange={modifyModalReviewContentInput}
                 type="text"
-              ></input>
+              ></textarea>
             </div>
             <div css={modalFooter}>
               <button css={reviewbutton} onClick={() => modifyReview()}>

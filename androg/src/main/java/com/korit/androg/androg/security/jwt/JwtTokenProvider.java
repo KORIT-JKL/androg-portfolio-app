@@ -25,7 +25,9 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
 	@Autowired
@@ -82,16 +84,20 @@ public class JwtTokenProvider {
 			return true;
 		} catch (SecurityException | MalformedJwtException e) {
 //			log.info("Invalid JWT Token", e);
+			return false;
 		} catch (ExpiredJwtException e) {
-//			log.info("Expired JWT Token", e);
+			log.info("ExpiredJwtException",e);
+			return false;
 		} catch (UnsupportedJwtException e) {
 //			log.info("Unsupported JWT Token", e);
+			return false;
 		} catch (IllegalArgumentException e) {
 //			log.info("IllegalArgument JWT Token", e);
+			return false;
 		} catch (Exception e) {
 //			log.info("JWT Token Error", e);
+			return false;
 		}
-		return false;
 	}
 
 	public String getToken(String token) {

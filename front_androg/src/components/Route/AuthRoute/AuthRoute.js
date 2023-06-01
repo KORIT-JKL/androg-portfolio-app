@@ -30,6 +30,9 @@ const AuthRoute = ({ path, element }) => {
           }
         }
       },
+      onError: (error) => {
+        console.log(error);
+      },
     }
   );
 
@@ -56,7 +59,7 @@ const AuthRoute = ({ path, element }) => {
       onError: (error) => {
         console.log(error);
       },
-      enabled: !!localStorage.getItem("accessToken"),
+      enabled: !!localStorage.getItem("accessToken") && authState,
     }
   );
 
