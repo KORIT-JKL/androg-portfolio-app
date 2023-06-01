@@ -201,7 +201,7 @@ const Payment = () => {
     const [userAddress, setUserAddress] = useState("");
     const [userPhone, setUserPhone] = useState();
     const [userAddressId, setUserAddressId] = useState();
-    const [cartListState, setCartListState] = useState(false);
+    // const [cartListState, setCartListState] = useState(false);
     const [userCartList, setUserCartList] = useState([]);
     const [cartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
     const [orderParams, setOrderParams] = useState({
@@ -216,10 +216,11 @@ const Payment = () => {
         poneNumber: "",
     });
     const [totalPrice, setTotalPrice] = useState(0);
+    const [userId, setUserId] = useState(0);
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
     const navigate = useNavigate();
-
+    
     const principal = useQuery(
         ["principal"],
         async () => {
@@ -232,9 +233,10 @@ const Payment = () => {
             return response;
         },
         {
-            onSuccess: () => {
-                cartList.refetch();
+            onSuccess: (response) => {
+                
                 setPrincipalState(false);
+                setUserId(response.data.userId);
             },
             enabled: principalState,
         }
@@ -280,21 +282,26 @@ const Payment = () => {
         ["cartList"],
         async () => {
             const option = {
-                params: { userId: principal.data.data.userId },
+                params: { userId: userId},
                 headers: {
                     Authorization: `${localStorage.getItem("accessToken")}`,
                 },
             };
             const response = await axios.get("http://localhost:8080/cart", option);
             return response;
+            
             },
+            
             {
                 onSuccess: (response) => {
-                setUserCartList([...response.data]);
-                setCartListState(false);
-
-            },
-            enabled: !!principal.data && cartListState
+                    setUserCartList([...response.data]);
+                // setCartListState(false);
+                 
+                },
+            refetchInterval: 1,
+            refetchIntervalInBackground: true,
+            // enabled: !!principal.data, 
+            
         }
     );
     
@@ -353,15 +360,15 @@ const Payment = () => {
             if (!addressListState) {
                 setaddressListState(true);
             }
-            if (!cartListState) {
-                setCartListState(true);
-            }
+            // if (!cartListState) {
+            //     setCartListState(true);
+            // }
         }, [addressIndex]);
         
-        const handleComplete = (data) => {
-            console.log(data.sido);
-            setUserAddress(data.address);
-            setUserAddressDetail("");
+    const handleComplete = (data) => {
+        console.log(data.sido);
+        setUserAddress(data.address);
+        setUserAddressDetail("");
         setUserAddressSido(data.sido);
         setUserAddressSigungu(data.sigungu);
         setUserAddressZonecode(data.zonecode);
@@ -373,39 +380,39 @@ const Payment = () => {
     };
 
 
-    const onClickPayment = () => {
-        if (!window.IMP) return;
-        /* 1. 가맹점 식별하기 */
-        const { IMP } = window;
-        IMP.init("imp55461401"); // 가맹점 식별코드
+    // const onClickPayment = () => {
+    //     if (!window.IMP) return;
+    //     /* 1. 가맹점 식별하기 */
+    //     const { IMP } = window;
+    //     IMP.init("imp55461401"); // 가맹점 식별코드
 
-        /* 2. 결제 데이터 정의하기 */
-        const data = {
-            pg: "tosspay", // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
-            pay_method: "tosspay", // 결제수단
-            merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-            amount: 2500 + totalPrice, // 결제금액
-            name:
-                orderParams.products[0].productName +
-                (orderParams.products.length > 1 ? "외" + (orderParams.products.length - 1) + "건" : ""), // 주문명
-            buyer_name: principal.data.data.name, // 구매자 이름
-            buyer_tel: userPhone, // 구매자 전화번호
-            buyer_email: principal.data.data.email, // 구매자 이메일
-            buyer_addr: userAddress, // 구매자 주소
-        };
+    //     /* 2. 결제 데이터 정의하기 */
+    //     const data = {
+    //         pg: "tosspay", // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
+    //         pay_method: "tosspay", // 결제수단
+    //         merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
+    //         amount: 2500 + totalPrice, // 결제금액
+    //         name:
+    //             orderParams.products[0].productName +
+    //             (orderParams.products.length > 1 ? "외" + (orderParams.products.length - 1) + "건" : ""), // 주문명
+    //         buyer_name: principal.data.data.name, // 구매자 이름
+    //         buyer_tel: userPhone, // 구매자 전화번호
+    //         buyer_email: principal.data.data.email, // 구매자 이메일
+    //         buyer_addr: userAddress, // 구매자 주소
+    //     };
 
-        /* 4. 결제 창 호출하기 */
-        IMP.request_pay(data, (response) => {
-            const { success, error_msg } = response;
+    //     /* 4. 결제 창 호출하기 */
+    //     IMP.request_pay(data, (response) => {
+    //         const { success, error_msg } = response;
 
-            if (success) {
-                orderBuy.mutate();
-                alert("결제 성공");
-            } else {
-                alert(`결제 실패: ${error_msg}`);
-            }
-        });
-    };
+    //         if (success) {
+    //             orderBuy.mutate();
+    //             alert("결제 성공");
+    //         } else {
+    //             alert(`결제 실패: ${error_msg}`);
+    //         }
+    //     });
+    // };
     const clickHandle = (e) => {
         setSelectedAddress(e.target.value);
         if (parseInt(e.target.value) !== userAddressList.length) {
@@ -528,7 +535,9 @@ const Payment = () => {
                             />
                       
                             {orderParams.products.length > 0 ? (
-                                <button css={continueBtn} onClick={onClickPayment}>
+                                <button css={continueBtn} onClick={()=>{
+                                    orderBuy.mutate();
+                                }}>
                                     주문하기
                                 </button>
                             ) : (

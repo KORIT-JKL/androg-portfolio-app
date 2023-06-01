@@ -18,7 +18,6 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	// api 수정 products/buying 
-	@ValidAspect
 	@PostMapping("/products/order")
 	public ResponseEntity<?> completeOrder(@RequestBody OrderCompleteReqDto orderCompleteReqDto) {
 		return ResponseEntity.ok().body(orderService.completeOrder(orderCompleteReqDto));

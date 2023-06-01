@@ -34,7 +34,7 @@ public class ErrorService {
 	
 	public void idCategoryCheck(Integer id, String category) {
 		if( id == null || id == 0) {
-			throw new CustomException("유효한 상품번호를 입력해주세요");
+			throw new CustomException("유효한 주문번호를 입력해주세요");
 		} else if(category.isBlank()) {
 			throw new CustomException("문의사항을 선택해주세요.");
 		}
