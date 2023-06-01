@@ -11,7 +11,7 @@ import { FiCornerDownRight } from "react-icons/fi";
 
 const reviewContainer = css`
   margin: 10px 0px 10px 0px;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 10px 10px 10px;
   width: 100%;
   height: 100%;
   background-color: #aaa;

@@ -39,7 +39,7 @@ const header = css`
 const main = css`
   display: flex;
   flex-direction: column;
-  height: 75%;
+  height: 70%;
 `;
 
 const text = css`
@@ -52,10 +52,28 @@ const text = css`
 `;
 
 const footer = css`
-  height: 10%;
+  height: 15%;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const modalButtonStyle = css`
+  margin-left: 5px;
+
+  font-size: 15px;
+  font-weight: 300;
+
+  width: 100px;
+  height: 30px;
+
+  background-color: black;
+  color: white;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: grey;
+  }
 `;
 const InquiryAnswer = ({ inquiryId }) => {
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
@@ -76,7 +94,11 @@ const InquiryAnswer = ({ inquiryId }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://localhost:8080/admin/inquiries/answer", data, option);
+      const response = await axios.post(
+        "http://localhost:8080/admin/inquiries/answer",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -109,8 +131,11 @@ const InquiryAnswer = ({ inquiryId }) => {
             <textarea css={text} placeholder="답변을 입력해주세요...200자" onChange={getAnswer} />
           </main>
           <footer css={footer}>
-            <button onClick={submitAnswer}>보내기</button>
+            <button css={modalButtonStyle} onClick={submitAnswer}>
+              보내기
+            </button>
             <button
+              css={modalButtonStyle}
               onClick={() => {
                 setAnswerState(false);
               }}

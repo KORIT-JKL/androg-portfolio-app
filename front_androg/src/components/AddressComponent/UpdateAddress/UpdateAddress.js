@@ -205,6 +205,7 @@ const UpdateAddress = ({ principal, address }) => {
         type="text"
         placeholder="전화번호"
         name="ponenumber"
+        value={addressInput.poneNumber}
         onChange={(e) => setAddressInput({ ...addressInput, poneNumber: e.target.value })}
       />
       <ErrorMessage children={errorMessage.poneNumber !== "" ? errorMessage.poneNumber : ""} />

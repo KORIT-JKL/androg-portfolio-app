@@ -104,7 +104,6 @@ const CommonUserSubHeader = ({ sbheader }) => {
     setThisPage(1);
     setThiRefresh(true);
   };
-  console.log(notice.noticeId);
   return (
     <>
       <div css={subHeader}>
