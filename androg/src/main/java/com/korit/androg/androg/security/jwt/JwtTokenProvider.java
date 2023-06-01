@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -49,7 +48,7 @@ public class JwtTokenProvider {
 			OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 			email = oAuth2User.getAttribute("email");
 		}
-		if(authentication.getAuthorities() == null) {
+		if (authentication.getAuthorities() == null) {
 			throw new RuntimeException("등록된 권한이 없습니다.");
 		}
 
@@ -64,8 +63,12 @@ public class JwtTokenProvider {
 
 		Date tokenExpiresDate = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
 
-		String accessToken = Jwts.builder().setSubject(authentication.getName()).claim("auth", authorities)
-				.claim("email", email).setExpiration(tokenExpiresDate).signWith(key, SignatureAlgorithm.HS256)
+		String accessToken = Jwts.builder()
+				.setSubject(authentication.getName())
+				.claim("auth", authorities)
+				.claim("email", email)
+				.setExpiration(tokenExpiresDate)
+				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 
 		return JwtRespDto.builder().grantType("Bearer").accessToken(accessToken).build();
@@ -113,9 +116,7 @@ public class JwtTokenProvider {
 		User user = userRepository.findUserByEmail(email);
 
 		PrincipalUser principalsUser = user.toPrincipal();
-
 		authentication = new UsernamePasswordAuthenticationToken(principalsUser, null, principalsUser.getAuthorities());
-
 		return authentication;
 	}
 
@@ -124,7 +125,11 @@ public class JwtTokenProvider {
 		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 		String email = oAuth2User.getAttribute("email");
 
-		return Jwts.builder().setSubject("OAuth2Register").claim("email", email).setExpiration(tokenExpiresDate)
-				.signWith(key, SignatureAlgorithm.HS256).compact();
+		return Jwts.builder()
+				.setSubject("OAuth2Register")
+				.claim("email", email)
+				.setExpiration(tokenExpiresDate)
+				.signWith(key, SignatureAlgorithm.HS256)
+				.compact();
 	}
 }

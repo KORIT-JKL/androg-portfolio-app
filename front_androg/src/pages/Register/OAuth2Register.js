@@ -7,6 +7,7 @@ import RegisterInput from "../../components/Register/RegisterInput/RegisterInput
 import axios from "axios";
 import { useMutation } from "react-query";
 import { useSearchParams } from "react-router-dom";
+import ErrorMessage from "../../components/Error/ErrorMessage";
 const container = css`
   display: flex;
   flex-direction: column;
@@ -33,12 +34,6 @@ const mainTxt = css`
 
 const inputCss = css`
   position: relative;
-`;
-
-const errorMsg = css`
-  position: absolute;
-  top: 40px;
-  color: red;
 `;
 
 const privacy = css`
@@ -89,6 +84,7 @@ const OAuth2Register = () => {
         return response;
       } catch (error) {
         setErrorMessages({ password: "", ...error.response.data.errorData });
+        console.log(errorMessages);
         return error;
       }
     },
@@ -152,7 +148,7 @@ const OAuth2Register = () => {
               name="password"
             />
           </div>
-          <div css={errorMsg}>{errorMessages.password}</div>
+          <ErrorMessage children={errorMessages.password} />
           <div css={inputCss}>
             <RegisterInput
               type="name"

@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React from 'react';
-import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
-import { setRefresh, setsbheader } from '../../../atoms/Common/CommonAtoms';
-import { setPage, setProducts } from '../../../atoms/Product/ProductAtoms';
-import { AdminNotice } from '../../../atoms/Admin/AdminAtoms';
+import { css } from "@emotion/react";
+import React from "react";
+import { useRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
+import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
+import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
+import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 /*
 const header = css`
   position: fixed;
@@ -78,23 +78,23 @@ const CommonUserSubHeader = ({ sbheader }) => {
   const [notice] = useRecoilState(AdminNotice);
   const navigate = useNavigate();
   const onClickNotice = () => {
-    navigate('/page/notice');
+    navigate("/page/notice");
     setThissbheader(0);
   };
   const onClickCoustomer = () => {
-    navigate('/page/customer');
+    navigate("/page/customer");
     setThissbheader(0);
   };
   const onClickShipping = () => {
-    navigate('/page/shipping');
+    navigate("/page/shipping");
     setThissbheader(0);
   };
   const onClickSizeGuide = () => {
-    navigate('/page/sizeguide');
+    navigate("/page/sizeguide");
     setThissbheader(0);
   };
   const onClickLegal = () => {
-    navigate('/page/legal');
+    navigate("/page/legal");
     setThissbheader(0);
   };
 
@@ -104,7 +104,7 @@ const CommonUserSubHeader = ({ sbheader }) => {
     setThisPage(1);
     setThiRefresh(true);
   };
-
+  console.log(notice.noticeId);
   return (
     <>
       <div css={subHeader}>
@@ -134,12 +134,12 @@ const CommonUserSubHeader = ({ sbheader }) => {
           </ul>
         ) : (
           <ul css={subHeaderList}>
-            {notice.content !== undefined ? (
+            {notice.noticeId !== undefined ? (
               <li css={sublist} onClick={onClickNotice}>
                 NOTICE
               </li>
             ) : (
-              ''
+              ""
             )}
 
             <li css={sublist} onClick={onClickCoustomer}>

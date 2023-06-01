@@ -193,7 +193,6 @@ const payButton = css`
   cursor: pointer;
 `;
 const Cart = () => {
-  
   // eslint-disable-next-line no-unused-vars
   const [count, setCount] = useState(0);
   const [refresh, setThiRefresh] = useRecoilState(setRefresh);
@@ -216,7 +215,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/cart/update/countUp", product, option);
+      const response = await axios.put(
+        "http://localhost:8080/cart/update/countUp",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -232,7 +235,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/cart/update/countDown", product, option);
+      const response = await axios.put(
+        "http://localhost:8080/cart/update/countDown",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -320,15 +327,15 @@ const Cart = () => {
 
   const payment = () => {
     if (chekcked1 && chekcked2) {
-      navigate(`/products/payment`);
+      navigate(`/product/payment`);
       setThiRefresh(true);
     } else {
       alert("이용 약관 동의를 체크해주세요");
       setThiRefresh(true);
     }
   };
-  if(principal.isLoading && getCart.isLoading){
-    return <></>
+  if (principal.isLoading && getCart.isLoading) {
+    return <></>;
   }
   return (
     <div css={cartContainer}>
@@ -350,7 +357,10 @@ const Cart = () => {
                     <div css={detailContainer}>
                       <div css={productName}>
                         {product.productName}
-                        <button css={productDelectButton} onClick={() => deleteProduct.mutate(product)}>
+                        <button
+                          css={productDelectButton}
+                          onClick={() => deleteProduct.mutate(product)}
+                        >
                           X
                         </button>
                       </div>
@@ -358,7 +368,8 @@ const Cart = () => {
                         {product.colorName} / {product.sizeName}
                       </div>
                       <div css={productPrice}>
-                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber})
+                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber}
+                        )
                       </div>
                       <div css={productCount}>
                         <button css={plusAndMinus} onClick={() => countMinus.mutate(product)}>

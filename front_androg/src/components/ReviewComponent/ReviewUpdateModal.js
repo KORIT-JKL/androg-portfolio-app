@@ -84,9 +84,14 @@ const ReviewUpdateModal = ({ onClose, review }) => {
       return response;
     },
     {
-      onSuccess: () => {
-        onClose();
-        setReviews(true);
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          onClose();
+          setReviews(true);
+        }
+      },
+      onError: (error) => {
+        alert(error.response.data.message);
       },
     }
   );
@@ -103,6 +108,7 @@ const ReviewUpdateModal = ({ onClose, review }) => {
             css={reviewContent}
             defaultValue={review.content}
             onChange={onChangeHandle}
+            placeholder="내용을 입력해주세요(최소5자이상 최대20자이하)"
           ></textarea>
           <div css={modalfooter}>
             <span>수정일 : {formattedDate}</span>

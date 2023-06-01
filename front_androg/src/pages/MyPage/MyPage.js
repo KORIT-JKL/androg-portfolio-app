@@ -46,7 +46,6 @@ const imgBox = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -105,6 +104,10 @@ const orderContent = css`
   margin-bottom: 10px;
   max-height: 100%;
 `;
+const textBox = css`
+  margin: 10px 0px 10px 0px;
+  font-size: 14px;
+`;
 // react useQuery, rendering, State 이슈
 const MyPage = () => {
   const navgate = useNavigate();
@@ -139,7 +142,7 @@ const MyPage = () => {
         setInfoRefresh(false);
         setProductsRefresh(true);
       },
-      enabled: infoRefresh,
+      enabled: !!localStorage.getItem("accessToken"),
     }
   );
   const profileImgUpdate = useMutation(
@@ -211,24 +214,34 @@ const MyPage = () => {
       enabled: !!principal.data, //useQuery를 동기식으로 쓰는 꼼수
     }
   );
-  const withdrawal = useMutation(async () => {
-    const option = {
-      params: {
-        userId: principal.data.data.userId,
+  const withdrawal = useMutation(
+    async () => {
+      const option = {
+        params: {
+          userId: principal.data.data.userId,
+        },
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      return await axios.delete(`http://localhost:8080/user/delete`, option);
+    },
+    {
+      onSuccess: (response) => {
+        if (response.data === 1) {
+          window.location.href = "http://localhost:3000";
+          localStorage.removeItem("accessToken");
+        }
       },
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+      onError: (error) => {
+        console.log(error);
       },
-    };
-    return await axios.delete(`http://localhost:8080/user/${userId}`, option);
-  });
+    }
+  );
 
   const withdrawalSubmit = () => {
     if (window.confirm("회원탈퇴 하시겠습니까?")) {
       withdrawal.mutate();
-      localStorage.removeItem("accessToken");
-      setLoginIsState(false);
-      navgate("/");
     }
   };
   const porfileImgChangeHandle = () => {
@@ -270,10 +283,15 @@ const MyPage = () => {
             <span css={subTitle}>
               {principal.data !== undefined ? principal.data.data.email : <></>}
             </span>
-            <div>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
-            <div>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
-            <div>
+            <div css={textBox}>
+              {userAddressList[0] !== undefined ? userAddressList[0].address : ""}
+            </div>
+            <div css={textBox}>
+              {userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}
+            </div>
+            <div css={textBox}>
               {userAddressList[0] !== undefined ? userAddressList[0].addressSigungu : ""}
+              {userAddressList[0] !== undefined ? ", 우편번호: " : ""}
               {userAddressList[0] !== undefined ? userAddressList[0].addressZonecode : ""}
             </div>
 

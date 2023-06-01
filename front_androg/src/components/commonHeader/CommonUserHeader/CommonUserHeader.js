@@ -7,10 +7,19 @@ import { useRecoilState } from "recoil";
 import impact from "../../../img/ANDROG 1.png";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { adminAuthenticationState, authenticationState, loginState } from "../../../atoms/Auth/AuthAtoms";
+import {
+  adminAuthenticationState,
+  authenticationState,
+  loginState,
+} from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
-import { SetSearchInput, setPage, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
+import {
+  SetSearchInput,
+  setPage,
+  setProducts,
+  setSearchParams,
+} from "../../../atoms/Product/ProductAtoms";
 import { FaHome } from "react-icons/fa";
 const header = css`
   position: fixed;
@@ -115,7 +124,7 @@ const CommonUserHeader = () => {
       });
       setThisProducts([]);
       setThiRefresh(true);
-      navigate('/auth/products/search');
+      navigate("/auth/products/search");
     }
   };
   const searchClick = (inputIsOpen) => {
@@ -145,7 +154,6 @@ const CommonUserHeader = () => {
   if (authority.isLoading) {
     return <></>;
   }
-  console.log(authState);
 
   return (
     <>
@@ -176,7 +184,12 @@ const CommonUserHeader = () => {
                 ""
               )}
               {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
+                <input
+                  placeholder="대문자로 입력해주세요"
+                  type="text"
+                  id="searchInputText"
+                  onKeyDown={EnterKeyDown}
+                />
               ) : (
                 ""
               )}
@@ -206,7 +219,12 @@ const CommonUserHeader = () => {
             </ul>
             <ul css={headerList2}>
               {inputIsOpen ? (
-                <input placeholder="대문자로 입력해주세요" type="text" id="searchInputText" onKeyDown={EnterKeyDown} />
+                <input
+                  placeholder="대문자로 입력해주세요"
+                  type="text"
+                  id="searchInputText"
+                  onKeyDown={EnterKeyDown}
+                />
               ) : (
                 ""
               )}

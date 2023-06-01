@@ -71,23 +71,35 @@ const AdminNoticeRegitser = () => {
       return response;
     },
     {
-      onSuccess: () => {
-        getNotice.refetch();
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("공지를 등록하였습니다.");
+          getNotice.refetch();
+        }
       },
     }
   );
-  const noticeModify = useMutation(async () => {
-    const data = {
-      ...notice,
-    };
-    const option = {
-      headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+  const noticeModify = useMutation(
+    async () => {
+      const data = {
+        ...notice,
+      };
+      const option = {
+        headers: {
+          Authorization: `${localStorage.getItem("accessToken")}`,
+        },
+      };
+      const response = await axios.put("http://localhost:8080/admin/notice/modify", data, option);
+      return response;
+    },
+    {
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("공지를 수정하였습니다.");
+        }
       },
-    };
-    const response = await axios.put("http://localhost:8080/admin/notice/modify", data, option);
-    return response;
-  });
+    }
+  );
 
   const noticeDelete = useMutation(
     async (notice) => {
@@ -103,8 +115,11 @@ const AdminNoticeRegitser = () => {
       return response;
     },
     {
-      onSuccess: () => {
-        getNotice.refetch();
+      onSuccess: (response) => {
+        if (response.status === 200) {
+          alert("공지를 삭제하였습니다.");
+          getNotice.refetch();
+        }
       },
     }
   );

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.korit.androg.androg.dto.review.ReviewModifyReqDto;
 import com.korit.androg.androg.dto.review.ReviewRegisterReqDto;
+import com.korit.androg.androg.service.ErrorService;
 import com.korit.androg.androg.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,7 @@ public class ReviewController {
 	}
 	@PutMapping("/product/review/modify")
 	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
+		errorService.minMaxLengthCheck(modifyReqDto.getContent(), minReviewLength, maxReviewLength);
 		return ResponseEntity.ok().body(reviewService.reviewModify(modifyReqDto));
 	}
 }

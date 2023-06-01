@@ -20,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 	
 	private final ReviewRepository reviewRepository;
+	private final ErrorService errorService;
+	private int minReviewLength = 5;
+	private int maxReviewLength = 20;
 	
 	public OrderProductsRespDto getProduct(Map<String, Object> requestMap) {
 		OrderDetail orderProducts = reviewRepository.getProduct(requestMap);
@@ -28,7 +31,7 @@ public class ReviewService {
 	}
 	
 	public int reviewRegister(ReviewRegisterReqDto reviewRegisterReqDto) {
-
+		errorService.minMaxLengthCheck("리뷰작성" ,reviewRegisterReqDto.getContent(), minReviewLength, maxReviewLength);
 		return reviewRepository.reviewRegister(reviewRegisterReqDto.toEntity());
 	}
 	

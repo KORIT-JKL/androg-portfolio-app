@@ -92,15 +92,14 @@ public class AuthenticationService implements UserDetailsService {
 	public PrincipalRespDto getPrincipal(String accessToken) {
 		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken));
 		User userEntity = userRepository.findUserByEmail(claims.getSubject());
-		
+			
 		return PrincipalRespDto.builder()
-				.userId(userEntity.getUserId())
-				.email(userEntity.getEmail())
-				.name(userEntity.getName())
-				.authorities((String) claims.get("auth"))
-				.profileImg(userEntity.getProfileImg())
-				.build();
-		
+					.userId(userEntity.getUserId())
+					.email(userEntity.getEmail())
+					.name(userEntity.getName())
+					.authorities((String) claims.get("auth"))
+					.profileImg(userEntity.getProfileImg())
+					.build();
 	}
 	
 	public Map<String, Object> forgotPassword(String email) {
