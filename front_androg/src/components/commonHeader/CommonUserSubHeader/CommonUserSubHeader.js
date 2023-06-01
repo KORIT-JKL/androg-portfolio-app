@@ -50,115 +50,114 @@ const img = css`
   height: 50px;
 `;*/
 const subHeader = css`
-  background-color: white;
-  display: flex;
-  width: 100%;
-  height: 50px;
-  z-index: 100;
+    background-color: white;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    z-index: 100;
 `;
 const subHeaderList = css`
-  display: flex;
-  margin-left: 40px;
-  align-items: center;
+    display: flex;
+    margin-left: 40px;
+    align-items: center;
 `;
 const sublist = css`
-  padding-left: 10px;
-  padding-right: 40px;
-  font-size: 15px;
-  cursor: pointer;
-  &:hover {
-    font-weight: 600;
-  }
+    padding-left: 10px;
+    padding-right: 40px;
+    font-size: 15px;
+    cursor: pointer;
+    &:hover {
+        font-weight: 600;
+    }
 `;
 const CommonUserSubHeader = ({ sbheader }) => {
-  const [, setThiRefresh] = useRecoilState(setRefresh);
-  const [, setThisProducts] = useRecoilState(setProducts);
-  const [, setThisPage] = useRecoilState(setPage);
-  const [, setThissbheader] = useRecoilState(setsbheader);
-  const [notice] = useRecoilState(AdminNotice);
-  const navigate = useNavigate();
-  const onClickNotice = () => {
-    navigate("/page/notice");
-    setThissbheader(0);
-  };
-  const onClickCoustomer = () => {
-    navigate("/page/customer");
-    setThissbheader(0);
-  };
-  const onClickShipping = () => {
-    navigate("/page/shipping");
-    setThissbheader(0);
-  };
-  const onClickSizeGuide = () => {
-    navigate("/page/sizeguide");
-    setThissbheader(0);
-  };
-  const onClickLegal = () => {
-    navigate("/page/legal");
-    setThissbheader(0);
-  };
+    const [, setThiRefresh] = useRecoilState(setRefresh);
+    const [, setThisProducts] = useRecoilState(setProducts);
+    const [, setThisPage] = useRecoilState(setPage);
+    const [, setThissbheader] = useRecoilState(setsbheader);
+    const [notice] = useRecoilState(AdminNotice);
+    const navigate = useNavigate();
+    const onClickNotice = () => {
+        navigate("/page/notice");
+        setThissbheader(0);
+    };
+    const onClickCoustomer = () => {
+        navigate("/page/customer");
+        setThissbheader(0);
+    };
+    const onClickShipping = () => {
+        navigate("/page/shipping");
+        setThissbheader(0);
+    };
+    const onClickSizeGuide = () => {
+        navigate("/page/sizeguide");
+        setThissbheader(0);
+    };
+    const onClickLegal = () => {
+        navigate("/page/legal");
+        setThissbheader(0);
+    };
 
-  const onClickCategory = (e) => {
-    navigate(`/auth/category/${e}`);
-    setThisProducts([]);
-    setThisPage(1);
-    setThiRefresh(true);
-  };
-  console.log(notice.noticeId);
-  return (
-    <>
-      <div css={subHeader}>
-        {sbheader === 1 ? (
-          <ul css={subHeaderList}>
-            <li css={sublist} onClick={() => onClickCategory(1)}>
-              TEES
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(2)}>
-              SWEATS
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(3)}>
-              PANTS
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(4)}>
-              OUTERWEAR
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(5)}>
-              HEADWEAR
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(6)}>
-              SHOES
-            </li>
-            <li css={sublist} onClick={() => onClickCategory(7)}>
-              ALL
-            </li>
-          </ul>
-        ) : (
-          <ul css={subHeaderList}>
-            {notice.noticeId !== undefined ? (
-              <li css={sublist} onClick={onClickNotice}>
-                NOTICE
-              </li>
-            ) : (
-              ""
-            )}
+    const onClickCategory = (e) => {
+        navigate(`/auth/category/${e}`);
+        setThisProducts([]);
+        setThisPage(1);
+        setThiRefresh(true);
+    };
+    return (
+        <>
+            <div css={subHeader}>
+                {sbheader === 1 ? (
+                    <ul css={subHeaderList}>
+                        <li css={sublist} onClick={() => onClickCategory(1)}>
+                            TEES
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(2)}>
+                            SWEATS
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(3)}>
+                            PANTS
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(4)}>
+                            OUTERWEAR
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(5)}>
+                            HEADWEAR
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(6)}>
+                            SHOES
+                        </li>
+                        <li css={sublist} onClick={() => onClickCategory(7)}>
+                            ALL
+                        </li>
+                    </ul>
+                ) : (
+                    <ul css={subHeaderList}>
+                        {notice.noticeId !== undefined ? (
+                            <li css={sublist} onClick={onClickNotice}>
+                                NOTICE
+                            </li>
+                        ) : (
+                            ""
+                        )}
 
-            <li css={sublist} onClick={onClickCoustomer}>
-              CUSTOMER SUPPORT
-            </li>
-            <li css={sublist} onClick={onClickShipping}>
-              SHIPPING & RETURNS
-            </li>
-            <li css={sublist} onClick={onClickSizeGuide}>
-              SIZE GUIDE
-            </li>
-            <li css={sublist} onClick={onClickLegal}>
-              LEGAL
-            </li>
-          </ul>
-        )}
-      </div>
-    </>
-  );
+                        <li css={sublist} onClick={onClickCoustomer}>
+                            CUSTOMER SUPPORT
+                        </li>
+                        <li css={sublist} onClick={onClickShipping}>
+                            SHIPPING & RETURNS
+                        </li>
+                        <li css={sublist} onClick={onClickSizeGuide}>
+                            SIZE GUIDE
+                        </li>
+                        <li css={sublist} onClick={onClickLegal}>
+                            LEGAL
+                        </li>
+                    </ul>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default CommonUserSubHeader;

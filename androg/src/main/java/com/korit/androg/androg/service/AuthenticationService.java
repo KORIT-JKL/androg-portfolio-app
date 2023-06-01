@@ -109,7 +109,6 @@ public class AuthenticationService implements UserDetailsService {
 			responseMap.put("result", 2);
 			return responseMap;
 		}
-		System.out.println(email);
 		MimeMessage message = javaMailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
@@ -120,6 +119,36 @@ public class AuthenticationService implements UserDetailsService {
 			message.setText(
 					"<div>"
 					+ "<h1>비밀번호 찾기</h1>"
+					+ "<p>아래의 코드를 웹페이지에서 입력해주세요</p>"
+					+ "<h1>" + token +"</h1>"
+					+ "</div>", "utf-8", "html");
+			javaMailSender.send(message);
+			responseMap.put("token", token);
+			responseMap.put("result", 1);
+			return responseMap;
+		}catch (Exception e) {
+			responseMap.put("result", 2);
+			return responseMap;
+		}
+
+	}
+	public Map<String, Object> authEmail(String email) {
+		User userEntity = userRepository.findUserByEmail(email);
+		Map<String, Object> responseMap = new HashMap<>();
+		if(userEntity != null) {
+			responseMap.put("result", 2);
+			return responseMap;
+		}
+		MimeMessage message = javaMailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+			helper.setSubject("ANDROG 이메일 인증");
+			helper.setFrom("ANDROG@naver.com");
+			helper.setTo(email);
+			String token = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 6);
+			message.setText(
+					"<div>"
+					+ "<h1>이메일 인증</h1>"
 					+ "<p>아래의 코드를 웹페이지에서 입력해주세요</p>"
 					+ "<h1>" + token +"</h1>"
 					+ "</div>", "utf-8", "html");
