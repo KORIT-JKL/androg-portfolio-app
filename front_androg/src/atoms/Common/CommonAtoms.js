@@ -19,3 +19,8 @@ export const setsbheader = atom({
   key: "setsbheader",
   default: true,
 });
+
+export const resetCode = atom({
+  key: "resetCode",
+  default : false
+})

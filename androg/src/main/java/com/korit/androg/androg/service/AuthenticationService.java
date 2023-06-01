@@ -109,7 +109,6 @@ public class AuthenticationService implements UserDetailsService {
 			responseMap.put("result", 2);
 			return responseMap;
 		}
-		System.out.println(email);
 		MimeMessage message = javaMailSender.createMimeMessage();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");

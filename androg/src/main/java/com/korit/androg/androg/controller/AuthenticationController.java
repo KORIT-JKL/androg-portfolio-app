@@ -48,13 +48,11 @@ public class AuthenticationController {
 	
 	@GetMapping("/authenticated")
 	public ResponseEntity<?> authenticated(@RequestHeader(value = "Authorization") String accessToken) {
-//		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.authenticated(accessToken));
 	}
 	
 	@GetMapping("/principal")
 	public ResponseEntity<?> principal(@RequestHeader(value = "Authorization") String accessToken) {
-//		System.out.println(accessToken);
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}	
 	

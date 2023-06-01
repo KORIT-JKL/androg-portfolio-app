@@ -37,7 +37,6 @@ public class AdminProfitService {
 	
 	public List<UserRankRespDto> getUserRank() {
 		List<UserRankRespDto> list = new ArrayList<>();
-		System.out.println(adminProfitRepository.getUserRank());
 		adminProfitRepository.getUserRank().forEach(orderDetail -> {
 			if(orderDetail.getRank() < 4) {
 				list.add(orderDetail.toUserRankDto());

@@ -1,11 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import CommonUserHeader from "../../components/CommonHeader/CommonUserHeader/CommonUserHeader";
 import CommonFooter from "./../../components/CommonFooter/CommonFooter";
 import { useNavigate } from "react-router-dom";
+import Timer from "../../components/timer";
+import { useRecoilState } from "recoil";
+import { resetCode } from "../../atoms/Common/CommonAtoms";
 const container = css`
     display: flex;
     height: 100%;
@@ -63,10 +66,15 @@ const button = css`
         background-color: #fafafa;
     }
 `;
-
+const timer = css`
+    width: 100px;
+    height: 20px;
+`;
 const ForgotPassword = () => {
     const [code, setCode] = useState("");
+    const [expire, setExpire] = useState(true);
     const [mailCode, setMailCode] = useState("");
+    const [check, setCheck] = useState(false);
     const [email, setEmail] = useState("");
     const [inputEmail, setInputEmail] = useState(false);
     const [openCodeInput, setOpenCodeInput] = useState(false);
@@ -75,6 +83,27 @@ const ForgotPassword = () => {
     const [modifypassword2, setmodifypassword2] = useState("");
     const [modifyButtonIsOpen, setModifyButtonIsOpen] = useState(false);
     const navigate = useNavigate();
+    const [codeReset, setCodeReset] = useRecoilState(resetCode);
+    const [minutes, setMinutes] = useState(parseInt(0));
+    const [seconds, setSeconds] = useState(parseInt(10));
+    useEffect(() => {
+        const countdown = setInterval(() => {
+            if (parseInt(seconds) > 0) {
+                setSeconds(parseInt(seconds) - 1);
+            }
+            if (parseInt(seconds) === 0) {
+                if (parseInt(minutes) === 0) {
+                    clearInterval(countdown);
+                    setMailCode("");
+                } else {
+                    setMinutes(parseInt(minutes) - 1);
+                    setSeconds(59);
+                }
+            }
+        }, 1000);
+        return () => clearInterval(countdown);
+    }, [minutes, seconds]);
+
     const sendMail = useMutation(
         async () => {
             alert("코드를 전송중입니다.");
@@ -84,10 +113,13 @@ const ForgotPassword = () => {
         {
             onSuccess: (response) => {
                 if (response.data.result === 1) {
+                    setCodeReset(true);
                     setMailCode(response.data.token);
                     alert("전송이 완료되었습니다.");
                     setOpenCodeInput(true);
                     setInputEmail(true);
+                    setMinutes(3);
+                    setSeconds(10);
                 } else {
                     alert("이메일을 확인해주세요");
                 }
@@ -114,6 +146,7 @@ const ForgotPassword = () => {
             },
         }
     );
+
     const buttonClickSubmit = () => {
         sendMail.mutate();
     };
@@ -133,6 +166,8 @@ const ForgotPassword = () => {
         if (code == mailCode) {
             alert("인증이 완료되었습니다.");
             setUpdatePasswordIsOpen(true);
+            setCheck(true);
+            setExpire(false);
         } else {
             alert("코드가 틀렸습니다.");
         }
@@ -153,7 +188,6 @@ const ForgotPassword = () => {
             alert("비밀번호가 일치하지 않습니다.");
         }
     };
-    console.log(email);
     return (
         <>
             <CommonUserHeader />
@@ -179,9 +213,20 @@ const ForgotPassword = () => {
                             <div css={inputText}>인증번호</div>
                             <div>
                                 <input css={input} placeholder="인증번호를 입력해주세요" onChange={codeInputHandle} />
+
                                 <button css={button} onClick={() => checkcode()}>
                                     확인
                                 </button>
+                                {!check && mailCode !== "" ? (
+                                    <div css={timer}>
+                                        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
+
+                                {mailCode === "" && !check ? <div>시간만료</div> : ""}
+                                {check ? <div>인증완료</div> : ""}
                             </div>
                         </>
                     ) : (
