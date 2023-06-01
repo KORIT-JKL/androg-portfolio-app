@@ -14,7 +14,7 @@ public class Inquiry {
 	private String date;
 	
 	private User user;
-	
+	private InquiryAnswer inquiryAnswer;
 	public InquiryRespDto toDto() {
 		return InquiryRespDto.builder()
 			.inquiryId(inquiryId)
@@ -23,6 +23,7 @@ public class Inquiry {
 			.category(category)
 			.inquiryContent(inquiryContent)
 			.date(date)
+			.answer(inquiryAnswer.getAnswer())
 			.build();
 	}
 }

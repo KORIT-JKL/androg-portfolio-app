@@ -4,7 +4,7 @@ import React, {  useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { AdminInquiries, InquiryAnswerState, disabledState } from "../../../atoms/Admin/AdminAtoms";
+import { AdminInquiries, InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
 import InquiryAnswer from "./InquiryAnswer";
 
 const mainContainer = css`
@@ -60,6 +60,8 @@ const AdminInquiry = () => {
   const [inquiries, setInquiries] = useRecoilState(AdminInquiries);
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [selectedInquiryId, setSelectedInquiryId] = useState(0);
+  const [disableState, setDisabledState] = useState(false);
+
   const getInquiries = useQuery(
     ["getInquiries"],
     async () => {
@@ -79,6 +81,7 @@ const AdminInquiry = () => {
   );
 
   if(getInquiries.isLoading){
+    
     return <></>;
   }
 
@@ -100,6 +103,7 @@ const AdminInquiry = () => {
                 <th>문의내용</th>
                 <th>접수일시</th>
                 <th>답변</th>
+
               </tr>
             </thead>
             <tbody>
@@ -114,15 +118,15 @@ const AdminInquiry = () => {
                       <td>{inquiry.inquiryContent}</td>
                       <td>{inquiry.date}</td>
                       <td>
-                        <button id={selectedInquiryId}
+                        <button
                           onClick={() => {
                             setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
                           }}
+                        disabled={inquiry.answer !== null ? true : false}
                         >
                           답변하기
                         </button>
-
                       </td>
                     </tr>
                   ))}

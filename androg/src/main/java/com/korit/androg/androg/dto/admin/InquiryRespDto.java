@@ -12,4 +12,5 @@ public class InquiryRespDto {
 	private String category;
 	private String inquiryContent;
 	private String date;
+	private String answer;
 }

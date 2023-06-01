@@ -2,9 +2,10 @@
 import { css } from "@emotion/react";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { InquiryAnswerState, SuccessState } from "../../../atoms/Admin/AdminAtoms";
+import { InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
+
 
 const answerContainer = css`
   position: fixed;
@@ -60,8 +61,7 @@ const footer = css`
 const InquiryAnswer = ({ inquiryId }) => {
   const [answerState, setAnswerState] = useRecoilState(InquiryAnswerState);
   const [answerContent, setAnswerContent] = useState("");
-  const [success, setSuccess] = useRecoilState(SuccessState);
-  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const inquiryResponse = useMutation(
     ["inquiryResponse"],
@@ -82,7 +82,9 @@ const InquiryAnswer = ({ inquiryId }) => {
     {
       onSuccess: (response) => {
         if (response.status === 200) {
+          
           alert("문의답변 완료");
+          queryClient.fetchQuery('getInquiries');
         }
       },
       onError: (error) => {

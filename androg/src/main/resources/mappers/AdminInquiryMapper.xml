@@ -8,8 +8,17 @@
 		<result property="category" column="inquiry_category"/>
 		<result property="inquiryContent" column="inquiry_content"/>
 		<result property="date" column="inquiry_date"/>
+		<association property="inquiryAnswer" resultMap="InquiryAnswerMap"></association>
 		<association property="user" resultMap="UserMap"></association>
 	</resultMap>
+	
+	<resultMap type="com.korit.androg.androg.entity.InquiryAnswer" id="InquiryAnswerMap">
+	<id property="inquiryRespId" column="inquiry_resp_id"/>
+	<result property="inquiryId" column="inquiry_id"/>
+	<result property="answer" column="answer"/>
+	<association property="inquiry" resultMap="InquiryMap"></association>
+	</resultMap>
+	
 	<resultMap type="com.korit.androg.androg.entity.User" id="UserMap">
 		<id property="userId" column="user_id"/>
 		<result property="email" column="email"/>
@@ -24,10 +33,12 @@
 			it.order_detail_id,
 			it.inquiry_category,
 			it.inquiry_content,
-			it.inquiry_date
+			it.inquiry_date,
+			irt.answer
 		from
 			inquiry_tb it
-			left outer join user_tb ut on(ut.user_id = it.user_id)	
+			left outer join user_tb ut on(ut.user_id = it.user_id)
+			left outer join inquiry_resp_tb irt on(irt.inquiry_id = it.inquiry_id)	
 	</select>
 	
 	<insert id="submitAnswer">

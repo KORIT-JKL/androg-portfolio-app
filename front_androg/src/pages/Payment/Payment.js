@@ -11,7 +11,6 @@ import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { postcodeScriptUrl } from "react-daum-postcode/lib/loadPostcode";
 import Select from "../../components/Payment/select/Select";
-import ErrorMessage from "../../components/Error/ErrorMessage";
 
 const container = css`
     font-size: 12px;
@@ -216,24 +215,6 @@ const Payment = () => {
         addressDetail: "",
         poneNumber: "",
     });
-    const [errorMessage, setErrorMessage] = useState({
-        addressDetail: '',
-        poneNumber: '',
-      });
-    useEffect(() => {
-        let sum = 0;
-        orderParams.products.forEach((product) => {
-            sum += product.productPrice * product.countNumber;
-        });
-        setTotalPrice(sum);
-
-        const iamport = document.createElement("script");
-        iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
-        document.head.appendChild(iamport);
-        return () => {
-            document.head.removeChild(iamport);
-        };
-    }, [orderParams]);
     const [totalPrice, setTotalPrice] = useState(0);
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
@@ -257,12 +238,12 @@ const Payment = () => {
             },
             enabled: principalState,
         }
-    );
+        );
 
-    const addressList = useQuery(
-        ["addressList"],
-        async () => {
-            const option = {
+        const addressList = useQuery(
+            ["addressList"],
+            async () => {
+                const option = {
                 params: {
                     userId: principal.data.data.userId,
                 },
@@ -276,7 +257,7 @@ const Payment = () => {
         {
             onSuccess: (response) => {
                 console.log(response);
-
+                
                 if (response.data.length !== 0) {
                     setUserAddressList([...response.data]);
                     setAddressIndex(selectedAddress);
@@ -293,9 +274,9 @@ const Payment = () => {
             },
             enabled: !!principal.data && addressListState,
         }
-    );
-
-    const cartList = useQuery(
+        );
+        
+        const cartList = useQuery(
         ["cartList"],
         async () => {
             const option = {
@@ -304,22 +285,19 @@ const Payment = () => {
                     Authorization: `${localStorage.getItem("accessToken")}`,
                 },
             };
-            const response = await axios.get(
-                "http://localhost:8080/cart",
-
-                option
-            );
+            const response = await axios.get("http://localhost:8080/cart", option);
             return response;
-        },
-        {
-            onSuccess: (response) => {
+            },
+            {
+                onSuccess: (response) => {
                 setUserCartList([...response.data]);
                 setCartListState(false);
+
             },
-            enabled: !!principal.data && cartListState,
+            enabled: !!principal.data && cartListState
         }
     );
-
+    
     const orderBuy = useMutation(
         async () => {
             const data = {
@@ -349,26 +327,41 @@ const Payment = () => {
                 }
             },
             onError: (error) => {
-                setErrorMessage({
-                    address: '',
-                    addressBname: '',
-                    addressDetail: '',
-                    addressSido: '',
-                    addressSigungu: '',
-                    addressZonecode: '',
-                    poneNumber: '',
-                    ...error.response.data.errorData,
-                  });
-          
                 alert(error.response.data.message);
             },
         }
-    );
-
-    const handleComplete = (data) => {
-        console.log(data.sido);
-        setUserAddress(data.address);
-        setUserAddressDetail("");
+        );
+        useEffect(() => {
+            let sum = 0;
+            orderParams.products.forEach((product) => {
+                sum += product.productPrice * product.countNumber;
+            });
+            setTotalPrice(sum);
+    
+            const iamport = document.createElement("script");
+            iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
+            document.head.appendChild(iamport);
+            return () => {
+                document.head.removeChild(iamport);
+            };
+        }, [orderParams]);
+        
+        useEffect(() => {
+            if (!principalState) {
+                setPrincipalState(true);
+            }
+            if (!addressListState) {
+                setaddressListState(true);
+            }
+            if (!cartListState) {
+                setCartListState(true);
+            }
+        }, [addressIndex]);
+        
+        const handleComplete = (data) => {
+            console.log(data.sido);
+            setUserAddress(data.address);
+            setUserAddressDetail("");
         setUserAddressSido(data.sido);
         setUserAddressSigungu(data.sigungu);
         setUserAddressZonecode(data.zonecode);
@@ -379,17 +372,6 @@ const Payment = () => {
         open({ onComplete: handleComplete });
     };
 
-    useEffect(() => {
-        if (!principalState) {
-            setPrincipalState(true);
-        }
-        if (!addressListState) {
-            setaddressListState(true);
-        }
-        if (!cartListState) {
-            setCartListState(true);
-        }
-    }, [addressIndex]);
 
     const onClickPayment = () => {
         if (!window.IMP) return;
@@ -465,7 +447,7 @@ const Payment = () => {
             });
         }
     };
-    console.log(orderParams);
+
     if (principal.isLoading && addressList.isLoading) {
         return <>로딩중...</>;
     }
@@ -532,10 +514,9 @@ const Payment = () => {
                                 css={input}
                                 value={userAddressDetail}
                                 onChange={(e) => {
-                                    setUserAddressDetail(e.target.value);
+                                        setUserAddressDetail(e.target.value);
                                 }}
                             />
-                            <ErrorMessage children={errorMessage.addressDetail !== '' ? errorMessage.addressDetail : ''}/>
                             <input
                                 type="text"
                                 placeholder="전화번호"
@@ -545,7 +526,7 @@ const Payment = () => {
                                     setUserPhone(e.target.value);
                                 }}
                             />
-                            <ErrorMessage children={errorMessage.poneNumber !== '' ? errorMessage.poneNumber : ''} />
+                      
                             {orderParams.products.length > 0 ? (
                                 <button css={continueBtn} onClick={onClickPayment}>
                                     주문하기
@@ -569,7 +550,7 @@ const Payment = () => {
                 </div>
                 <aside css={aside}>
                     <div css={asideContent}>
-                        {!!userCartList
+                        {userCartList.length > 0
                             ? userCartList.map((userCart) => {
                                   return (
                                       <>

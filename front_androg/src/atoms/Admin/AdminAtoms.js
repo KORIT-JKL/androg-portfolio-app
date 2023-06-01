@@ -30,8 +30,3 @@ export const InquiryAnswerState = atom({
   key: "InquiryAnswerState",
   default: false,
 });
-
-export const SuccessState = atom({
-  key: "SuccessState",
-  default: false,
-})
