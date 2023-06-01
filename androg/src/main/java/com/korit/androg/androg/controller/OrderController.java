@@ -1,6 +1,7 @@
 package com.korit.androg.androg.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class OrderController {
 	// api 수정 products/buying 
 	@ValidAspect
 	@PostMapping("/products/order")
-	public ResponseEntity<?> completeOrder(@RequestBody OrderCompleteReqDto orderCompleteReqDto) {
+	public ResponseEntity<?> completeOrder(@RequestBody OrderCompleteReqDto orderCompleteReqDto,BindingResult bindingResult) {
 		return ResponseEntity.ok().body(orderService.completeOrder(orderCompleteReqDto));
 	}
 	

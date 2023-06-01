@@ -41,6 +41,7 @@ public class AdminProductsController {
 	public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId) {
 		return ResponseEntity.ok().body(adminProductService.getProducts(categoryId));
 	}
+	@ValidAspect
 	@PutMapping("/admin/products/modify")
 	public ResponseEntity<?> productModify(@Valid @RequestBody ModifyProductReqDto modifyProductReqDto, BindingResult bindingResult) {
 		adminProductService.productModify(modifyProductReqDto);
