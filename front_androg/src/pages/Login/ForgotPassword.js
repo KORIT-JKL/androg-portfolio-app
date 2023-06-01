@@ -68,6 +68,7 @@ const ForgotPassword = () => {
     const [code, setCode] = useState("");
     const [mailCode, setMailCode] = useState("");
     const [email, setEmail] = useState("");
+    const [inputEmail, setInputEmail] = useState(false);
     const [openCodeInput, setOpenCodeInput] = useState(false);
     const [updatePasswordIsOpen, setUpdatePasswordIsOpen] = useState(false);
     const [modifypassword1, setmodifypassword1] = useState("");
@@ -86,6 +87,7 @@ const ForgotPassword = () => {
                     setMailCode(response.data.token);
                     alert("전송이 완료되었습니다.");
                     setOpenCodeInput(true);
+                    setInputEmail(true);
                 } else {
                     alert("이메일을 확인해주세요");
                 }
@@ -101,9 +103,14 @@ const ForgotPassword = () => {
             return response;
         },
         {
-            onSuccess: () => {
-                alert("변경이 완료 되었습니다.");
-                navigate("/auth/login");
+            onSuccess: (response) => {
+                if (response.status === 200) {
+                    alert("변경이 완료 되었습니다.");
+                    navigate("/auth/login");
+                }
+            },
+            onError: (error) => {
+                alert(error.response.data.errorData.password);
             },
         }
     );
@@ -138,9 +145,15 @@ const ForgotPassword = () => {
             alert("비밀번호가 불일치 합니다.");
         }
     };
+
     const modifyClickHandle = () => {
-        modifyPassword.mutate();
+        if (modifypassword1 === modifypassword2) {
+            modifyPassword.mutate();
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
+        }
     };
+    console.log(email);
     return (
         <>
             <CommonUserHeader />
@@ -154,6 +167,7 @@ const ForgotPassword = () => {
                             placeholder="이메일을 입력해주세요"
                             css={input}
                             onChange={emailInputHandle}
+                            readOnly={inputEmail}
                         />
                         <button css={button} onClick={() => buttonClickSubmit()}>
                             전송

@@ -62,8 +62,9 @@ public class AuthenticationController {
 	public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestMap) {
 		return ResponseEntity.ok().body(authenticationService.forgotPassword(requestMap.get("email")));
 	}
+	@ValidAspect
 	@PostMapping("/forgot/modify")
-	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
+	public ResponseEntity<?> modifyPassword(@Valid @RequestBody ModifyPasswordReqDto modifyPasswordReqDto,BindingResult bindingResult) {
 		return ResponseEntity.ok().body(authenticationService.modifypassword(modifyPasswordReqDto));
 
 	}
