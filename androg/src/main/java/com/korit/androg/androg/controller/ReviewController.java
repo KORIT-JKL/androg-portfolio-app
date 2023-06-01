@@ -54,7 +54,7 @@ public class ReviewController {
 	}
 	@PutMapping("/product/review/modify")
 	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
-		errorService.minMaxLengthCheck(modifyReqDto.getContent(), minReviewLength, maxReviewLength);
+	
 		return ResponseEntity.ok().body(reviewService.reviewModify(modifyReqDto));
 	}
 }

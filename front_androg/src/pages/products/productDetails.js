@@ -53,8 +53,9 @@ const sameNameProductsImg = css`
     padding: 5px;
     top: 5px;
     cursor: pointer;
+    transition: 0.4s;
     &:hover {
-        background-color: #dbdbdb;
+        background-color: #848484;
     }
 `;
 const detailTop = css`

@@ -48,6 +48,7 @@ public class ReviewService {
 	}
 	
 	public int reviewModify(ReviewModifyReqDto modifyReqDto) {
+		errorService.minMaxLengthCheck("리뷰수정",modifyReqDto.getContent(), minReviewLength, maxReviewLength);
 		return reviewRepository.reviewModify(modifyReqDto);
 	}
 }

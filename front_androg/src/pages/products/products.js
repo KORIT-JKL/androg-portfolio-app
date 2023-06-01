@@ -35,8 +35,9 @@ const productCard = css`
     padding: 10px;
     cursor: pointer;
     border-radius: 10px;
+    transition: 0.4s;
     &:hover {
-        background-color: #dbdbdb90;
+        background-color: #848484;
     }
     &:active {
         background-color: #fafafa;
