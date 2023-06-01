@@ -6,7 +6,6 @@ import { useMutation } from "react-query";
 import CommonUserHeader from "../../components/CommonHeader/CommonUserHeader/CommonUserHeader";
 import CommonFooter from "./../../components/CommonFooter/CommonFooter";
 import { useNavigate } from "react-router-dom";
-import Timer from "../../components/timer";
 import { useRecoilState } from "recoil";
 import { resetCode } from "../../atoms/Common/CommonAtoms";
 const container = css`

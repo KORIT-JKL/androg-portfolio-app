@@ -66,4 +66,8 @@ public class AuthenticationController {
 		return ResponseEntity.ok().body(authenticationService.modifypassword(modifyPasswordReqDto));
 
 	}
+	@PostMapping("/email")
+	public ResponseEntity<?> authEmail(@RequestBody Map<String, String> requestMap) {
+		return ResponseEntity.ok().body(authenticationService.authEmail(requestMap.get("checkemail")));
+	}
 }
