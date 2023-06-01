@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.dto.LoginReqDto;
 import com.korit.androg.androg.dto.SignupReqDto;
+import com.korit.androg.androg.dto.ModifyPasswordReqDto;
 import com.korit.androg.androg.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,11 @@ public class AuthenticationController {
 	
 	@PostMapping("/forgot")
 	public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> requestMap) {
-		System.out.println(requestMap);
 		return ResponseEntity.ok().body(authenticationService.forgotPassword(requestMap.get("email")));
+	}
+	@PostMapping("/forgot/modify")
+	public ResponseEntity<?> modifyPassword(@RequestBody ModifyPasswordReqDto modifyPasswordReqDto) {
+		return ResponseEntity.ok().body(authenticationService.modifypassword(modifyPasswordReqDto));
+
 	}
 }

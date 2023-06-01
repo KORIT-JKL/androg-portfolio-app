@@ -15,10 +15,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.LoginReqDto;
 import com.korit.androg.androg.dto.SignupReqDto;
+import com.korit.androg.androg.dto.ModifyPasswordReqDto;
 import com.korit.androg.androg.dto.auth.JwtRespDto;
 import com.korit.androg.androg.dto.auth.PrincipalRespDto;
 import com.korit.androg.androg.entity.Authority;
@@ -56,6 +58,14 @@ public class AuthenticationService implements UserDetailsService {
 	
 	
 	public JwtRespDto signin(LoginReqDto loginReqDto) {
+		
+		User userEntity = userRepository.findUserByEmail(loginReqDto.getEmail());
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		if(!passwordEncoder.matches(loginReqDto.getPassword(), userEntity.getPassword())) {
+			throw new CustomException("로그인실패",ErrorMap.builder().put("password", "사용자 정보를 확인하세요").build());
+		}
+		
 		UsernamePasswordAuthenticationToken authenticationToken =
 				new UsernamePasswordAuthenticationToken(loginReqDto.getEmail(), loginReqDto.getPassword());
 		
@@ -94,13 +104,14 @@ public class AuthenticationService implements UserDetailsService {
 	}
 	
 	public Map<String, Object> forgotPassword(String email) {
-//		User userEntity = userRepository.findUserByEmail(email);
-//		if(userEntity == null) {
-//			return 2;
-//		}
+		User userEntity = userRepository.findUserByEmail(email);
+		Map<String, Object> responseMap = new HashMap<>();
+		if(userEntity == null) {
+			responseMap.put("result", 2);
+			return responseMap;
+		}
 		System.out.println(email);
 		MimeMessage message = javaMailSender.createMimeMessage();
-		Map<String, Object> responseMap = new HashMap<>();
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
 			helper.setSubject("ANDROG 비밀번호 찾기");
@@ -122,6 +133,16 @@ public class AuthenticationService implements UserDetailsService {
 			return responseMap;
 		}
 
+	}
+	public int modifypassword(ModifyPasswordReqDto modifyPasswordReqDto) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		String password = passwordEncoder.encode(modifyPasswordReqDto.getPassword()); 
+		
+		modifyPasswordReqDto.setPassword(password);
+		
+		
+		return userRepository.modifyPassword(modifyPasswordReqDto);
 	}
 	
 }

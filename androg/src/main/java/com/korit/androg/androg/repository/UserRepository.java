@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.korit.androg.androg.dto.ModifyPasswordReqDto;
 import com.korit.androg.androg.entity.Authority;
 import com.korit.androg.androg.entity.OrderDetail;
 import com.korit.androg.androg.entity.User;
@@ -23,5 +24,7 @@ public interface UserRepository {
 	public List<OrderDetail> getOrderProducts(int userId);
 
 	public int deleteUser(int userId);
+	
+	public int modifyPassword(ModifyPasswordReqDto modifyPasswordReqDto);
 
 }
