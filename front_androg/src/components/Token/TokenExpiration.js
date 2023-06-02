@@ -62,16 +62,10 @@ const TokenExpiration = ({ token }) => {
       };
     }
   }, [token]);
-  console.log(expiration);
-  return (
-    <div>
-      {!!localStorage.getItem("accessToken")
-        ? `만료시간: ${expiration} ${
-            tokenAuthenticated.data !== undefined ? tokenAuthenticated.data.data.email : ""
-          }`
-        : ""}
-    </div>
-  );
+  if (tokenAuthenticated.isLoading) {
+    return <></>;
+  }
+  return <div>{!!localStorage.getItem("accessToken") ? `만료시간: ${expiration}` : ""}</div>;
 };
 
 export default TokenExpiration;

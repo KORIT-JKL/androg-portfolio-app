@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+  <style>
+    .my-class {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      font-size: 15px;
+      height: 300px;
+      width: 600px;
+    }
+  </style>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -40,7 +51,12 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     function alert(msg) {
-      Swal.fire(msg);
+      Swal.fire({
+        customClass: "my-class",
+        text: msg,
+        icon: "warning",
+        confirmButtonColor: "#1d1d1f",
+      });
     }
   </script>
 </html>
