@@ -78,7 +78,5 @@ public class OrderService {
 		
 	}
 	
-	public int saveAddress(int addressId) {
-		return orderRepository.saveAddress(addressId);
-	}
+
 }	

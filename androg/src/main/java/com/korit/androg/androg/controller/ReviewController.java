@@ -41,15 +41,6 @@ public class ReviewController {
 		return ResponseEntity.ok().body(reviewService.reviewRegister(reviewRegisterReqDto));
 	}
 	
-	@PostMapping("/admin/test")
-	public ResponseEntity<?> admintest(){
-		return ResponseEntity.ok().body("admin");
-	}
-	
-	@PutMapping("/product/review/reviewflag")
-	public ResponseEntity<?> reviewFlag(@RequestBody Map<String, Object> requestMap){
-		return ResponseEntity.ok().body(reviewService.reviewFlag(requestMap));
-	}
 	@PutMapping("/product/review/modify")
 	public ResponseEntity<?> reviewModify(@RequestBody ReviewModifyReqDto modifyReqDto){
 	

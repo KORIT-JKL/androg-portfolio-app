@@ -2,7 +2,6 @@ package com.korit.androg.androg.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,9 +22,4 @@ public class OrderController {
 		return ResponseEntity.ok().body(orderService.completeOrder(orderCompleteReqDto));
 	}
 	
-	@PostMapping("/products/order/address/{addressId}")
-	public ResponseEntity<?> saveDeliveryAddress(@PathVariable int addressId) {
-		return ResponseEntity.ok().body(orderService.saveAddress(addressId));
-		
-	}
 }

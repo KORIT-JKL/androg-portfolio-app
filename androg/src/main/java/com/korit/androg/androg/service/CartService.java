@@ -21,7 +21,6 @@ public class CartService {
 	private final CartRepository cartRepository;
 	public void addCart(CartReqDto addCartRequestDto) {
 		PrincipalUser user = (PrincipalUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		System.out.println(user.getUserId());
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("userId", user.getUserId());
 		requestMap.put("productId", addCartRequestDto.getProductId());

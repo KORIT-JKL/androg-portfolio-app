@@ -81,6 +81,7 @@ put /admin/products/soldout 상품품절
 get /admin/rank/count 상품판매량 순위 조회
 get /admin/rank/profit 상품매출액 순위 조회
 get /admin/rank/user 유저 순위 조회
+get /admin/rank/date 날짜별 매출액 조회
 
 리뷰
 get /admin/reviews 모든리뷰조회

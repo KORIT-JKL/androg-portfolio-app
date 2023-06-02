@@ -39,7 +39,6 @@ public class JwtTokenProvider {
 	}
 
 	public JwtRespDto generateToken(Authentication authentication) {
-		System.out.println(authentication.getPrincipal().getClass());
 		String email = null;
 		if (authentication.getPrincipal().getClass() == PrincipalUser.class) {
 			// PrincipalUser

@@ -43,9 +43,6 @@ public class ReviewService {
 		return reviewList;
 	}
 	
-	public int reviewFlag(Map<String, Object> requestMap) {
-		return reviewRepository.reviewFlag(requestMap);
-	}
 	
 	public int reviewModify(ReviewModifyReqDto modifyReqDto) {
 		errorService.minMaxLengthCheck("리뷰수정",modifyReqDto.getContent(), minReviewLength, maxReviewLength);
