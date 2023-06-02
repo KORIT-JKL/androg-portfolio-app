@@ -13,4 +13,5 @@ public class Order {
 	private int userId;
 	private int addressId;
 	private User user;
+	private String date;
 }
