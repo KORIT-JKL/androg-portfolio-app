@@ -6,86 +6,80 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AuthRoute = ({ path, element }) => {
-  const [authState, setAuthState] = useRecoilState(authenticationState);
-  const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
-  const navigate = useNavigate();
-  const authenticated = useQuery(
-    ["authenticated"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+    const [authState, setAuthState] = useRecoilState(authenticationState);
+    const [adminState, setAdminState] = useRecoilState(adminAuthenticationState);
+    const navigate = useNavigate();
+    const authenticated = useQuery(
+        ["authenticated"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: `${localStorage.getItem("accessToken")}`,
+                },
+            };
+            const response = await axios.get("http://localhost:8080/auth/authenticated", option);
+            return response;
         },
-      };
-      const response = await axios.get("http://localhost:8080/auth/authenticated", option);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        if (response.status === 200) {
-          if (response.data) {
-            setAuthState(true);
-          } else {
-            setAuthState(false);
-          }
+        {
+            onSuccess: (response) => {
+                if (response.status === 200) {
+                    if (response.data) {
+                        setAuthState(true);
+                    } else {
+                        setAuthState(false);
+                    }
+                }
+            },
+            onError: (error) => {},
         }
-      },
-      onError: (error) => {
-      },
-    }
-  );
+    );
 
-  const principal = useQuery(
-    ["principal"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
+    const tokenAuthenticated = useQuery(
+        ["principal"],
+        async () => {
+            const option = {
+                headers: {
+                    Authorization: `${localStorage.getItem("accessToken")}`,
+                },
+            };
+            const response = await axios.get("http://localhost:8080/auth/principal", option);
+            return response;
         },
-      };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        const roles = response.data.authorities.split(",");
-        if (roles.includes("ROLE_ADMIN")) {
-          setAdminState(true);
-        } else {
-          setAdminState(false);
+        {
+            onSuccess: (response) => {
+                const roles = response.data.authorities.split(",");
+                if (roles.includes("ROLE_ADMIN")) {
+                    setAdminState(true);
+                } else {
+                    setAdminState(false);
+                }
+            },
+            enabled: !!localStorage.getItem("accessToken") && authState,
         }
-      },
-      onError: (error) => {
-      },
-      enabled: !!localStorage.getItem("accessToken") && authState,
+    );
+
+    const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
+    const authPath = "/auth";
+    const adminPath = "/admin";
+    if (authenticated.isLoading && tokenAuthenticated.isLoading) {
+        return <></>;
     }
-  );
 
-  const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
-  const authPath = "/auth";
-  const adminPath = "/admin";
-  if (authenticated.isLoading && principal.isLoading) {
-    return <></>;
-  }
-
-  if (path.startsWith(adminPath) && !adminState) {
-    navigate("/");
-  }
-
-  if (authState && path.startsWith(authPath)) {
-    if (path === "/auth/login") {
-      navigate("/");
+    if (path.startsWith(adminPath) && !adminState) {
+        navigate("/");
     }
+
+    if (authState && path.startsWith(authPath)) {
+        if (path === "/auth/login") {
+            navigate("/");
+        }
+        return element;
+    }
+    if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
+        navigate("/auth/login");
+    }
+
     return element;
-  }
-  if (
-    !authState &&
-    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
-  ) {
-    navigate("/auth/login");
-  }
-
-  return element;
 };
 
 export default AuthRoute;
