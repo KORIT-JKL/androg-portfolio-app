@@ -349,7 +349,7 @@ const Cart = () => {
                     {getproducts != null
                         ? getproducts.map((product) => (
                               <>
-                                  <div css={mainProduct}>
+                                  <div css={mainProduct} key={product.cartId}>
                                       <div css={imgContainer}>
                                           <img css={img} src={product.productImg} alt="" />
                                       </div>
