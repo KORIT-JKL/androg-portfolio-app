@@ -36,7 +36,7 @@ const AuthRoute = ({ path, element }) => {
     }
   );
 
-  const principal = useQuery(
+  const tokenAuthenticated = useQuery(
     ["principal"],
     async () => {
       const option = {
@@ -56,9 +56,6 @@ const AuthRoute = ({ path, element }) => {
           setAdminState(false);
         }
       },
-      onError: (error) => {
-        console.log(error);
-      },
       enabled: !!localStorage.getItem("accessToken") && authState,
     }
   );
@@ -66,8 +63,8 @@ const AuthRoute = ({ path, element }) => {
   const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
   const authPath = "/auth";
   const adminPath = "/admin";
-  console.log(adminState);
-  if (authenticated.isLoading && principal.isLoading) {
+  console.log(authState);
+  if (authenticated.isLoading && tokenAuthenticated.isLoading) {
     return <></>;
   }
 

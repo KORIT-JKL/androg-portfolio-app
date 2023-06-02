@@ -102,7 +102,7 @@ const CommonUserHeader = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://localhost:8080/token/authenticated", option);
       return response;
     },
     {
@@ -112,7 +112,7 @@ const CommonUserHeader = () => {
           Setgetauthority(false);
         }
       },
-      enabled: getauthority && !!localStorage.getItem("accessToken"),
+      enabled: getauthority && !!localStorage.getItem("accessToken") && authState,
     }
   );
 
