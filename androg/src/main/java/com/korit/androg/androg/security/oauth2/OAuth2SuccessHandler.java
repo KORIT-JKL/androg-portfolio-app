@@ -47,10 +47,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 								+ "&provider=" + provider
 					);
 		}else {
-			System.out.println(userEntity);
 			if(StringUtils.hasText(userEntity.getProvider())) {
 				//회원가입이 되어 있고 provider가 등록된 경우
-				System.out.println("provider notnull");
 				if(!userEntity.getProvider().contains(provider)) {
 					response.sendRedirect("http://localhost:3000/auth/oauth2/merge"	
 							+ "?provider="
@@ -62,7 +60,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 						+ "?accessToken=" +"Bearer " + jwtTokenProvider.generateToken(authentication).getAccessToken());
 			}else {
 				//회원가입은 되어 있지만 provider가 null인 경우
-				System.out.println("provider null");
 				response.sendRedirect("http://localhost:3000/auth/oauth2/merge"	
 														+ "?provider="
 														+ provider

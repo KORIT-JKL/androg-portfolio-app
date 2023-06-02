@@ -91,33 +91,19 @@ const AdminProfit = () => {
             enabled: refresh,
             onSuccess: (response) => {
                 setCountRankList(response.data);
-                setCountData([
-                    {
-                        productName: response.data[0].productName + " " + response.data[0].colorName,
-                        count: response.data[0].totalCount,
-                        countColor: "hsl(0, 0%, 70%)",
-                    },
-                    {
-                        productName: response.data[1].productName + " " + response.data[1].colorName,
-                        count: response.data[1].totalCount,
-                        countColor: "hsl(286, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[2].productName + " " + response.data[2].colorName,
-                        count: response.data[2].totalCount,
-                        countColor: "hsl(256, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[3].productName + " " + response.data[3].colorName,
-                        count: response.data[3].totalCount,
-                        countColor: "hsl(173, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[4].productName + " " + response.data[4].colorName,
-                        count: response.data[4].totalCount,
-                        countColor: "hsl(174, 70%, 50%)",
-                    },
-                ]);
+                const countData = [];
+
+                response.data.forEach((item, index) => {
+                    const data = {
+                        productName: `${item.productName} ${item.colorName}`,
+                        count: item.totalCount,
+                        countColor: `hsl(${index * 70}, 70%, 50%)`,
+                    };
+
+                    countData.push(data);
+                });
+
+                setCountData(countData);
                 setRefresh(false);
             },
         }
@@ -132,33 +118,19 @@ const AdminProfit = () => {
             enabled: refresh,
             onSuccess: (response) => {
                 setProfitRankList(response.data);
-                setPriceData([
-                    {
-                        productName: response.data[0].productName + " " + response.data[0].colorName,
-                        totalPrice: response.data[0].totalPrice,
-                        countColor: "hsl(0, 0%, 70%)",
-                    },
-                    {
-                        productName: response.data[1].productName + " " + response.data[1].colorName,
-                        totalPrice: response.data[1].totalPrice,
-                        countColor: "hsl(286, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[2].productName + " " + response.data[2].colorName,
-                        totalPrice: response.data[2].totalPrice,
-                        countColor: "hsl(256, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[3].productName + " " + response.data[3].colorName,
-                        totalPrice: response.data[3].totalPrice,
-                        countColor: "hsl(173, 70%, 50%)",
-                    },
-                    {
-                        productName: response.data[4].productName + " " + response.data[4].colorName,
-                        totalPrice: response.data[4].totalPrice,
-                        countColor: "hsl(174, 70%, 50%)",
-                    },
-                ]);
+                const priceData = [];
+
+                response.data.forEach((item, index) => {
+                    const data = {
+                        productName: `${item.productName} ${item.colorName}`,
+                        totalPrice: item.totalPrice,
+                        countColor: `hsl(${index * 70}, 70%, 50%)`,
+                    };
+
+                    priceData.push(data);
+                });
+
+                setPriceData(priceData);
                 setRefresh(false);
             },
         }

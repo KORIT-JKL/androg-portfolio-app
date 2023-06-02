@@ -90,8 +90,6 @@ const CustomerSupport = () => {
             };
             const response = await axios.post("http://localhost:8080/user/inquiry", data, option);
 
-
-            
             return response;
         },
         {
@@ -99,7 +97,6 @@ const CustomerSupport = () => {
                 if (response.status === 200) {
                     alert("문의가 정상적으로 접수되었습니다.");
                 }
-              
             },
             onError: (error) => {
                 alert(error.response.data.message);
@@ -119,7 +116,6 @@ const CustomerSupport = () => {
 
     const getInquiryCategory = (e) => {
         setCategory(e.target.value);
-
     };
 
     const getContent = (e) => {

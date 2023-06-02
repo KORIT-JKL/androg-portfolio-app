@@ -49,7 +49,6 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
 	}
 	
 	public int oauth2Register(OAuth2RegisterReqDto oAuth2RegisterReqDto) {
-		System.out.println(oAuth2RegisterReqDto);
 		User userEntity = oAuth2RegisterReqDto.toEntity();
 		userRepository.saveUser(userEntity);
 		return userRepository.saveAuthority(Authority.builder().userId(userEntity.getUserId()).roleId(2).build());

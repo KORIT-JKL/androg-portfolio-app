@@ -82,6 +82,7 @@ const AdminReviewDelete = () => {
             const response = await axios.delete("http://localhost:8080/admin/reviews/delete", option);
             setRefresh(true);
             alert("삭제 완료");
+            getreviews.refetch();
             return response;
         } else {
             alert("삭제 취소");

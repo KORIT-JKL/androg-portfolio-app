@@ -18,7 +18,7 @@ const LineGraph = ({ data }) => {
                 xScale={{ type: "point" }}
                 yScale={{
                     type: "linear",
-                    min: 0,
+                    min: 50000,
                     max: "auto",
                     stacked: true,
                     reverse: false,
