@@ -131,7 +131,6 @@ const AdminProductRegister = () => {
             alert("등록되었습니다.");
             return response;
         } catch (error) {
-            console.log(error);
             if (error.response.data.errorData.productName != null) {
                 alert(error.response.data.errorData.productName);
             }

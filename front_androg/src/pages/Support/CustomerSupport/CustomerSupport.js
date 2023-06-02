@@ -112,12 +112,11 @@ const CustomerSupport = () => {
 
     const getOrderId = (e) => {
         setOrderDtlId(e.target.value);
-        console.log(e.target.value);
     };
 
     const getInquiryCategory = (e) => {
         setCategory(e.target.value);
-        console.log(e.target.value);
+
     };
 
     const getContent = (e) => {

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korit.androg.androg.dto.Product.CartReqDto;
-import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.entity.Cart;
 @Mapper
 public interface CartRepository {

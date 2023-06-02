@@ -31,7 +31,6 @@ const AuthRoute = ({ path, element }) => {
         }
       },
       onError: (error) => {
-        console.log(error);
       },
     }
   );
@@ -57,7 +56,6 @@ const AuthRoute = ({ path, element }) => {
         }
       },
       onError: (error) => {
-        console.log(error);
       },
       enabled: !!localStorage.getItem("accessToken") && authState,
     }
@@ -66,7 +64,6 @@ const AuthRoute = ({ path, element }) => {
   const authenticatedPaths = ["/mypage", "/user", "/product", "/cart"];
   const authPath = "/auth";
   const adminPath = "/admin";
-  console.log(adminState);
   if (authenticated.isLoading && principal.isLoading) {
     return <></>;
   }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.service.admin.AdminReviewService;
 
 import lombok.RequiredArgsConstructor;

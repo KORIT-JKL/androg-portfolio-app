@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.AdminReviewCheckRespDto;
 import com.korit.androg.androg.dto.admin.UserReviewsRespDto;
-import com.korit.androg.androg.exception.CustomException;
 import com.korit.androg.androg.repository.admin.AdminReviewRepository;
 import com.korit.androg.androg.service.ErrorService;
 

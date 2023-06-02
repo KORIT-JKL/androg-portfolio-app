@@ -205,7 +205,6 @@ const ProductDetails = () => {
         {
             onSuccess: (response) => {
                 setProduct(response.data);
-                console.log(response.data);
                 setThiRefresh(false);
             },
             enabled: refresh,

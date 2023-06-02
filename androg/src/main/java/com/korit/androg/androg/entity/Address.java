@@ -1,7 +1,5 @@
 package com.korit.androg.androg.entity;
 
-import java.util.List;
-
 import com.korit.androg.androg.dto.address.AddressRespDto;
 
 import lombok.AllArgsConstructor;

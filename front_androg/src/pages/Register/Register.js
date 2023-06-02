@@ -194,7 +194,6 @@ const Register = () => {
       alert("코드가 틀렸습니다.");
     }
   };
-  console.log(mailCode);
   return (
     <>
       <CommonHeader />

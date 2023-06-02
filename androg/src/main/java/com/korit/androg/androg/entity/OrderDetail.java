@@ -3,7 +3,6 @@ package com.korit.androg.androg.entity;
 import com.korit.androg.androg.dto.admin.CountRankRespDto;
 import com.korit.androg.androg.dto.admin.DateRankRespDto;
 import com.korit.androg.androg.dto.admin.UserRankRespDto;
-import com.korit.androg.androg.dto.admin.UserReviewsRespDto;
 import com.korit.androg.androg.dto.user.OrderProductsRespDto;
 
 import lombok.AllArgsConstructor;

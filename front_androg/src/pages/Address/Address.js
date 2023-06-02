@@ -247,7 +247,6 @@ const Address = () => {
                             if (!addressOpen || addressOpen) {
                               setUpdateOpen(true);
                               setAddressOpen(false);
-                              console.log(address);
                               setAddressRecoil({ ...address });
                             }
                           }}

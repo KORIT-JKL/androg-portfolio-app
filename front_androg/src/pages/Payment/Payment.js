@@ -256,7 +256,6 @@ const Payment = () => {
         },
         {
             onSuccess: (response) => {
-                console.log(response);
                 
                 if (response.data.length !== 0) {
                     setUserAddressList([...response.data]);
@@ -310,7 +309,6 @@ const Payment = () => {
                 addressDetail: userAddressDetail,
                 poneNumber: userPhone,
             };
-            console.log(data);
             const response = await axios.post("http://localhost:8080/products/order", data, {
                 headers: {
                     Authorization: localStorage.getItem("accessToken"),
@@ -359,7 +357,6 @@ const Payment = () => {
         }, [addressIndex]);
         
         const handleComplete = (data) => {
-            console.log(data.sido);
             setUserAddress(data.address);
             setUserAddressDetail("");
         setUserAddressSido(data.sido);

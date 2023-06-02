@@ -51,7 +51,6 @@ const AdminProfit = () => {
     const [countData, setCountData] = useState([]);
     const [priceData, setPriceData] = useState([]);
     const [dateTotalPriceData, setDateTotalPriceData] = useState([]);
-    console.log(dateTotalPriceData);
     const option = {
         headers: {
             Authorization: `${localStorage.getItem("accessToken")}`,
@@ -65,7 +64,6 @@ const AdminProfit = () => {
         },
         {
             onSuccess: (response) => {
-                console.log(response);
                 const newData = [];
                 response.data.forEach((item) => {
                     newData.push({
@@ -179,7 +177,6 @@ const AdminProfit = () => {
             },
         }
     );
-    console.log(userRankList);
     return (
         <>
             <div css={container}>
@@ -200,7 +197,7 @@ const AdminProfit = () => {
                     {countRankList !== null ? (
                         <tbody>
                             {countRankList.map((list) => (
-                                <tr key={list.rank}>
+                                <tr>
                                     <td>{list.rank}</td>
                                     <td>{list.productName}</td>
                                     <td>{list.colorName}</td>
@@ -230,7 +227,7 @@ const AdminProfit = () => {
                     {profitRankList !== null ? (
                         <tbody>
                             {profitRankList.map((list) => (
-                                <tr key={list.rank}>
+                                <tr>
                                     <td>{list.rank}</td>
                                     <td>{list.productName}</td>
                                     <td>{list.colorName}</td>

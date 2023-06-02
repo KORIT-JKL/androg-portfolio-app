@@ -1,7 +1,5 @@
 package com.korit.androg.androg.dto.Product;
 
-import com.korit.androg.androg.entity.Products;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

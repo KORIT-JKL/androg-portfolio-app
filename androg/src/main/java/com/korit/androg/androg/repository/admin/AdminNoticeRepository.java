@@ -1,7 +1,5 @@
 package com.korit.androg.androg.repository.admin;
 
-import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 
 import com.korit.androg.androg.dto.admin.AdminNoticeReqDto;

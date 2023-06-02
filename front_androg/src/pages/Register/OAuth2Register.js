@@ -84,7 +84,6 @@ const OAuth2Register = () => {
         return response;
       } catch (error) {
         setErrorMessages({ password: "", ...error.response.data.errorData });
-        console.log(errorMessages);
         return error;
       }
     },

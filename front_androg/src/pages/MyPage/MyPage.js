@@ -234,7 +234,6 @@ const MyPage = () => {
         }
       },
       onError: (error) => {
-        console.log(error);
       },
     }
   );
