@@ -37,6 +37,7 @@ public class OrderService {
 					.addressSigungu(orderCompleteReqDto.getAddressSigungu())
 					.addressSido(orderCompleteReqDto.getAddressSido())
 					.addressZonecode(orderCompleteReqDto.getAddressZonecode())
+					.addressBname(orderCompleteReqDto.getAddressBname())
 					.poneNumber(orderCompleteReqDto.getPoneNumber())
 					.build();
 			addressRepository.addressRegister(newAddress);

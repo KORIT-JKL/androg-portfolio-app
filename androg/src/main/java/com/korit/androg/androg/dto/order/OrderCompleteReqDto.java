@@ -17,6 +17,6 @@ public class OrderCompleteReqDto {
 	private String addressSido;
 	private String addressZonecode;
 	private String addressDetail;
-	
+	private String addressBname;
 	private String poneNumber;
 }

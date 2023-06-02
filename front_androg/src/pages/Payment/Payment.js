@@ -191,6 +191,7 @@ const summaryFooter = css`
 const Payment = () => {
     const [principalState, setPrincipalState] = useState(false);
     const [addressListState, setaddressListState] = useState(false);
+    const [newAddressListState, setNewAddressState] = useState(true);
     const [addressIndex, setAddressIndex] = useState(0);
     const [selectedAddress, setSelectedAddress] = useState(0);
     const [userAddressList, setUserAddressList] = useState([]);
@@ -201,6 +202,7 @@ const Payment = () => {
     const [userAddress, setUserAddress] = useState("");
     const [userPhone, setUserPhone] = useState();
     const [userAddressId, setUserAddressId] = useState();
+    const [userAddressBname, setUserAddressBname] = useState();
     // const [cartListState, setCartListState] = useState(false);
     const [userCartList, setUserCartList] = useState([]);
     const [cartIsOpen, setCartIsOpen] = useRecoilState(cartIsOpenState);
@@ -213,6 +215,7 @@ const Payment = () => {
         addressSido: "",
         addressZonecode: "",
         addressDetail: "",
+        addressBname: "",
         poneNumber: "",
     });
     const [totalPrice, setTotalPrice] = useState(0);
@@ -220,7 +223,8 @@ const Payment = () => {
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
     const navigate = useNavigate();
-    
+    const regex = /^\d{2,3}-\d{4}-\d{4}$/
+
     const principal = useQuery(
         ["principal"],
         async () => {
@@ -270,11 +274,12 @@ const Payment = () => {
                     setUserAddressZonecode(response.data[selectedAddress].addressZonecode);
                     setUserAddress(response.data[selectedAddress].address);
                     setUserPhone(response.data[selectedAddress].poneNumber);
+                    setUserAddressBname(response.data[selectedAddress].addressBname);
                 }
 
                 setaddressListState(false);
             },
-            enabled: !!principal.data && addressListState,
+            enabled: !!principal.data && addressListState && newAddressListState
         }
         );
         
@@ -315,6 +320,7 @@ const Payment = () => {
                 addressSido: userAddressSido,
                 addressZonecode: userAddressZonecode,
                 addressDetail: userAddressDetail,
+                addressBname: userAddressBname,
                 poneNumber: userPhone,
             };
             console.log(data);
@@ -366,12 +372,13 @@ const Payment = () => {
         }, [addressIndex]);
         
     const handleComplete = (data) => {
-        console.log(data.sido);
+        console.log(data.bname);
         setUserAddress(data.address);
         setUserAddressDetail("");
         setUserAddressSido(data.sido);
         setUserAddressSigungu(data.sigungu);
         setUserAddressZonecode(data.zonecode);
+        setUserAddressBname(data.bname);
         setUserPhone("");
     };
 
@@ -423,6 +430,7 @@ const Payment = () => {
             setUserAddressSigungu(userAddressList[e.target.value].addressSigungu);
             setUserAddressZonecode(userAddressList[e.target.value].addressZonecode);
             setUserAddress(userAddressList[e.target.value].address);
+            setUserAddressBname(userAddressList[e.target.value].addressBname);
             setUserPhone(userAddressList[e.target.value].poneNumber);
         } else {
             setUserAddressId(0);
@@ -431,7 +439,9 @@ const Payment = () => {
             setUserAddressSido("");
             setUserAddressSigungu("");
             setUserAddressZonecode("");
+            setUserAddressBname("");
             setUserPhone("");
+            setNewAddressState(false)
         }
     };
 
@@ -521,20 +531,25 @@ const Payment = () => {
                                 css={input}
                                 value={userAddressDetail}
                                 onChange={(e) => {
-                                        setUserAddressDetail(e.target.value);
+                                        const regex = /^[a-zA-Zㄱ-ㅎ가-힣0-9\s-]*$/
+                                        if(regex.test(e.target.value)) {
+                                            setUserAddressDetail(e.target.value);
+                                        } else {
+                                            alert("-만 포함할 수 있습니다.");
+                                        }
                                 }}
                             />
                             <input
                                 type="text"
-                                placeholder="전화번호"
+                                placeholder="전화번호(-포함)"
                                 css={input}
                                 value={userPhone}
                                 onChange={(e) => {
-                                    setUserPhone(e.target.value);
+                                        setUserPhone(e.target.value);
                                 }}
                             />
                       
-                            {orderParams.products.length > 0 ? (
+                            {orderParams.products.length > 0 && userAddressDetail !== "" && regex.test(userPhone)  ? (
                                 <button css={continueBtn} onClick={()=>{
                                     orderBuy.mutate();
                                 }}>
@@ -568,7 +583,7 @@ const Payment = () => {
                                               <div css={productDescription}>
                                                   <div>{userCart.productName}</div>
                                                   <div>{userCart.colorName + " / " + userCart.sizeName}</div>
-                                                  <div>{userCart.productPrice}</div>
+                                                  <div>{userCart.productPrice + "원"}</div>
                                                   <div>{"수량 : " + userCart.countNumber}</div>
                                                   <Checkbox id={userCart.cartId} onChange={getCheckBoxState} />
                                               </div>
@@ -579,11 +594,11 @@ const Payment = () => {
                             : ""}
                         <div css={cartSummary}>
                             <div css={summaryHeader}>
-                                <div>{"총 상품금액 " + totalPrice}</div>
-                                <div>{"배송비 " + 2500}</div>
+                                <div>{"총 상품금액 " + totalPrice + "원"}</div>
+                                <div>{"배송비 " + 2500 + "원"}</div>
                             </div>
                             <div css={summaryFooter}>
-                                <div>{"총 주문금액 " + (2500 + totalPrice)}</div>
+                                <div>{"총 주문금액 " + (2500 + totalPrice) + "원"}</div>
                             </div>
                         </div>
                     </div>
