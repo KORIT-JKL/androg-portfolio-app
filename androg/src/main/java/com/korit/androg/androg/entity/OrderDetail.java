@@ -1,8 +1,8 @@
 package com.korit.androg.androg.entity;
 
 import com.korit.androg.androg.dto.admin.CountRankRespDto;
+import com.korit.androg.androg.dto.admin.DateRankRespDto;
 import com.korit.androg.androg.dto.admin.UserRankRespDto;
-import com.korit.androg.androg.dto.admin.UserReviewsRespDto;
 import com.korit.androg.androg.dto.user.OrderProductsRespDto;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +30,7 @@ public class OrderDetail {
 	private int totalPrice;
 	private int userTotalCount;
 	private int userTotalPrice;
+	private int dateTotalPrice;
 	public OrderProductsRespDto toDto() {
 		return OrderProductsRespDto.builder()
 				.orderDetailId(orderDetailId)
@@ -63,6 +64,12 @@ public class OrderDetail {
 				.totalCount(userTotalCount)
 				.totalPrice(userTotalPrice)
 				.rank(rank)
+				.build();
+	}
+	public DateRankRespDto toDateRankDto() {
+		return DateRankRespDto.builder()
+				.date(order.getDate())
+				.totalDatePrice(dateTotalPrice)
 				.build();
 	}
 }

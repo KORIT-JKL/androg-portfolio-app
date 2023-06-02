@@ -29,7 +29,6 @@ public class AddressController {
 	@ValidAspect
 	@PostMapping("/user/mypage/address")
 	public ResponseEntity<?> addressRegister(@Valid @RequestBody AddressReigsteReqDto addressReigsteReqDto, BindingResult bindingResult){
-		System.out.println(addressReigsteReqDto);
 		return ResponseEntity.ok().body(addressService.addressRegister(addressReigsteReqDto));
 	}
 	

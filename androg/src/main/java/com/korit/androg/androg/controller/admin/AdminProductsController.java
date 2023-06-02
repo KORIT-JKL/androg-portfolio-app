@@ -26,27 +26,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminProductsController {
 	public final AdminProductService adminProductService;
-	@GetMapping("admin/products/colors")
+	@GetMapping("/admin/products/colors")
 	public ResponseEntity<?> getColors() {
 		return ResponseEntity.ok().body(adminProductService.getColors()) ;
 	}
 	@ValidAspect
-	@PostMapping("admin/product/register")
+	@PostMapping("/admin/product/register")
 	public ResponseEntity<?> registerProduct(@Valid @RequestBody RegisterProductReqDto productReqDto, BindingResult bindingResult) {
 		adminProductService.registerProductDetails(productReqDto);
 		return null;
 	}
 	
-	@GetMapping("admin/products/{categoryId}")
+	@GetMapping("/admin/products/{categoryId}")
 	public ResponseEntity<?> getProductByCategoryId(@PathVariable int categoryId) {
 		return ResponseEntity.ok().body(adminProductService.getProducts(categoryId));
 	}
-	@PutMapping("admin/products/modify")
+	@ValidAspect
+	@PutMapping("/admin/products/modify")
 	public ResponseEntity<?> productModify(@Valid @RequestBody ModifyProductReqDto modifyProductReqDto, BindingResult bindingResult) {
 		adminProductService.productModify(modifyProductReqDto);
 		return null;
 	}
-	@DeleteMapping("admin/products/delete")
+	@DeleteMapping("/admin/products/delete")
 	public ResponseEntity<?> productDelete(@RequestParam int productId) {
 		adminProductService.productDelte(productId);
 		return null;

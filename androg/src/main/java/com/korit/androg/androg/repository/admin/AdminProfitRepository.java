@@ -11,4 +11,5 @@ public interface AdminProfitRepository {
 	public List<OrderDetail> getCountRank();
 	public List<OrderDetail> getProfitRank();
 	public List<OrderDetail> getUserRank();
+	public List<OrderDetail> getDateRank();
 }

@@ -1,8 +1,5 @@
 package com.korit.androg.androg.dto.admin;
 
-import com.korit.androg.androg.entity.Category;
-import com.korit.androg.androg.entity.Color;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

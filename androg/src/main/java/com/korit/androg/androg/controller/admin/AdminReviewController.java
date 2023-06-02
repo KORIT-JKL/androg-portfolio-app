@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.korit.androg.androg.aop.annotation.ValidAspect;
 import com.korit.androg.androg.service.admin.AdminReviewService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,12 +23,12 @@ public class AdminReviewController {
 		return ResponseEntity.ok().body(adminReviewService.getReviews());
 	
 	}
-	@DeleteMapping("admin/reviews/delete")
+	@DeleteMapping("/admin/reviews/delete")
 	public ResponseEntity<?> deleteReviews(@RequestParam int reviewID) {
 		adminReviewService.reviesDelete(reviewID);
 		return null;
 	}
-	@GetMapping("admin/reviews/review")
+	@GetMapping("/admin/reviews/review")
 	public ResponseEntity<?> getReviewsReview(@RequestParam int answer) {
 		return ResponseEntity.ok().body(adminReviewService.getReivewsReview(answer));
 	}

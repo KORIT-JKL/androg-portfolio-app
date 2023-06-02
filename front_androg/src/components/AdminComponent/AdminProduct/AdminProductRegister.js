@@ -131,7 +131,6 @@ const AdminProductRegister = () => {
             alert("등록되었습니다.");
             return response;
         } catch (error) {
-            console.log(error);
             if (error.response.data.errorData.productName != null) {
                 alert(error.response.data.errorData.productName);
             }
@@ -167,24 +166,12 @@ const AdminProductRegister = () => {
                         name="Category"
                         id="categoryId"
                     >
-                        <option key={1} value="1">
-                            TEES
-                        </option>
-                        <option key={2} value="2">
-                            SWEATS
-                        </option>
-                        <option key={3} value="3">
-                            PANTS
-                        </option>
-                        <option key={4} value="4">
-                            OUTER
-                        </option>
-                        <option key={5} value="5">
-                            HEADWEAR
-                        </option>
-                        <option key={6} value="6">
-                            SHOES
-                        </option>
+                        <option value="1">TEES</option>
+                        <option value="2">SWEATS</option>
+                        <option value="3">PANTS</option>
+                        <option value="4">OUTER</option>
+                        <option value="5">HEADWEAR</option>
+                        <option value="6">SHOES</option>
                     </select>
                     <select css={productColorInput} onChange={productColorSelectHandle} name="Color" id="colorId">
                         {colors.map((color) => (

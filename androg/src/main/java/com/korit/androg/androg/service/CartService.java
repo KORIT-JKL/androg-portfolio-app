@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.Product.CartReqDto;
 import com.korit.androg.androg.dto.Product.CartRespDto;
-import com.korit.androg.androg.entity.Products;
 import com.korit.androg.androg.repository.CartRepository;
-import com.korit.androg.androg.repository.ProductsRepository;
 import com.korit.androg.androg.security.PrincipalUser;
 
 import lombok.RequiredArgsConstructor;

@@ -25,5 +25,9 @@ public class AdminProfitController {
 	public ResponseEntity<?> getRankRank(){
 		return ResponseEntity.ok().body(adminProfitService.getUserRank());
 	}
+	@GetMapping("/admin/rank/date")
+	public ResponseEntity<?> getRankDate() {
+		return ResponseEntity.ok().body(adminProfitService.getDateRank());
+	}
 			
 }

@@ -38,7 +38,6 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
 		
 		OAuth2User oAuth2User = oAuth2UserService.loadUser(userRequest);
 		
-		System.out.println(oAuth2User);
 		
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,8 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.LoginReqDto;
-import com.korit.androg.androg.dto.SignupReqDto;
 import com.korit.androg.androg.dto.ModifyPasswordReqDto;
+import com.korit.androg.androg.dto.SignupReqDto;
 import com.korit.androg.androg.dto.auth.JwtRespDto;
 import com.korit.androg.androg.dto.auth.PrincipalRespDto;
 import com.korit.androg.androg.entity.Authority;

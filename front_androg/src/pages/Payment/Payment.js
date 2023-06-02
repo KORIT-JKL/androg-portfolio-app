@@ -223,7 +223,7 @@ const Payment = () => {
 
     const open = useDaumPostcodePopup(postcodeScriptUrl);
     const navigate = useNavigate();
-    const regex = /^\d{2,3}-\d{4}-\d{4}$/
+    const regex = /^\d{2,3}-\d{4}-\d{4}$/;
 
     const principal = useQuery(
         ["principal"],
@@ -238,18 +238,17 @@ const Payment = () => {
         },
         {
             onSuccess: (response) => {
-                
                 setPrincipalState(false);
                 setUserId(response.data.userId);
             },
             enabled: principalState,
         }
-        );
+    );
 
-        const addressList = useQuery(
-            ["addressList"],
-            async () => {
-                const option = {
+    const addressList = useQuery(
+        ["addressList"],
+        async () => {
+            const option = {
                 params: {
                     userId: principal.data.data.userId,
                 },
@@ -262,8 +261,6 @@ const Payment = () => {
         },
         {
             onSuccess: (response) => {
-                console.log(response);
-                
                 if (response.data.length !== 0) {
                     setUserAddressList([...response.data]);
                     setAddressIndex(selectedAddress);
@@ -279,37 +276,34 @@ const Payment = () => {
 
                 setaddressListState(false);
             },
-            enabled: !!principal.data && addressListState && newAddressListState
+            enabled: !!principal.data && addressListState && newAddressListState,
         }
-        );
-        
-        const cartList = useQuery(
+    );
+
+    const cartList = useQuery(
         ["cartList"],
         async () => {
             const option = {
-                params: { userId: userId},
+                params: { userId: userId },
                 headers: {
                     Authorization: `${localStorage.getItem("accessToken")}`,
                 },
             };
             const response = await axios.get("http://localhost:8080/cart", option);
             return response;
-            
-            },
-            
-            {
-                onSuccess: (response) => {
-                    setUserCartList([...response.data]);
+        },
+
+        {
+            onSuccess: (response) => {
+                setUserCartList([...response.data]);
                 // setCartListState(false);
-                 
-                },
+            },
             refetchInterval: 1,
             refetchIntervalInBackground: true,
-            // enabled: !!principal.data, 
-            
+            // enabled: !!principal.data,
         }
     );
-    
+
     const orderBuy = useMutation(
         async () => {
             const data = {
@@ -323,7 +317,6 @@ const Payment = () => {
                 addressBname: userAddressBname,
                 poneNumber: userPhone,
             };
-            console.log(data);
             const response = await axios.post("http://localhost:8080/products/order", data, {
                 headers: {
                     Authorization: localStorage.getItem("accessToken"),
@@ -343,36 +336,35 @@ const Payment = () => {
                 alert(error.response.data.message);
             },
         }
-        );
-        useEffect(() => {
-            let sum = 0;
-            orderParams.products.forEach((product) => {
-                sum += product.productPrice * product.countNumber;
-            });
-            setTotalPrice(sum);
-    
-            const iamport = document.createElement("script");
-            iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
-            document.head.appendChild(iamport);
-            return () => {
-                document.head.removeChild(iamport);
-            };
-        }, [orderParams]);
-        
-        useEffect(() => {
-            if (!principalState) {
-                setPrincipalState(true);
-            }
-            if (!addressListState) {
-                setaddressListState(true);
-            }
-            // if (!cartListState) {
-            //     setCartListState(true);
-            // }
-        }, [addressIndex]);
-        
+    );
+    useEffect(() => {
+        let sum = 0;
+        orderParams.products.forEach((product) => {
+            sum += product.productPrice * product.countNumber;
+        });
+        setTotalPrice(sum);
+
+        const iamport = document.createElement("script");
+        iamport.src = "https://cdn.iamport.kr/v1/iamport.js";
+        document.head.appendChild(iamport);
+        return () => {
+            document.head.removeChild(iamport);
+        };
+    }, [orderParams]);
+
+    useEffect(() => {
+        if (!principalState) {
+            setPrincipalState(true);
+        }
+        if (!addressListState) {
+            setaddressListState(true);
+        }
+        // if (!cartListState) {
+        //     setCartListState(true);
+        // }
+    }, [addressIndex]);
+
     const handleComplete = (data) => {
-        console.log(data.bname);
         setUserAddress(data.address);
         setUserAddressDetail("");
         setUserAddressSido(data.sido);
@@ -385,7 +377,6 @@ const Payment = () => {
     const handleClick = () => {
         open({ onComplete: handleComplete });
     };
-
 
     // const onClickPayment = () => {
     //     if (!window.IMP) return;
@@ -441,7 +432,7 @@ const Payment = () => {
             setUserAddressZonecode("");
             setUserAddressBname("");
             setUserPhone("");
-            setNewAddressState(false)
+            setNewAddressState(false);
         }
     };
 
@@ -531,12 +522,12 @@ const Payment = () => {
                                 css={input}
                                 value={userAddressDetail}
                                 onChange={(e) => {
-                                        const regex = /^[a-zA-Zㄱ-ㅎ가-힣0-9\s-]*$/
-                                        if(regex.test(e.target.value)) {
-                                            setUserAddressDetail(e.target.value);
-                                        } else {
-                                            alert("-만 포함할 수 있습니다.");
-                                        }
+                                    const regex = /^[a-zA-Zㄱ-ㅎ가-힣0-9\s-]*$/;
+                                    if (regex.test(e.target.value)) {
+                                        setUserAddressDetail(e.target.value);
+                                    } else {
+                                        alert("-만 포함할 수 있습니다.");
+                                    }
                                 }}
                             />
                             <input
@@ -545,14 +536,17 @@ const Payment = () => {
                                 css={input}
                                 value={userPhone}
                                 onChange={(e) => {
-                                        setUserPhone(e.target.value);
+                                    setUserPhone(e.target.value);
                                 }}
                             />
-                      
-                            {orderParams.products.length > 0 && userAddressDetail !== "" && regex.test(userPhone)  ? (
-                                <button css={continueBtn} onClick={()=>{
-                                    orderBuy.mutate();
-                                }}>
+
+                            {orderParams.products.length > 0 && userAddressDetail !== "" && regex.test(userPhone) ? (
+                                <button
+                                    css={continueBtn}
+                                    onClick={() => {
+                                        orderBuy.mutate();
+                                    }}
+                                >
                                     주문하기
                                 </button>
                             ) : (

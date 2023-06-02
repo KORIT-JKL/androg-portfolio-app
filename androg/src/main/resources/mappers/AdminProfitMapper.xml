@@ -9,6 +9,7 @@
 		<result property="totalPrice" column="total_price"/>
 		<result property="userTotalCount" column="order_count"/>
 		<result property="userTotalPrice" column="total_money"/>
+		<result property="dateTotalPrice" column="total_date_price"/>
 		<association property="products" resultMap="productMap"></association>
 		<association property="order" resultMap="orderMap"></association>
 	</resultMap>
@@ -28,6 +29,7 @@
 		<id property="orderId" column="order_id" />
 		<result property="userId" column="user_id"/>
 		<result property="addressId" column="address_id"/>
+		<result property="date" column="order_date"/>
 		<association property="user" resultMap="userMap"></association>
 	</resultMap>
 	
@@ -97,6 +99,19 @@
 			ut.name
 		order by
 			total_money desc
+	</select>
+	<select id="getDateRank" resultMap="orderDetailMap">
+	select 
+		ot.order_date,
+	    sum(pt.product_price) as total_date_price
+	from 
+		order_detail_tb odt
+	    left outer join order_tb ot on(ot.order_id = odt.order_id)
+	    left outer join product_tb pt on(pt.product_id = odt.product_id)
+	group by
+		order_date
+    order by
+		order_date 
 	</select>
 	
 </mapper>

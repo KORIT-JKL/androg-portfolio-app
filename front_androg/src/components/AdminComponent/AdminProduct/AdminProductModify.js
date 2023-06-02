@@ -202,7 +202,6 @@ const AdminProductModify = () => {
             enabled: selectCategoryId !== 0 && refresh,
             onSuccess: (response) => {
                 setThisProducts(response.data);
-                console.log(response.data);
                 setRefresh(false);
             },
         }
@@ -313,11 +312,9 @@ const AdminProductModify = () => {
             setRefresh(true);
             return response;
         } catch (error) {
-            console.log(error);
             alert(error.response.data.message);
         }
     };
-    console.log(productsDetails);
     return (
         <div>
             <ul css={categoryIdContainer}>

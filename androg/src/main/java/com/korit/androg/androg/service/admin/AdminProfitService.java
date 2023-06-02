@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.korit.androg.androg.dto.admin.CountRankRespDto;
+import com.korit.androg.androg.dto.admin.DateRankRespDto;
 import com.korit.androg.androg.dto.admin.UserRankRespDto;
 import com.korit.androg.androg.repository.admin.AdminProfitRepository;
 
@@ -18,7 +19,7 @@ public class AdminProfitService {
 	public List<CountRankRespDto> getCountRank() {
 		List<CountRankRespDto> list = new ArrayList<>();
 		adminProfitRepository.getCountRank().forEach(orderDetail -> {
-			if(orderDetail.getRank() < 4) {
+			if(orderDetail.getRank() < 6) {
 				list.add(orderDetail.toRankDto());
 			}
 		});
@@ -28,7 +29,7 @@ public class AdminProfitService {
 	public List<CountRankRespDto> getProfitRank() {
 		List<CountRankRespDto> list = new ArrayList<>();
 		adminProfitRepository.getProfitRank().forEach(orderDetail -> {
-			if(orderDetail.getRank() < 4) {
+			if(orderDetail.getRank() < 6) {
 				list.add(orderDetail.toRankDto());
 			}
 		});
@@ -38,11 +39,17 @@ public class AdminProfitService {
 	public List<UserRankRespDto> getUserRank() {
 		List<UserRankRespDto> list = new ArrayList<>();
 		adminProfitRepository.getUserRank().forEach(orderDetail -> {
-			if(orderDetail.getRank() < 4) {
+			if(orderDetail.getRank() < 10) {
 				list.add(orderDetail.toUserRankDto());
 			}
 		});
-		System.out.println(list);
+		return list;
+	}
+	public List<DateRankRespDto> getDateRank() {
+		List<DateRankRespDto> list = new ArrayList<>();
+		adminProfitRepository.getDateRank().forEach(orderdetail -> {
+			list.add(orderdetail.toDateRankDto());
+		});
 		return list;
 	}
 	

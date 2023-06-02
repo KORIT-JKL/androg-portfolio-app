@@ -5,10 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.korit.androg.androg.dto.Product.CartReqDto;
-import com.korit.androg.androg.dto.Product.CartRespDto;
 import com.korit.androg.androg.dto.admin.AdminReviewIdReqDto;
-import com.korit.androg.androg.dto.admin.AdminReviewRespdto;
 import com.korit.androg.androg.entity.AdminReview;
 import com.korit.androg.androg.entity.Products;
 
