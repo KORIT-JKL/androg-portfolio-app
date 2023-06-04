@@ -20,7 +20,7 @@ public class AddressReigsteReqDto {
 	private String address;
 	
 	@NotBlank
-	@Pattern(regexp = "^[A-Za-z0-9가-힣,!\\- ]+$", message="특수문자는 - 만 사용 가능합니다.")
+	@Pattern(regexp = "^[A-Za-z0-9가-힣,!\\- ]+$", message="공백일 수 없습니다(특수문자는 - 만 사용 가능합니다.)")
 	private String addressDetail;
 	
 
