@@ -208,6 +208,7 @@ const MyPage = () => {
     },
     {
       onSuccess: (response) => {
+        console.log(orderProducts);
         setOrderProducts([...response.data]);
         setProductsRefresh(false);
       },
@@ -233,8 +234,7 @@ const MyPage = () => {
           localStorage.removeItem("accessToken");
         }
       },
-      onError: (error) => {
-      },
+      onError: (error) => {},
     }
   );
 
