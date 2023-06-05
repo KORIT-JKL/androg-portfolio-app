@@ -15,6 +15,7 @@ import {
   getAddressListRecoil,
   getAddressRecoil,
 } from "../../atoms/AddressAtoms/AddressAtoms";
+import { authenticationState } from "../../atoms/Auth/AuthAtoms";
 
 const mainContainer = css`
   display: grid;
@@ -122,11 +123,11 @@ const Address = () => {
   const [addressListState, setAddressListState] = useRecoilState(AddressListStateRecoil);
   const [userAddressList, setUserAddressList] = useRecoilState(getAddressListRecoil);
   const [addressRecoil, setAddressRecoil] = useRecoilState(getAddressRecoil);
+  const [authState] = useRecoilState(authenticationState);
 
   const principal = useQuery(
     ["principal"],
     async () => {
-      //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
       const option = {
         headers: {
           Authorization: `${localStorage.getItem("accessToken")}`,
@@ -139,7 +140,7 @@ const Address = () => {
       onSuccess: (response) => {
         setPrincipalState(false);
       },
-      enabled: principalState,
+      enabled: principalState && authState,
     }
   );
 

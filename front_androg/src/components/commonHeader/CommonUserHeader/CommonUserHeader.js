@@ -4,9 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CommonUserSubHeader from "../CommonUserSubHeader/CommonUserSubHeader";
 import { useRecoilState } from "recoil";
-import impact from "../../../img/ANDROG 1.png";
-import { useQuery } from "react-query";
-import axios from "axios";
 import {
   adminAuthenticationState,
   authenticationState,
@@ -14,21 +11,8 @@ import {
 } from "../../../atoms/Auth/AuthAtoms";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { cartIsOpenState } from "../../../atoms/Cart/CartAtoms";
-import {
-  SetSearchInput,
-  setPage,
-  setProducts,
-  setSearchParams,
-} from "../../../atoms/Product/ProductAtoms";
-import { FaHome } from "react-icons/fa";
-const header = css`
-  position: fixed;
-  flex-direction: column;
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #dbdbdb;
-`;
-
+import { SetSearchInput, setProducts, setSearchParams } from "../../../atoms/Product/ProductAtoms";
+import TokenExpiration from "../../Token/TokenExpiration";
 const mainHeader = css`
   display: flex;
   width: 100%;
@@ -82,39 +66,17 @@ const CommonUserHeader = () => {
   const [loginIsState, setLoginIsState] = useRecoilState(loginState);
   const [, setAdminState] = useRecoilState(adminAuthenticationState);
   const [authState] = useRecoilState(authenticationState);
+  const [adminState] = useRecoilState(adminAuthenticationState);
   const [sbheader, setThissbheader] = useRecoilState(setsbheader);
   const [, setThiRefresh] = useRecoilState(setRefresh);
   const [, setCartIsOpen] = useRecoilState(cartIsOpenState);
   const [, setThisProducts] = useRecoilState(setProducts);
   const [, setThisSearchParams] = useRecoilState(setSearchParams);
-  const [userAuthority, setUserAuthority] = useState("");
-  const [getauthority, Setgetauthority] = useState(true);
 
   const navigate = useNavigate();
   const onClickLogo = () => {
     navigate("/");
   };
-  const authority = useQuery(
-    ["authority"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-      };
-      const response = await axios.get("http://localhost:8080/token/authenticated", option);
-      return response;
-    },
-    {
-      onSuccess: (response) => {
-        setUserAuthority(response.data.authorities);
-        if (!!userAuthority) {
-          Setgetauthority(false);
-        }
-      },
-      enabled: getauthority && !!localStorage.getItem("accessToken") && authState,
-    }
-  );
 
   const EnterKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -151,10 +113,6 @@ const CommonUserHeader = () => {
     }
   }, [loginIsState]);
 
-  if (authority.isLoading) {
-    return <></>;
-  }
-
   return (
     <>
       <div css={mainHeader}>
@@ -176,10 +134,15 @@ const CommonUserHeader = () => {
               </li>
             </ul>
             <ul css={headerList2}>
-              {userAuthority === "ROLE_ADMIN" ? (
-                <li css={list} onClick={() => navigate("/admin")}>
-                  관리자
-                </li>
+              {adminState ? (
+                <>
+                  <li>
+                    <TokenExpiration token={localStorage.getItem("accessToken")} />
+                  </li>
+                  <li css={list} onClick={() => navigate("/admin")}>
+                    관리자
+                  </li>
+                </>
               ) : (
                 ""
               )}
@@ -190,6 +153,13 @@ const CommonUserHeader = () => {
                   id="searchInputText"
                   onKeyDown={EnterKeyDown}
                 />
+              ) : (
+                ""
+              )}
+              {!adminState ? (
+                <li>
+                  <TokenExpiration token={localStorage.getItem("accessToken")} />
+                </li>
               ) : (
                 ""
               )}

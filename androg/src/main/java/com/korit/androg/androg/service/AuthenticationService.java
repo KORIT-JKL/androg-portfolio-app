@@ -89,6 +89,10 @@ public class AuthenticationService implements UserDetailsService {
 	}
 	
 	public PrincipalRespDto getPrincipal(String accessToken) {
+		boolean validToken = jwtTokenProvider.validateToken(jwtTokenProvider.getToken(accessToken));
+		if(!validToken) {
+			throw new CustomException("인증에 실패했습니다.");
+		}
 		Claims claims = jwtTokenProvider.getClaims(jwtTokenProvider.getToken(accessToken));
 		User userEntity = userRepository.findUserByEmail(claims.getSubject());
 			

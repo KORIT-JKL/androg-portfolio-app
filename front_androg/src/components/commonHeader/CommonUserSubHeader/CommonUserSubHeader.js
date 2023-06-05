@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { setRefresh, setsbheader } from "../../../atoms/Common/CommonAtoms";
 import { setPage, setProducts } from "../../../atoms/Product/ProductAtoms";
 import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
-import TokenExpiration from "./../../Token/TokenExpiration";
 /*
 const header = css`
   position: fixed;
@@ -153,9 +152,6 @@ const CommonUserSubHeader = ({ sbheader }) => {
             </li>
             <li css={sublist} onClick={onClickLegal}>
               LEGAL
-            </li>
-            <li>
-              <TokenExpiration token={localStorage.getItem("accessToken")} />
             </li>
           </ul>
         )}

@@ -1,30 +1,25 @@
-import axios from "axios";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useQueryClient } from "react-query";
+import { useRecoilState } from "recoil";
+import { authenticationState } from "../../atoms/Auth/AuthAtoms";
+
+const box = css`
+  margin: 0px 10px 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  font-weight: 600;
+  text-decoration: underline;
+`;
 
 const TokenExpiration = ({ token }) => {
   const [expiration, setExpiration] = useState("");
-  const tokenAuthenticated = useQuery(
-    ["tokenAuthenticated"],
-    async () => {
-      const option = {
-        headers: {
-          Authorization: `${localStorage.getItem("accessToken")}`,
-        },
-      };
-      const response = await axios.get("http://localhost:8080/token/authenticated", option);
-      return response;
-    },
-    {
-      onError: () => {
-        if (window.confirm()) {
-          localStorage.removeItem("accessToken");
-          window.location.href = "http://localhost:3000";
-        }
-      },
-      enabled: expiration === "Token Expired" && !!localStorage.getItem("accessToken"),
-    }
-  );
+  const [authState] = useRecoilState(authenticationState);
+  const queryClient = useQueryClient();
   useEffect(() => {
     if (token !== undefined) {
       const extractExpiration = () => {
@@ -37,12 +32,18 @@ const TokenExpiration = ({ token }) => {
             const timeDiff = expirationTime.getTime() - now.getTime();
 
             if (timeDiff > 0) {
+              const hours = Math.floor(timeDiff / (1000 * 60 * 60));
               const minutes = Math.floor(timeDiff / (1000 * 60));
               const seconds = Math.floor((timeDiff / 1000) % 60);
 
-              setExpiration(`${minutes}분 ${seconds}초`);
+              setExpiration(`${hours}시 ${minutes}분 ${seconds}초`);
             } else {
               setExpiration("Token Expired");
+              localStorage.removeItem("accessToken");
+              queryClient.fetchQuery("tokenAuthenticated");
+              queryClient.fetchQuery("authenticated");
+              console.log("멈춤");
+              clearInterval(interval);
             }
           } catch (error) {
             console.error("Error decoding token:", error);
@@ -62,10 +63,7 @@ const TokenExpiration = ({ token }) => {
       };
     }
   }, [token]);
-  if (tokenAuthenticated.isLoading) {
-    return <></>;
-  }
-  return <div>{!!localStorage.getItem("accessToken") ? `만료시간: ${expiration}` : ""}</div>;
+  return <div css={box}>{authState === true ? `만료시간: ${expiration}` : ""}</div>;
 };
 
 export default TokenExpiration;
