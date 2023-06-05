@@ -12,6 +12,7 @@ import { popUpState } from "../../atoms/Common/CommonAtoms";
 import { AdminPopUp } from "../../atoms/Admin/AdminAtoms";
 import { useQuery } from "react-query";
 import axios from "axios";
+import TokenExpiration from "../Token/TokenExpiration";
 
 const header = css`
   position: sticky;
@@ -105,7 +106,6 @@ const CommonHeader = () => {
       {CartIsOpen ? <Cart /> : ""}
 
       <div css={[header, isVisible ? null : hiddenStyles]}>
-        {/* authority가 1일땐 관리자 */}
         {popUpList.content !== undefined ? (
           <div css={[popup, isVisible ? null : hiddenStyles]}>
             <h2 css={popupContent}>{popUpList.content}</h2>
@@ -116,6 +116,7 @@ const CommonHeader = () => {
         ) : (
           ""
         )}
+
         <CommonUserHeader />
       </div>
     </>

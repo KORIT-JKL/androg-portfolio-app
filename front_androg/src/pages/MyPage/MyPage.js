@@ -10,7 +10,7 @@ import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import OrderProducts from "../../components/Products/OrderProducts";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../atoms/Auth/AuthAtoms";
+import { authenticationState, loginState } from "../../atoms/Auth/AuthAtoms";
 import { getAddressListRecoil } from "../../atoms/AddressAtoms/AddressAtoms";
 
 const mainContainer = css`
@@ -112,7 +112,7 @@ const textBox = css`
 const MyPage = () => {
   const navgate = useNavigate();
   const [orderProducts, setOrderProducts] = useState([]);
-
+  const [authState] = useRecoilState(authenticationState);
   const [infoRefresh, setInfoRefresh] = useState(false);
   const [, setProductsRefresh] = useState(false);
   const [, setLoginIsState] = useRecoilState(loginState);
@@ -142,7 +142,7 @@ const MyPage = () => {
         setInfoRefresh(false);
         setProductsRefresh(true);
       },
-      enabled: !!localStorage.getItem("accessToken"),
+      enabled: !!localStorage.getItem("accessToken") && authState,
     }
   );
   const profileImgUpdate = useMutation(

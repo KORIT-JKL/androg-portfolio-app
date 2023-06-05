@@ -36,7 +36,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.updateProfile(profileImgFile));
 	}
 
-	@GetMapping("/token/authenticated")
+	@GetMapping("/token/authentcation")
 	public ResponseEntity<?> tokenAuthenticated(@RequestHeader(value = "Authorization") String accessToken) {
 		return ResponseEntity.ok().body(authenticationService.getPrincipal(accessToken));
 	}

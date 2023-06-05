@@ -7,6 +7,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { productInfoState } from "../../atoms/ReviewAtoms/ReviewAtom";
+import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../components/CommonFooter/CommonFooter";
 
 const container = css`
   margin: 50px;
@@ -166,43 +168,47 @@ const Review = () => {
   }
 
   return (
-    <div css={container}>
-      <header css={header}>
-        <h2 css={Title}>상품 후기 작성</h2>
-        <div css={userInfo}>작성자</div>
-        <div css={userInfo}>
-          {principal.data !== undefined
-            ? principal.data.data.name + "(" + principal.data.data.email + ")"
-            : ""}
-        </div>
-      </header>
-      <main>
-        <div css={productBox}>
-          <OrderProducts
-            orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""}
-            isOpen={false}
-          />
-        </div>
-        <textarea
-          css={textArea}
-          placeholder="내용을 입력하세요(최소5자이상 20자이하)"
-          onChange={onChangeHandle}
-        ></textarea>
-      </main>
-      <footer css={footer}>
-        <button
-          css={reviewButton}
-          onClick={() => {
-            reviewRegister.mutate();
-          }}
-        >
-          리뷰등록
-        </button>
-        <button css={reviewButton} onClick={() => navigate("/")}>
-          리뷰취소
-        </button>
-      </footer>
-    </div>
+    <>
+      <CommonHeader />
+      <div css={container}>
+        <header css={header}>
+          <h2 css={Title}>상품 후기 작성</h2>
+          <div css={userInfo}>작성자</div>
+          <div css={userInfo}>
+            {principal.data !== undefined
+              ? principal.data.data.name + "(" + principal.data.data.email + ")"
+              : ""}
+          </div>
+        </header>
+        <main>
+          <div css={productBox}>
+            <OrderProducts
+              orderProduct={getProduct.data !== undefined ? getProduct.data.data : ""}
+              isOpen={false}
+            />
+          </div>
+          <textarea
+            css={textArea}
+            placeholder="내용을 입력하세요(최소5자이상 20자이하)"
+            onChange={onChangeHandle}
+          ></textarea>
+        </main>
+        <footer css={footer}>
+          <button
+            css={reviewButton}
+            onClick={() => {
+              reviewRegister.mutate();
+            }}
+          >
+            리뷰등록
+          </button>
+          <button css={reviewButton} onClick={() => navigate("/")}>
+            리뷰취소
+          </button>
+        </footer>
+      </div>
+      <CommonFooter />
+    </>
   );
 };
 

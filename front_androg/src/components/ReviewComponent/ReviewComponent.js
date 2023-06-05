@@ -91,11 +91,9 @@ const img = css`
 
 const ReviewComponent = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [reviewProfileImg, setReviewProfileImg] = useState();
   const [adminReviews] = useRecoilState(SetAdminReviews);
   const [authState] = useRecoilState(authenticationState);
   const [userId, setUserId] = useState(0);
-  // setReviewProfileImg('http://localhost:8080/image/profile/' + review.profileImg);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -107,7 +105,6 @@ const ReviewComponent = ({ review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
       const response = await axios.get("http://localhost:8080/auth/principal", option);
       return response;
     },

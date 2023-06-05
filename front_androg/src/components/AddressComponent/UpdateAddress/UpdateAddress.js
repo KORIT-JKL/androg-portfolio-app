@@ -12,6 +12,7 @@ import {
 } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 import ErrorMessage from "../../Error/ErrorMessage";
+import { authenticationState } from "../../../atoms/Auth/AuthAtoms";
 
 const Title = css`
   margin-top: 5px;
@@ -62,6 +63,7 @@ const UpdateAddress = ({ principal, address }) => {
   const [updateOpen, setUpdateOpen] = useRecoilState(AddressUpdateStateRecoil);
   const [addressInitState, setAddressInitState] = useState(true);
   const [addressInput, setAddressInput] = useRecoilState(getAddressRecoil);
+  const [authState] = useRecoilState(authenticationState);
   const [errorMessage, setErrorMessage] = useState({
     address: "",
     addressBname: "",
@@ -144,7 +146,10 @@ const UpdateAddress = ({ principal, address }) => {
   return (
     <div css={addressContent}>
       <h2 css={Title}>주소 수정 하기</h2>
-      <div css={nameBox}> {principal.data !== undefined ? principal.data.data.name : ""}</div>
+      <div css={nameBox}>
+        {" "}
+        {principal.data !== undefined && authState ? principal.data.data.name : ""}
+      </div>
       <div css={nameBox}>
         {addressInitState
           ? address.address + "(" + address.addressBname + ")"
