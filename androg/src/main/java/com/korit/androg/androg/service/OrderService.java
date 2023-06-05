@@ -64,6 +64,26 @@ public class OrderService {
 			requestMap.put("orderId", order.getOrderId());
 			return orderRepository.completeOrder(requestMap);
 		} else {
+			
+			Address oldAddress =
+			addressRepository.getAddressByAddressId(orderCompleteReqDto.getAddressId());
+			
+			Address address = Address
+					.builder()
+					.addressId(oldAddress.getAddressId())
+					.userId(oldAddress.getUserId())
+					.address(oldAddress.getAddress())
+					.addressDetail(orderCompleteReqDto.getAddressDetail())
+					.addressSido(oldAddress.getAddressSido())
+					.addressSigungu(oldAddress.getAddressSigungu())
+					.addressBname(oldAddress.getAddressBname())
+					.addressZonecode(oldAddress.getAddressZonecode())
+					.poneNumber(orderCompleteReqDto.getPoneNumber())
+					.addressFlag(oldAddress.getAddressFlag())
+					.build();
+			
+			addressRepository.addressUpdate(address);
+			
 			Order order = Order
 					.builder()
 					.userId(orderCompleteReqDto.getUserId())

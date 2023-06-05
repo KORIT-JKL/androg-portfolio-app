@@ -20,7 +20,7 @@
 		<result property="password" column="password"/>
 		<result property="name" column="name"/>
 	</resultMap>
-
+	
 	<insert id="addressRegister" parameterType="com.korit.androg.androg.entity.Address">
 	insert into address_tb
 		values(0,#{userId},#{address},#{addressDetail},#{addressSido},#{addressSigungu},#{addressBname},#{addressZonecode},#{poneNumber},#{addressFlag})
@@ -77,5 +77,14 @@
       	where user_id = #{userId}
 		
 	</update>
+	
+	<select id="getAddressByAddressId" parameterType="Integer" resultMap="AddressMap">
+		select 
+			*
+		from
+			address_tb
+		where
+			address_id = #{addressId}
+	</select>
 	
 </mapper>
