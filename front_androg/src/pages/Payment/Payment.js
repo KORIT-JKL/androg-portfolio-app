@@ -443,7 +443,6 @@ const Payment = () => {
 
     const getCheckBoxState = (e) => {
         setTotalPrice(0);
-        const { id, checked } = e.target;
         if (e.target.checked) {
             setOrderParams({
                 userId: principal.data.data.userId,
