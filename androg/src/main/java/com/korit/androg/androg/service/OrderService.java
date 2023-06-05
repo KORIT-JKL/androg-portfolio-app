@@ -25,10 +25,12 @@ public class OrderService {
 
 	
 	public int completeOrder(OrderCompleteReqDto orderCompleteReqDto) {
+		System.out.println(orderCompleteReqDto);
 		if(orderCompleteReqDto.getProducts().size() == 0) {
 			throw new CustomException("상품을 선택해주세요.");
 		}
 		if(orderCompleteReqDto.getAddressId() == 0) { 
+			System.out.println(orderCompleteReqDto);
 			Address newAddress = Address
 					.builder()
 					.userId(orderCompleteReqDto.getUserId())
