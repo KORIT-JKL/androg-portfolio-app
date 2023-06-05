@@ -68,7 +68,7 @@ const inquiryButton = css`
 
 const CustomerSupport = () => {
     const [principalState, setPrincipalState] = useState(false);
-    const [orderDtlId, setOrderDtlId] = useState(0);
+    const [orderDtlId, setOrderDtlId] = useState();
     const [category, setCategory] = useState("");
     const [inquiryContent, setInquiryContent] = useState("");
     const navigate = useNavigate();
@@ -96,6 +96,9 @@ const CustomerSupport = () => {
             onSuccess: (response) => {
                 if (response.status === 200) {
                     alert("문의가 정상적으로 접수되었습니다.");
+                    setOrderDtlId("");
+                    setCategory("");
+                    setInquiryContent("");
                 }
             },
             onError: (error) => {
@@ -138,8 +141,8 @@ const CustomerSupport = () => {
                     <div css={headerText}>
                         <h1>문의하기</h1>
                     </div>
-                    <SupprotInput type="text" placeholder="orderNumber" onChange={getOrderId} />
-                    <select name="" id="" css={select} onClick={getInquiryCategory}>
+                    <SupprotInput type="text" placeholder="orderNumber" onChange={getOrderId} value={orderDtlId}/>
+                    <select name="" id="" css={select} onChange={getInquiryCategory} value={category}>
                         <option value="">문의사항을 선택해주세요</option>
                         <option value="주문상태">주문상태</option>
                         <option value="반품">반품</option>
@@ -148,7 +151,7 @@ const CustomerSupport = () => {
                         <option value="오류문의">오류문의</option>
                         <option value="기타">기타</option>
                     </select>
-                    <textarea css={textArea} placeholder="내용을 입력하세요.200자" onChange={getContent}></textarea>
+                    <textarea css={textArea} placeholder="내용을 입력하세요.200자" onChange={getContent} value={inquiryContent}></textarea>
                     <button css={inquiryButton} onClick={inquirySubmitHandle}>
                         확인
                     </button>
