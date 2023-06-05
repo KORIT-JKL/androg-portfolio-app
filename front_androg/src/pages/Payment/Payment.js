@@ -310,6 +310,7 @@ const Payment = () => {
                 ...orderParams,
                 userId: principal.data.data.userId,
                 address: userAddress,
+                addressId: userAddressId,
                 addressSigungu: userAddressSigungu,
                 addressSido: userAddressSido,
                 addressZonecode: userAddressZonecode,
@@ -317,7 +318,8 @@ const Payment = () => {
                 addressBname: userAddressBname,
                 poneNumber: userPhone,
             };
-            const response = await axios.post("http://localhost:8080/products/order", data, {
+            console.log(data);
+            const response = await axios.post("http://localhost:8080/product/order", data, {
                 headers: {
                     Authorization: localStorage.getItem("accessToken"),
                 },
@@ -411,6 +413,7 @@ const Payment = () => {
     //         }
     //     });
     // };
+
     const clickHandle = (e) => {
         setSelectedAddress(e.target.value);
         if (parseInt(e.target.value) !== userAddressList.length) {
@@ -423,7 +426,9 @@ const Payment = () => {
             setUserAddress(userAddressList[e.target.value].address);
             setUserAddressBname(userAddressList[e.target.value].addressBname);
             setUserPhone(userAddressList[e.target.value].poneNumber);
-        } else {
+        }
+        if (parseInt(e.target.value) === userAddressList.length) {
+            console.log("새주소");
             setUserAddressId(0);
             setUserAddress("");
             setUserAddressDetail("");

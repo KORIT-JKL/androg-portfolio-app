@@ -17,7 +17,7 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	// api 수정 products/buying 
-	@PostMapping("/products/order")
+	@PostMapping("/product/order")
 	public ResponseEntity<?> completeOrder(@RequestBody OrderCompleteReqDto orderCompleteReqDto,BindingResult bindingResult) {
 		return ResponseEntity.ok().body(orderService.completeOrder(orderCompleteReqDto));
 	}
