@@ -134,7 +134,7 @@ const CommonUserSubHeader = ({ sbheader }) => {
           </ul>
         ) : (
           <ul css={subHeaderList}>
-            {notice.noticeId !== undefined ? (
+            {notice.content !== undefined ? (
               <li css={sublist} onClick={onClickNotice}>
                 NOTICE
               </li>
