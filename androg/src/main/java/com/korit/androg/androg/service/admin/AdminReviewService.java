@@ -26,6 +26,7 @@ public class AdminReviewService {
 	}
 	
 	public void reviesDelete(int reviewsId) {
+		adminReivewRepository.deleteAdminReview(reviewsId);
 		adminReivewRepository.delteReivews(reviewsId);
 		return;
 	}

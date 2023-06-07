@@ -10,6 +10,7 @@ public interface AdminReviewRepository {
 //	리뷰
 	public List<Review> getReviews();
 	public void delteReivews(int reviewsId);
+	public void deleteAdminReview(int reviewId);
 	public List<Review> getReviewsNoReview();
 	public List<Review> getReviewsYesReview();
 	public void reviewReviewRegister(int reviewId, String content);

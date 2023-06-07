@@ -54,6 +54,10 @@
 		delete from review_tb
 		where review_id = #{reviewsId};
 	</delete>
+	<delete id="deleteAdminReview" parameterType="Integer">
+		delete from adminreview_tb
+		where review_id = #{reviewsId};
+	</delete>
 	<select id="getReviewsYesReview" resultMap="reviewMap">
 		SELECT 
 		    rt.review_id,
