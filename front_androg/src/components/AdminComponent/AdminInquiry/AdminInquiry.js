@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -70,7 +70,7 @@ const AdminInquiry = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/admin/inquiries", option);
+      const response = await axios.get("http://15.165.181.187/admin/inquiries", option);
       return response;
     },
     {
@@ -80,8 +80,7 @@ const AdminInquiry = () => {
     }
   );
 
-  if(getInquiries.isLoading){
-    
+  if (getInquiries.isLoading) {
     return <></>;
   }
 
@@ -103,7 +102,6 @@ const AdminInquiry = () => {
                 <th>문의내용</th>
                 <th>접수일시</th>
                 <th>답변</th>
-
               </tr>
             </thead>
             <tbody>
@@ -123,7 +121,7 @@ const AdminInquiry = () => {
                             setSelectedInquiryId(inquiry.inquiryId);
                             setAnswerState(true);
                           }}
-                        disabled={inquiry.answer !== null ? true : false}
+                          disabled={inquiry.answer !== null ? true : false}
                         >
                           답변하기
                         </button>

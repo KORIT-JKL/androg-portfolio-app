@@ -187,11 +187,7 @@ const AdminReviewReview = () => {
       },
     };
     try {
-      const response = await axios.post(
-        "http://localhost:8080/admin/reviews/review/register",
-        "",
-        option
-      );
+      const response = await axios.post("http://15.165.181.187/admin/reviews/review/register", "", option);
       setSelectReivew({ reviewId: 0, name: "", productName: "", content: "" });
       setReviewParams({ reviewId: 0, content: "" });
       setModalIsOpen(false);
@@ -213,11 +209,7 @@ const AdminReviewReview = () => {
       },
     };
     try {
-      const response = await axios.put(
-        "http://localhost:8080/admin/reviews/review/modify",
-        "",
-        option
-      );
+      const response = await axios.put("http://15.165.181.187/admin/reviews/review/modify", "", option);
       setReviewModifyParams({ reviewId: 0, name: "", productName: "", content: "" });
       setReviewModifyParams({ reviewId: 0, content: "" });
       setModifyModalIsOpen(false);
@@ -239,7 +231,7 @@ const AdminReviewReview = () => {
           answer: reviewTextSelect,
         },
       };
-      const response = await axios.get("http://localhost:8080/admin/reviews/review", option);
+      const response = await axios.get("http://15.165.181.187/admin/reviews/review", option);
       return response;
     },
     {
@@ -304,11 +296,7 @@ const AdminReviewReview = () => {
               <div css={modalContent}>리뷰 내용 :{selectReview.content}</div>
             </div>
             <div css={modalbody}>
-              <input
-                css={modalreviewContent}
-                onChange={modalReviewContentInput}
-                type="text"
-              ></input>
+              <input css={modalreviewContent} onChange={modalReviewContentInput} type="text"></input>
             </div>
             <div css={modalFooter}>
               <button css={reviewbutton} onClick={() => registerReview()}>
@@ -333,11 +321,7 @@ const AdminReviewReview = () => {
               <div css={modalContent}>답변 내용 :{selectModifyReview.reviewContent} </div>
             </div>
             <div css={modalbody}>
-              <textarea
-                css={modalreviewContent}
-                onChange={modifyModalReviewContentInput}
-                type="text"
-              ></textarea>
+              <textarea css={modalreviewContent} onChange={modifyModalReviewContentInput} type="text"></textarea>
             </div>
             <div css={modalFooter}>
               <button css={reviewbutton} onClick={() => modifyReview()}>

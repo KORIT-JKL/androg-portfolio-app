@@ -235,7 +235,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
       return response;
     },
     {
@@ -258,7 +258,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
       return response;
     },
     {
@@ -291,7 +291,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/cart", option);
+      const response = await axios.get("http://15.165.181.187/cart", option);
       return response;
     },
 
@@ -321,7 +321,7 @@ const Payment = () => {
         poneNumber: userPhone,
       };
       console.log(data);
-      const response = await axios.post("http://localhost:8080/product/order", data, {
+      const response = await axios.post("http://15.165.181.187/product/order", data, {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         },
@@ -458,9 +458,7 @@ const Payment = () => {
     } else {
       setOrderParams({
         userId: principal.data.data.userId,
-        products: [
-          ...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id)),
-        ],
+        products: [...orderParams.products.filter((product) => product.cartId !== parseInt(e.target.id))],
       });
     }
   };
@@ -497,28 +495,15 @@ const Payment = () => {
                 ) : (
                   <option value="">새주소</option>
                 )}
-                {userAddressList.length > 0 ? (
-                  <option value={userAddressList.length}>새주소</option>
-                ) : (
-                  ""
-                )}
+                {userAddressList.length > 0 ? <option value={userAddressList.length}>새주소</option> : ""}
               </select>
 
               <select css={select}>
                 <option>대한민국</option>
               </select>
-              <input
-                type="text"
-                css={input}
-                value={principal.data !== undefined ? principal.data.data.name : ""}
-              />
+              <input type="text" css={input} value={principal.data !== undefined ? principal.data.data.name : ""} />
               <div>
-                <input
-                  type="text"
-                  css={postNumInput}
-                  value={userAddressZonecode}
-                  placeholder="우편번호"
-                />
+                <input type="text" css={postNumInput} value={userAddressZonecode} placeholder="우편번호" />
                 <button css={addressSearchBtn} onClick={handleClick}>
                   주소찾기
                 </button>
@@ -550,9 +535,7 @@ const Payment = () => {
                 }}
               />
 
-              {orderParams.products.length > 0 &&
-              userAddressDetail !== "" &&
-              regex.test(userPhone) ? (
+              {orderParams.products.length > 0 && userAddressDetail !== "" && regex.test(userPhone) ? (
                 <button css={continueBtn} onClick={onClickPayment}>
                   주문하기
                 </button>

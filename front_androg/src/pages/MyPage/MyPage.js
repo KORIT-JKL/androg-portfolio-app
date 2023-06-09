@@ -132,12 +132,12 @@ const MyPage = () => {
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
       return response;
     },
     {
       onSuccess: (response) => {
-        setProFileImgUrl("http://localhost:8080/image/profile/" + response.data.profileImg);
+        setProFileImgUrl("http://15.165.181.187/image/profile/" + response.data.profileImg);
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
@@ -155,11 +155,7 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post(
-        "http://localhost:8080/user/mypage/profile/img",
-        formData,
-        option
-      );
+      const response = await axios.post("http://15.165.181.187/user/mypage/profile/img", formData, option);
       return response;
     },
     {
@@ -180,7 +176,7 @@ const MyPage = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
       return response;
     },
     {
@@ -203,7 +199,7 @@ const MyPage = () => {
         },
       };
       //user가 구매한 상품 목록 url ->/user/mypage/purchases
-      const response = await axios.get("http://localhost:8080/user/mypage/purchases", data);
+      const response = await axios.get("http://15.165.181.187/user/mypage/purchases", data);
       return response;
     },
     {
@@ -225,7 +221,7 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      return await axios.delete(`http://localhost:8080/user/delete`, option);
+      return await axios.delete(`http://15.165.181.187/user/delete`, option);
     },
     {
       onSuccess: (response) => {
@@ -270,24 +266,13 @@ const MyPage = () => {
             <span css={subTitle}>
               <div css={imgBox}>
                 <img css={img} src={profileImgUrl} alt="" />
-                <input
-                  css={fileInput}
-                  type="file"
-                  ref={fileRef}
-                  onChange={profileImgFileChangeHadle}
-                />
+                <input css={fileInput} type="file" ref={fileRef} onChange={profileImgFileChangeHadle} />
               </div>
               {principal.data !== undefined ? principal.data.data.name : <></>} <br />
             </span>
-            <span css={subTitle}>
-              {principal.data !== undefined ? principal.data.data.email : <></>}
-            </span>
-            <div css={textBox}>
-              {userAddressList[0] !== undefined ? userAddressList[0].address : ""}
-            </div>
-            <div css={textBox}>
-              {userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}
-            </div>
+            <span css={subTitle}>{principal.data !== undefined ? principal.data.data.email : <></>}</span>
+            <div css={textBox}>{userAddressList[0] !== undefined ? userAddressList[0].address : ""}</div>
+            <div css={textBox}>{userAddressList[0] !== undefined ? userAddressList[0].addressDetail : ""}</div>
             <div css={textBox}>
               {userAddressList[0] !== undefined ? userAddressList[0].addressSigungu : ""}
               {userAddressList[0] !== undefined ? ", 우편번호: " : ""}
@@ -333,13 +318,7 @@ const MyPage = () => {
           <h2 css={Title}>주문 기록</h2>
           {orderProducts.length > 0 ? (
             orderProducts.map((orderProduct) => {
-              return (
-                <OrderProducts
-                  key={orderProduct.orderDetailId}
-                  orderProduct={orderProduct}
-                  isOpen={true}
-                />
-              );
+              return <OrderProducts key={orderProduct.orderDetailId} orderProduct={orderProduct} isOpen={true} />;
             })
           ) : (
             <h2 css={subTitle}>주문한 상품이 없습니다.</h2>

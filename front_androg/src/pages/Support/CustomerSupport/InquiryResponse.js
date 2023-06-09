@@ -75,7 +75,7 @@ const InquiryResponse = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
       return response;
     },
     {
@@ -95,7 +95,7 @@ const InquiryResponse = () => {
         },
       };
       const response = await axios.get(
-        `http://localhost:8080/user/inquiry/answer/${principal.data.data.userId}`,
+        `http://15.165.181.187/user/inquiry/answer/${principal.data.data.userId}`,
         option
       );
       return response;

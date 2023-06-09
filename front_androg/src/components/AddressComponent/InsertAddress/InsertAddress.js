@@ -5,10 +5,7 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import AddressInput from "../../Input/AddressInput";
 import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
-import {
-  AddressInsertStateRecoil,
-  AddressListStateRecoil,
-} from "../../../atoms/AddressAtoms/AddressAtoms";
+import { AddressInsertStateRecoil, AddressListStateRecoil } from "../../../atoms/AddressAtoms/AddressAtoms";
 import { useRecoilState } from "recoil";
 import ErrorMessage from "../../Error/ErrorMessage";
 import { authenticationState } from "../../../atoms/Auth/AuthAtoms";
@@ -97,7 +94,7 @@ const InsertAddress = ({ principal }) => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
+      const response = await axios.post("http://15.165.181.187/user/mypage/address", data, option);
       return response;
     },
     {
@@ -145,13 +142,9 @@ const InsertAddress = ({ principal }) => {
   return (
     <div css={addressContent}>
       <h2 css={Title}>새 주소 추가</h2>
+      <div css={nameBox}>{principal.data !== undefined && authState ? principal.data.data.name : ""}</div>
       <div css={nameBox}>
-        {principal.data !== undefined && authState ? principal.data.data.name : ""}
-      </div>
-      <div css={nameBox}>
-        {addressInput.address !== ""
-          ? addressInput.address + "(" + addressInput.bname + ")"
-          : "주소"}
+        {addressInput.address !== "" ? addressInput.address + "(" + addressInput.bname + ")" : "주소"}
       </div>
       <ErrorMessage children={errorMessage.address !== "" ? errorMessage.address : ""} />
       <button
@@ -167,15 +160,8 @@ const InsertAddress = ({ principal }) => {
         주소찾기
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput
-        type="text"
-        placeholder="상세주소"
-        name="addressDetail"
-        onChange={inputOnChangeHandle}
-      />
-      <ErrorMessage
-        children={errorMessage.addressDetail !== "" ? errorMessage.addressDetail : ""}
-      />
+      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+      <ErrorMessage children={errorMessage.addressDetail !== "" ? errorMessage.addressDetail : ""} />
       <AddressInput
         type="text"
         placeholder="구/군/시"
@@ -183,9 +169,7 @@ const InsertAddress = ({ principal }) => {
         value={addressInput.sigungu}
         onChange={(e) => setAddressInput({ ...addressInput, sigungu: e.target.value })}
       />
-      <ErrorMessage
-        children={errorMessage.addressSigungu !== "" ? errorMessage.addressSigungu : ""}
-      />
+      <ErrorMessage children={errorMessage.addressSigungu !== "" ? errorMessage.addressSigungu : ""} />
       <AddressInput
         type="text"
         placeholder="시/도"
@@ -201,9 +185,7 @@ const InsertAddress = ({ principal }) => {
         value={addressInput.zonecode}
         onChange={(e) => setAddressInput({ ...addressInput, zonecode: e.target.value })}
       />
-      <ErrorMessage
-        children={errorMessage.addressZonecode !== "" ? errorMessage.addressZonecode : ""}
-      />
+      <ErrorMessage children={errorMessage.addressZonecode !== "" ? errorMessage.addressZonecode : ""} />
       <AddressInput
         type="text"
         placeholder="전화번호"

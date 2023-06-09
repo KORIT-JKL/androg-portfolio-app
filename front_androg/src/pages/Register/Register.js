@@ -117,7 +117,7 @@ const Register = () => {
   const sendMail = useMutation(
     async () => {
       alert("코드를 전송중입니다.");
-      const response = await axios.post("http://localhost:8080/auth/email", { checkemail });
+      const response = await axios.post("http://15.165.181.187/auth/email", { checkemail });
       return response;
     },
     {
@@ -170,7 +170,7 @@ const Register = () => {
       },
     };
     try {
-      await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
+      await axios.post("http://15.165.181.187/auth/signup", JSON.stringify(data), option);
 
       setErrorMessages({ email: "", password: "", name: "" });
       navigate("/auth/login");

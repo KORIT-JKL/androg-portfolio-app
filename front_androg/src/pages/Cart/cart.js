@@ -222,11 +222,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/cart/update/countUp",
-        product,
-        option
-      );
+      const response = await axios.put("http://15.165.181.187/cart/update/countUp", product, option);
       return response;
     },
     {
@@ -242,11 +238,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/cart/update/countDown",
-        product,
-        option
-      );
+      const response = await axios.put("http://15.165.181.187/cart/update/countDown", product, option);
       return response;
     },
     {
@@ -265,7 +257,7 @@ const Cart = () => {
         headers: { Authorization: `${localStorage.getItem("accessToken")}` },
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.delete("http://localhost:8080/cart/delete", option);
+      const response = await axios.delete("http://15.165.181.187/cart/delete", option);
       return response;
     },
     {
@@ -288,7 +280,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
 
       return response;
     },
@@ -311,7 +303,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/cart", option);
+      const response = await axios.get("http://15.165.181.187/cart", option);
       return response;
     },
     {
@@ -365,10 +357,7 @@ const Cart = () => {
                     <div css={detailContainer}>
                       <div css={productName}>
                         {product.productName}
-                        <button
-                          css={productDelectButton}
-                          onClick={() => deleteProduct.mutate(product)}
-                        >
+                        <button css={productDelectButton} onClick={() => deleteProduct.mutate(product)}>
                           X
                         </button>
                       </div>
@@ -376,8 +365,7 @@ const Cart = () => {
                         {product.colorName} / {product.sizeName}
                       </div>
                       <div css={productPrice}>
-                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber}
-                        )
+                        ₩{product.productPrice * product.countNumber} (Count : {product.countNumber})
                       </div>
                       <div css={productCount}>
                         <button css={plusAndMinus} onClick={() => countMinus.mutate(product)}>

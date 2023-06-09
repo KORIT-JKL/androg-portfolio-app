@@ -75,11 +75,7 @@ const OAuth2Register = () => {
         },
       };
       try {
-        const response = await axios.post(
-          "http://localhost:8080/auth/oauth2/register",
-          registerData,
-          option
-        );
+        const response = await axios.post("http://15.165.181.187/auth/oauth2/register", registerData, option);
         setErrorMessages({ password: "" });
         return response;
       } catch (error) {
@@ -131,31 +127,14 @@ const OAuth2Register = () => {
             디로 이용하실 수 있습니다.
           </p>
           <div css={inputCss}>
-            <RegisterInput
-              type="email"
-              placeholder="이메일"
-              name="email"
-              disabled={true}
-              value={email}
-            />
+            <RegisterInput type="email" placeholder="이메일" name="email" disabled={true} value={email} />
           </div>
           <div css={inputCss}>
-            <RegisterInput
-              type="password"
-              placeholder="비밀번호"
-              onChange={passwordOnchange}
-              name="password"
-            />
+            <RegisterInput type="password" placeholder="비밀번호" onChange={passwordOnchange} name="password" />
           </div>
           <ErrorMessage children={errorMessages.password} />
           <div css={inputCss}>
-            <RegisterInput
-              type="name"
-              placeholder="이름"
-              name="name"
-              disabled={true}
-              value={name}
-            />
+            <RegisterInput type="name" placeholder="이름" name="name" disabled={true} value={name} />
           </div>
           <div css={privacy}>
             <input type="checkbox" css={privacyBtn} />

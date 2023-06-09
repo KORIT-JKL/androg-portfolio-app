@@ -133,7 +133,7 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
       return response;
     },
     {
@@ -152,10 +152,7 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
-        option
-      );
+      const response = await axios.delete(`http://15.165.181.187/user/mypage/address/${address.addressId}`, option);
       return response;
     },
     {
@@ -179,7 +176,7 @@ const Address = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
       return response;
     },
     {
@@ -201,11 +198,7 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/user/mypage/address/default",
-        data,
-        option
-      );
+      const response = await axios.put("http://15.165.181.187/user/mypage/address/default", data, option);
       return response;
     },
     {
@@ -271,10 +264,7 @@ const Address = () => {
                         {address.addressSigungu}, 우편번호:{address.addressZonecode}
                       </p>
 
-                      <button
-                        css={defaultAddress(index)}
-                        onClick={() => addressDefault.mutate(address)}
-                      >
+                      <button css={defaultAddress(index)} onClick={() => addressDefault.mutate(address)}>
                         {index === 0 ? "기본 배송지" : "기본 배송지 설정"}
                       </button>
                     </div>

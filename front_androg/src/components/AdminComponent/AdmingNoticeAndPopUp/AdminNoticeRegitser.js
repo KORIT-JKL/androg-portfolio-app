@@ -63,11 +63,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post(
-        "http://localhost:8080/admin/notice/register",
-        data,
-        option
-      );
+      const response = await axios.post("http://15.165.181.187/admin/notice/register", data, option);
       return response;
     },
     {
@@ -92,7 +88,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/admin/notice/modify", data, option);
+      const response = await axios.put("http://15.165.181.187/admin/notice/modify", data, option);
       return response;
     },
     {
@@ -111,10 +107,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(
-        `http://localhost:8080/admin/notice/${notice.noticeId}`,
-        option
-      );
+      const response = await axios.delete(`http://15.165.181.187/admin/notice/${notice.noticeId}`, option);
       return response;
     },
     {
@@ -135,7 +128,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/notice", option);
+      const response = await axios.get("http://15.165.181.187/auth/notice", option);
       return response;
     },
     {
@@ -165,12 +158,7 @@ const AdminNoticeRegitser = () => {
       <div css={inputbox}>
         <SupprotInput type="text" placeholder="제목" name="subject" onChange={onchangeHandle} />
       </div>
-      <textarea
-        css={textArea}
-        placeholder="내용을 입력하세요"
-        name="content"
-        onChange={onchangeHandle}
-      ></textarea>
+      <textarea css={textArea} placeholder="내용을 입력하세요" name="content" onChange={onchangeHandle}></textarea>
       {notice.noticeId !== undefined ? (
         <>
           <button

@@ -105,7 +105,7 @@ const ReviewComponent = ({ review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://15.165.181.187/auth/principal", option);
       return response;
     },
     {
@@ -126,11 +126,7 @@ const ReviewComponent = ({ review }) => {
       <div css={reviewTitle}>
         <div css={reviewUser}>
           <div css={imgBox}>
-            <img
-              css={img}
-              src={"http://localhost:8080/image/profile/" + review.profileImg}
-              alt=""
-            />
+            <img css={img} src={"http://15.165.181.187/image/profile/" + review.profileImg} alt="" />
           </div>
           {review.userName}
         </div>
@@ -147,9 +143,7 @@ const ReviewComponent = ({ review }) => {
             ""
           )}
 
-          {isModalOpen && (
-            <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />
-          )}
+          {isModalOpen && <ReviewUpdateModal onClose={() => setIsModalOpen(false)} review={review} />}
         </div>
       </div>
 

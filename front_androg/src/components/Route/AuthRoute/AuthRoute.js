@@ -17,7 +17,7 @@ const AuthRoute = ({ path, element }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/authenticated", option);
+      const response = await axios.get("http://15.165.181.187/auth/authenticated", option);
       return response;
     },
     {
@@ -43,7 +43,7 @@ const AuthRoute = ({ path, element }) => {
         },
       };
       try {
-        const response = await axios.get("http://localhost:8080/token/authentcation", option);
+        const response = await axios.get("http://15.165.181.187/token/authentcation", option);
         if (response.data !== null) {
           const roles = response.data.authorities.split(",");
           if (roles.includes("ROLE_ADMIN")) {
@@ -82,10 +82,7 @@ const AuthRoute = ({ path, element }) => {
     }
     return element;
   }
-  if (
-    !authState &&
-    authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0
-  ) {
+  if (!authState && authenticatedPaths.filter((authenticatedPath) => path.startsWith(authenticatedPath)).length > 0) {
     navigate("/auth/login");
   }
 

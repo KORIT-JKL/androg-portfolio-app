@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useMutation } from 'react-query';
-import { useSearchParams } from 'react-router-dom';
-import CommonHeader from '../../components/CommonHeader/CommonHeader';
-import CommonFooter from '../../components/CommonFooter/CommonFooter';
-import LoginInput from '../../components/Login/LoginInput/LoginInput';
+import { css } from "@emotion/react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useMutation } from "react-query";
+import { useSearchParams } from "react-router-dom";
+import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import LoginInput from "../../components/Login/LoginInput/LoginInput";
 
 const container = css`
   display: flex;
@@ -61,7 +61,7 @@ const OAuth2Merge = () => {
   const providerMerge = useMutation(
     async (mergeData) => {
       try {
-        const response = await axios.put('http://localhost:8080/auth/oauth2/merge', mergeData);
+        const response = await axios.put("http://15.165.181.187/auth/oauth2/merge", mergeData);
         return response;
       } catch (error) {
         setErrorMsg(error.response.data.message);
@@ -71,17 +71,17 @@ const OAuth2Merge = () => {
     {
       onSuccess: (response) => {
         if (response.status === 200) {
-          window.location.replace('/auth/login');
+          window.location.replace("/auth/login");
         }
       },
     }
   );
   const [password, setPassword] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [errorMessage, setErrorMsg] = useState('');
+  const [errorMessage, setErrorMsg] = useState("");
 
-  const email = searchParams.get('email');
-  const provider = searchParams.get('provider');
+  const email = searchParams.get("email");
+  const provider = searchParams.get("provider");
 
   const passwordChangeHandle = (e) => {
     setPassword(e.target.value);

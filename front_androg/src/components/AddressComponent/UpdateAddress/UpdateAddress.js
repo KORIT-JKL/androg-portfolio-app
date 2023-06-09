@@ -96,7 +96,7 @@ const UpdateAddress = ({ principal, address }) => {
       };
       //주소지 put url
       const response = await axios.put(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        `http://15.165.181.187/user/mypage/address/${address.addressId}`,
         JSON.stringify(data),
         option
       );
@@ -146,10 +146,7 @@ const UpdateAddress = ({ principal, address }) => {
   return (
     <div css={addressContent}>
       <h2 css={Title}>주소 수정 하기</h2>
-      <div css={nameBox}>
-        {" "}
-        {principal.data !== undefined && authState ? principal.data.data.name : ""}
-      </div>
+      <div css={nameBox}> {principal.data !== undefined && authState ? principal.data.data.name : ""}</div>
       <div css={nameBox}>
         {addressInitState
           ? address.address + "(" + address.addressBname + ")"
@@ -169,15 +166,8 @@ const UpdateAddress = ({ principal, address }) => {
         주소찾기
       </button>
       {openPostCode ? <DaumPostcodeEmbed onComplete={selectAddress} autoClose={false} /> : ""}
-      <AddressInput
-        type="text"
-        placeholder="상세주소"
-        name="addressDetail"
-        onChange={inputOnChangeHandle}
-      />
-      <ErrorMessage
-        children={errorMessage.addressDetail !== "" ? errorMessage.addressDetail : ""}
-      />
+      <AddressInput type="text" placeholder="상세주소" name="addressDetail" onChange={inputOnChangeHandle} />
+      <ErrorMessage children={errorMessage.addressDetail !== "" ? errorMessage.addressDetail : ""} />
       <AddressInput
         type="text"
         placeholder="구/군/시"
@@ -185,9 +175,7 @@ const UpdateAddress = ({ principal, address }) => {
         value={addressInitState ? address.addressSigungu : addressInput.addressSigungu}
         onChange={(e) => setAddressInput({ ...addressInput, addressSigungu: e.target.value })}
       />
-      <ErrorMessage
-        children={errorMessage.addressSigungu !== "" ? errorMessage.addressSigungu : ""}
-      />
+      <ErrorMessage children={errorMessage.addressSigungu !== "" ? errorMessage.addressSigungu : ""} />
       <AddressInput
         type="text"
         placeholder="시/도"
@@ -203,9 +191,7 @@ const UpdateAddress = ({ principal, address }) => {
         value={addressInitState ? address.addressZonecode : addressInput.addressZonecode}
         onChange={(e) => setAddressInput({ ...addressInput, addressZonecode: e.target.value })}
       />
-      <ErrorMessage
-        children={errorMessage.addressZonecode !== "" ? errorMessage.addressZonecode : ""}
-      />
+      <ErrorMessage children={errorMessage.addressZonecode !== "" ? errorMessage.addressZonecode : ""} />
       <AddressInput
         type="text"
         placeholder="전화번호"
