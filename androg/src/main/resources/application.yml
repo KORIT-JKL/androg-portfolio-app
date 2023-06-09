@@ -41,7 +41,7 @@ spring:
           naver:
             client-id: QWEPYwG2j9mrsHN2I81l
             client-secret: RitP1Sj6kz
-            redirect-uri:  http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/naver
+            redirect-uri:  http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws./login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope:
               - name

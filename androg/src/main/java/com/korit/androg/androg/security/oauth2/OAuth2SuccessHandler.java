@@ -40,7 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			String name = oAuth2User.getAttribute("name");
 			response
 			.sendRedirect(
-					"http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/auth/oauth2/register"
+					"http://otso.s3-website.ap-northeast-2.amazonaws.com/auth/oauth2/register"
 								+"?registerToken=" + registerToken
 								+ "&email=" + email
 								+ "&name=" + URLEncoder.encode(name, "UTF-8") 
@@ -50,17 +50,17 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			if(StringUtils.hasText(userEntity.getProvider())) {
 				//회원가입이 되어 있고 provider가 등록된 경우
 				if(!userEntity.getProvider().contains(provider)) {
-					response.sendRedirect("http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/auth/oauth2/merge"	
+					response.sendRedirect("http://otso.s3-website.ap-northeast-2.amazonaws.com/auth/oauth2/merge"	
 							+ "?provider="
 							+ provider
 							+ "&email=" + email);
 					return;
 				}
-				response.sendRedirect("http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/auth/oauth2/login"	
+				response.sendRedirect("http://otso.s3-website.ap-northeast-2.amazonaws.com/auth/oauth2/login"	
 						+ "?accessToken=" +"Bearer " + jwtTokenProvider.generateToken(authentication).getAccessToken());
 			}else {
 				//회원가입은 되어 있지만 provider가 null인 경우
-				response.sendRedirect("http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/auth/oauth2/merge"	
+				response.sendRedirect("http://otso.s3-website.ap-northeast-2.amazonaws.com/auth/oauth2/merge"	
 														+ "?provider="
 														+ provider
 														+ "&email=" + email);
