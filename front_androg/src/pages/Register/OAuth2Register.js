@@ -76,7 +76,7 @@ const OAuth2Register = () => {
       };
       try {
         const response = await axios.post(
-          "http://localhost:8080/auth/oauth2/register",
+          "http://52.79.158.206/auth/oauth2/register",
           registerData,
           option
         );

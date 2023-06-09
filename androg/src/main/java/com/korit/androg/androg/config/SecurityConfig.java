@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 			.and()
 			.oauth2Login()
-			.loginPage("http://localhost:3000/auth/login")
+			.loginPage("http://otso.s3-website.ap-northeast-2.amazonaws.com/auth/login")
 			.successHandler(auth2SuccessHandler)
 			.userInfoEndpoint()
 			.userService(oAuth2Service);

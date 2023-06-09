@@ -80,7 +80,7 @@ const ReviewUpdateModal = ({ onClose, review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/product/review/modify", data, option);
+      const response = await axios.put("http://52.79.158.206/product/review/modify", data, option);
       return response;
     },
     {

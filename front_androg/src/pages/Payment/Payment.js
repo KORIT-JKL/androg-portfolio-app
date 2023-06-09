@@ -235,7 +235,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
       return response;
     },
     {
@@ -258,7 +258,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://52.79.158.206/user/mypage/address", option);
       return response;
     },
     {
@@ -291,7 +291,7 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/cart", option);
+      const response = await axios.get("http://52.79.158.206/cart", option);
       return response;
     },
 
@@ -321,7 +321,7 @@ const Payment = () => {
         poneNumber: userPhone,
       };
       console.log(data);
-      const response = await axios.post("http://localhost:8080/product/order", data, {
+      const response = await axios.post("http://52.79.158.206/product/order", data, {
         headers: {
           Authorization: localStorage.getItem("accessToken"),
         },

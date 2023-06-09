@@ -133,7 +133,7 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
       return response;
     },
     {
@@ -153,7 +153,7 @@ const Address = () => {
         },
       };
       const response = await axios.delete(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        `http://52.79.158.206/user/mypage/address/${address.addressId}`,
         option
       );
       return response;
@@ -179,7 +179,7 @@ const Address = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://52.79.158.206/user/mypage/address", option);
       return response;
     },
     {
@@ -202,7 +202,7 @@ const Address = () => {
         },
       };
       const response = await axios.put(
-        "http://localhost:8080/user/mypage/address/default",
+        "http://52.79.158.206/user/mypage/address/default",
         data,
         option
       );

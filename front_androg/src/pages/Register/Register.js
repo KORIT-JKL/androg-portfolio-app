@@ -117,7 +117,7 @@ const Register = () => {
   const sendMail = useMutation(
     async () => {
       alert("코드를 전송중입니다.");
-      const response = await axios.post("http://localhost:8080/auth/email", { checkemail });
+      const response = await axios.post("http://52.79.158.206/auth/email", { checkemail });
       return response;
     },
     {
@@ -170,7 +170,7 @@ const Register = () => {
       },
     };
     try {
-      await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
+      await axios.post("http://52.79.158.206/auth/signup", JSON.stringify(data), option);
 
       setErrorMessages({ email: "", password: "", name: "" });
       navigate("/auth/login");
@@ -219,7 +219,11 @@ const Register = () => {
           {openCodeInput ? (
             <>
               <div>
-                <input css={input} placeholder="인증번호를 입력해주세요" onChange={codeInputHandle} />
+                <input
+                  css={input}
+                  placeholder="인증번호를 입력해주세요"
+                  onChange={codeInputHandle}
+                />
 
                 <button css={button} onClick={() => checkcode()}>
                   확인
@@ -242,7 +246,12 @@ const Register = () => {
           {updatePasswordIsOpen ? (
             <>
               <div css={inputCss}>
-                <RegisterInput type="password" placeholder="비밀번호" onChange={onChange} name="password" />
+                <RegisterInput
+                  type="password"
+                  placeholder="비밀번호"
+                  onChange={onChange}
+                  name="password"
+                />
                 <div css={errorMsg}>{errorMessages.password}</div>
               </div>
               <div css={inputCss}>
@@ -252,7 +261,8 @@ const Register = () => {
               <div css={privacy}>
                 <input type="checkbox" css={privacyBtn} />
                 <label css={text}>
-                  <a href="/page/legal">개인정보 보호정책</a> 및 <a href="/page/legal">이용약관</a> 동의
+                  <a href="/page/legal">개인정보 보호정책</a> 및 <a href="/page/legal">이용약관</a>{" "}
+                  동의
                 </label>
               </div>
             </>

@@ -132,12 +132,12 @@ const MyPage = () => {
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
       return response;
     },
     {
       onSuccess: (response) => {
-        setProFileImgUrl("http://localhost:8080/image/profile/" + response.data.profileImg);
+        setProFileImgUrl("http://52.79.158.206/image/profile/" + response.data.profileImg);
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
@@ -156,7 +156,7 @@ const MyPage = () => {
         },
       };
       const response = await axios.post(
-        "http://localhost:8080/user/mypage/profile/img",
+        "http://52.79.158.206/user/mypage/profile/img",
         formData,
         option
       );
@@ -180,7 +180,7 @@ const MyPage = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://localhost:8080/user/mypage/address", option);
+      const response = await axios.get("http://52.79.158.206/user/mypage/address", option);
       return response;
     },
     {
@@ -203,7 +203,7 @@ const MyPage = () => {
         },
       };
       //user가 구매한 상품 목록 url ->/user/mypage/purchases
-      const response = await axios.get("http://localhost:8080/user/mypage/purchases", data);
+      const response = await axios.get("http://52.79.158.206/user/mypage/purchases", data);
       return response;
     },
     {
@@ -225,7 +225,7 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      return await axios.delete(`http://localhost:8080/user/delete`, option);
+      return await axios.delete(`http://52.79.158.206/user/delete`, option);
     },
     {
       onSuccess: (response) => {

@@ -105,7 +105,7 @@ const ReviewComponent = ({ review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
       return response;
     },
     {
@@ -126,11 +126,7 @@ const ReviewComponent = ({ review }) => {
       <div css={reviewTitle}>
         <div css={reviewUser}>
           <div css={imgBox}>
-            <img
-              css={img}
-              src={"http://localhost:8080/image/profile/" + review.profileImg}
-              alt=""
-            />
+            <img css={img} src={"http://52.79.158.206/image/profile/" + review.profileImg} alt="" />
           </div>
           {review.userName}
         </div>

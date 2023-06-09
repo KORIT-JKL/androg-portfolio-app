@@ -97,7 +97,7 @@ const InsertAddress = ({ principal }) => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.post("http://localhost:8080/user/mypage/address", data, option);
+      const response = await axios.post("http://52.79.158.206/user/mypage/address", data, option);
       return response;
     },
     {

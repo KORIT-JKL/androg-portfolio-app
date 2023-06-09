@@ -88,7 +88,7 @@ const Review = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
       return response;
     },
     {
@@ -114,7 +114,7 @@ const Review = () => {
       };
 
       const response = await axios.get(
-        `http://localhost:8080/product/${orderDetailId}/reviewproduct`,
+        `http://52.79.158.206/product/${orderDetailId}/reviewproduct`,
         data
       );
       return response;
@@ -140,7 +140,7 @@ const Review = () => {
         },
       };
       const response = await axios.post(
-        "http://localhost:8080/product/review/register",
+        "http://52.79.158.206/product/review/register",
         data,
         option
       );

@@ -53,7 +53,7 @@ const Notice = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/notice", option);
+      const response = await axios.get("http://52.79.158.206/auth/notice", option);
       return response;
     },
     {

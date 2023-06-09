@@ -96,7 +96,7 @@ const UpdateAddress = ({ principal, address }) => {
       };
       //주소지 put url
       const response = await axios.put(
-        `http://localhost:8080/user/mypage/address/${address.addressId}`,
+        `http://52.79.158.206/user/mypage/address/${address.addressId}`,
         JSON.stringify(data),
         option
       );

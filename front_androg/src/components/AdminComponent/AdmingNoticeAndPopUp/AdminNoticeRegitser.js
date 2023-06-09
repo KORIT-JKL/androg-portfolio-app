@@ -63,11 +63,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post(
-        "http://localhost:8080/admin/notice/register",
-        data,
-        option
-      );
+      const response = await axios.post("http://52.79.158.206/admin/notice/register", data, option);
       return response;
     },
     {
@@ -92,7 +88,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://localhost:8080/admin/notice/modify", data, option);
+      const response = await axios.put("http://52.79.158.206/admin/notice/modify", data, option);
       return response;
     },
     {
@@ -112,7 +108,7 @@ const AdminNoticeRegitser = () => {
         },
       };
       const response = await axios.delete(
-        `http://localhost:8080/admin/notice/${notice.noticeId}`,
+        `http://52.79.158.206/admin/notice/${notice.noticeId}`,
         option
       );
       return response;
@@ -135,7 +131,7 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/notice", option);
+      const response = await axios.get("http://52.79.158.206/auth/notice", option);
       return response;
     },
     {

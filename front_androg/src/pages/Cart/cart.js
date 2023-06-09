@@ -222,11 +222,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put(
-        "http://localhost:8080/cart/update/countUp",
-        product,
-        option
-      );
+      const response = await axios.put("http://52.79.158.206/cart/update/countUp", product, option);
       return response;
     },
     {
@@ -243,7 +239,7 @@ const Cart = () => {
         },
       };
       const response = await axios.put(
-        "http://localhost:8080/cart/update/countDown",
+        "http://52.79.158.206/cart/update/countDown",
         product,
         option
       );
@@ -265,7 +261,7 @@ const Cart = () => {
         headers: { Authorization: `${localStorage.getItem("accessToken")}` },
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.delete("http://localhost:8080/cart/delete", option);
+      const response = await axios.delete("http://52.79.158.206/cart/delete", option);
       return response;
     },
     {
@@ -288,7 +284,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/auth/principal", option);
+      const response = await axios.get("http://52.79.158.206/auth/principal", option);
 
       return response;
     },
@@ -311,7 +307,7 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://localhost:8080/cart", option);
+      const response = await axios.get("http://52.79.158.206/cart", option);
       return response;
     },
     {

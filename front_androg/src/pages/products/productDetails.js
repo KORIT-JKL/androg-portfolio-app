@@ -199,7 +199,7 @@ const ProductDetails = () => {
   const getProduct = useQuery(
     ["getProduct"],
     async () => {
-      const reponse = await axios.get(`http://localhost:8080/products/${productId}/details`);
+      const reponse = await axios.get(`http://52.79.158.206/products/${productId}/details`);
       return reponse;
     },
     {
@@ -213,7 +213,7 @@ const ProductDetails = () => {
   const getSameNameProducts = useQuery(
     ["getSameNameProducts"],
     async () => {
-      const response = await axios.get(`http://localhost:8080/products/${productId}/sameName`);
+      const response = await axios.get(`http://52.79.158.206/products/${productId}/sameName`);
       return response;
     },
     {
@@ -228,7 +228,7 @@ const ProductDetails = () => {
     setThiRefresh(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/cart/addition",
+        "http://52.79.158.206/cart/addition",
         JSON.stringify(searchParams),
         {
           headers: {
@@ -249,7 +249,7 @@ const ProductDetails = () => {
   const getReviews = useQuery(
     ["getReviews"],
     async () => {
-      const response = await axios.get(`http://localhost:8080/products/review/${productId}`);
+      const response = await axios.get(`http://52.79.158.206/products/review/${productId}`);
       return response;
     },
     {
@@ -278,7 +278,7 @@ const ProductDetails = () => {
 
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.get("http://localhost:8080/products/adminReview", option);
+      const response = await axios.get("http://52.79.158.206/products/adminReview", option);
       return response;
     },
     {
@@ -317,7 +317,7 @@ const ProductDetails = () => {
   const directBuy = async (product) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/product/directBuy",
+        "http://52.79.158.206/product/directBuy",
         JSON.stringify(searchParams),
         {
           headers: {

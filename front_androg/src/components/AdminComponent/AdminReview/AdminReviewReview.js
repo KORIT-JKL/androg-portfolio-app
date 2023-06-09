@@ -188,7 +188,7 @@ const AdminReviewReview = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:8080/admin/reviews/review/register",
+        "http://52.79.158.206/admin/reviews/review/register",
         "",
         option
       );
@@ -214,7 +214,7 @@ const AdminReviewReview = () => {
     };
     try {
       const response = await axios.put(
-        "http://localhost:8080/admin/reviews/review/modify",
+        "http://52.79.158.206/admin/reviews/review/modify",
         "",
         option
       );
@@ -239,7 +239,7 @@ const AdminReviewReview = () => {
           answer: reviewTextSelect,
         },
       };
-      const response = await axios.get("http://localhost:8080/admin/reviews/review", option);
+      const response = await axios.get("http://52.79.158.206/admin/reviews/review", option);
       return response;
     },
     {

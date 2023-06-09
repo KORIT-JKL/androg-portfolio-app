@@ -6,7 +6,6 @@ import { InquiryAnswerState } from "../../../atoms/Admin/AdminAtoms";
 import axios from "axios";
 import { QueryClient, useMutation, useQueryClient } from "react-query";
 
-
 const answerContainer = css`
   position: fixed;
   display: flex;
@@ -95,7 +94,7 @@ const InquiryAnswer = ({ inquiryId }) => {
         },
       };
       const response = await axios.post(
-        "http://localhost:8080/admin/inquiries/answer",
+        "http://52.79.158.206/admin/inquiries/answer",
         data,
         option
       );
@@ -104,9 +103,8 @@ const InquiryAnswer = ({ inquiryId }) => {
     {
       onSuccess: (response) => {
         if (response.status === 200) {
-          
           alert("문의답변 완료");
-          queryClient.fetchQuery('getInquiries');
+          queryClient.fetchQuery("getInquiries");
         }
       },
       onError: (error) => {

@@ -1,16 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import CommonHeader from '../../components/CommonHeader/CommonHeader';
-import axios from 'axios';
-import ProductsCard from './productsCard';
-import CommonFooter from '../../components/CommonFooter/CommonFooter';
-import QueryString from 'qs';
-import { setRefresh } from '../../atoms/Common/CommonAtoms';
-import { setProducts, setSearchParams } from '../../atoms/Product/ProductAtoms';
+import { css } from "@emotion/react";
+import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
+import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import axios from "axios";
+import ProductsCard from "./productsCard";
+import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import QueryString from "qs";
+import { setRefresh } from "../../atoms/Common/CommonAtoms";
+import { setProducts, setSearchParams } from "../../atoms/Product/ProductAtoms";
 
 const container = css`
   display: flex;
@@ -70,13 +70,13 @@ const SearchProducts = () => {
     params: {
       searchParams: searchParams,
     },
-    paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: 'repeat' }),
+    paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
   };
 
   const searchProducts = useQuery(
-    ['searchProducts'],
+    ["searchProducts"],
     async () => {
-      const response = await axios.get('http://localhost:8080/products/search', option);
+      const response = await axios.get("http://52.79.158.206/products/search", option);
       return response;
     },
     {
@@ -116,7 +116,7 @@ const SearchProducts = () => {
                   </li>
                 </>
               ))
-            : ''}
+            : ""}
         </ul>
         <div ref={lastProductRef}></div>
       </div>
