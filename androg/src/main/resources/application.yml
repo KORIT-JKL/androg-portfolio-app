@@ -24,14 +24,14 @@ spring:
           google:
             client-id: 821126360659-in3nrsqk4lkk931p6skmsbkbs99na8ph.apps.googleusercontent.com
             client-secret: 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
-            redirect-uri: http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/google
+            redirect-uri: http://ec2-18-189-65-68.us-east-2.compute.amazonaws.com/login/oauth2/code/google
             scope:
               - email
               - profile
           kakao:
             client-id: 1932e3e68d4e6ca2ec3e566e6b6b55f7
             client-secret: BsNWBsgDcAM0Ff4A7CpgBZOBM2jtNXMd
-            redirect-uri: http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/kakao
+            redirect-uri: http://ec2-18-189-65-68.us-east-2.compute.amazonaws.com/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             client-name: Kakao
@@ -41,7 +41,7 @@ spring:
           naver:
             client-id: QWEPYwG2j9mrsHN2I81l
             client-secret: RitP1Sj6kz
-            redirect-uri:  http://ec2-52-79-158-206.ap-northeast-2.compute.amazonaws./login/oauth2/code/naver
+            redirect-uri:  http://ec2-18-189-65-68.us-east-2.compute.amazonaws.com/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope:
               - name
