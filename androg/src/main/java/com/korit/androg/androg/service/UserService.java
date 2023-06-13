@@ -1,5 +1,6 @@
 package com.korit.androg.androg.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,6 +43,12 @@ public class UserService {
 		
 		Path uploadPath = Paths.get(filePath+"profile/"+tempFileName);
 		
+		
+		File f = new File(filePath + "profile/");
+		
+		if(f.exists()) {
+			f.mkdirs();
+		}
 		
 		try {
 			Files.write(uploadPath, profileImgFile.getBytes());
