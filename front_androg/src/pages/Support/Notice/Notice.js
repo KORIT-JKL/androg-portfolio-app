@@ -53,7 +53,10 @@ const Notice = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/notice", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/notice",
+        option
+      );
       return response;
     },
     {

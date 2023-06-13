@@ -133,7 +133,10 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
@@ -152,7 +155,10 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(`http://15.165.181.187/user/mypage/address/${address.addressId}`, option);
+      const response = await axios.delete(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address/${address.addressId}`,
+        option
+      );
       return response;
     },
     {
@@ -176,7 +182,10 @@ const Address = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address",
+        option
+      );
       return response;
     },
     {
@@ -198,7 +207,11 @@ const Address = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/user/mypage/address/default", data, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address/default",
+        data,
+        option
+      );
       return response;
     },
     {

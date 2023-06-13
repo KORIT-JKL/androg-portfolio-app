@@ -96,7 +96,7 @@ const UpdateAddress = ({ principal, address }) => {
       };
       //주소지 put url
       const response = await axios.put(
-        `http://15.165.181.187/user/mypage/address/${address.addressId}`,
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address/${address.addressId}`,
         JSON.stringify(data),
         option
       );

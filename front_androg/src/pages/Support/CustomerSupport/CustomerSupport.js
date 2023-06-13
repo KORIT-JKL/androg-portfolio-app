@@ -88,7 +88,11 @@ const CustomerSupport = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/user/inquiry", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/inquiry",
+        data,
+        option
+      );
 
       return response;
     },

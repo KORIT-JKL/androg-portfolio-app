@@ -17,7 +17,10 @@ const AuthRoute = ({ path, element }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/authenticated", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/authenticated",
+        option
+      );
       return response;
     },
     {
@@ -43,7 +46,10 @@ const AuthRoute = ({ path, element }) => {
         },
       };
       try {
-        const response = await axios.get("http://15.165.181.187/token/authentcation", option);
+        const response = await axios.get(
+          "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/token/authentcation",
+          option
+        );
         if (response.data !== null) {
           const roles = response.data.authorities.split(",");
           if (roles.includes("ROLE_ADMIN")) {

@@ -132,12 +132,18 @@ const MyPage = () => {
         },
       };
       //마이페이지 조회 url /user/{userId}/mypage -> /user/mypage로 변경
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
       onSuccess: (response) => {
-        setProFileImgUrl("http://15.165.181.187/image/profile/" + response.data.profileImg);
+        setProFileImgUrl(
+          "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/image/profile/" +
+            response.data.profileImg
+        );
         userId = response.data.userId;
         setInfoRefresh(false);
         setProductsRefresh(true);
@@ -155,7 +161,11 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/user/mypage/profile/img", formData, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/profile/img",
+        formData,
+        option
+      );
       return response;
     },
     {
@@ -176,7 +186,10 @@ const MyPage = () => {
         },
       };
       //user 주소지 조회 url/user/mypage/address
-      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address",
+        option
+      );
       return response;
     },
     {
@@ -199,7 +212,10 @@ const MyPage = () => {
         },
       };
       //user가 구매한 상품 목록 url ->/user/mypage/purchases
-      const response = await axios.get("http://15.165.181.187/user/mypage/purchases", data);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/purchases",
+        data
+      );
       return response;
     },
     {
@@ -221,7 +237,10 @@ const MyPage = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      return await axios.delete(`http://15.165.181.187/user/delete`, option);
+      return await axios.delete(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/delete`,
+        option
+      );
     },
     {
       onSuccess: (response) => {

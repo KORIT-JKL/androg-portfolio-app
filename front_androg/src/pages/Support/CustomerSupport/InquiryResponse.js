@@ -75,7 +75,10 @@ const InquiryResponse = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
@@ -95,7 +98,7 @@ const InquiryResponse = () => {
         },
       };
       const response = await axios.get(
-        `http://15.165.181.187/user/inquiry/answer/${principal.data.data.userId}`,
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/inquiry/answer/${principal.data.data.userId}`,
         option
       );
       return response;

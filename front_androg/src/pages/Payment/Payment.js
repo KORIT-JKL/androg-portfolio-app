@@ -235,7 +235,10 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
@@ -258,7 +261,10 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/user/mypage/address", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address",
+        option
+      );
       return response;
     },
     {
@@ -291,7 +297,10 @@ const Payment = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/cart", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart",
+        option
+      );
       return response;
     },
 
@@ -321,11 +330,15 @@ const Payment = () => {
         poneNumber: userPhone,
       };
       console.log(data);
-      const response = await axios.post("http://15.165.181.187/product/order", data, {
-        headers: {
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/product/order",
+        data,
+        {
+          headers: {
+            Authorization: localStorage.getItem("accessToken"),
+          },
+        }
+      );
       return response;
     },
     {

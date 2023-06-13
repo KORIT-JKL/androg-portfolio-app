@@ -59,7 +59,10 @@ const AdminProfit = () => {
   const getDateTotalPrice = useQuery(
     ["getDateTotalPrice"],
     async () => {
-      const response = await axios.get("http://15.165.181.187/admin/rank/date", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/rank/date",
+        option
+      );
       return response;
     },
     {
@@ -84,7 +87,10 @@ const AdminProfit = () => {
   const getCountRank = useQuery(
     ["getCountRank"],
     async () => {
-      const response = await axios.get("http://15.165.181.187/admin/rank/count", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/rank/count",
+        option
+      );
       return response;
     },
     {
@@ -111,7 +117,10 @@ const AdminProfit = () => {
   const getProfitRank = useQuery(
     ["getProfitRank"],
     async () => {
-      const response = await axios.get("http://15.165.181.187/admin/rank/profit", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/rank/profit",
+        option
+      );
       return response;
     },
     {
@@ -138,7 +147,10 @@ const AdminProfit = () => {
   const getUserRank = useQuery(
     ["getUserRank"],
     async () => {
-      const response = await axios.get("http://15.165.181.187/admin/rank/user", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/rank/user",
+        option
+      );
       return response;
     },
     {

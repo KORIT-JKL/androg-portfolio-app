@@ -88,7 +88,10 @@ const Review = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
@@ -113,7 +116,10 @@ const Review = () => {
         },
       };
 
-      const response = await axios.get(`http://15.165.181.187/product/${orderDetailId}/reviewproduct`, data);
+      const response = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/product/${orderDetailId}/reviewproduct`,
+        data
+      );
       return response;
     },
     {
@@ -136,7 +142,11 @@ const Review = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/product/review/register", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/product/review/register",
+        data,
+        option
+      );
       return response;
     },
     {

@@ -177,7 +177,10 @@ const AdminProductModify = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete("http://15.165.181.187/admin/products/delete", option);
+      const response = await axios.delete(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/delete",
+        option
+      );
       return response;
     },
     {
@@ -194,7 +197,10 @@ const AdminProductModify = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.get(`http://15.165.181.187/admin/products/${selectCategoryId}`, option);
+      const response = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/${selectCategoryId}`,
+        option
+      );
 
       return response;
     },
@@ -215,7 +221,10 @@ const AdminProductModify = () => {
         },
       };
       // 전체 색상 들고오기
-      const response = await axios.get("http://15.165.181.187/admin/products/colors", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/colors",
+        option
+      );
       return response;
     },
     {
@@ -303,7 +312,7 @@ const AdminProductModify = () => {
     };
     try {
       const response = await axios.put(
-        "http://15.165.181.187/admin/products/modify",
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/modify",
         JSON.stringify(productsDetails),
         option
       );

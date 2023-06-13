@@ -94,7 +94,11 @@ const InsertAddress = ({ principal }) => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.post("http://15.165.181.187/user/mypage/address", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/user/mypage/address",
+        data,
+        option
+      );
       return response;
     },
     {

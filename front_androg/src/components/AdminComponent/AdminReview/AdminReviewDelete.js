@@ -59,7 +59,10 @@ const AdminReviewDelete = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/admin/reviews", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/reviews",
+        option
+      );
       return response;
     },
     {
@@ -79,7 +82,10 @@ const AdminReviewDelete = () => {
       },
     };
     if (window.confirm("삭제하시겠습니까?")) {
-      const response = await axios.delete("http://15.165.181.187/admin/reviews/delete", option);
+      const response = await axios.delete(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/reviews/delete",
+        option
+      );
       setRefresh(true);
       alert("삭제 완료");
       getreviews.refetch();

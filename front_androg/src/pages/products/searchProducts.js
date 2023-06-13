@@ -76,7 +76,10 @@ const SearchProducts = () => {
   const searchProducts = useQuery(
     ["searchProducts"],
     async () => {
-      const response = await axios.get("http://15.165.181.187/products/search", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/products/search",
+        option
+      );
       return response;
     },
     {

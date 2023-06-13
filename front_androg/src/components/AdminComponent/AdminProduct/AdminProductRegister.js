@@ -90,7 +90,10 @@ const AdminProductRegister = () => {
         },
       };
       // 전체 색상 들고오기
-      const response = await axios.get("http://15.165.181.187/admin/products/colors", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/colors",
+        option
+      );
       return response;
     },
     {
@@ -124,7 +127,7 @@ const AdminProductRegister = () => {
     };
     try {
       const response = await axios.post(
-        "http://15.165.181.187/admin/product/register",
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/product/register",
         JSON.stringify(productsDetails),
         option
       );

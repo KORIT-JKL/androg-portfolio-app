@@ -80,7 +80,11 @@ const ReviewUpdateModal = ({ onClose, review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/product/review/modify", data, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/product/review/modify",
+        data,
+        option
+      );
       return response;
     },
     {

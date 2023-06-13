@@ -104,7 +104,11 @@ const Login = () => {
       },
     };
     try {
-      const response = await axios.post("http://15.165.181.187/auth/login", JSON.stringify(loginUser), option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/login",
+        JSON.stringify(loginUser),
+        option
+      );
       setErrorMessages({ email: "", password: "" });
 
       const accessToken = response.data.grantType + " " + response.data.accessToken;

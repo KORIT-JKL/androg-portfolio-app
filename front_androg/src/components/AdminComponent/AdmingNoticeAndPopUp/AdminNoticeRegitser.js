@@ -63,7 +63,11 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/admin/notice/register", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/notice/register",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -88,7 +92,11 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/admin/notice/modify", data, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/notice/modify",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -107,7 +115,10 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete(`http://15.165.181.187/admin/notice/${notice.noticeId}`, option);
+      const response = await axios.delete(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/notice/${notice.noticeId}`,
+        option
+      );
       return response;
     },
     {
@@ -128,7 +139,10 @@ const AdminNoticeRegitser = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/notice", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/notice",
+        option
+      );
       return response;
     },
     {

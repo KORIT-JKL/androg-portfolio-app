@@ -93,7 +93,11 @@ const InquiryAnswer = ({ inquiryId }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/admin/inquiries/answer", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/inquiries/answer",
+        data,
+        option
+      );
       return response;
     },
     {

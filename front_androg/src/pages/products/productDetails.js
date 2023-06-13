@@ -199,7 +199,9 @@ const ProductDetails = () => {
   const getProduct = useQuery(
     ["getProduct"],
     async () => {
-      const reponse = await axios.get(`http://15.165.181.187/products/${productId}/details`);
+      const reponse = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/products/${productId}/details`
+      );
       return reponse;
     },
     {
@@ -213,7 +215,9 @@ const ProductDetails = () => {
   const getSameNameProducts = useQuery(
     ["getSameNameProducts"],
     async () => {
-      const response = await axios.get(`http://15.165.181.187/products/${productId}/sameName`);
+      const response = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/products/${productId}/sameName`
+      );
       return response;
     },
     {
@@ -227,12 +231,16 @@ const ProductDetails = () => {
   const addCartSubmitHandle = async () => {
     setThiRefresh(true);
     try {
-      const response = await axios.post("http://15.165.181.187/cart/addition", JSON.stringify(searchParams), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart/addition",
+        JSON.stringify(searchParams),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("accessToken"),
+          },
+        }
+      );
       alert("상품을 장바구니에 등록 성공");
       return response;
     } catch (error) {
@@ -245,7 +253,9 @@ const ProductDetails = () => {
   const getReviews = useQuery(
     ["getReviews"],
     async () => {
-      const response = await axios.get(`http://15.165.181.187/products/review/${productId}`);
+      const response = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/products/review/${productId}`
+      );
       return response;
     },
     {
@@ -274,7 +284,10 @@ const ProductDetails = () => {
 
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.get("http://15.165.181.187/products/adminReview", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/products/adminReview",
+        option
+      );
       return response;
     },
     {
@@ -312,12 +325,16 @@ const ProductDetails = () => {
 
   const directBuy = async (product) => {
     try {
-      const response = await axios.post("http://15.165.181.187/product/directBuy", JSON.stringify(searchParams), {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("accessToken"),
-        },
-      });
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/product/directBuy",
+        JSON.stringify(searchParams),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("accessToken"),
+          },
+        }
+      );
       setThiRefresh(true);
       navigate(`/product/payment`);
       return response;

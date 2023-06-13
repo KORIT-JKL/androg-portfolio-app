@@ -106,7 +106,10 @@ const ForgotPassword = () => {
   const sendMail = useMutation(
     async () => {
       alert("코드를 전송중입니다.");
-      const response = await axios.post("http://15.165.181.187/auth/forgot", { email });
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/forgot",
+        { email }
+      );
       return response;
     },
     {
@@ -127,10 +130,13 @@ const ForgotPassword = () => {
   );
   const modifyPassword = useMutation(
     async () => {
-      const response = await axios.post("http://15.165.181.187/auth/forgot/modify", {
-        email: email,
-        password: modifypassword1,
-      });
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/forgot/modify",
+        {
+          email: email,
+          password: modifypassword1,
+        }
+      );
       return response;
     },
     {

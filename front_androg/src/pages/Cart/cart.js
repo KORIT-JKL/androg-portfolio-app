@@ -222,7 +222,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/cart/update/countUp", product, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart/update/countUp",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -238,7 +242,11 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/cart/update/countDown", product, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart/update/countDown",
+        product,
+        option
+      );
       return response;
     },
     {
@@ -257,7 +265,10 @@ const Cart = () => {
         headers: { Authorization: `${localStorage.getItem("accessToken")}` },
         paramsSerializer: (params) => QueryString.stringify(params, { arrayFormat: "repeat" }),
       };
-      const response = await axios.delete("http://15.165.181.187/cart/delete", option);
+      const response = await axios.delete(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart/delete",
+        option
+      );
       return response;
     },
     {
@@ -280,7 +291,10 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
 
       return response;
     },
@@ -303,7 +317,10 @@ const Cart = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/cart", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/cart",
+        option
+      );
       return response;
     },
     {

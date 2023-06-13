@@ -75,7 +75,11 @@ const OAuth2Register = () => {
         },
       };
       try {
-        const response = await axios.post("http://15.165.181.187/auth/oauth2/register", registerData, option);
+        const response = await axios.post(
+          "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/register",
+          registerData,
+          option
+        );
         setErrorMessages({ password: "" });
         return response;
       } catch (error) {

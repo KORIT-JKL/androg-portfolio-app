@@ -27,11 +27,14 @@ const oauth2Text = css`
 const OAuth2Button = ({ provider, children }) => {
   const onClickHandle = (provider) => {
     if (provider === "google") {
-      window.location.href = "http://15.165.181.187/oauth2/authorization/google";
+      window.location.href =
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/oauth2/authorization/google";
     } else if (provider === "naver") {
-      window.location.href = "http://15.165.181.187/oauth2/authorization/naver";
+      window.location.href =
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/oauth2/authorization/naver";
     } else if (provider === "kakao") {
-      window.location.href = "http://15.165.181.187/oauth2/authorization/kakao";
+      window.location.href =
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/oauth2/authorization/kakao";
     }
   };
 

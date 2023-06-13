@@ -75,7 +75,10 @@ const AdminProductSoldOut = () => {
           Authorization: localStorage.getItem("accessToken"),
         },
       };
-      const response = await axios.get(`http://15.165.181.187/admin/products/${selectCategoryId}`, option);
+      const response = await axios.get(
+        `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/${selectCategoryId}`,
+        option
+      );
 
       return response;
     },
@@ -101,7 +104,11 @@ const AdminProductSoldOut = () => {
         value: value,
       },
     };
-    const response = await axios.put(`http://15.165.181.187/admin/products/soldout`, "", option);
+    const response = await axios.put(
+      `https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/products/soldout`,
+      "",
+      option
+    );
     setRefresh(true);
     return response;
   };

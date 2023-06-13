@@ -93,7 +93,11 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.post("http://15.165.181.187/admin/pop-up/register", data, option);
+      const response = await axios.post(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/pop-up/register",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -114,7 +118,10 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/pop-up", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/pop-up",
+        option
+      );
       return response;
     },
     {
@@ -134,7 +141,11 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.put("http://15.165.181.187/admin/pop-up/modify", data, option);
+      const response = await axios.put(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/pop-up/modify",
+        data,
+        option
+      );
       return response;
     },
     {
@@ -156,7 +167,10 @@ const AdminPopUpRegister = () => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.delete("http://15.165.181.187/admin/pop-up", option);
+      const response = await axios.delete(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/admin/pop-up",
+        option
+      );
       return response;
     },
     {

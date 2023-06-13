@@ -105,7 +105,10 @@ const ReviewComponent = ({ review }) => {
           Authorization: `${localStorage.getItem("accessToken")}`,
         },
       };
-      const response = await axios.get("http://15.165.181.187/auth/principal", option);
+      const response = await axios.get(
+        "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/principal",
+        option
+      );
       return response;
     },
     {
@@ -126,7 +129,14 @@ const ReviewComponent = ({ review }) => {
       <div css={reviewTitle}>
         <div css={reviewUser}>
           <div css={imgBox}>
-            <img css={img} src={"http://15.165.181.187/image/profile/" + review.profileImg} alt="" />
+            <img
+              css={img}
+              src={
+                "https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/image/profile/" +
+                review.profileImg
+              }
+              alt=""
+            />
           </div>
           {review.userName}
         </div>
