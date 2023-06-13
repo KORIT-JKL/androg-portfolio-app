@@ -2,8 +2,8 @@
 import { css } from "@emotion/react";
 import React, { useRef, useState } from "react";
 
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
 import Information from "../../components/SupportUI/Information/Information";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";

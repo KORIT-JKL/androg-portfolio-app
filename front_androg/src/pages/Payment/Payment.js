@@ -11,8 +11,8 @@ import { cartIsOpenState } from "../../atoms/Cart/CartAtoms";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { postcodeScriptUrl } from "react-daum-postcode/lib/loadPostcode";
 import Select from "../../components/Payment/select/Select";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
 
 const container = css`
   font-size: 12px;

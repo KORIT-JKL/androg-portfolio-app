@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
 import mainPageImg from "../../img/ANDROG 1.png";
 
 const mainPage = css`

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React, { useEffect, useState } from "react";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import InsertAddress from "../../components/AddressComponent/InsertAddress/InsertAddress";

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import React from "react";
-import CommonFooter from "../../../components/CommonFooter/CommonFooter";
-import CommonHeader from "../../../components/CommonHeader/CommonHeader";
+import CommonFooter from "../../../components/commonFooter/CommonFooter";
+import CommonHeader from "../../../components/commonHeader/CommonHeader";
 import { useRecoilState } from "recoil";
 import { AdminNotice } from "../../../atoms/Admin/AdminAtoms";
 import { useQuery } from "react-query";

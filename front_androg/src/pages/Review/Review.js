@@ -7,8 +7,8 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { productInfoState } from "../../atoms/ReviewAtoms/ReviewAtom";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
 
 const container = css`
   margin: 50px;

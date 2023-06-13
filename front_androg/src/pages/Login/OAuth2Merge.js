@@ -4,8 +4,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { useSearchParams } from "react-router-dom";
-import CommonHeader from "../../components/CommonHeader/CommonHeader";
-import CommonFooter from "../../components/CommonFooter/CommonFooter";
+import CommonHeader from "../../components/commonHeader/CommonHeader";
+import CommonFooter from "../../components/commonFooter/CommonFooter";
 import LoginInput from "../../components/Login/LoginInput/LoginInput";
 
 const container = css`
