@@ -46,7 +46,7 @@ public class UserService {
 		
 		File f = new File(filePath + "profile/");
 		
-		if(f.exists()) {
+		if(!f.exists()) {
 			f.mkdirs();
 		}
 		
