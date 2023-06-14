@@ -50,7 +50,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			if(StringUtils.hasText(userEntity.getProvider())) {
 				//회원가입이 되어 있고 provider가 등록된 경우
 				if(!userEntity.getProvider().contains(provider)) {
-					response.sendRedirect("https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/merge"	
+					response.sendRedirect("https://web-androg-portfolio-app-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/merge"	
 							+ "?provider="
 							+ provider
 							+ "&email=" + email);
@@ -60,7 +60,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 						+ "?accessToken=" +"Bearer " + jwtTokenProvider.generateToken(authentication).getAccessToken());
 			}else {
 				//회원가입은 되어 있지만 provider가 null인 경우
-				response.sendRedirect("https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/merge"	
+				response.sendRedirect("https://web-androg-portfolio-app-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/merge"	
 														+ "?provider="
 														+ provider
 														+ "&email=" + email);
