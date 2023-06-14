@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 			.and()
 			.oauth2Login()
-			.loginPage("http://localhost:3000/auth/login")
+			.loginPage("https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/login")
 			.successHandler(auth2SuccessHandler)
 			.userInfoEndpoint()
 			.userService(oAuth2Service);

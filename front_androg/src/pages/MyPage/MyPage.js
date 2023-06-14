@@ -245,7 +245,7 @@ const MyPage = () => {
     {
       onSuccess: (response) => {
         if (response.data === 1) {
-          window.location.href = "http://localhost:3000";
+          window.location.href = "https://web-androg-portfolio-app-7xwyjq992llitnrgqd.sel4.cloudtype.app/";
           localStorage.removeItem("accessToken");
         }
       },
