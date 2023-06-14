@@ -56,7 +56,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 							+ "&email=" + email);
 					return;
 				}
-				response.sendRedirect("https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/login"	
+				response.sendRedirect("https://web-androg-portfolio-app-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/login"	
 						+ "?accessToken=" +"Bearer " + jwtTokenProvider.generateToken(authentication).getAccessToken());
 			}else {
 				//회원가입은 되어 있지만 provider가 null인 경우
