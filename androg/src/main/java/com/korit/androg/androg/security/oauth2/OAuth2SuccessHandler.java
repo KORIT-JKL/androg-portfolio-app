@@ -40,7 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 			String name = oAuth2User.getAttribute("name");
 			response
 			.sendRedirect(
-					"https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/register"
+					"https://web-androg-portfolio-app-7xwyjq992llitnrgqd.sel4.cloudtype.app/auth/oauth2/register"
 								+"?registerToken=" + registerToken
 								+ "&email=" + email
 								+ "&name=" + URLEncoder.encode(name, "UTF-8") 
