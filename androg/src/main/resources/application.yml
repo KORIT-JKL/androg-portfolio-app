@@ -22,8 +22,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 821126360659-in3nrsqk4lkk931p6skmsbkbs99na8ph.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 88838579524-1umcpuule7ak21e0bmbrgosjh1nigis5.apps.googleusercontent.com
+            client-secret: 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
             redirect-uri: https://port-0-androg-portfolio-app-back-7xwyjq992llitnrgqd.sel4.cloudtype.app/login/oauth2/code/google
             scope:
               - email
