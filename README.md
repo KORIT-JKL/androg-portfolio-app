@@ -22,6 +22,15 @@
 - 리뷰관리(답변, 수정, 삭제)
 - 매출관리(일자별 매출액, 판매랑 상품 순위, 상품 매출순위, 사용자 결재액 순위)
 
+# 메뉴 구조도
+
+## 사용자(User)
+![image](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/a0f9676f-18b6-4333-93fe-4f77bd28cc3e)
+
+## 관리자(Admin)
+![image](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/6763932e-d5e4-44bf-a889-e50b92fcb6f0)
+
+
 # 화면
 
 ## 메인페이지, 로그인, 회원가입
