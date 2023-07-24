@@ -106,16 +106,6 @@ const defaultAddress = (index) => css`
   ${index === 0 ? "" : "&:hover {font-weight: 600}"};
 `;
 
-//CommonHeader 문제가 많다 뭐가 문제인지 모를정도로 빠른 시일내에 해결을 해야함.
-
-//문제: 컴포넌트를 나누지 않고 한 곳에 다 작성을 하니 기능을 구현하기 애먹었음.
-//해결: 결국 컴포넌트를 나누었다. 하지만 컴포넌트를 이렇게 나누는게 맞는지 잘 모르겠다.
-
-//문제 : 해당 유저에 배송지를 저장하고 추가된 주소지가 바로바로 적용이 안됨 새로고침을 해야 적용된다. 삭제 수정도 마찬가지
-//해결 : 삭제는 useQuery의 내장 함수인 refetch를 써서 해결하였음 addressDelete가 성공시에 addressList에 refetch를 써서 다시
-//주소지를 가져오는 기능 같다 자세한 건 알아봐야함, 수정과 추가는 recoil을 써서 전역으로 상태를 관리해 수정이나 추가가 성공하면 addressList
-//useQuery 요청을 다시보내서 userAddressList에 다시 응답된 주소지 목록을 집어넣어서 해결하였다.
-
 const Address = () => {
   const [addressOpen, setAddressOpen] = useRecoilState(AddressInsertStateRecoil);
   const [principalState, setPrincipalState] = useState(false);
