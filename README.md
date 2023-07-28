@@ -37,9 +37,10 @@
 ![로그인](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/0c0adb64-566d-4ccf-a8b7-0880944c5082)
 
 ### 주소록
-![주소록](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/748f1293-2966-470f-a7d0-1f0a24c19b22)\
+![주소록](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/748f1293-2966-470f-a7d0-1f0a24c19b22)
 
 ### 장바구니 및 상품 구매
+![장바구니및상품구매](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/9936bcc2-cbaa-4e3f-8f42-35753088e1a9)
 
 ### 리뷰작성
 
