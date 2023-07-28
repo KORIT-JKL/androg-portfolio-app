@@ -43,7 +43,6 @@
 ![장바구니및상품구매](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/9936bcc2-cbaa-4e3f-8f42-35753088e1a9)
 
 ### 리뷰작성
-![리뷰](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/44c49671-ace4-4754-8bc9-9cdf36f977d5)
 
 
 ### 문의하기
