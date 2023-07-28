@@ -50,7 +50,7 @@
 ## 관리자 페이지
 
 ### 관리자 상품
-![관리자 상품](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/dd0335d3-db18-4d91-826f-68b7adf2f580)
+
 
 ### 관리자 리뷰(공지 포함)
 
