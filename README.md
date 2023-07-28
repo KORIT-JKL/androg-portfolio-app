@@ -37,4 +37,4 @@
 ![로그인](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/0c0adb64-566d-4ccf-a8b7-0880944c5082)
 
 ### 주소록
-
+![주소록](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/748f1293-2966-470f-a7d0-1f0a24c19b22)
