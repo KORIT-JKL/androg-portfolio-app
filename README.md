@@ -34,31 +34,32 @@
 # 화면 구현
 
 ### 로그인 및 Oauth2 로그인
-
+![로그인](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/178b3487-c0b6-4413-9a95-cd32d65695b1)
 
 ### 주소록
-
+![주소록](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/1f728355-1b59-4197-9442-c96f16a80284)
 
 ### 장바구니 및 상품 구매
-
+![상품구매 및 장바구니](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/71c0c6d4-d2bb-45a0-9891-ce579bc02398)
 
 ### 리뷰작성
-
+![리뷰작성](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/214bbc05-231b-41d4-8aa6-dde0d53cc7d2)
 
 ### 문의하기
-
+![문의하기](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/66a65a94-510a-4f7b-a493-4430389932a5)
 ### 검색
+![검색](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/ed8b0255-f2c3-4afd-82b2-dea7b958dcd6)
 
 ## 관리자 페이지
 
 ### 관리자 상품
-
+![관리자 상품](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/7f0f05f4-7827-4d45-94b0-0334cad511e8)
 
 ### 관리자 리뷰(공지 포함)
-
+![관리자 리뷰 및 공지](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/34acf8e4-b028-4028-af32-a26589d2f8fa)
 ### 관리자 매출(공지 포함)
-
+![관리자 매출 및 공지](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/7dd066fc-ab40-4b7c-919f-3b70c818d2a9)
 ### 관리자 문의
-
+![관리자 문의](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/47feb85f-adca-46e2-8678-c2200f349603)
 
 
