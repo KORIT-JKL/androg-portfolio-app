@@ -22,6 +22,20 @@
 - 리뷰관리(답변, 수정, 삭제)
 - 매출관리(일자별 매출액, 판매랑 상품 순위, 상품 매출순위, 사용자 결재액 순위)
 
+
+# 주요 로직
+## AuthRoute 로직
+![AuthRoute 로직](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/c69c2d8f-09d7-4ef4-9c37-931fcb3f9145)
+
+## JWT
+![JWT 설계 구조](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/ac8795fd-07fa-4a5a-9258-fe9358e84d4d)
+
+## Oauth2 + JWT
+![Oauth2+JWT 프로세스](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/18a7879c-ff60-42d8-9e54-0b1305037e10)
+
+## MyBatis + MySQL
+![MyBatis+MySQL(Spring Boot)](https://github.com/KORIT-JKL/androg-portfolio-app/assets/51119920/f51bcc91-85d0-4c2d-bb9c-aeec991eab96)
+
 # 메뉴 구조도
 
 ## 사용자(User)
