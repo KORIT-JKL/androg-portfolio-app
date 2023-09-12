@@ -40,6 +40,7 @@ public class AuthenticationService implements UserDetailsService {
 	private final UserRepository userRepository;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 	private final JavaMailSender javaMailSender;
+	
 	public void checkDuplicatedEmail(String email) {
 		if(userRepository.findUserByEmail(email) != null) {
 			throw new CustomException("Duplicated Email",

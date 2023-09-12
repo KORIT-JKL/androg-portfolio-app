@@ -25,7 +25,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 		
 		System.out.println(authException.getMessage());
 		response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		response.setStatus(HttpStatus.FORBIDDEN.value());
 		ErrorResponseDto<?> errorResponseDto = new ErrorResponseDto<AuthenticationException>("인증 실패했다.", authException);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
